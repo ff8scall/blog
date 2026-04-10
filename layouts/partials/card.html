@@ -1,4 +1,4 @@
-<article class="post-card {{ with .Params.categories }}cat-{{ index . 0 | urlize }}{{ end }}">
+<article class="post-card {{ with .Params.categories }}{{ $cat := index . 0 }}{{ if eq $cat "AI·신기술" }}cat-ai-tech{{ else if eq $cat "AI 에이전트" }}cat-ai-agents{{ else if eq $cat "수익화 전략" }}cat-profit{{ else if or (eq $cat "캠핑") (eq $cat "캠핑트렌드") (eq $cat "캠핑육아") (eq $cat "캠핑안전") (eq $cat "펫캠핑") (eq $cat "캠핑요리") }}cat-camping{{ else }}cat-default{{ end }}{{ end }}">
   <a href="{{ .RelPermalink }}" class="card-link" aria-label="{{ .Title }} 자세히 보기">
     {{/* ── 썸네일 (이미지가 있을 때만 노출) ── */}}
     {{ if .Params.thumbnail }}

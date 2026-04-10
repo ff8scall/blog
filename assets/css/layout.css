@@ -234,15 +234,15 @@
 .post-card { position: relative; border-top: 3px solid transparent; transition: all var(--duration-fast); }
 
 /* AI·신기술: 블루 */
-.post-card.cat-ai-신기술 { --cat-color: #007AFF; }
+.post-card.cat-ai-tech { --cat-color: #007AFF; }
 /* AI 에이전트: 퍼플 */
-.post-card.cat-ai-에이전트 { --cat-color: #A855F7; }
+.post-card.cat-ai-agents { --cat-color: #A855F7; }
 /* 수익화 전략: 골드 */
-.post-card.cat-수익화-전략 { --cat-color: #F59E0B; }
+.post-card.cat-profit { --cat-color: #F59E0B; }
 /* 캠핑: 오렌지 */
-.post-card.cat-캠핑 { --cat-color: #F97316; }
-/* 라이프스타일: 핑크/그린 */
-.post-card.cat-라이프스타일 { --cat-color: #10B981; }
+.post-card.cat-camping { --cat-color: #F97316; }
+/* 기본: 핑크/그린 */
+.post-card.cat-default { --cat-color: #10B981; }
 
 /* 공통 액센트 적용 */
 .post-card[class*="cat-"] {

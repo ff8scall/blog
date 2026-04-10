@@ -64,7 +64,3 @@ removePathAccents = false
   url    = "/categories/캠핑/"
   weight = 4
 
-[[menus.main]]
-  name   = "라이프스타일"
-  url    = "/categories/라이프스타일/"
-  weight = 5

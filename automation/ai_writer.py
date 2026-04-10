@@ -19,19 +19,25 @@ class AIWriter:
         """실제 API 호출 로직 (Gemini 또는 OpenRouter)"""
         if provider == "gemini":
             genai.configure(api_key=self.gemini_key)
-            model = genai.GenerativeModel('gemini-2.0-flash')
+            model = genai.GenerativeModel('models/gemini-flash-lite-latest')
             return model.generate_content(prompt).text
         else:
-            # OpenRouter 최신 무료 라이우터 사용
+            # OpenRouter 한글 특화 모델 사용 (DeepSeek-V3/Chat 등 한국어 가성비 최강)
             response = requests.post(
                 "https://openrouter.ai/api/v1/chat/completions",
                 headers={"Authorization": f"Bearer {self.openrouter_key.strip()}"},
-                data=json.dumps({"model": "openrouter/free", "messages": [{"role": "user", "content": prompt}]}),
-                timeout=150
+                data=json.dumps({
+                    "model": "deepseek/deepseek-chat", # 또는 "google/gemma-2-27b-it:free"
+                    "messages": [
+                        {"role": "system", "content": "너는 한국어 뉴스를 전문적으로 요약하는 최고 수준의 편집장이다. 반드시 전문적이고 자연스러운 '존댓말 한국어'로만 응답하라. 절대 영어를 섞지 마라."},
+                        {"role": "user", "content": prompt}
+                    ]
+                }),
+                timeout=180
             )
             return response.json()["choices"][0]["message"]["content"]
 
-    def generate_content(self, keyword, extra_info=""):
+    def generate_content(self, keyword, category="AI·신기술", extra_info=""):
         # 고도로 정제된 한국어 전문가 프롬프트
         prompt = f"""
         당신은 대한민국 최고의 SEO 전문가이자 전업 블로거 'Lego-sia'입니다.
@@ -61,23 +67,32 @@ class AIWriter:
         title: "제목"
         date: "{datetime.now().strftime('%Y-%m-%dT%H:%M:%S+09:00')}"
         description: "SEO 최적화된 독창적인 요약 (150자)"
-        categories: ["라이프스타일"]
+        categories: ["{category}"]
         tags: ["정보", "트렌드", "2026"]
-        slug: "news-{int(time.time())}"
+        slug: "auto-{int(time.time())}"
         ---
         """
         
-        try:
-            print("[*] 1차 시도: Gemini Direct...")
-            return self._generate_content_logic(prompt, "gemini")
-        except Exception as e:
-            print(f"[!] Gemini 실패({e}), 2차 OpenRouter 라우터 가동...")
-            time.sleep(10)
+        # 끈질긴 재시도 로직 도입
+        max_retries = 3
+        # 끈질긴 재시도 및 하이브리드 대행 로직
+        for attempt in range(max_retries):
             try:
-                return self._generate_content_logic(prompt, "openrouter")
-            except Exception as e2:
-                print(f"[!] 전사적 시도 실패: {e2}")
-                return None
+                print(f"[*] Attempt {attempt+1}: Gemini 2.5 Direct...")
+                res = self._generate_content_logic(prompt, "gemini")
+                if res: return res
+            except Exception as e:
+                # 429든 아니든 일단 다음 비상 수단(OpenRouter) 가동
+                print(f"[!] Gemini 이슈 발생({e}). 즉시 OpenRouter 비상 엔진으로 우회 시도...")
+                try:
+                    res = self._generate_content_logic(prompt, "openrouter")
+                    if res: return res
+                except Exception as e2:
+                    print(f"[!] OpenRouter마저 이슈({e2}). 70초 정비 후 다시 처음부터 시도...")
+                    time.sleep(70)
+                    continue
+        return None
+        return None
 
     def save_post(self, content, filename):
         if not content: return
