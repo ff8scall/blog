@@ -33,13 +33,52 @@ body[data-theme="dark"] {
   letter-spacing: -0.02em;
 }
 
-/* 🔥 실시간 핫토픽 티커 (V2.5) */
+/* 🔥 실시간 핫토픽 티커 (정밀 수리 V2.6) */
 .hot-topic-ticker {
-  background: rgba(7, 9, 13, 0.8);
+  background: rgba(7, 9, 13, 0.95);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--p-border);
   padding: 12px 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  overflow: hidden; /* 영역 밖 글자 차단 */
+  position: relative;
+  z-index: 1000;
+}
+
+.ticker-wrapper {
+  overflow: hidden;
+  white-space: nowrap; /* 줄바꿈 절대 금지 */
+  width: 100%;
+}
+
+.ticker-inner {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: ticker-scroll 60s linear infinite; /* 느리고 우아하게 */
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 40px; /* 아이템 간격 */
+  color: var(--p-text-main);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.ticker-badge {
+  background: var(--p-gradient);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  margin-right: 12px;
+}
+
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* 무한 루프 최적화 */
 }
 
 /* ✨ 프리미엄 가독성 헤드라인 */
