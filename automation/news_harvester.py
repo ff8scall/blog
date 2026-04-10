@@ -14,43 +14,40 @@ class NewsHarvester:
         self.currents_key = os.getenv("CURRENTSAPI_KEY")
 
     def fetch_all(self, limit_per_api=50):
-        print(f"[*] Starting Night-Shift News Harvest (Limit per API: {limit_per_api})...")
+        # [V3.7] 안정성 강화: 쿼리를 쪼개서 개별적으로 요청 (에러 방지)
+        target_keywords = ["NVIDIA", "AI Tech", "RTX 5090", "HBM4", "Nintendo Switch 2", "AI SaaS"]
+        print(f"[*] Multi-Query Harvest Level 2...")
+        
         results = []
         
-        # 1. GNews (Global Focus) - limit 50 (If plan allows)
-        try:
-            url = f"https://gnews.io/api/v4/search?q=AI OR NVIDIA OR GPT&lang=en&token={self.gnews_key}&max={limit_per_api}"
-            res = requests.get(url, timeout=10).json()
-            for i in res.get("articles", []):
-                # 이미지 링크 필수 체크
-                img = i.get("image") or "https://source.unsplash.com/featured/?ai,tech"
-                results.append({"title": i["title"], "url": i["url"], "source": i["source"]["name"], "urlToImage": img})
-        except: pass
+        # GNews (가장 안정적)
+        for kw in target_keywords[:3]:
+            try:
+                url = f"https://gnews.io/api/v4/search?q={kw}&lang=en&token={self.gnews_key}&max=10"
+                res = requests.get(url, timeout=10).json()
+                if "articles" in res:
+                    for i in res["articles"]:
+                        results.append({"title": i["title"], "url": i["url"], "source": i["source"]["name"], "urlToImage": i.get("image")})
+            except: pass
 
-        # 2. NewsAPI (Technology Focus) - pageSize max (100 is max for free)
-        try:
-            url = f"https://newsapi.org/v2/everything?q=AI OR Semiconductor&language=en&apiKey={self.newsapi_key}&pageSize={limit_per_api}"
-            res = requests.get(url, timeout=10).json()
-            for i in res.get("articles", []):
-                img = i.get("urlToImage") or "https://source.unsplash.com/featured/?technology"
-                results.append({"title": i["title"], "url": i["url"], "source": i["source"]["name"], "urlToImage": img})
-        except: pass
-
-        # 3. Currents API
-        try:
-            url = f"https://api.currentsapi.services/v1/search?apiKey={self.currents_key}&keywords=AI&language=en&limit={limit_per_api}"
-            res = requests.get(url, timeout=10).json()
-            for i in res.get("news", []):
-                img = i.get("image") or "https://source.unsplash.com/featured/?chip,robot"
-                results.append({"title": i["title"], "url": i["url"], "source": i["author"], "urlToImage": img})
-        except: pass
+        # NewsAPI (상세 검색) - 가장 민감하므로 하나씩
+        for kw in target_keywords[3:]:
+            try:
+                url = f"https://newsapi.org/v2/everything?q={kw}&language=en&apiKey={self.newsapi_key}&pageSize=10"
+                res = requests.get(url, timeout=10).json()
+                if "articles" in res:
+                    for i in res["articles"]:
+                        results.append({"title": i["title"], "url": i["url"], "source": i["source"]["name"], "urlToImage": i.get("urlToImage")})
+            except: pass
 
         seen = set()
         unique = []
         for n in results:
             if n["url"] not in seen:
+                if not n.get("urlToImage"):
+                    n["urlToImage"] = "https://source.unsplash.com/featured/?technology"
                 unique.append(n)
                 seen.add(n["url"])
         
-        print(f"[SUCCESS] Night-Shift Harvested {len(unique)} global articles.")
+        print(f"[SUCCESS] Total {len(unique)} candidate articles collected.")
         return unique

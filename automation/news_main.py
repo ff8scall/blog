@@ -1,11 +1,19 @@
 import os
 import time
 import sys
+import glob
 from news_harvester import NewsHarvester
 from ai_news_editor import NewsEditor
 from history_manager import HistoryManager
 from telegram_notifier import TelegramNotifier
 from gatekeeper import FinalGatekeeper
+
+def count_all_posts():
+    """블로그 내의 전체 마크다운 포스트 개수 계산"""
+    posts = glob.glob("content/posts/**/*.md", recursive=True)
+    # _index.md 같은 설정 파일 제외
+    valid_posts = [p for p in posts if "_index" not in p]
+    return len(valid_posts)
 
 def create_hugo_post(article):
     """최종 선정된 뉴스를 Hugo 포스팅으로 생성"""
@@ -36,11 +44,9 @@ image: "{article['urlToImage']}"
     print(f"[SUCCESS] Draft: {article['title']}")
 
 def main():
-    # 인자값에 따라 정밀 쿼터 관리
     is_night_mode = "--night" in sys.argv
-    
-    # [사용자 요청 반영] 야간에는 대량(50개), 주간에는 테스트 보존을 위해 소량(10개)
-    article_limit = 50 if is_night_mode else 10
+    article_limit = 50 if is_night_mode else 20
+    harvest_limit = 50 if is_night_mode else 5
     
     harvester = NewsHarvester()
     editor = NewsEditor()
@@ -48,10 +54,10 @@ def main():
     gatekeeper = FinalGatekeeper()
     notifier = TelegramNotifier()
     
-    print(f"=== [V4.6] News Hub Starting (Security: HIGH / Limit: {article_limit}) ===")
+    print(f"=== [V4.8] News Hub Starting (Total Post Tracking) ===")
     
-    # 1. 뉴스 수집 (야간에만 그물을 크게 침)
-    new_raw_news = harvester.fetch_all(limit_per_api=50 if is_night_mode else 5)
+    # 1. 뉴스 수집
+    new_raw_news = harvester.fetch_all(limit_per_api=harvest_limit)
     
     # 2. 중복 처리
     new_articles = []
@@ -62,42 +68,38 @@ def main():
             new_articles.append(article)
             seen_urls.add(url)
     
-    if not new_articles:
-        if not is_night_mode: notifier.send_message("실시간 새로운 소식이 없습니다. 💤")
-        return
-
-    # 3. 1차 AI 편집 (정해진 쿼터 내에서만)
-    new_articles = new_articles[:article_limit]
-    print(f"[*] Processing {len(new_articles)} articles under Quota-Protection Mode.")
-    
-    batch_size = 10
+    # 3. AI 편집
     high_value_news = []
-    
-    for i in range(0, len(new_articles), batch_size):
-        batch = new_articles[i : i + batch_size]
-        reviews = editor.review_batch(batch)
-        for rev in reviews:
-            idx = rev.get('index')
-            if idx is not None and isinstance(idx, int) and idx < len(batch):
-                score = rev.get('score', 0)
-                if score >= 7:
-                    art = batch[idx]
-                    art['summary'] = rev.get('summary', '요약 실패')
-                    create_hugo_post(art)
-                    history.add_to_history(art['url'], art['title'])
-        if i + batch_size < len(new_articles): time.sleep(5)
+    if new_articles:
+        new_articles = new_articles[:article_limit]
+        batch_size = 10
+        for i in range(0, len(new_articles), batch_size):
+            batch = new_articles[i : i + batch_size]
+            reviews = editor.review_batch(batch)
+            for rev in reviews:
+                idx = rev.get('index')
+                if idx is not None and isinstance(idx, int) and idx < len(batch):
+                    score = rev.get('score', 0)
+                    if score >= 7:
+                        art = batch[idx]
+                        art['summary'] = rev.get('summary', '요약 실패')
+                        create_hugo_post(art)
+                        history.add_to_history(art['url'], art['title'])
+                        high_value_news.append(art)
+            if i + batch_size < len(new_articles): time.sleep(5)
             
-    # 4. 최종 마이그레이션 및 검역 (마지막 품질 보증)
-    gatekeeper.audit_and_migrate()
+    # 4. 최종 검증 및 마이그레이션
+    if high_value_news:
+        gatekeeper.audit_and_migrate()
 
-    # 5. 자동화 빌드 (야간 모드만)
-    if is_night_mode:
-        print("[*] Performing Night-Shift Build & Deploy...")
-        os.system(f"powershell -Command \"& C:\\hugo_tmp\\hugo.exe --gc --cleanDestinationDir; git add .; git commit -m 'Auto Harvest (Nightly)'; git push origin main\"")
+    # 5. 빌드 및 배포
+    if is_night_mode and high_value_news:
+        os.system(f"powershell -Command \"& C:\\hugo_tmp\\hugo.exe --gc --cleanDestinationDir; git add .; git commit -m 'Auto Harvest'; git push origin main\"")
 
-    # 6. 알림
-    mode_str = "야간 수혈" if is_night_mode else "주간 정찰"
-    msg = f"🛡️ **[{mode_str}] 완료**\n\n- 정예 포스팅 발행 성공\n- 테스트용 쿼터를 보존하며 실시간 반영되었습니다. 🛰️"
+    # 6. 알림 (실제 숫자 카운트 반영)
+    total_posts = count_all_posts()
+    mode_str = f"새벽 정규 수집({time.strftime('%H:%M')})" if is_night_mode else "주간 수동 원격 제어"
+    msg = f"🛡️ **[{mode_str}] 작업완료**\n\n- 신규 발행 기사: {len(high_value_news)}건\n- 수집 후보: {len(new_articles)}건 중 선별\n- **현재 블로그 총 글수: {total_posts}개** 🏛️\n\nLego-sia 사옥의 질서가 유지되었습니다. 🛰️"
     notifier.send_message(msg)
 
 if __name__ == "__main__":
