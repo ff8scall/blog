@@ -46,7 +46,7 @@ removePathAccents = false
 
 [[menus.main]]
   name   = "AI·신기술"
-  url    = "/categories/ai-신기술/"
+  url    = "/categories/ai신기술/"
   weight = 1
 
 [[menus.main]]
@@ -61,10 +61,10 @@ removePathAccents = false
 
 [[menus.main]]
   name   = "캠핑"
-  url    = "/categories/camping/"
+  url    = "/categories/캠핑/"
   weight = 4
 
 [[menus.main]]
   name   = "라이프스타일"
-  url    = "/categories/lifestyle/"
+  url    = "/categories/라이프스타일/"
   weight = 5
