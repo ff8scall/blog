@@ -1,0 +1,96 @@
+/* 
+   🎨 Lego-sia Premium V2.0 Design System
+   Theme: Deep Charcoal & Neon Future
+   Effect: Glassmorphism & High-Contrast Typography
+*/
+
+:root {
+  --p-bg: #0B0E14; /* 초고급 딥 차콜 */
+  --p-card-bg: rgba(26, 30, 38, 0.7); /* 글래스모피즘 베이스 */
+  --p-accent: #00D2FF; /* 일렉트릭 블루 */
+  --p-accent-glow: rgba(0, 210, 255, 0.3);
+  --p-gradient: linear-gradient(135deg, #00D2FF 0%, #702283 100%);
+  --p-border: rgba(255, 255, 255, 0.08);
+  --p-text-main: #E2E8F0;
+  --p-text-muted: #94A3B8;
+}
+
+/* 🌙 전역 스타일 오버라이드 */
+body[data-theme="dark"] {
+  background-color: var(--p-bg);
+  color: var(--p-text-main);
+  font-family: 'Inter', 'Pretendard', sans-serif;
+}
+
+/* 🔥 실시간 핫토픽 티커 스타일 */
+.hot-topic-ticker {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--p-border);
+  padding: 10px 0;
+  overflow: hidden;
+  position: relative;
+  z-index: 100;
+}
+
+.ticker-inner {
+  display: flex;
+  white-space: nowrap;
+  animation: ticker-scroll 40s linear infinite;
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 50px;
+  color: var(--p-text-main);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.ticker-badge {
+  background: var(--p-gradient);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  margin-right: 10px;
+  letter-spacing: 0.05em;
+}
+
+@keyframes ticker-scroll {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* ✨ 글래스모피즘 카드 스타일 */
+.premium-card {
+  background: var(--p-card-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--p-border);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.premium-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  border-color: var(--p-accent);
+  box-shadow: 0 20px 40px rgba(0, 210, 255, 0.15);
+}
+
+/* 🚀 강렬한 그라데이션 타이틀 */
+.gradient-text-v2 {
+  background: var(--p-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+
+/* 📱 반응형 보정 */
+@media (max-width: 768px) {
+  .ticker-inner { animation-duration: 20s; }
+}

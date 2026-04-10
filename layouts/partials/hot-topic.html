@@ -1,0 +1,18 @@
+<div class="hot-topic-ticker" aria-label="실시간 핫토픽">
+    <div class="container" style="display: flex; align-items: center;">
+        <div style="background: var(--p-gradient); color: white; padding: 4px 12px; font-weight: bold; font-size: 0.8rem; border-radius: 4px; margin-right: 20px; flex-shrink: 0;">HOT TOPIC</div>
+        <div class="ticker-inner">
+            {{ range first 10 (where .Site.RegularPages "Section" "ne" "") }}
+            <a href="{{ .RelPermalink }}" class="ticker-item">
+                <span class="ticker-badge">NEW</span> {{ .Title }}
+            </a>
+            {{ end }}
+            {{/* 무한 루프를 위해 한 번 더 반복 */}}
+            {{ range first 10 (where .Site.RegularPages "Section" "ne" "") }}
+            <a href="{{ .RelPermalink }}" class="ticker-item">
+                <span class="ticker-badge">NEW</span> {{ .Title }}
+            </a>
+            {{ end }}
+        </div>
+    </div>
+</div>

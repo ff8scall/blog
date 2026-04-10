@@ -1,45 +1,41 @@
 {{ define "main" }}
 <div class="home-page">
 
-  {{/* ── 히어로 섹션 ── */}}
-  <section class="hero">
+  {{/* ── [V2.0 추가] 실시간 핫토픽 티커 ── */}}
+  {{ partial "hot-topic.html" . }}
+
+  {{/* ── 히어로 섹션 (Premium) ── */}}
+  <section class="hero" style="padding: 100px 0 60px;">
     <div class="container">
-      <div class="hero-inner">
-        <p class="hero-eyebrow">🤖 인공지능이 바꾸는 우리의 미래</p>
-        <h1 class="hero-title">
-          지금 가장 빠른<br>
-          <span class="gradient-text">신기술 & AI 인사이트</span>
+      <div class="hero-inner" style="text-align: center;">
+        <p class="hero-eyebrow" style="color: var(--p-accent); font-weight: bold; letter-spacing: 0.1em; margin-bottom: 20px;">🛡️ 2026 AI STRATEGY MAGAZINE</p>
+        <h1 class="hero-title" style="font-size: 3.5rem; line-height: 1.2; margin-bottom: 30px;">
+          미래를 앞당기는<br>
+          <span class="gradient-text-v2">최첨단 AI & 수익화 인사이트</span>
         </h1>
-        <p class="hero-desc">2026 AI 트렌드부터 실전 수익화 비결까지 한눈에 확인하세요.</p>
+        <p class="hero-desc" style="font-size: 1.25rem; color: var(--p-text-muted); max-width: 700px; margin: 0 auto;">전 세계 실시간 테크 트렌드와 독보적인 부업 무기를 가장 먼저 만나보세요.</p>
       </div>
     </div>
   </section>
 
   {{/* ── 최신 글 카드 그리드 ── */}}
-  <section class="posts-section">
+  <section class="posts-section" style="padding-bottom: 100px;">
     <div class="container">
-      <h2 class="section-title">최신 포스트</h2>
-
-      {{ if .Site.Params.googleAdSense }}
-      <div class="ad-slot ad-slot--top">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="{{ .Site.Params.googleAdSense }}"
-             data-ad-slot="TOP_SLOT_ID"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-      </div>
-      {{ end }}
+      <h2 class="section-title" style="margin-bottom: 40px; display: flex; align-items: center;">
+        <span style="width: 4px; height: 24px; background: var(--p-gradient); display: inline-block; margin-right: 12px; border-radius: 2px;"></span>
+        최신 인사이트
+      </h2>
 
       <div class="card-grid">
-        {{ range first 9 (where .Site.RegularPages "Section" "ne" "") }}
+        {{ range first 12 (where .Site.RegularPages "Section" "ne" "") }}
         {{ partial "card.html" . }}
         {{ end }}
       </div>
 
       {{/* ── 페이지네이션 ── */}}
-      {{ template "_internal/pagination.html" . }}
+      <div style="margin-top: 60px;">
+        {{ template "_internal/pagination.html" . }}
+      </div>
     </div>
   </section>
 
