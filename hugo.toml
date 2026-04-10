@@ -2,6 +2,11 @@ baseURL = "https://blog.lego-sia.com/"
 languageCode = "ko"
 defaultContentLanguage = "ko"
 title = "blog.lego-sia.com"
+<<<<<<< Updated upstream
+=======
+[pagination]
+  pagerSize = 10
+>>>>>>> Stashed changes
 enableRobotsTXT = true
 enableGitInfo = true
 removePathAccents = false
