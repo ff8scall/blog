@@ -1,0 +1,87 @@
+{{ define "main" }}
+<div class="post-page">
+  <div class="container">
+    <div class="post-layout">
+
+      {{/* ── 본문 영역 ── */}}
+      <article class="post-article">
+
+        {{/* ── 헤더 ── */}}
+        <header class="post-header">
+          {{ with .Params.categories }}
+          <a href="{{ (index . 0) | urlize | printf "/categories/%s/" }}" class="post-category">{{ index . 0 }}</a>
+          {{ end }}
+          <h1 class="post-title">{{ .Title }}</h1>
+          <p class="post-description">{{ .Description }}</p>
+          <div class="post-meta">
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006년 01월 02일" }}</time>
+            <span class="read-time">· 약 {{ div (len .RawContent) 500 }}분 읽기</span>
+          </div>
+        </header>
+
+        {{/* ── 대표 이미지 ── */}}
+        {{ with .Params.thumbnail }}
+        <div class="post-thumbnail">
+          <img src="{{ . }}" alt="{{ $.Title }}" loading="lazy" width="1200" height="630">
+        </div>
+        {{ end }}
+
+        {{/* ── 애드센스 본문 상단 ── */}}
+        {{ if .Site.Params.googleAdSense }}
+        <div class="ad-slot ad-slot--post-top">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="{{ .Site.Params.googleAdSense }}"
+               data-ad-slot="POST_TOP_SLOT_ID"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+        {{ end }}
+
+        {{/* ── 본문 ── */}}
+        <div class="post-content">
+          {{ .Content }}
+        </div>
+
+        {{/* ── 태그 ── */}}
+        {{ with .Params.tags }}
+        <div class="post-tags">
+          {{ range . }}<a href="{{ . | urlize | printf "/tags/%s/" }}" class="tag">#{{ . }}</a>{{ end }}
+        </div>
+        {{ end }}
+
+        {{/* ── 애드센스 본문 하단 ── */}}
+        {{ if .Site.Params.googleAdSense }}
+        <div class="ad-slot ad-slot--post-bottom">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="{{ .Site.Params.googleAdSense }}"
+               data-ad-slot="POST_BOTTOM_SLOT_ID"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+        {{ end }}
+
+        {{/* ── 관련 글 ── */}}
+        {{ partial "related-posts.html" . }}
+
+      </article>
+
+      {{/* ── 사이드바 / 스티키 TOC ── */}}
+      <aside class="post-sidebar">
+        {{ if .TableOfContents }}
+        <div class="toc-widget">
+          <h2 class="toc-title">목차</h2>
+          <nav class="toc-nav" id="toc-nav">
+            {{ .TableOfContents }}
+          </nav>
+        </div>
+        {{ end }}
+      </aside>
+
+    </div>
+  </div>
+</div>
+{{ end }}

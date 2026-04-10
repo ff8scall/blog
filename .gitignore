@@ -1,0 +1,15 @@
+# Hugo build output
+/public/
+/resources/_gen/
+/.hugo_build.lock
+
+# Pagefind 정적 검색 인덱스 (빌드 시 자동 생성)
+/static/pagefind/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/

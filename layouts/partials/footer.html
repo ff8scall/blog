@@ -1,0 +1,22 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="{{ .Site.BaseURL }}" class="site-logo">
+          <span class="logo-accent">blog</span>.lego-sia.com
+        </a>
+        <p class="footer-desc">캠핑, IT, 라이프스타일 트렌드를<br>빠르고 정확하게 전달합니다.</p>
+      </div>
+
+      <nav class="footer-nav" aria-label="바닥 메뉴">
+        {{ range .Site.Menus.main }}
+        <a href="{{ .URL }}" class="footer-nav-link">{{ .Name }}</a>
+        {{ end }}
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="copyright">&copy; {{ now.Year }} blog.lego-sia.com. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,11 @@
+{{ $related := .Site.RegularPages.Related . | first 3 }}
+{{ with $related }}
+<section class="related-posts">
+  <h2 class="related-title">📌 관련 포스트</h2>
+  <div class="card-grid card-grid--compact">
+    {{ range . }}
+      {{ partial "card.html" . }}
+    {{ end }}
+  </div>
+</section>
+{{ end }}

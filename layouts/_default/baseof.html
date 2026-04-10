@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  {{/* ── SEO 메타 ── */}}
+  {{ partial "seo.html" . }}
+
+  {{/* ── CSS ── */}}
+  {{ $css := resources.Get "css/index.css" | resources.Minify | resources.Fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+  {{ $layout := resources.Get "css/layout.css" | resources.Minify | resources.Fingerprint }}
+  <link rel="stylesheet" href="{{ $layout.RelPermalink }}" integrity="{{ $layout.Data.Integrity }}">
+
+  {{/* ── 파비콘 ── */}}
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+
+  {{/* ── 애드센스 ── */}}
+  {{ if .Site.Params.googleAdSense }}
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ .Site.Params.googleAdSense }}" crossorigin="anonymous"></script>
+  {{ end }}
+</head>
+
+<body>
+  {{ partial "header.html" . }}
+
+  <main id="main-content" class="site-main">
+    {{- block "main" . }}{{- end }}
+  </main>
+
+  {{ partial "footer.html" . }}
+
+  {{/* ── JS ── */}}
+  {{ $js := resources.Get "js/main.js" | resources.Minify | resources.Fingerprint }}
+  <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+</body>
+</html>
