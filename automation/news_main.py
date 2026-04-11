@@ -112,13 +112,14 @@ featured: {is_featured}
 
 def get_api_quotas():
     results = []
-    keys = {"NEWSAPI_ORG_KEY": "NewsAPI", "THENEWSAPI_KEY": "TheNewsAPI", "CURRENTSAPI_KEY": "CurrentsAPI"}
+    keys = {"NEWSAPI_ORG_KEY": "NewsAPI", "THENEWSAPI_KEY": "TheNewsAPI", "CURRENTSAPI_KEY": "CurrentsAPI", "GNEWS_API_KEY": "GNews"}
     for k, name in keys.items():
         v = os.getenv(k)
         if v:
             try:
                 if name == "NewsAPI": res = requests.get(f"https://newsapi.org/v2/top-headlines?country=us&pageSize=1&apiKey={v}", timeout=5)
                 elif name == "TheNewsAPI": res = requests.get(f"https://api.thenewsapi.com/v1/news/top?api_token={v}&limit=1", timeout=5)
+                elif name == "GNews": res = requests.get(f"https://gnews.io/api/v4/top-headlines?token={v}&max=1", timeout=5)
                 else: res = requests.get(f"https://api.currentsapi.services/v1/latest-news?apiKey={v}", timeout=5)
                 rem = res.headers.get('X-Remaining-Quota') or res.headers.get('X-RateLimit-Remaining') or "OK"
                 results.append(f"- {name}: {rem}")
@@ -231,4 +232,16 @@ def main():
             print(f" [!] Report failed: {e}")
 
 if __name__ == "__main__":
-    main()
+    telegram = TelegramRemote()
+    try:
+        # 1. 시작 알림
+        telegram.send_resp("🚀 [Lego-Sia v10.9] Strategic News Engine 가동을 시작합니다.")
+        main()
+    except Exception as e:
+        # 2. 에러 긴급 보고
+        import traceback
+        err_detail = traceback.format_exc()
+        error_msg = f"⚠️ [CRITICAL ERROR] 엔진 가동 중단!\n\n원인: {str(e)}\n\n세부사항:\n{err_detail[:300]}..."
+        print(error_msg)
+        telegram.send_resp(error_msg)
+        sys.exit(1)
