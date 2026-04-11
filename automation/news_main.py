@@ -218,18 +218,24 @@ def main():
             else:
                 print(f" DEBUG: Score too low ({draft.get('score')}) for final publication.")
 
-    if published_urls:
-        print(f"[*] Dispatching final intelligence report... (Articles: {published_count})")
-        # 배포는 사용자 명령 대기 중이므로 실제 push는 주석 처리 또는 생략 가능하지만 
-        # 코드상의 완성도를 위해 논리 구조는 유지 (실행 시 사용자 개입 필요)
-        try:
-            # subprocess.run(["git", "push", "origin", "main"], check=True) [HOLD BY USER]
-            quota_report = get_api_quotas()
-            report_msg = f"[READY TO DEPLOY] Total {published_count} insights prepared.\n\n[QUOTA]\n{quota_report}"
-            telegram.send_resp(report_msg)
-            # notify_indexnow(published_urls)
-        except Exception as e:
-            print(f" [!] Report failed: {e}")
+    # [V11.8] 기사 발행 여부와 상관없이 항상 상태 보고 수행
+    print(f"[*] Dispatching final intelligence report... (Articles: {published_count})")
+    try:
+        quota_report = get_api_quotas()
+        
+        if published_count > 0:
+            report_msg = f"✅ [DEPLOAY READY] 총 {published_count}건의 전략 리포트가 준비되었습니다.\n\n[QUOTA]\n{quota_report}"
+        else:
+            report_msg = f"ℹ️ [SKIP] 새로운 뉴스가 없습니다. (모든 중복 검사 완료)\n\n[QUOTA]\n{quota_report}"
+            
+        telegram.send_resp(report_msg)
+        
+        # 기사가 있을 때만 IndexNow 통보
+        if published_urls:
+            pass # notify_indexnow(published_urls)
+            
+    except Exception as e:
+        print(f" [!] Report failed: {e}")
 
 if __name__ == "__main__":
     telegram = TelegramRemote()
