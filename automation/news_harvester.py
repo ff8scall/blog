@@ -35,14 +35,23 @@ class NewsHarvester:
         self.test_mode = test_mode
         self.exhausted = set() # 기력 소진된 API 목록
         
-        # [V10.0] 2026년 4월 현재 메가 트렌드 키워드 (전략적 가중치 반영)
+        # [V12.0] 전문 용어 풀 (Sophisticated Keyword Pools)
+        self.keyword_pools = {
+            "ai_tech": ["Multimodal LLMs", "Small Language Models SLM", "AI Reasoning", "Neural Architecture", "Silicon Photonics AI"],
+            "ai_agent": ["Agentic Workflows", "Multi-agent systems", "Autonomous planning", "AutoGPT evolution", "Task-oriented AI"],
+            "hardware": ["Blackwell B200", "B100 GPU", "HBM4 architecture", "2nm Process roadmap", "GaN power semic"],
+            "game": ["Unreal Engine 5.5", "Path Tracing gaming", "Handheld PC market", "Cloud gaming server", "AI driven NPCs"],
+            "monetization": ["AI Monetization strategy", "SaaS retention 2026", "Digital Ad trends", "Affiliate marketing AI"],
+            "tech_biz": ["Tech regulation 2026", "Big tech antitrust", "Venture capital AI", "Tech IPO 2026"]
+        }
+
         self.categories_config = {
-            "ai_tech": {"query": "Latest AI breakthroughs 2026 NLP Vision models LLM innovation", "kor_name": "AI-기술", "thenews_cat": "tech", "currents_cat": "science_technology"},
-            "ai_agent": {"query": "AI agent tools autonomous workflows AI automation productivity", "kor_name": "AI-에이전트", "thenews_cat": "tech", "currents_cat": "science_technology"},
-            "hardware": {"query": "New computer hardware 2026 GPU CPU storage tech gadgets", "kor_name": "하드웨어", "thenews_cat": "tech", "currents_cat": "science_technology"},
-            "game": {"query": "Latest video games 2026 console news gaming industry updates", "kor_name": "게임", "thenews_cat": "entertainment", "currents_cat": "arts_culture_entertainment"},
-            "business": {"query": "Tech business news 2026 startup funding investment trends", "kor_name": "수익화-전략", "thenews_cat": "business", "currents_cat": "economy_business_finance"},
-            "tech_biz": {"query": "Global technology policy regulation market competition 2026", "kor_name": "테크-비즈니스", "thenews_cat": "business", "currents_cat": "economy_business_finance"}
+            "ai_tech": {"base_q": "AI technology innovation", "kor_name": "AI-기술", "thenews_cat": "tech", "currents_cat": "science_technology"},
+            "ai_agent": {"base_q": "AI Agent automation", "kor_name": "AI-에이전트", "thenews_cat": "tech", "currents_cat": "science_technology"},
+            "hardware": {"base_q": "Next-gen computing hardware", "kor_name": "하드웨어", "thenews_cat": "tech", "currents_cat": "science_technology"},
+            "game": {"base_q": "Future of gaming industry", "kor_name": "게임", "thenews_cat": "entertainment", "currents_cat": "arts_culture_entertainment"},
+            "business": {"base_q": "Tech business strategy", "kor_name": "수익화-전략", "thenews_cat": "business", "currents_cat": "economy_business_finance"},
+            "tech_biz": {"base_q": "Global tech market policy", "kor_name": "테크-비즈니스", "thenews_cat": "business", "currents_cat": "economy_business_finance"}
         }
 
     def _is_safe(self, api_name, res):
@@ -61,6 +70,30 @@ class NewsHarvester:
         except: pass
         return True
 
+    def _get_dynamic_query(self, cat_key):
+        """[V12.0] 전문 키워드 로테이션 및 전략적 쿼리 생성"""
+        import random
+        config = self.categories_config.get(cat_key, {})
+        base_q = config.get("base_q", "technology")
+        pool = self.keyword_pools.get(cat_key, [])
+        
+        # 전문 키워드 1개 선택 + 베이스 쿼리 조합
+        sub_q = random.choice(pool) if pool else ""
+        return f"{base_q} {sub_q}".strip()
+
+    def _get_time_params(self):
+        """[V12.0] 골든 타임 및 속보 윈도우 계산"""
+        now = datetime.now()
+        # 새벽 5~7시: 글로벌 메가 트렌드 가중치 (popularity)
+        if 5 <= now.hour <= 7:
+            sort_by = "popularity"
+            from_time = (now - timedelta(hours=24)).strftime('%Y-%m-%dT%H:%M:%S')
+        else:
+            sort_by = "publishedAt"
+            from_time = (now - timedelta(minutes=135)).strftime('%Y-%m-%dT%H:%M:%S') # 2시간 + 여유분
+        
+        return sort_by, from_time
+
     def _normalize(self, raw, source_api, kor_name):
         title = raw.get("title") or "Untitled Article"
         image = raw.get("urlToImage") or raw.get("image") or raw.get("image_url") or ""
@@ -70,10 +103,10 @@ class NewsHarvester:
         return {"title": title, "description": desc, "urlToImage": image, "url": url, "source": source, "category": kor_name}
 
     def _fetch_newsapi(self, query, kor_name, limit):
+
         if "newsapi" in self.exhausted: return []
-        hour = datetime.now().hour
-        sort_by = "popularity" if (8 <= hour <= 10 or 17 <= hour <= 19) else "publishedAt"
-        url = f"https://newsapi.org/v2/everything?q={query}&sortBy={sort_by}&language=en&apiKey={self.keys['newsapi']}&pageSize={limit}"
+        sort_by, from_time = self._get_time_params()
+        url = f"https://newsapi.org/v2/everything?q={query}&from={from_time}&sortBy={sort_by}&language=en&apiKey={self.keys['newsapi']}&pageSize={limit}"
         try:
             res = requests.get(url, timeout=12)
             if self._is_safe("newsapi", res):
@@ -134,11 +167,11 @@ class NewsHarvester:
         
         for internal_key, config in self.categories_config.items():
             kor_name = config["kor_name"]
-            query = config["query"]
+            query = self._get_dynamic_query(internal_key)
             thenews_cat = config.get("thenews_cat", "tech")
             cur_cat = config.get("currents_cat", "general")
             
-            print(f"[*] Processing: {kor_name} ({internal_key})")
+            print(f"[*] Processing: {kor_name} (Query: {query})")
             cat_results = []
             
             if self.test_mode:

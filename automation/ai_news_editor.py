@@ -12,10 +12,12 @@ class NewsEditor:
         all_drafts = []
         for article in articles:
             prompt = f"""
-            Task: Expand ONE tech news into a dual-language (EN/KO) feature.
+            Task: Expand ONE tech news into a professional dual-language (EN/KO) feature.
+            Identity: You are a senior tech strategist at a premium magazine.
             Rules: Use markdown, 5+ paragraphs per language, STRICT JSON.
+            Focus: Analyze the 'Business Impact' and 'Market Outlook'. Provide sharp, strategic insights.
             
-            JSON format: {{ "score": 10, "category": "ai-tech", "eng_title": "...", "kor_title": "...", "eng_content": "...", "kor_content": "...", "kor_summary": "...", "kor_insight": "..." }}
+            JSON format: {{ "score": 10, "category": "ai-tech", "eng_title": "...", "kor_title": "...", "eng_content": "...", "kor_content": "...", "kor_summary": "...", "kor_insight": "비즈니스 임팩트: ... 전략적 전망: ..." }}
             
             Source Article:
             Title: {article['title']}
