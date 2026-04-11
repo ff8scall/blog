@@ -1,28 +1,97 @@
-baseURL = "https://blog.lego-sia.com/"
-languageCode = "ko"
+baseURL = "https://news.lego-sia.com/"
 defaultContentLanguage = "ko"
-title = "blog.lego-sia.com"
+defaultContentLanguageInSubdir = false
 enableRobotsTXT = true
-enableGitInfo = true
-removePathAccents = false
 
-[pagination]
-  pagerSize = 10
+[languages]
+  [languages.ko]
+    languageCode = "ko-kr"
+    languageName = "한국어"
+    title = "레고-시아 전략 매거진"
+    weight = 1
+    contentDir = "content/ko"
+    [languages.ko.params]
+      description = "AI 전략, 수익화, 고성능 하드웨어를 다루는 프리미엄 테크 매거진"
+      heroTitle = "글로벌 테크 인텔리전스"
+      heroSub = "인공지능부터 비즈니스 전략까지, 당신의 지성을 깨우는 가장 날카로운 통찰."
+      siteTag = "AI STRATEGY MAGAZINE"
+      latestPostTitle = "최신 인텔리전스"
+
+  [languages.en]
+    languageCode = "en-us"
+    languageName = "English"
+    title = "Lego-Sia Strategy Magazine"
+    weight = 2
+    contentDir = "content/en"
+    [languages.en.params]
+      description = "Premium Tech Magazine covering AI Strategy, Monetization, and High-Performance Hardware."
+      heroTitle = "Global Tech Intelligence"
+      heroSub = "The sharpest insights for the AI revolution and digital monetization."
+      siteTag = "AI STRATEGY MAGAZINE"
+      latestPostTitle = "Latest Intelligence"
+
+# ── KO Menu ──
+[[languages.ko.menu.main]]
+  name = "AI-기술"
+  url = "/categories/ai-tech/"
+  weight = 1
+[[languages.ko.menu.main]]
+  name = "AI-에이전트"
+  url = "/categories/ai-agents/"
+  weight = 2
+[[languages.ko.menu.main]]
+  name = "하드웨어"
+  url = "/categories/hardware/"
+  weight = 3
+[[languages.ko.menu.main]]
+  name = "게임"
+  url = "/categories/game/"
+  weight = 4
+[[languages.ko.menu.main]]
+  name = "수익화-전략"
+  url = "/categories/monetization/"
+  weight = 5
+[[languages.ko.menu.main]]
+  name = "테크-비즈니스"
+  url = "/categories/tech-biz/"
+  weight = 6
+
+# ── EN Menu ──
+[[languages.en.menu.main]]
+  name = "AI-Tech"
+  url = "/categories/ai-tech/"
+  weight = 1
+[[languages.en.menu.main]]
+  name = "AI-Agents"
+  url = "/categories/ai-agents/"
+  weight = 2
+[[languages.en.menu.main]]
+  name = "Hardware"
+  url = "/categories/hardware/"
+  weight = 3
+[[languages.en.menu.main]]
+  name = "Gaming"
+  url = "/categories/gaming/"
+  weight = 4
+[[languages.en.menu.main]]
+  name = "Monetization"
+  url = "/categories/monetization/"
+  weight = 5
+[[languages.en.menu.main]]
+  name = "Tech-Biz"
+  url = "/categories/tech-biz/"
+  weight = 6
 
 [params]
-  siteName = "blog.lego-sia.com"
-  siteDescription = "인공지능(AI), 신기술, 스마트 수익화 전략을 다루는 프리미엄 테크 매거진"
-  author = "Lego-Sia"
+  theme = "lego-sia-premium"
+  author = "Lego-Sia Editor"
+  siteName = "news.lego-sia.com"
   logo = "/images/logo.svg"
-  twitterHandle = ""
-  ogImage = "/images/og-default.jpg"
-  googleAdSense = ""
-  googleAnalytics = ""
-  # -- Search Engine Verification --
-  googleSiteVerification = ""
-  naverSiteVerification = ""
-  bingSiteVerification = ""
   indexNowKey = "bd9cab15af0446658b1e7bd00b8120ca"
+  
+  [params.social]
+    github = "https://github.com/lego-sia"
+    twitter = "https://twitter.com/legosia"
 
 [markup]
   [markup.goldmark]
@@ -31,7 +100,6 @@ removePathAccents = false
   [markup.highlight]
     style = "monokai"
     lineNos = true
-    lineNumbersInTable = true
 
 [taxonomies]
   category = "categories"
@@ -43,24 +111,3 @@ removePathAccents = false
   section = ["HTML", "RSS"]
   taxonomy = ["HTML"]
   term    = ["HTML", "RSS"]
-
-[[menus.main]]
-  name   = "AI·신기술"
-  url    = "/categories/ai-신기술/"
-  weight = 1
-
-[[menus.main]]
-  name   = "AI 에이전트"
-  url    = "/categories/ai-에이전트/"
-  weight = 2
-
-[[menus.main]]
-  name   = "수익화 전략"
-  url    = "/categories/수익화-전략/"
-  weight = 3
-
-[[menus.main]]
-  name   = "라이프·취미"
-  url    = "/categories/라이프-취미/"
-  weight = 4
-

@@ -2,9 +2,9 @@
   <div class="container">
     <div class="header-inner">
 
-      {{/* ── 로고 ── */}}
-      <a href="{{ .Site.BaseURL }}" class="site-logo" aria-label="{{ .Site.Title }} 홈으로">
-        <span class="logo-accent">blog</span>.lego-sia.com
+      {{/* ── 로고 (브랜드 네이밍 강화) ── */}}
+      <a href="{{ .Site.Home.RelPermalink }}" class="site-logo" aria-label="{{ .Site.Title }} 홈으로">
+        <span class="logo-accent">LEGO-SIA</span> INTELLIGENCE
       </a>
 
       {{/* ── 데스크탑 GNB ── */}}
@@ -12,7 +12,7 @@
         <ul class="gnb-list">
           {{ range .Site.Menus.main }}
           <li class="gnb-item">
-            <a href="{{ .URL }}" class="gnb-link {{ if $.IsMenuCurrent "main" . }}is-active{{ end }}">{{ .Name }}</a>
+            <a href="{{ .URL | relLangURL }}" class="gnb-link {{ if $.IsMenuCurrent "main" . }}is-active{{ end }}">{{ .Name }}</a>
           </li>
           {{ end }}
         </ul>
@@ -39,7 +39,7 @@
   <nav class="mobile-nav" id="mobile-nav" aria-label="모바일 메뉴" aria-hidden="true">
     <ul>
       {{ range .Site.Menus.main }}
-      <li><a href="{{ .URL }}" class="{{ if $.IsMenuCurrent "main" . }}is-active{{ end }}">{{ .Name }}</a></li>
+      <li><a href="{{ .URL | relLangURL }}" class="{{ if $.IsMenuCurrent "main" . }}is-active{{ end }}">{{ .Name }}</a></li>
       {{ end }}
     </ul>
   </nav>

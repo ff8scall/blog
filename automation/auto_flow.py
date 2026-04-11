@@ -6,7 +6,7 @@ import subprocess
 from site_indexer import submit_indexnow
 
 def run_batch_automation(post_count=3):
-    print(f"=== [SEO Blog Automation: Batch Production Mode ({post_count} posts)] ===")
+    print(f"=== [SEO News Automation: Batch Production Mode ({post_count} posts)] ===")
     
     collector = TrendCollector()
     writer = AIWriter()
@@ -52,7 +52,7 @@ def run_batch_automation(post_count=3):
             print("[🚀] 배포 완료!")
             
             # IndexNow 알림 전송 (신규 포스팅 시 즉시 인덱싱 요청)
-            submit_indexnow("https://blog.lego-sia.com/", "bd9cab15af0446658b1e7bd00b8120ca")
+            submit_indexnow("https://news.lego-sia.com/", "bd9cab15af0446658b1e7bd00b8120ca")
             return True
         except Exception as e:
             print(f"[X] 배포 실패: {e}")

@@ -42,3 +42,34 @@ class HistoryManager:
             return True
         except:
             return False
+
+    def is_similar_title_exists(self, title, threshold=0.5):
+        """최근 100건의 제목과 비교하여 유사도가 높은 것이 있는지 확인 (Jaccard Similarity)"""
+        if not title: return False
+        
+        try:
+            conn = sqlite3.connect(self.db_path)
+            cur = conn.cursor()
+            # 최근 100건의 기사 제목을 가져옴
+            cur.execute("SELECT title FROM history ORDER BY processed_at DESC LIMIT 100")
+            recent_titles = [row[0] for row in cur.fetchall() if row[0]]
+            conn.close()
+            
+            # 검색어 정규화 (공백 기준 단어 화이트리스트)
+            new_words = set(title.split())
+            if not new_words: return False
+            
+            for old_title in recent_titles:
+                old_words = set(old_title.split())
+                if not old_words: continue
+                
+                # 단어 교집합 / 합집합 비율 계산 (Jaccard Similarity)
+                intersection = new_words.intersection(old_words)
+                union = new_words.union(old_words)
+                similarity = len(intersection) / len(union)
+                
+                if similarity >= threshold:
+                    return True
+            return False
+        except:
+            return False

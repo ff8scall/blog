@@ -1,136 +1,248 @@
 import os
 import time
 import sys
+import json
+import re
 import glob
+import random
+from datetime import datetime
 from news_harvester import NewsHarvester
 from ai_news_editor import NewsEditor
 from history_manager import HistoryManager
-from telegram_notifier import TelegramNotifier
-from gatekeeper import FinalGatekeeper
+from indexnow_service import notify_indexnow
 
-def count_all_posts():
-    """블로그 내의 전체 마크다운 포스트 개수 계산"""
-    posts = glob.glob("content/posts/**/*.md", recursive=True)
-    # _index.md 같은 설정 파일 제외
-    valid_posts = [p for p in posts if "_index" not in p]
-    return len(valid_posts)
+import requests
 
-def create_hugo_post(article):
-    """최종 선정된 뉴스를 풍성한 다층 구조로 생성 (원본+번역+인사이트)"""
-    path = "content/posts/news" 
-    os.makedirs(path, exist_ok=True)
+def download_image(original_url, category_slug, slug):
+    """
+    1차: 원본 뉴스 이미지 시도
+    2차: 실패 시 카테고리별 전용 폴백 이미지 사용
+    3차: 최후 수단으로 AI 생성 시도
+    """
+    save_path = os.path.join("static", "images", f"{slug}.jpg")
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+
+    # [1단계] 원본 원고 이미지 시도
+    if original_url and original_url.startswith("http"):
+        try:
+            print(f" [*] Attempting to download original image: {original_url[:50]}...")
+            response = requests.get(original_url, timeout=10)
+            if response.status_code == 200:
+                with open(save_path, "wb") as f:
+                    f.write(response.content)
+                return f"/images/{slug}.jpg"
+        except Exception as e:
+            print(f" [!] Original image download failed: {e}")
+
+    # [2단계] 카테고리별 폴백 이미지 (단, 파일이 실제 존재할 때만)
+    fallback_path = f"static/images/fallbacks/{category_slug}.jpg"
+    if os.path.exists(fallback_path):
+        return f"/images/fallbacks/{category_slug}.jpg"
+
+    # [3단계] AI 생성 (Pollinations AI)
+    try:
+        seed_val = sum(ord(c) for c in slug) % 1000000
+        prompt = f"Futuristic technology concept for {category_slug}"
+        ai_url = f"https://image.pollinations.ai/prompt/{prompt}?width=1080&height=720&nologo=true&seed={seed_val}"
+        response = requests.get(ai_url, timeout=20)
+        if response.status_code == 200:
+            with open(save_path, "wb") as f:
+                f.write(response.content)
+            return f"/images/{slug}.jpg"
+    except:
+        pass
+
+    return "/images/fallback-default.jpg"
+
+def sanitize_slug(title):
+    """영문 제목을 기반으로 URL 친화적인 파일명 생성"""
+    clean = re.sub(r'[^a-zA-Z0-9\s-]', '', title).lower()
+    return re.sub(r'\s+', '-', clean).strip('-')[:50]
+
+def create_hugo_post(article, lang='ko'):
+    """[V10.1] 날짜별 폴더 구조(YYYY/MM) 및 고도화된 저장 로직"""
+    now = datetime.now()
+    year = now.strftime('%Y')
+    month = now.strftime('%m')
     
-    # 본문 요약 (메타 데이터용)
-    clean_desc = article.get('summary', '')[:150].replace('\n', ' ')
-    filename = f"news-{int(time.time())}.md"
+    # 1. 언어별/날짜별 경로 설정 (구조적 관리)
+    base_path = f"content/{lang}/posts/{year}/{month}"
+    os.makedirs(base_path, exist_ok=True)
     
-    content = f"""---
-title: "{article['korean_title']}"
-date: "{time.strftime('%Y-%m-%dT%H:%M:%S+09:00')}"
-description: "{clean_desc}"
-categories: ["AI·뉴스"]
-tags: ["{article['source']}", "2026", "테크"]
-image: "{article['urlToImage']}"
+    # 2. 파일명 (영문 슬러그 공유)
+    slug = sanitize_slug(article['eng_title'])
+    timestamp = int(time.time())
+    md_filename = f"{slug}-{timestamp}.md"
+    
+    # 3. 이미지 영구 저장 (V7.2)
+    original_img = article.get('original_image_url')
+    cat_slug = article.get('eng_category_slug', 'tech-biz')
+    local_img_url = download_image(original_img, cat_slug, slug)
+    
+    # 4. 언어별 원고 구성
+    cat_slug = article.get('eng_category_slug', 'tech-biz')
+    tags = json.dumps(article.get('keywords', []), ensure_ascii=False)
+    is_featured = "true" if article.get('score', 0) >= 9 else "false"
+    
+    if lang == 'ko':
+        title = article['kor_title']
+        summary_first_line = article.get('kor_summary', '').split('\n')[0][:100]
+        content = f"""---
+title: "{title}"
+date: "{datetime.now().strftime('%Y-%m-%dT%H:%M:%S+09:00')}"
+description: "{summary_first_line}"
+image: "{local_img_url}"
+categories: ["{cat_slug}"]
+tags: {tags}
+featured: {is_featured}
 ---
 
-### 📡 AI 전문 편집장 3줄 요약
-{article['summary']}
+## 📋 Executive Summary: 핵심 이슈 브리핑
+
+{article.get('kor_summary', '내용 요약 중...')}
 
 ---
 
-### 🌐 Original Article Summary
-> {article.get('original_title', '')}
-> 
-> {article.get('original_description', 'No description available.')}
+## 🔍 심층 분석: 글로벌 테크 리포트
+
+{article.get('kor_content', '진행 중...')}
 
 ---
 
-### 🇰🇷 한국어 번역 및 마이그레이션
-{article.get('translation', '번역 중 오류가 발생했습니다.')}
+## 💡 Editorial: 미래 전략과 시장 전망
 
----
-
-### 💎 AI 편집장의 심층 분석 및 전망
-{article.get('insight', '분석 중 오류가 발생했습니다.')}
-
----
-
-**[원본 기사 보기]({article['url']})**
+{article.get('kor_insight', '인사이트 분석 중...')}
 """
-    with open(f"{path}/{filename}", "w", encoding="utf-8") as f:
+    else: # English
+        title = article['eng_title']
+        eng_desc = article.get('eng_content', '')[:150].replace('"', "'")
+        content = f"""---
+title: "{title}"
+date: "{datetime.now().strftime('%Y-%m-%dT%H:%M:%S+09:00')}"
+description: "{eng_desc}..."
+image: "{local_img_url}"
+categories: ["{cat_slug}"]
+tags: {tags}
+featured: {is_featured}
+---
+
+{article.get('eng_content', 'Processing...')}
+
+---
+*Published by Lego-Sia Intelligence (V10.0)*
+"""
+
+    with open(f"{base_path}/{md_filename}", "w", encoding="utf-8-sig") as f:
         f.write(content)
-    print(f"[SUCCESS] Premium Column Posted: {article['korean_title']}")
+    
+    return md_filename
+
+def save_raw_archive(article, slug):
+    """API 원본 데이터를 배포되지 않는 별도 폴더에 JSON으로 영구 보관"""
+    archive_dir = "automation/raw_archive"
+    os.makedirs(archive_dir, exist_ok=True)
+    
+    archive_path = os.path.join(archive_dir, f"{slug}.json")
+    try:
+        with open(archive_path, "w", encoding="utf-8") as f:
+            json.dump(article, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f" [!] Raw archive save failed: {e}")
 
 def main():
-    is_night_mode = "--night" in sys.argv
-    article_limit = 50 if is_night_mode else 10 # 주간엔 10개만 정규 수집
-    harvest_limit = 50 if is_night_mode else 5
+    print(f"=== [V10.0 Global] April 2026 Strategy Engine Starting ===")
     
     harvester = NewsHarvester()
     editor = NewsEditor()
     history = HistoryManager()
-    gatekeeper = FinalGatekeeper()
-    notifier = TelegramNotifier()
     
-    print(f"=== [V5.0] Premium Magazine Engine Launch ===")
+    # 1. 뉴스 수집 (중복 기사 필터링 포함)
+    raw_news = harvester.fetch_all(limit_per_cat=5)
     
-    # 1. 뉴스 수집
-    new_raw_news = harvester.fetch_all(limit_per_api=harvest_limit)
-    
-    # 2. 중복 처리
+    # 2. 중복 처리 강화 (DB 대조 + 실시간 배치 내 전수 조사)
     new_articles = []
-    seen_urls = set()
-    for article in new_raw_news:
+    seen_titles = [] 
+    published_urls = [] # [V10.5] 검색 색인용 URL 리스트
+    
+    for article in raw_news:
         url = article['url']
-        if url not in seen_urls and not history.is_already_processed(url):
+        title = article['title']
+        
+        # [V10.3] 하이브리드 중복 차단
+        is_duplicate = False
+        
+        # 1) 히스토리 DB 대조 (문맥 유사도 0.5 이상 컷)
+        if history.is_already_processed(url) or history.is_similar_title_exists(title, threshold=0.5):
+            is_duplicate = True
+        
+        # 2) 현재 작업 리스트 내 근접 중복 검사 (앞부분 일치 검사 추가)
+        for seen_title in seen_titles:
+            # 제목 앞부분 15자 중 12자 이상이 겹치면 동일 사건으로 간주
+            if title[:15] == seen_title[:15]:
+                is_duplicate = True
+                break
+        
+        if not is_duplicate:
             new_articles.append(article)
-            seen_urls.add(url)
+            seen_titles.append(title)
+        else:
+            continue
     
     if not new_articles:
-        if not is_night_mode: notifier.send_message("🔍 실시간 새로운 정보가 감지되지 않았습니다. 🛰️")
+        print("[*] No unique news found in this cycle. Keeping existing archive.")
         return
 
-    # 3. AI 심층 편집 (원본 전달)
-    new_articles = new_articles[:article_limit]
-    print(f"[*] Deep-Editing {len(new_articles)} global articles...")
+    # 3. AI 2-Step Editorial (Expansion Mode + Category Balancing)
+    print(f"[*] Deep-Editing {len(new_articles)} fresh articles with Priority...")
     
-    batch_size = 5 # 심층 분석을 위해 배치를 줄임
-    high_value_news = []
-    for i in range(0, len(new_articles), batch_size):
-        batch = new_articles[i : i + batch_size]
-        reviews = editor.review_batch(batch)
-        for rev in reviews:
-            idx = rev.get('index')
-            if idx is not None and isinstance(idx, int) and idx < len(batch):
-                score = rev.get('score', 0)
-                if score >= 7:
-                    art = batch[idx]
-                    # 원본 데이터와 AI 데이터를 결합
-                    art.update({
-                        'korean_title': rev.get('korean_title', art['title']),
-                        'original_title': art['title'],
-                        'original_description': art.get('description', ''),
-                        'summary': rev.get('summary', ''),
-                        'translation': rev.get('translation', ''),
-                        'insight': rev.get('insight', ''),
-                        'score': score
-                    })
-                    create_hugo_post(art)
-                    history.add_to_history(art['url'], art['title'])
-                    high_value_news.append(art)
-        if i + batch_size < len(new_articles): time.sleep(5)
-            
-    # 4. 최종 게이트키핑 및 배포
-    if high_value_news:
-        gatekeeper.audit_and_migrate()
-        if is_night_mode:
-            os.system(f"powershell -Command \"& C:\\hugo_tmp\\hugo.exe --gc --cleanDestinationDir; git add .; git commit -m 'Release V5.0 Premium Contents'; git push origin main\"")
+    # [V10.4] 우선순위 카테고리 관리
+    priority_order = ["ai-tech", "ai-agents", "hardware", "game"]
+    category_quota = {"tech-biz": 2, "monetization": 3} # 과밀 카테고리 제한
+    current_counts = {}
 
-    # 5. 알림
-    total_posts = count_all_posts()
-    mode_str = "새벽 정규 수집" if is_night_mode else "주간 원격 제어"
-    msg = f"🏛️ **[{mode_str}] V5.0 마감 보고**\n\n- 발행 포스트: {len(high_value_news)}건\n- 누적 포스트: {total_posts}개\n\n원본 보존 및 심층 분석이 완료되었습니다. 🚀"
-    notifier.send_message(msg)
+    # 우선순위대로 정렬하여 추출
+    sorted_articles = sorted(new_articles, key=lambda x: 0 if any(k in x['category'].lower() or k in x['title'].lower() for k in ["ai", "chip", "hardware", "game"]) else 1)
+    
+    for article in sorted_articles:
+        reviews = editor.review_batch([article])
+        for rev in reviews:
+            # 카테고리 매핑 및 정원 체크
+            cat_map = {
+                "AI-기술": "ai-tech", "AI-에이전트": "ai-agents", "하드웨어": "hardware",
+                "게임": "game", "수익화-전략": "monetization", "테크-비즈니스": "tech-biz"
+            }
+            cat_slug = cat_map.get(rev.get('category', 'tech-biz'), 'tech-biz')
+            rev['eng_category_slug'] = cat_slug
+            
+            # [V10.4] 쿼터제 적용: 테크-비즈니스 등이 이미 찼으면 스킵
+            count = current_counts.get(cat_slug, 0)
+            if cat_slug in category_quota and count >= category_quota[cat_slug]:
+                # print(f" [QUOTA FULL] Skipping {cat_slug}: {rev['kor_title'][:30]}")
+                continue
+
+            if rev.get('score', 0) >= 8: # 품질 하한선 8점으로 상향
+                post_slug = sanitize_slug(rev['eng_title'])
+                save_raw_archive(article, post_slug)
+                
+                # [V10.5] 파일명과 날짜 기반 URL 추출
+                now = datetime.now()
+                url_path = f"posts/{now.strftime('%Y/%m')}/{post_slug}/"
+                
+                ko_file = create_hugo_post(rev, lang='ko')
+                en_file = create_hugo_post(rev, lang='en')
+                
+                published_urls.append(f"https://news.lego-sia.com/{url_path}")
+                published_urls.append(f"https://news.lego-sia.com/en/{url_path}")
+                
+                history.add_to_history(article['url'], rev['kor_title'])
+                current_counts[cat_slug] = count + 1 # 카운트 증가
+                print(f" [SUCCESS] Priority Added [{cat_slug}]: {rev['kor_title']}")
+
+    # [V10.5] 검색 엔진 색인 알림 실행
+    if published_urls:
+        notify_indexnow(published_urls)
+
+    print(f"[*] Global Update Complete. Archive Updated.")
 
 if __name__ == "__main__":
     main()

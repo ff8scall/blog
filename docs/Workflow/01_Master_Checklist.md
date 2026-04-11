@@ -1,6 +1,6 @@
 # 🛠️ Master Development Workflow & Task Tracker
 
-본 문서는 `blog.lego-sia.com` 프로젝트의 진행 상황을 한눈에 파악하고 진도를 체크하기 위한 마스터 작업표입니다.
+본 문서는 `news.lego-sia.com` 프로젝트의 진행 상황을 한눈에 파악하고 진도를 체크하기 위한 마스터 작업표입니다.
 각 단계별 작업이 완료될 때마다 체크(`[x]`) 표기하며 함께 확인하는 지표로 활용됩니다.
 
 ## Phase 1: 🏗️ 뼈대 구축 및 기본 셋팅 (Foundation)

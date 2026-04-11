@@ -6,8 +6,8 @@
       {{ else }}
       <div style="width: 100%; height: 100%; background: var(--p-gradient); opacity: 0.2;"></div>
       {{ end }}
-      <div class="card-category" style="position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); color: white; padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: bold; border: 1px solid rgba(255,255,255,0.1);">
-        {{ if .Params.categories }}{{ index .Params.categories 0 }}{{ else }}NEWS{{ end }}
+      <div class="card-category" style="position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); color: white; padding: 4px 12px; border-radius: 50px; font-size: 0.75rem; font-weight: bold; border: 1px solid rgba(255,255,255,0.1); text-transform: uppercase;">
+        {{ with .GetTerms "categories" }}{{ (index . 0).LinkTitle }}{{ else }}NEWS{{ end }}
       </div>
     </div>
     

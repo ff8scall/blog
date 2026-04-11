@@ -1,6 +1,6 @@
-# 🚀 blog.lego-sia.com 기술 스택 및 전문 역량 로드맵 (Skill Tree)
+# 🚀 news.lego-sia.com 기술 스택 및 전문 역량 로드맵 (Skill Tree)
 
-본 문서는 개발 PM의 관점에서 `blog.lego-sia.com` 프로젝트의 성공적인 구축과 지속 가능한 운영을 위해 필요한 핵심 기술 역량과 관련 정보를 정리한 가이드입니다.
+본 문서는 개발 PM의 관점에서 `news.lego-sia.com` 프로젝트의 성공적인 구축과 지속 가능한 운영을 위해 필요한 핵심 기술 역량과 관련 정보를 정리한 가이드입니다.
 
 ## 1. 핵심 기술 스택 (Core Skill Tree)
 

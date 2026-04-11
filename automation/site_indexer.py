@@ -29,4 +29,4 @@ def submit_indexnow(site_url, key):
 
 if __name__ == "__main__":
     # 테스트용 단독 실행
-    submit_indexnow("https://blog.lego-sia.com/", "bd9cab15af0446658b1e7bd00b8120ca")
+    submit_indexnow("https://news.lego-sia.com/", "bd9cab15af0446658b1e7bd00b8120ca")

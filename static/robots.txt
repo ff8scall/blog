@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Sitemaps (Global)
+Sitemap: https://news.lego-sia.com/sitemap.xml
+
+# RSS Feeds (Fresh Content)
+Sitemap: https://news.lego-sia.com/index.xml
+Sitemap: https://news.lego-sia.com/en/index.xml
+
+# Search Verification Key
+Disallow: /5ab061f17ab14049b6b3377c527b939c.txt

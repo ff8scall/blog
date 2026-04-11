@@ -4,16 +4,14 @@
   {{/* ── [V2.0 추가] 실시간 핫토픽 티커 ── */}}
   {{ partial "hot-topic.html" . }}
 
-  {{/* ── 히어로 섹션 (Premium) ── */}}
-  <section class="hero" style="padding: 100px 0 60px;">
+  {{/* ── 히어로 섹션 (미니멀리즘 개편) ── */}}
+  <section class="hero-minimal" style="padding: 40px 0 20px; text-align: center;">
     <div class="container">
-      <div class="hero-inner" style="text-align: center;">
-        <p class="hero-eyebrow" style="color: var(--p-accent); font-weight: bold; letter-spacing: 0.1em; margin-bottom: 20px;">🛡️ 2026 AI STRATEGY MAGAZINE</p>
-        <h1 class="hero-title" style="font-size: 3.5rem; line-height: 1.2; margin-bottom: 30px;">
-          미래를 앞당기는<br>
-          <span class="gradient-text-v2">최첨단 AI & 수익화 인사이트</span>
-        </h1>
-        <p class="hero-desc" style="font-size: 1.25rem; color: var(--p-text-muted); max-width: 700px; margin: 0 auto;">전 세계 실시간 테크 트렌드와 독보적인 부업 무기를 가장 먼저 만나보세요.</p>
+      <div class="intelligence-status" style="display: inline-flex; align-items: center; background: rgba(0,198,255,0.05); border: 1px solid rgba(0,198,255,0.1); padding: 5px 15px; border-radius: 4px; gap: 10px;">
+        <span class="status-dot" style="width: 8px; height: 8px; background: #00ff88; border-radius: 50%; box-shadow: 0 0 10px #00ff88; animation: pulse 2s infinite;"></span>
+        <span style="color: var(--p-text-muted); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;">
+          {{ if eq .Site.Language.Lang "ko" }}실시간 글로벌 뉴스 터미널 가동 중{{ else }}Live Global Intelligence Stream{{ end }}
+        </span>
       </div>
     </div>
   </section>
@@ -22,9 +20,9 @@
   <section class="trending-section" style="padding: 0 0 60px;">
     <div class="container">
       <div class="trending-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-        {{ range first 3 (where .Site.RegularPages "Section" "news") }}
+        {{ range first 3 (where .Site.RegularPages "Section" "posts") }}
         <div class="trending-card-wrapper" style="position: relative;">
-          <div style="position: absolute; top: 15px; left: 15px; background: #FF3B30; color: white; padding: 4px 10px; font-size: 0.7rem; font-weight: bold; border-radius: 4px; z-index: 50; box-shadow: 0 4px 10px rgba(255, 59, 48, 0.4);">HOT</div>
+          <div style="position: absolute; top: 15px; right: 15px; background: #FF3B30; color: white; padding: 4px 10px; font-size: 0.7rem; font-weight: bold; border-radius: 4px; z-index: 50; box-shadow: 0 4px 10px rgba(255, 59, 48, 0.4);">HOT</div>
           {{ partial "card.html" . }}
         </div>
         {{ end }}
@@ -37,11 +35,11 @@
     <div class="container">
       <h2 class="section-title" style="margin-bottom: 40px; display: flex; align-items: center;">
         <span style="width: 4px; height: 24px; background: var(--p-gradient); display: inline-block; margin-right: 12px; border-radius: 2px;"></span>
-        최신 인사이트
+        {{ .Site.Params.latestPostTitle }}
       </h2>
 
       <div class="card-grid">
-        {{ range first 12 (where .Site.RegularPages "Section" "ne" "") }}
+        {{ range first 12 (where .Site.RegularPages "Section" "posts") }}
         {{ partial "card.html" . }}
         {{ end }}
       </div>
@@ -54,4 +52,11 @@
   </section>
 
 </div>
+<style>
+  @keyframes pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.4); opacity: 0.4; }
+    100% { transform: scale(1); opacity: 0.8; }
+  }
+</style>
 {{ end }}

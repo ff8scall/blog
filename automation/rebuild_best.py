@@ -5,7 +5,7 @@ from ai_writer import AIWriter
 # 정예 주제 3선
 BEST_TOPICS = [
     ("NVIDIA Blackwell GPU: South Korea's Semiconductor Opportunity or Crisis?", "AI·신기술"),
-    ("AI Blog Flipping Strategy: High-Profit Sales Tactics Revealed", "수익화 전략"),
+    ("AI News Flipping Strategy: High-Profit Sales Tactics Revealed", "수익화 전략"),
     ("Autonomous Workforce: AutoGen and the Shocking Reality of Multi-Agent Systems", "AI 에이전트")
 ]
 

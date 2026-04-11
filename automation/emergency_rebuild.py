@@ -16,7 +16,7 @@ class EmergencyWriter:
         payload = {
             "model": "meta-llama/llama-3.1-8b-instruct:free",
             "messages": [
-                {"role": "system", "content": "너는 IT 전문 기자다. 반드시 자연스럽고 정중한 한국어 존댓말로 블로그 포스팅 형식을 갖춰 작성하라. 절대 영어를 섞지 마라."},
+                {"role": "system", "content": "너는 IT 전문 기자다. 반드시 자연스럽고 정중한 한국어 존댓말로 뉴스 기사 형식을 갖춰 작성하라. 절대 영어를 섞지 마라."},
                 {"role": "user", "content": prompt}
             ]
         }
@@ -39,13 +39,13 @@ def main():
     writer = EmergencyWriter()
     topics = [
         ("NVIDIA Blackwell GPU Industry Impact Analysis", "ai-tech"),
-        ("Successful AI Blog Flipping & Monetization Strategy", "profit"),
+        ("Successful AI News Flipping & Monetization Strategy", "profit"),
         ("Next Generation Multi-Agent AI with AutoGen", "ai-agents")
     ]
     
     for title, folder in topics:
         print(f"\n[!] Re-writing masterpiece: {title}")
-        prompt = f"다음 주제에 대해 전문적인 한국어 IT 블로그 기사를 마크다운 형식으로 작성해줘: {title}. 제목, 일시, 카테고리, 요약, 상세 본문을 포함해."
+        prompt = f"다음 주제에 대해 전문적인 한국어 IT 뉴스 기사를 마크다운 형식으로 작성해줘: {title}. 제목, 일시, 카테고리, 요약, 상세 본문을 포함해."
         content = writer.generate(prompt)
         if content:
             fname = f"best-{int(time.time())}.md"

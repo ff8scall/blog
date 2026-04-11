@@ -1,6 +1,6 @@
 # 🏕️ Camping Category: Content Acquisition Strategy
 
-본 문서는 `blog.lego-sia.com`의 핵심 카테고리인 **캠핑** 분야의 실시간 수집 지침과 콘텐츠 생산 전략을 정의합니다. AI 자동화 엔진은 본 가이드라인에 따라 트렌드를 분석하고 포스팅을 생성합니다.
+본 문서는 `news.lego-sia.com`의 핵심 카테고리인 **캠핑** 분야의 실시간 수집 지침과 콘텐츠 생산 전략을 정의합니다. AI 자동화 엔진은 본 가이드라인에 따라 트렌드를 분석하고 포스팅을 생성합니다.
 
 ## 1. 핵심 수집 테마 (High-Traffic Themes)
 

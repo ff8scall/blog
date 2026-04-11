@@ -5,8 +5,9 @@ import subprocess
 from datetime import datetime
 from dotenv import load_dotenv
 
-# .env 로드
-env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.env')
+# [V3.3] 멀티태스킹 패치: 비동기 실행으로 명령 응답 지연 해소
+base_dir = os.path.dirname(os.path.abspath(__file__))
+env_path = os.path.join(base_dir, '.env')
 load_dotenv(env_path)
 
 class TelegramRemote:
@@ -17,48 +18,61 @@ class TelegramRemote:
         self.last_run_hour = -1
 
     def send_resp(self, text):
-        url = f"https://api.telegram.org/bot{self.token}/sendMessage"
-        requests.post(url, json={"chat_id": self.chat_id, "text": text, "parse_mode": "Markdown"})
+        try:
+            url = f"https://api.telegram.org/bot{self.token}/sendMessage"
+            requests.post(url, json={"chat_id": self.chat_id, "text": text, "parse_mode": "Markdown"})
+        except Exception as e:
+            print(f"[!] Send Error: {e}")
 
     def handle_command(self, cmd):
+        print(f"[*] Command: {cmd}")
+        # Popen을 사용하여 명령을 백그라운드에서 실행 (봇이 멈추지 않음)
         if cmd == "/news":
-            self.send_resp("🛰️ **뉴스 수집 명령 수신!**")
-            subprocess.run(["python", "automation/news_main.py"])
+            self.send_resp("🛰️ **뉴스 수집 시작!** 수집 및 편집 중에도 저는 계속 대기하겠습니다. 😊")
+            subprocess.Popen(["python", "automation/news_main.py"])
         
         elif cmd == "/night":
-            self.send_resp("🌃 **수동 야간 모드 가동!**")
-            subprocess.run(["python", "automation/news_main.py", "--night"])
+            self.send_resp("🌃 **야간 모드 대량 수집 가동!**")
+            subprocess.Popen(["python", "automation/news_main.py", "--night"])
 
         elif cmd == "/status":
             post_count = 0
-            for root, dirs, files in os.walk("content/posts"):
-                post_count += len([f for f in files if f.endswith(".md")])
-            self.send_resp(f"📊 **Lego-sia 블로그 현황**\n\n- 전체 정예 기사: {post_count}개\n- 시스템 상태: 정상 운영 중 ✅")
+            # content/posts 하위의 모든 마크다운 파일 카운트
+            for root, dirs, files in os.walk(os.path.join(os.getcwd(), "content", "posts")):
+                for file in files:
+                    if file.endswith(".md") and "_index" not in file:
+                        post_count += 1
+            self.send_resp(f"📊 **Lego-sia 블로그 현황**\n\n- 전체 정예 기사: {post_count}개\n- 시스템 상태: **멀티태스킹 가동 중** 🚀✅")
             
         elif cmd == "/deploy":
-            self.send_resp("🚀 **배포 시작!** 승인 창 없이 조용히 처리합니다...")
-            
-            # [보안 승인 방지 패치]
-            # 1. 터미널 창(창 숨김)으로 실행하여 윈도우 간섭 최소화
-            # 2. 시스템 환경 변수에 등록된 hugo가 있다면 우선 사용
-            hugo_cmd = "hugo" # 기본 시스템 명령어 시도
-            if not subprocess.run(["where", "hugo"], capture_output=True).returncode == 0:
-                hugo_cmd = r"C:\hugo_tmp\hugo.exe" # 없으면 기존 경로
-            
-            try:
-                # shell=True와 creationflags를 사용하여 윈도우 인터랙티브 창 방지
-                subprocess.run(f"{hugo_cmd} --gc --cleanDestinationDir", shell=True)
-                subprocess.run("git add .", shell=True)
-                subprocess.run("git commit -m 'Remote Deploy via Telegram (Silent)'", shell=True)
-                subprocess.run("git push origin main", shell=True)
-                self.send_resp("✨ **무인 배포 완료!**")
-            except Exception as e:
-                self.send_resp(f"❌ 배포 중 오류 발생: {e}")
+            self.send_resp("🚀 **백그라운드 배포 시작!**")
+            # 배포 명령도 비동기로 실행하여 봇의 응답성을 유지
+            deploy_cmd = "hugo --gc --cleanDestinationDir; git add .; git commit -m 'Remote Deploy'; git push origin main"
+            subprocess.Popen(f"powershell -Command \"{deploy_cmd}\"", shell=True)
 
     def listen(self):
-        print("[*] Telegram Remote Started (Silent Mode)...")
+        print(f"[*] Multi-tasking Bot Active.")
+        self.send_resp("📡 **멀티태스킹 엔진으로 업그레이드 완료!** 이제 수집 중에도 즉각 응답합니다. 😊")
+        
         while True:
-            # (스케줄러 로직 생략 - 실제 파일엔 포함됨)
-            ...
-            # 텔레그램 명령 체크
-            ...
+            # 자동 스케줄러
+            now = datetime.now()
+            if now.hour in [1, 2, 3, 4, 5, 6] and now.hour != self.last_run_hour:
+                subprocess.Popen(["python", "automation/news_main.py", "--night"])
+                self.last_run_hour = now.hour
+
+            try:
+                url = f"https://api.telegram.org/bot{self.token}/getUpdates?offset={self.last_update_id + 1}&timeout=30"
+                res = requests.get(url, timeout=35).json()
+                for update in res.get("result", []):
+                    self.last_update_id = update["update_id"]
+                    msg = update.get("message", {})
+                    text = msg.get("text", "")
+                    if text.startswith("/"):
+                        self.handle_command(text)
+            except:
+                time.sleep(5)
+
+if __name__ == "__main__":
+    bot = TelegramRemote()
+    bot.listen()
