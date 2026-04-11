@@ -18,3 +18,6 @@ automation/.env
 
 # Local News Backups
 automation/archive/
+
+# Private Project Documentation
+docs_private/

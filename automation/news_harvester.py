@@ -6,7 +6,7 @@ import feedparser
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 
-# [V12.1] 인코딩 및 환경 설정
+# [V12.2] 인코딩 및 환경 설정
 try:
     sys.stdout.reconfigure(encoding='utf-8')
 except:
@@ -20,10 +20,14 @@ class NewsHarvester:
             "gnews": os.getenv("GNEWS_API_KEY"),
             "newsapi": os.getenv("NEWSAPI_ORG_KEY"),
             "thenewsapi": os.getenv("THENEWSAPI_KEY"),
-            "currents": os.getenv("CURRENTSAPI_KEY")
+            "currents": os.getenv("CURRENTSAPI_KEY"),
+            "newsdata": os.getenv("NEWSDATA_API_KEY")
         }
-        # [V12.1] 안전 마진 5%로 하향 (95% 풀가동)
-        self.limits = {"gnews": 10, "newsapi": 100, "thenewsapi": 300, "currents": 600}
+        # [V12.2] API별 한도 및 안전 마진 설정
+        self.limits = {
+            "gnews": 10, "newsapi": 100, "thenewsapi": 300, 
+            "currents": 600, "newsdata": 200
+        }
         self.safety_margin = 0.05 
         self.test_mode = test_mode
         self.exhausted = set() 
@@ -39,12 +43,12 @@ class NewsHarvester:
         }
 
         self.categories_config = {
-            "ai_tech": {"base_q": "AI technology innovation", "kor_name": "AI-기술", "thenews_cat": "tech", "currents_cat": "science_technology"},
-            "ai_agent": {"base_q": "AI Agent automation", "kor_name": "AI-에이전트", "thenews_cat": "tech", "currents_cat": "science_technology"},
-            "hardware": {"base_q": "Next-gen computing hardware", "kor_name": "하드웨어", "thenews_cat": "tech", "currents_cat": "science_technology"},
-            "game": {"base_q": "Future of gaming industry", "kor_name": "게임", "thenews_cat": "entertainment", "currents_cat": "arts_culture_entertainment"},
-            "business": {"base_q": "Tech business strategy", "kor_name": "수익화-전략", "thenews_cat": "business", "currents_cat": "economy_business_finance"},
-            "tech_biz": {"base_q": "Global tech market policy", "kor_name": "테크-비즈니스", "thenews_cat": "business", "currents_cat": "economy_business_finance"}
+            "ai_tech": {"base_q": "AI technology innovation", "kor_name": "AI-기술", "thenews_cat": "tech", "currents_cat": "science_technology", "newsdata_cat": "technology"},
+            "ai_agent": {"base_q": "AI Agent automation", "kor_name": "AI-에이전트", "thenews_cat": "tech", "currents_cat": "science_technology", "newsdata_cat": "technology"},
+            "hardware": {"base_q": "Next-gen computing hardware", "kor_name": "하드웨어", "thenews_cat": "tech", "currents_cat": "science_technology", "newsdata_cat": "technology"},
+            "game": {"base_q": "Future of gaming industry", "kor_name": "게임", "thenews_cat": "entertainment", "currents_cat": "arts_culture_entertainment", "newsdata_cat": "entertainment"},
+            "business": {"base_q": "Tech business strategy", "kor_name": "수익화-전략", "thenews_cat": "business", "currents_cat": "economy_business_finance", "newsdata_cat": "business"},
+            "tech_biz": {"base_q": "Global tech market policy", "kor_name": "테크-비즈니스", "thenews_cat": "business", "currents_cat": "economy_business_finance", "newsdata_cat": "business"}
         }
 
     def _is_safe(self, api_name, res):
@@ -84,7 +88,7 @@ class NewsHarvester:
                 raw.get("media") or raw.get("image_link") or ""
         
         desc = raw.get("description") or raw.get("snippet") or raw.get("content", "")
-        url = raw.get("url") or ""
+        url = raw.get("url") or raw.get("link") or ""
         source = raw.get("source", {}).get("name") if isinstance(raw.get("source"), dict) else raw.get("source", source_api)
         return {"title": title, "description": desc, "urlToImage": image, "url": url, "source": source, "category": kor_name}
 
@@ -134,6 +138,21 @@ class NewsHarvester:
         except: pass
         return []
 
+    def _fetch_newsdata(self, query, kor_name, newsdata_cat, limit):
+        # [V12.2] Newsdata.io 신규 엔진 (image=1로 양질의 이미지 기사 우선 수급)
+        if "newsdata" in self.exhausted: return []
+        url = f"https://newsdata.io/api/1/latest?apikey={self.keys['newsdata']}&q={query}&language=en&category={newsdata_cat}&image=1&size={limit}"
+        try:
+            res = requests.get(url, timeout=15)
+            # Newsdata는 헤더 방식이 다를 수 있어 단순 호출 성공 체크
+            if res.status_code == 200:
+                data = res.json()
+                return [self._normalize(a, "NewsData", kor_name) for a in data.get("results", [])]
+            elif res.status_code == 429:
+                self.exhausted.add("newsdata")
+        except: pass
+        return []
+
     def _fetch_kr_rss(self):
         rss_url = "https://www.itworld.co.kr/rss/feed/index.php"
         articles = []
@@ -147,27 +166,28 @@ class NewsHarvester:
     def fetch_all(self, limit_per_cat=8):
         all_unique_news = []
         seen_urls = set()
-        stats = {"NewsAPI": 0, "TheNewsAPI": 0, "GNews": 0, "Currents": 0, "KR-RSS": 0}
+        stats = {"NewsAPI": 0, "TheNewsAPI": 0, "GNews": 0, "Currents": 0, "NewsData": 0, "KR-RSS": 0}
         
-        # [V12.1] 전략적 우선순위 리스트
+        # [V12.2] 전략적 우선순위 리스트 (NewsData를 핵심 폴백으로 배치)
         strategy_map = {
-            "ai_tech": ["NewsAPI", "TheNewsAPI", "GNews", "Currents"],
-            "ai_agent": ["NewsAPI", "TheNewsAPI", "Currents", "GNews"],
-            "hardware": ["NewsAPI", "GNews", "TheNewsAPI", "Currents"],
-            "game": ["GNews", "Currents", "TheNewsAPI", "NewsAPI"],
-            "business": ["TheNewsAPI", "Currents", "NewsAPI", "GNews"],
-            "tech_biz": ["TheNewsAPI", "Currents", "NewsAPI", "GNews"]
+            "ai_tech": ["NewsAPI", "NewsData", "TheNewsAPI", "GNews", "Currents"],
+            "ai_agent": ["NewsAPI", "NewsData", "TheNewsAPI", "Currents", "GNews"],
+            "hardware": ["NewsAPI", "GNews", "NewsData", "TheNewsAPI", "Currents"],
+            "game": ["GNews", "NewsData", "Currents", "TheNewsAPI", "NewsAPI"],
+            "business": ["TheNewsAPI", "NewsData", "Currents", "NewsAPI", "GNews"],
+            "tech_biz": ["TheNewsAPI", "NewsData", "Currents", "NewsAPI", "GNews"]
         }
         
-        print(f"[*] Starting Hybrid Strategic Harvest (V12.1: Priority & Fallback)...")
+        print(f"[*] Starting Hybrid Strategic Harvest (V12.2: Ultra-Enhanced Strategy)...")
         for internal_key, config in self.categories_config.items():
             kor_name = config["kor_name"]
             query = self._get_dynamic_query(internal_key)
             thenews_cat = config.get("thenews_cat", "tech")
             cur_cat = config.get("currents_cat", "general")
+            nd_cat = config.get("newsdata_cat", "technology")
             
             print(f"[*] Analyzing Strategy for: {kor_name} (Query: {query})")
-            priorities = strategy_map.get(internal_key, ["NewsAPI", "TheNewsAPI", "GNews", "Currents"])
+            priorities = strategy_map.get(internal_key, ["NewsAPI", "NewsData", "TheNewsAPI", "GNews", "Currents"])
             
             for api_name in priorities:
                 if self.test_mode and api_name != "Currents": continue
@@ -178,6 +198,7 @@ class NewsHarvester:
                     elif api_name == "TheNewsAPI": res = self._fetch_thenewsapi(query, kor_name, thenews_cat, limit_per_cat)
                     elif api_name == "GNews": res = self._fetch_gnews(query, kor_name, limit_per_cat)
                     elif api_name == "Currents": res = self._fetch_currents(query, kor_name, cur_cat, limit_per_cat)
+                    elif api_name == "NewsData": res = self._fetch_newsdata(query, kor_name, nd_cat, limit_per_cat)
 
                     if res:
                         stats[api_name] += len(res)
@@ -186,7 +207,6 @@ class NewsHarvester:
                                 all_unique_news.append(article)
                                 seen_urls.add(article["url"])
                     
-                    # [V12.1 BUG FIX] 기사를 실제로 가져왔을 때만 다음 카테고리로 이동
                     if len(res) >= max(1, limit_per_cat // 2):
                         print(f"    [+] {api_name} provided sufficient depth ({len(res)} articles). Moving to next category.")
                         break
