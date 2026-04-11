@@ -28,10 +28,17 @@ class AIWriter:
         """[V3.8] 멀티 AI 통합 호출 (제미나이, 딥시크, 그로그, 오픈라우터)"""
         if provider == "gemini":
             if not self.gemini_key: return None
-            genai.configure(api_key=self.gemini_key)
-            target_model = model_name if model_name else 'models/gemini-flash-lite-latest'
-            model = genai.GenerativeModel(target_model)
-            return model.generate_content(prompt).text
+            try:
+                genai.configure(api_key=self.gemini_key)
+                # [V10.9] 하드코딩 제거: 전달받은 모델명 사용
+                model = genai.GenerativeModel(model_name if model_name else 'models/gemini-1.5-flash-latest')
+                response = model.generate_content(prompt)
+                if response and response.text:
+                    return response.text
+                return None
+            except Exception as e:
+                print(f" [!] Gemini Failure: {e}")
+                return None
             
         elif provider == "deepseek":
             if not self.deepseek_key: return None
@@ -42,81 +49,82 @@ class AIWriter:
                     headers={"Authorization": f"Bearer {self.deepseek_key.strip()}", "Content-Type": "application/json"},
                     data=json.dumps({
                         "model": target_model,
-                        "messages": [{"role": "system", "content": "너는 프리미엄 테크 저널리스트이자 전문 번역가다."}, {"role": "user", "content": prompt}],
-                        "temperature": 0.7
-                    }), timeout=120
+                        "messages": [{"role": "system", "content": "Output ONLY JSON."}, {"role": "user", "content": prompt}],
+                        "temperature": 0.3
+                    }), timeout=60
                 )
                 data = response.json()
-                return data["choices"][0]["message"]["content"] if "choices" in data else None
+                if "choices" in data:
+                    return data["choices"][0]["message"]["content"]
+                else:
+                    return None
             except: return None
 
         elif provider == "groq":
             if not self.groq_key: return None
             try:
-                # Groq 초광속 LPU 연동 (Llama-3-70b 기본 사용)
-                target_model = model_name if model_name else "llama3-70b-8192"
+                target_model = model_name if model_name else "llama-3.1-8b-instant"
                 response = requests.post(
                     "https://api.groq.com/openai/v1/chat/completions",
                     headers={"Authorization": f"Bearer {self.groq_key.strip()}", "Content-Type": "application/json"},
                     data=json.dumps({
                         "model": target_model,
-                        "messages": [{"role": "system", "content": "너는 전광석화 같은 정확한 테크 뉴스 전문 에디터다."}, {"role": "user", "content": prompt}],
-                        "temperature": 0.5
-                    }), timeout=60
+                        "messages": [{"role": "user", "content": prompt}],
+                        "temperature": 0.3
+                    }), timeout=30
                 )
                 data = response.json()
-                return data["choices"][0]["message"]["content"] if "choices" in data else None
+                if "choices" in data:
+                    return data["choices"][0]["message"]["content"]
+                else:
+                    print(f" [!] groq Error Body: {data}")
+                    return None
             except Exception as e:
-                print(f"[!] Groq Request Failed: {e}")
+                print(f" [!] groq Failure: {e}")
                 return None
                 
         elif provider == "openrouter":
             if not self.openrouter_key: return None
-            target_model = model_name if model_name else "deepseek/deepseek-chat"
             try:
                 response = requests.post(
                     "https://openrouter.ai/api/v1/chat/completions",
                     headers={"Authorization": f"Bearer {self.openrouter_key.strip()}", "Content-Type": "application/json"},
                     data=json.dumps({
-                        "model": target_model,
+                        "model": "openai/gpt-4o-mini",
                         "messages": [{"role": "user", "content": prompt}]
-                    }), timeout=120
+                    }), timeout=60
                 )
                 data = response.json()
-                return data["choices"][0]["message"]["content"] if "choices" in data else None
-            except: return None
+                if "choices" in data:
+                    return data["choices"][0]["message"]["content"]
+                else:
+                    print(f" [!] openrouter Error Body: {data}")
+                    return None
+            except Exception as e:
+                print(f" [!] openrouter Failure: {e}")
+                return None
         return None
 
     def generate_content(self, prompt, category="AI·신기술", model=None):
-        """[V3.8] 4중 폴백: 제미나이 -> 딥시크 -> 그로그 -> 오픈라우터 순서로 시도"""
-        # 1순위: 제미나이
-        try:
-            print(f"[*] Level 1 Attempt: Gemini...")
-            res = self._generate_api_call(prompt, "gemini", model_name=model)
-            if res: return res
-        except: pass
-
-        # 2순위: 딥시크
-        try:
-            print(f"[*] Level 2 Attempt: DeepSeek (Emergency/Fallback)...")
-            res = self._generate_api_call(prompt, "deepseek")
-            if res: return res
-        except: pass
-
-        # 3순위: 그로그 (초고속 요약/정리 특화)
-        try:
-            print(f"[*] Level 3 Attempt: Groq (LPU Speed Booster)...")
-            res = self._generate_api_call(prompt, "groq")
-            if res: return res
-        except: pass
-
-        # 4순위: 오픈라우터 (최후의 보루)
-        try:
-            print(f"[*] Level 4 Attempt: OpenRouter (Final Defense)...")
-            res = self._generate_api_call(prompt, "openrouter")
-            if res: return res
-        except: pass
-
+        """[V10.9 Production] 안정 최우선: 15초 간격으로 가용 모델 순회"""
+        candidates = [
+            ("groq", "llama-3.1-8b-instant"),
+            ("openrouter", "openai/gpt-4o-mini"),
+            ("gemini", "models/gemini-2.0-flash"),
+            ("gemini", "models/gemini-flash-latest")
+        ]
+        
+        for provider, model_name in candidates:
+            try:
+                res = self._generate_api_call(prompt, provider, model_name=model_name)
+                if res and len(res.strip()) > 10:
+                    return res
+            except Exception as e:
+                print(f" [!] {provider} mode skip: {e}")
+            
+            # [USER RULE] 무료 API 보호를 위한 15초 대기
+            time.sleep(15)
+            
         return None
 
     def save_post(self, content, filename):

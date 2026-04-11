@@ -1,0 +1,7 @@
+requests
+feedparser
+python-dotenv
+google-generativeai
+# [V10.8] 추가 필요한 라이브러리 목록
+beautifulsoup4
+lxml

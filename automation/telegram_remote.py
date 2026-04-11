@@ -28,31 +28,32 @@ class TelegramRemote:
         print(f"[*] Command: {cmd}")
         # Popen을 사용하여 명령을 백그라운드에서 실행 (봇이 멈추지 않음)
         if cmd == "/news":
-            self.send_resp("🛰️ **뉴스 수집 시작!** 수집 및 편집 중에도 저는 계속 대기하겠습니다. 😊")
+            self.send_resp("[INFO] Starting news harvest. I'll remain responsive during processing.")
             subprocess.Popen(["python", "automation/news_main.py"])
         
         elif cmd == "/night":
-            self.send_resp("🌃 **야간 모드 대량 수집 가동!**")
+            self.send_resp("[INFO] Starting Night-Mode mass harvest.")
             subprocess.Popen(["python", "automation/news_main.py", "--night"])
 
         elif cmd == "/status":
             post_count = 0
-            # content/posts 하위의 모든 마크다운 파일 카운트
-            for root, dirs, files in os.walk(os.path.join(os.getcwd(), "content", "posts")):
-                for file in files:
-                    if file.endswith(".md") and "_index" not in file:
-                        post_count += 1
-            self.send_resp(f"📊 **Lego-sia 블로그 현황**\n\n- 전체 정예 기사: {post_count}개\n- 시스템 상태: **멀티태스킹 가동 중** 🚀✅")
+            # content 하위의 모든 마크다운 파일 카운트 (ko/en 통합)
+            for root, dirs, files in os.walk(os.getcwd()):
+                if "content" in root:
+                    for file in files:
+                        if file.endswith(".md") and "_index" not in file:
+                            post_count += 1
+            self.send_resp(f"[STATUS] Lego-Sia Blog Status\n- Total Articles: {post_count}\n- System: Multi-tasking engine active [OK]")
             
         elif cmd == "/deploy":
-            self.send_resp("🚀 **백그라운드 배포 시작!**")
+            self.send_resp("[DEPLOY] Starting manual deployment.")
             # 배포 명령도 비동기로 실행하여 봇의 응답성을 유지
             deploy_cmd = "hugo --gc --cleanDestinationDir; git add .; git commit -m 'Remote Deploy'; git push origin main"
             subprocess.Popen(f"powershell -Command \"{deploy_cmd}\"", shell=True)
 
     def listen(self):
         print(f"[*] Multi-tasking Bot Active.")
-        self.send_resp("📡 **멀티태스킹 엔진으로 업그레이드 완료!** 이제 수집 중에도 즉각 응답합니다. 😊")
+        self.send_resp("[SYSTEM] Multi-tasking engine upgraded. Ready for commands.")
         
         while True:
             # 자동 스케줄러
