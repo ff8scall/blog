@@ -88,6 +88,7 @@ enableRobotsTXT = true
   siteName = "news.lego-sia.com"
   logo = "/images/logo.svg"
   indexNowKey = "bbd0d9a6843c450eb3e9d811a0fd504a"
+  naverSiteVerification = "ac0d8533975bb7d08a360395853f8b211bbde902"
   
   [params.social]
     github = "https://github.com/lego-sia"
