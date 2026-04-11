@@ -87,7 +87,7 @@ enableRobotsTXT = true
   author = "Lego-Sia Editor"
   siteName = "news.lego-sia.com"
   logo = "/images/logo.svg"
-  indexNowKey = "bd9cab15af0446658b1e7bd00b8120ca"
+  indexNowKey = "bbd0d9a6843c450eb3e9d811a0fd504a"
   
   [params.social]
     github = "https://github.com/lego-sia"

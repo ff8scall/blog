@@ -9,7 +9,7 @@ def notify_indexnow(urls):
         return
     
     host = "news.lego-sia.com"
-    key = "5ab061f17ab14049b6b3377c527b939c"
+    key = "bbd0d9a6843c450eb3e9d811a0fd504a"
     key_location = f"https://{host}/{key}.txt"
     
     # 주요 IndexNow 지원 엔드포인트
