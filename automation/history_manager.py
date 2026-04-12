@@ -7,7 +7,7 @@ class HistoryManager:
         self._init_db()
 
     def _init_db(self):
-        """DB 및 테이블 초기화"""
+        """DB 및 테이블 초기화 및 마이그레이션"""
         os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
         conn = sqlite3.connect(self.db_path)
         cur = conn.cursor()
@@ -16,9 +16,14 @@ class HistoryManager:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 url TEXT UNIQUE,
                 title TEXT,
+                local_url TEXT,
                 processed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         """)
+        # [V2.9.9] local_url 컬럼이 없는 기존 DB를 위해 마이그레이션 시도
+        try:
+            cur.execute("ALTER TABLE history ADD COLUMN local_url TEXT")
+        except: pass 
         conn.commit()
         conn.close()
 
@@ -31,29 +36,27 @@ class HistoryManager:
         conn.close()
         return result is not None
 
-    def add_to_history(self, url, title):
-        """처리된 URL 추가"""
+    def add_to_history(self, url, title, local_url=None):
+        """처리된 URL과 로컬 주소 추가"""
         try:
             conn = sqlite3.connect(self.db_path)
             cur = conn.cursor()
-            cur.execute("INSERT INTO history (url, title) VALUES (?, ?)", (url, title))
+            cur.execute("INSERT OR REPLACE INTO history (url, title, local_url) VALUES (?, ?, ?)", (url, title, local_url))
             conn.commit()
             conn.close()
             return True
-        except:
-            return False
+        except: return False
 
     def get_recent_posts(self, limit=10):
-        """AI의 내부 링크 생성을 위해 최근 발행된 기사 제목과 URL 목록 반환"""
+        """로컬 주소가 포함된 최근 기사 목록 반환"""
         try:
             conn = sqlite3.connect(self.db_path)
             cur = conn.cursor()
-            cur.execute("SELECT title, url FROM history ORDER BY processed_at DESC LIMIT ?", (limit,))
+            cur.execute("SELECT title, local_url FROM history WHERE local_url IS NOT NULL ORDER BY processed_at DESC LIMIT ?", (limit,))
             rows = cur.fetchall()
             conn.close()
             return [{"title": row[0], "url": row[1]} for row in rows]
-        except:
-            return []
+        except: return []
 
     def is_similar_title_exists(self, title, threshold=0.5):
         """최근 100건의 제목과 비교하여 유사도가 높은 것이 있는지 확인 (Jaccard Similarity)"""

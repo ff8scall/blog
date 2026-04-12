@@ -1,154 +1,207 @@
-baseURL = "https://news.lego-sia.com/"
-defaultContentLanguage = "ko"
-defaultContentLanguageInSubdir = false
-enableRobotsTXT = true
+baseURL = 'https://news.lego-sia.com'
+title = '레고-시아 전략 매거진'
+defaultContentLanguage = 'ko'
+hasCJKLanguage = true
 
 [languages]
   [languages.ko]
-    languageCode = "ko-kr"
     languageName = "한국어"
-    title = "레고-시아 전략 매거진"
-    weight = 1
     contentDir = "content/ko"
-    [languages.ko.params]
-      description = "AI 전략, 수익화, 고성능 하드웨어를 다루는 프리미엄 테크 매거진"
-      heroTitle = "글로벌 테크 인텔리전스"
-      heroSub = "인공지능부터 비즈니스 전략까지, 당신의 지성을 깨우는 가장 날카로운 통찰."
-      siteTag = "AI STRATEGY MAGAZINE"
-      latestPostTitle = "최신 인텔리전스"
+    weight = 1
+    [languages.ko.menu]
+      [[languages.ko.menu.main]]
+        name = "INTELLIGENCE (AI)"
+        identifier = "intelligence"
+        url = "/categories/llm-tech"
+        weight = 1
+      [[languages.ko.menu.main]]
+        name = "STRATEGIC GUIDES"
+        identifier = "guides"
+        url = "/guides"
+        weight = 5
+      [[languages.ko.menu.main]]
+        name = "TECH COMPARE"
+        identifier = "compare"
+        url = "/compare"
+        weight = 6
+
+      # 하위 카테고리 (생략 가능하지만 메뉴 가독성을 위해 유지)
+      [[languages.ko.menu.main]]
+        parent = "intelligence"
+        name = "LLM & 모델링"
+        url = "/categories/llm-tech"
+        weight = 1
+      [[languages.ko.menu.main]]
+        parent = "intelligence"
+        name = "자율 에이전트"
+        url = "/categories/ai-agent"
+        weight = 2
+      [[languages.ko.menu.main]]
+        parent = "intelligence"
+        name = "글로벌 규제·정책"
+        url = "/categories/ai-policy"
+        weight = 3
+      [[languages.ko.menu.main]]
+        parent = "intelligence"
+        name = "미래 소프트웨어"
+        url = "/categories/future-sw"
+        weight = 4
+        
+      [[languages.ko.menu.main]]
+        name = "PHYSICAL (HW/ROBOT)"
+        identifier = "physical"
+        url = "/categories/semi-hbm"
+        weight = 2
+      [[languages.ko.menu.main]]
+        parent = "physical"
+        name = "반도체 & 메모리"
+        url = "/categories/semi-hbm"
+        weight = 1
+      [[languages.ko.menu.main]]
+        parent = "physical"
+        name = "고성능 컴퓨팅(HPC)"
+        url = "/categories/hpc-infra"
+        weight = 2
+      [[languages.ko.menu.main]]
+        parent = "physical"
+        name = "로봇 & 자동화"
+        url = "/categories/robotics"
+        weight = 3
+
+      [[languages.ko.menu.main]]
+        name = "STRATEGY (BIZ)"
+        identifier = "strategy"
+        url = "/categories/monetization"
+        weight = 3
+      [[languages.ko.menu.main]]
+        parent = "strategy"
+        name = "수익화 전략"
+        url = "/categories/monetization"
+        weight = 1
+      [[languages.ko.menu.main]]
+        parent = "strategy"
+        name = "스타트업 & 투자"
+        url = "/categories/startups-vc"
+        weight = 2
+      [[languages.ko.menu.main]]
+        parent = "strategy"
+        name = "글로벌 시장동향"
+        url = "/categories/market-trend"
+        weight = 3
+
+      [[languages.ko.menu.main]]
+        name = "DIGITAL (GAME/XR)"
+        identifier = "digital"
+        url = "/categories/game-tech"
+        weight = 4
+      [[languages.ko.menu.main]]
+        parent = "digital"
+        name = "게임 테크"
+        url = "/categories/game-tech"
+        weight = 1
+      [[languages.ko.menu.main]]
+        parent = "digital"
+        name = "공간 컴퓨팅"
+        url = "/categories/spatial-tech"
+        weight = 2
 
   [languages.en]
-    languageCode = "en-us"
     languageName = "English"
-    title = "Lego-Sia Strategy Magazine"
-    weight = 2
     contentDir = "content/en"
-    [languages.en.params]
-      description = "Premium Tech Magazine covering AI Strategy, Monetization, and High-Performance Hardware."
-      heroTitle = "Global Tech Intelligence"
-      heroSub = "The sharpest insights for the AI revolution and digital monetization."
-      siteTag = "AI STRATEGY MAGAZINE"
-      latestPostTitle = "Latest Intelligence"
+    weight = 2
+    [languages.en.menu]
+      [[languages.en.menu.main]]
+        name = "INTELLIGENCE (AI)"
+        identifier = "intelligence-en"
+        url = "/en/categories/llm-tech"
+        weight = 1
+      [[languages.en.menu.main]]
+        parent = "intelligence-en"
+        name = "LLM & Architecture"
+        url = "/en/categories/llm-tech"
+        weight = 1
+      [[languages.en.menu.main]]
+        parent = "intelligence-en"
+        name = "Autonomous Agents"
+        url = "/en/categories/ai-agent"
+        weight = 2
+      [[languages.en.menu.main]]
+        parent = "intelligence-en"
+        name = "Global AI Policy"
+        url = "/en/categories/ai-policy"
+        weight = 3
+      [[languages.en.menu.main]]
+        parent = "intelligence-en"
+        name = "Future Software"
+        url = "/en/categories/future-sw"
+        weight = 4
 
-# ── KO Menu (3 Clusters) ──
-[[languages.ko.menu.main]]
-  name = "INTELLIGENCE (AI)"
-  identifier = "intel"
-  weight = 10
-[[languages.ko.menu.main]]
-  name = "AI Insight"
-  parent = "intel"
-  url = "/categories/ai-tech/"
-  weight = 11
-[[languages.ko.menu.main]]
-  name = "AI Agents"
-  parent = "intel"
-  url = "/categories/ai-agents/"
-  weight = 12
+      [[languages.en.menu.main]]
+        name = "PHYSICAL (HW/ROBOT)"
+        identifier = "physical-en"
+        url = "/en/categories/semi-hbm"
+        weight = 2
+      [[languages.en.menu.main]]
+        parent = "physical-en"
+        name = "Semiconductors & HBM"
+        url = "/en/categories/semi-hbm"
+        weight = 1
+      [[languages.en.menu.main]]
+        parent = "physical-en"
+        name = "HPC Infrastructure"
+        url = "/en/categories/hpc-infra"
+        weight = 2
+      [[languages.en.menu.main]]
+        parent = "physical-en"
+        name = "Robotics & Automation"
+        url = "/en/categories/robotics"
+        weight = 3
 
-[[languages.ko.menu.main]]
-  name = "PHYSICAL (HW/GAME)"
-  identifier = "phys"
-  weight = 20
-[[languages.ko.menu.main]]
-  name = "Computing HW"
-  parent = "phys"
-  url = "/categories/hardware/"
-  weight = 21
-[[languages.ko.menu.main]]
-  name = "Next-Gen Game"
-  parent = "phys"
-  url = "/categories/gaming/"
-  weight = 22
+      [[languages.en.menu.main]]
+        name = "STRATEGY (BIZ)"
+        identifier = "strategy-en"
+        url = "/en/categories/monetization"
+        weight = 3
+      [[languages.en.menu.main]]
+        parent = "strategy-en"
+        name = "Monetization Strategy"
+        url = "/en/categories/monetization"
+        weight = 1
+      [[languages.en.menu.main]]
+        parent = "strategy-en"
+        name = "Startups & VC"
+        url = "/en/categories/startups-vc"
+        weight = 2
+      [[languages.en.menu.main]]
+        parent = "strategy-en"
+        name = "Global Market Trends"
+        url = "/en/categories/market-trend"
+        weight = 3
 
-[[languages.ko.menu.main]]
-  name = "STRATEGY (BIZ)"
-  identifier = "strat"
-  weight = 30
-[[languages.ko.menu.main]]
-  name = "Strategy & Biz"
-  parent = "strat"
-  url = "/categories/monetization/"
-  weight = 31
-[[languages.ko.menu.main]]
-  name = "Market Trend"
-  parent = "strat"
-  url = "/categories/tech-biz/"
-  weight = 32
-
-# ── EN Menu (3 Clusters) ──
-[[languages.en.menu.main]]
-  name = "INTELLIGENCE"
-  identifier = "intel_en"
-  weight = 10
-[[languages.en.menu.main]]
-  name = "AI Technology"
-  parent = "intel_en"
-  url = "/categories/ai-tech/"
-  weight = 11
-[[languages.en.menu.main]]
-  name = "AI Agents"
-  parent = "intel_en"
-  url = "/categories/ai-agents/"
-  weight = 12
-
-[[languages.en.menu.main]]
-  name = "PHYSICAL"
-  identifier = "phys_en"
-  weight = 20
-[[languages.en.menu.main]]
-  name = "Hardware"
-  parent = "phys_en"
-  url = "/categories/hardware/"
-  weight = 21
-[[languages.en.menu.main]]
-  name = "Gaming"
-  parent = "phys_en"
-  url = "/categories/gaming/"
-  weight = 22
-
-[[languages.en.menu.main]]
-  name = "STRATEGY"
-  identifier = "strat_en"
-  weight = 30
-[[languages.en.menu.main]]
-  name = "Monetization"
-  parent = "strat_en"
-  url = "/categories/monetization/"
-  weight = 31
-[[languages.en.menu.main]]
-  name = "Tech Business"
-  parent = "strat_en"
-  url = "/categories/tech-biz/"
-  weight = 32
+      [[languages.en.menu.main]]
+        name = "DIGITAL (GAME/XR)"
+        identifier = "digital-en"
+        url = "/en/categories/game-tech"
+        weight = 4
+      [[languages.en.menu.main]]
+        parent = "digital-en"
+        name = "Game Tech"
+        url = "/en/categories/game-tech"
+        weight = 1
+      [[languages.en.menu.main]]
+        parent = "digital-en"
+        name = "Spatial Computing"
+        url = "/en/categories/spatial-tech"
+        weight = 2
 
 [params]
-  theme = "lego-sia-premium"
-  author = "Lego-Sia Editor"
-  siteName = "news.lego-sia.com"
-  logo = "/images/logo.svg"
-  indexNowKey = "bbd0d9a6843c450eb3e9d811a0fd504a"
-  naverSiteVerification = "ac0d8533975bb7d08a360395853f8b211bbde902"
+  description = 'AI 전략, 수익화, 고성능 하드웨어를 다루는 프리미엄 테크 매거진'
+  author = 'Antigravity Senior Editor'
+  showRSSButton = true
+  latestPostTitle = "최신 인텔리전스"
   
-  [params.social]
-    github = "https://github.com/lego-sia"
-    twitter = "https://twitter.com/legosia"
-
-[markup]
-  [markup.goldmark]
-    [markup.goldmark.renderer]
-      unsafe = true
-  [markup.highlight]
-    style = "monokai"
-    lineNos = true
-
-[taxonomies]
-  category = "categories"
-  tag = "tags"
-
-[outputs]
-  home    = ["HTML", "RSS", "JSON"]
-  page    = ["HTML"]
-  section = ["HTML", "RSS"]
-  taxonomy = ["HTML"]
-  term    = ["HTML", "RSS"]
+  [params.fuji]
+    headerTitle = "LEGO-SIA STRATEGIC"
+    mainSections = ["posts", "guides", "compare"]
+    search = true
+    darkMode = true

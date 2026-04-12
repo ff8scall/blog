@@ -14,8 +14,10 @@
           <h1 class="post-title">{{ .Title }}</h1>
           <p class="post-description">{{ .Description }}</p>
           <div class="post-meta">
-            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006년 01월 02일" }}</time>
-            <span class="read-time">· 약 {{ div (len .RawContent) 500 }}분 읽기</span>
+            <time datetime="{{ .Date.Format "2006-01-02" }}">
+              {{ if eq .Lang "en" }}{{ .Date.Format "Jan 02, 2006" }}{{ else }}{{ .Date.Format "2006년 01월 02일" }}{{ end }}
+            </time>
+            <span class="read-time">· {{ if eq .Lang "en" }}{{ div (len .RawContent) 500 }} min read{{ else }}약 {{ div (len .RawContent) 500 }}분 읽기{{ end }}</span>
           </div>
         </header>
 
@@ -73,7 +75,7 @@
       <aside class="post-sidebar">
         {{ if .TableOfContents }}
         <div class="toc-widget">
-          <h2 class="toc-title">목차</h2>
+          <h2 class="toc-title">{{ if eq .Lang "en" }}Table of Contents{{ else }}목차{{ end }}</h2>
           <nav class="toc-nav" id="toc-nav">
             {{ .TableOfContents }}
           </nav>

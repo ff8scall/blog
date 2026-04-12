@@ -41,7 +41,7 @@ body[data-theme="dark"] {
   padding: 12px 0;
   overflow: hidden; /* 영역 밖 글자 차단 */
   position: relative;
-  z-index: 1000;
+  z-index: 50;
 }
 
 .ticker-wrapper {
