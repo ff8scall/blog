@@ -15,7 +15,6 @@ def notify_indexnow(urls):
     # 주요 IndexNow 지원 엔드포인트
     endpoints = [
         "https://www.bing.com/indexnow",
-        "https://search.naver.com/indexnow", # Naver (IndexNow 지원 시)
         "https://yandex.com/indexnow"
     ]
     

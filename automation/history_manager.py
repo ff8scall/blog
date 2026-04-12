@@ -43,6 +43,18 @@ class HistoryManager:
         except:
             return False
 
+    def get_recent_posts(self, limit=10):
+        """AI의 내부 링크 생성을 위해 최근 발행된 기사 제목과 URL 목록 반환"""
+        try:
+            conn = sqlite3.connect(self.db_path)
+            cur = conn.cursor()
+            cur.execute("SELECT title, url FROM history ORDER BY processed_at DESC LIMIT ?", (limit,))
+            rows = cur.fetchall()
+            conn.close()
+            return [{"title": row[0], "url": row[1]} for row in rows]
+        except:
+            return []
+
     def is_similar_title_exists(self, title, threshold=0.5):
         """최근 100건의 제목과 비교하여 유사도가 높은 것이 있는지 확인 (Jaccard Similarity)"""
         if not title: return False

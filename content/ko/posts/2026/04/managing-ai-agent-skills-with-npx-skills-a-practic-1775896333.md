@@ -16,7 +16,6 @@ AI 에이전트 스킬 관리를 위한 `npx skills` CLI 가이드입니다.
 
 ## Deep Analysis: 글로벌 테크 리포트
 
-# AI 에이전트 스킬 관리하기: `npx skills` CLI 가이드
 
 ## 소개
 

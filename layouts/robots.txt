@@ -1,6 +1,6 @@
 User-agent: *
 Disallow: /search/
-Disallow: /tags/
+Allow: /tags/
 Allow: /
 
 Sitemap: {{ "sitemap.xml" | absURL }}

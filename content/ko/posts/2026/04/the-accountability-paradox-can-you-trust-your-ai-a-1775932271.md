@@ -16,7 +16,6 @@ featured: true
 
 ## Deep Analysis: 글로벌 테크 리포트
 
-# 책임의 모순: 당신의 AI 에이전트를 신뢰할 수 있을까?
 
 ## 비즈니스 임팩트
 

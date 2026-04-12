@@ -16,7 +16,6 @@ featured: true
 
 ## Deep Analysis: 글로벌 테크 리포트
 
-# 자율 AI 엔진을 위한 교육의 새로운 지평
 
 ## 비즈니스 임팩트
 

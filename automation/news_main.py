@@ -133,14 +133,58 @@ def get_api_quotas():
             except: pass
     return "\n".join(results) if results else "No quota data available."
 
+def group_articles_by_topic(articles, threshold=0.12):
+    """[V15.0] 관련 기사들을 주제별로 그룹화 (글로벌-로컬 매칭용)"""
+    groups = []
+    used_indices = set()
+    
+    # 1. 기사들을 순회하며 유사한 기사들을 그룹화
+    for i in range(len(articles)):
+        if i in used_indices: continue
+        
+        current_group = [articles[i]]
+        used_indices.add(i)
+        
+        # 제목에서 불용어 제외한 핵심 단어 추출 (매칭 정확도 향상)
+        def get_keywords(text):
+            stop_words = {'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'with', 'by', 'of', 'from', 'as', 'is', 'are', 'was', 'were', 'it', 'on', 'off', 'up', 'down'}
+            words = re.sub(r'[^a-zA-Z0-9가-힣\s]', '', text).lower().split()
+            return set([w for w in words if len(w) > 1 and w not in stop_words])
+        
+        keywords_i = get_keywords(articles[i]['title'])
+        
+        for j in range(i + 1, len(articles)):
+            if j in used_indices: continue
+            
+            keywords_j = get_keywords(articles[j]['title'])
+            if not keywords_i or not keywords_j: continue
+            
+            # Jaccard 유사도 계산
+            intersection = keywords_i.intersection(keywords_j)
+            union = keywords_i.union(keywords_j)
+            similarity = len(intersection) / len(union)
+            
+            # 특정 브랜드(NVIDIA, Apple 등)가 공통으로 포함되면 가중치 부여
+            brands = {'nvidia', 'apple', 'samsung', 'google', 'microsoft', 'meta', 'openai', 'tesla', 'intel', 'sk', 'hynix', 'tsmc'}
+            common_brands = keywords_i.intersection(keywords_j).intersection(brands)
+            
+            if similarity >= threshold or common_brands:
+                current_group.append(articles[j])
+                used_indices.add(j)
+                # 그룹 내 최대 기사 수는 2개로 제한 (글로벌 1 + 로컬 1 조합 선호)
+                if len(current_group) >= 2: break
+                
+        groups.append(current_group)
+    return groups
+
 def main():
     import argparse
-    parser = argparse.ArgumentParser(description="Lego-Sia Strategic News Engine V12.0")
+    parser = argparse.ArgumentParser(description="Lego-Sia Strategic News Engine V15.0")
     parser.add_argument("--rss-only", action="store_true", help="Only fetch from RSS sources (Skip News APIs)")
     parser.add_argument("--limit", type=int, default=8, help="Limit articles per category")
     args = parser.parse_args()
 
-    print(f"=== [V12.0 Hawk-Eye] Strategic Media Engine Initializing ===")
+    print(f"=== [V15.0 Hawk-Eye] Strategic Media Engine Initializing (Global-Local Matching Mode) ===")
     harvester = NewsHarvester()
     from ai_writer import AIWriter
     writer = AIWriter()
@@ -161,35 +205,34 @@ def main():
                 new_articles.append(article)
                 seen_urls.add(url)
         else:
-            # 테스트를 위해 중복/유사 기사 발견 시 로그 출력
             print(f" [SKIP] Duplicate or similar found: {title[:30]}...")
 
-    # [테스트 전용] 중복이더라도 강제로 2건의 후보군을 포함시켜 로직 검증
-    if not new_articles and len(raw_news) > 0:
-        print("[!] TEST MODE: Forcing 2 candidates from raw pool to verify 6:2:2 logic.")
-        new_articles = raw_news[:2]
-    
     if not new_articles:
         print("[*] No unique news found. System on standby.")
         quota_report = get_api_quotas()
         telegram.send_resp(f"ℹ️ [SKIP] 새로운 뉴스가 없습니다.\n\n[수집통계]\n{json.dumps(harvest_stats, indent=2)}\n\n[QUOTA]\n{quota_report}")
         return
 
-    # [V12.0 Unchained Mode] 발행 건수 제한 완전 제거. 쿼터가 허용하는 한 수집된 모든 양질의 뉴스 발행.
+    # [V15.0] 글로벌-로컬 매칭을 위한 그룹화 단계
+    article_groups = group_articles_by_topic(new_articles)
+    print(f"[*] Grouping complete. {len(new_articles)} articles clustered into {len(article_groups)} topic blocks.")
+
+    # AI/전략 기사 우선 정렬 (그룹의 첫 번째 기사 기준)
+    sorted_groups = sorted(article_groups, key=lambda g: 0 if any(k in g[0]['title'].lower() for k in ["ai", "chip", "nvidia", "hardware", "semiconductor", "agent", "robot", "llm"]) else 1)
+
     published_count = 0
     published_urls = []
 
-    # AI/전략 기사 우선 정렬
-    sorted_candidates = sorted(new_articles, key=lambda x: 0 if any(k in x['title'].lower() for k in ["ai", "chip", "nvidia", "hardware", "semiconductor", "agent", "robot", "llm"]) else 1)
+    # [V15.1] 내부 링크 및 컨텍스트를 위해 최근 기사 목록 획득
+    recent_posts = history.get_recent_posts(limit=12)
 
-    for article in sorted_candidates:
-        # 건수 제한 없이 모든 후보군 전수 조사
-        
+    for group in sorted_groups:
         if writer.is_all_exhausted():
-            print(" [CRITICAL] All AI Providers exhausted. Capacity reached for this session.")
+            print(" [CRITICAL] All AI Providers exhausted.")
             break
 
-        drafts = editor.review_batch([article])
+        # [V15.1] 그룹 단위로 에디터에게 전달 (최근 맥락 포함)
+        drafts = editor.review_batch(group, recent_posts=recent_posts)
         if not drafts: continue
         
         for draft in drafts:
@@ -253,7 +296,8 @@ def main():
         
         # 기사가 있을 때만 IndexNow 통보
         if published_urls:
-            pass # notify_indexnow(published_urls)
+            print(f" [*] Notifying IndexNow for {len(published_urls)} URLs...")
+            notify_indexnow(published_urls)
             
     except Exception as e:
         print(f" [!] Report failed: {e}")

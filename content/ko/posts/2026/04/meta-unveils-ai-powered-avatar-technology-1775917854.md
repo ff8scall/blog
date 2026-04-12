@@ -16,7 +16,6 @@ featured: true
 
 ## Deep Analysis: 글로벌 테크 리포트
 
-# 메타, AI 기반 아바타 기술 공개
 
 ## 비즈니스 임팩트
 

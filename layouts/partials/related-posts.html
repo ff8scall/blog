@@ -1,7 +1,14 @@
 {{ $related := .Site.RegularPages.Related . | first 3 }}
+{{ if not $related }}
+  {{/* 동일 카테고리의 최신 글을 fallback으로 사용 */}}
+  {{ $cat := index .Params.categories 0 }}
+  {{ $related = where .Site.RegularPages "Params.categories" "intersect" (slice $cat) | first 3 }}
+{{ end }}
+
 {{ with $related }}
 <section class="related-posts">
-  <h2 class="related-title">📌 관련 포스트</h2>
+  <div class="section-divider"></div>
+  <h2 class="related-title">🔍 연관 분석 리포트</h2>
   <div class="card-grid card-grid--compact">
     {{ range . }}
       {{ partial "card.html" . }}

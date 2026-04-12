@@ -16,7 +16,6 @@ featured: true
 
 ## Deep Analysis: 글로벌 테크 리포트
 
-# 블록체인 게임에서 마이크로 베팅을 가능하게 하는 베이스 L2
 
 ## 소개
 

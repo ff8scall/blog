@@ -198,13 +198,22 @@ class NewsHarvester:
         return articles
 
     def _fetch_kr_rss(self):
-        rss_url = "https://www.itworld.co.kr/rss/feed/index.php"
+        rss_sources = [
+            {"name": "ITWorld-KR", "url": "https://www.itworld.co.kr/rss/feed/index.php"},
+            {"name": "ETNews-KR", "url": "https://rss.etnews.com/Section902.xml"}
+        ]
         articles = []
-        try:
-            feed = feedparser.parse(rss_url)
-            for entry in feed.entries[:10]:
-                articles.append(self._normalize({"title": entry.title, "description": entry.get('summary', ''), "url": entry.link, "urlToImage": None}, "ITWorld-KR", "테크-비즈니스"))
-        except: pass
+        for source in rss_sources:
+            try:
+                feed = feedparser.parse(source["url"])
+                for entry in feed.entries[:10]:
+                    articles.append(self._normalize({
+                        "title": entry.title,
+                        "description": entry.get('summary', ''),
+                        "url": entry.link,
+                        "urlToImage": None
+                    }, source["name"], "Market Trend"))
+            except: pass
         return articles
 
     def fetch_all(self, limit_per_cat=8, rss_only=False):

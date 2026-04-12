@@ -6,18 +6,20 @@
 ## 2. 체크리스트 및 상태 (Current Status)
 
 ### 📁 인프라 점검
-- [x] **폴더 구조 생성**: `static/images/fallbacks/` 경로 확보.
-- [ ] **카테고리별 마스터 이미지 배치**:
-    - [ ] `ai-tech.jpg`
-    - [ ] `hardware.jpg`
-    - [ ] `game.jpg`
-    - [ ] `tech-biz.jpg`
-    - [ ] `monetization.jpg`
+- [x] **폴더 구조 생성**: `static/images/fallbacks/` 경로 확보. (완료)
+- [x] **카테고리별 마스터 이미지 배치**: (완료: 2026-04-12)
+    - [x] `ai-tech.jpg`
+    - [x] `hardware.jpg`
+    - [x] `gaming.jpg` (이전 game.jpg 명칭 수정 완료)
+    - [x] `tech-biz.jpg`
+    - [x] `monetization.jpg`
+    - [x] `ai-agents.jpg`
 
 ### 💻 로직 점검 및 데이터 보존 (`news_main.py`)
 - [x] **보존형 업데이트**: `Remove-Item`을 통한 전체 삭제 로직 제거 및 누적(Archive) 방식 전환.
 - [x] **원문 고립 저장**: 원본 JSON 데이터를 `automation/raw_archive/`에 영구 보관 (비배포 영역).
-- [ ] **다중 방어 코드**: 원본 시도 -> 폴백 시도 -> AI 생성 시도 -> 최종 디폴트 이미지 반환의 4단계 프로세스 검증.
+- [x] **공격적 이미지 매핑**: `raw_img_url` 추출 시 다용도 필드(`urlToImage`, `image`, `thumbnail_url` 등) 전수 조사 로직 반영.
+- [ ] **AI 이미지 생성 연동**: (검색 및 폴백 실패 시) AI API를 통한 주제 맞춤형 이미지 자동 생성 로직 (Phase 4 예정).
 
 ## 3. 향후 대응
 - 이미지가 없는 기사가 발견될 경우, 즉시 해당 카테고리의 폴백 이미지가 정상 로드되는지 로그를 통해 역추적함.
