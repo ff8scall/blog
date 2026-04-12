@@ -189,12 +189,12 @@ def main():
         for draft in drafts:
             raw_cat = draft.get('category', 'tech-biz')
             cat_map = {
-                "ai-tech": "ai-tech", "AI-기술": "ai-tech",
-                "ai-agents": "ai-agents", "AI-에이전트": "ai-agents",
-                "hardware": "hardware", "하드웨어": "hardware",
-                "game": "gaming", "게임": "gaming",
-                "monetization": "monetization", "수익화-전략": "monetization",
-                "tech-biz": "tech-biz", "테크-비즈니스": "tech-biz"
+                "ai-tech": "ai-tech", "AI Insight": "ai-tech", "AI-기술": "ai-tech",
+                "ai-agents": "ai-agents", "AI Agents": "ai-agents", "AI-에이전트": "ai-agents",
+                "hardware": "hardware", "Computing HW": "hardware", "하드웨어": "hardware",
+                "game": "gaming", "Next-Gen Game": "gaming", "게임": "gaming",
+                "monetization": "monetization", "Strategy & Biz": "monetization", "수익화-전략": "monetization",
+                "tech-biz": "tech-biz", "Market Trend": "tech-biz", "테크-비즈니스": "tech-biz"
             }
             cat_slug = cat_map.get(raw_cat, "tech-biz")
             draft['eng_category_slug'] = cat_slug
