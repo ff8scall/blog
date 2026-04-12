@@ -58,7 +58,7 @@ enableRobotsTXT = true
 [[languages.ko.menu.main]]
   name = "Next-Gen Game"
   parent = "phys"
-  url = "/categories/game/"
+  url = "/categories/gaming/"
   weight = 22
 
 [[languages.ko.menu.main]]
@@ -104,7 +104,7 @@ enableRobotsTXT = true
 [[languages.en.menu.main]]
   name = "Gaming"
   parent = "phys_en"
-  url = "/categories/game/"
+  url = "/categories/gaming/"
   weight = 22
 
 [[languages.en.menu.main]]

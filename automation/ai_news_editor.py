@@ -37,13 +37,14 @@ class NewsEditor:
                         cat = draft.get('category', 'tech-biz').lower()
                         text_pool = f"{cat} {draft.get('kor_title', '')} {draft.get('eng_title', '')}".lower()
                         
+                        # [V13.1] 분류 우선순위 고도화: 구체적 카테고리 우선 매칭
                         if any(k in text_pool for k in ['agent', '에이전트']): draft['category'] = 'ai-agents'
-                        elif any(k in text_pool for k in ['ai', '기술', 'insight']): draft['category'] = 'ai-tech'
-                        elif any(k in text_pool for k in ['hard', 'chip', 'hw', '컴퓨팅']): draft['category'] = 'hardware'
-                        elif any(k in text_pool for k in ['game', '플레이', '게임']): draft['category'] = 'game'
-                        elif any(k in text_pool for k in ['biz', '비즈니스', 'trend']): draft['category'] = 'tech-biz'
-                        elif any(k in text_pool for k in ['strategy', '전략', '수익']): draft['category'] = 'monetization'
-                        else: draft['category'] = 'ai-tech' # Fallback
+                        elif any(k in text_pool for k in ['hard', 'chip', 'hw', '컴퓨팅', '하드웨어', '반도체']): draft['category'] = 'hardware'
+                        elif any(k in text_pool for k in ['game', '플레이', '게임', 'gaming', 'unreal', '닌텐도']): draft['category'] = 'game'
+                        elif any(k in text_pool for k in ['strategy', '전략', '수익', 'monetization']): draft['category'] = 'monetization'
+                        elif any(k in text_pool for k in ['biz', '비즈니스', 'trend', '시장', '동향']): draft['category'] = 'tech-biz'
+                        elif any(k in text_pool for k in ['ai', '기술', 'insight', '인텔리전스']): draft['category'] = 'ai-tech'
+                        else: draft['category'] = 'ai-tech' # Final Fallback
                         
                         # [V12.1] 원본 메타데이터 보존 (이미지 및 주소 유실 방지)
                         draft['original_image_url'] = article.get('urlToImage')
