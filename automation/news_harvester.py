@@ -45,12 +45,12 @@ class NewsHarvester:
         }
 
         self.categories_config = {
-            "ai_tech": {"base_q": "AI technology innovation", "kor_name": "AI-기술", "thenews_cat": "tech", "currents_cat": "science_technology", "newsdata_cat": "technology"},
-            "ai_agent": {"base_q": "AI Agent automation", "kor_name": "AI-에이전트", "thenews_cat": "tech", "currents_cat": "science_technology", "newsdata_cat": "technology"},
-            "hardware": {"base_q": "Next-gen computing hardware", "kor_name": "하드웨어", "thenews_cat": "tech", "currents_cat": "science_technology", "newsdata_cat": "technology"},
-            "game": {"base_q": "Future of gaming industry", "kor_name": "게임", "thenews_cat": "entertainment", "currents_cat": "arts_culture_entertainment", "newsdata_cat": "entertainment"},
-            "business": {"base_q": "Tech business strategy", "kor_name": "수익화-전략", "thenews_cat": "business", "currents_cat": "economy_business_finance", "newsdata_cat": "business"},
-            "tech_biz": {"base_q": "Global tech market policy", "kor_name": "테크-비즈니스", "thenews_cat": "business", "currents_cat": "economy_business_finance", "newsdata_cat": "business"}
+            "ai_tech": {"base_q": "AI technology innovation", "kor_name": "AI Insight", "thenews_cat": "tech", "currents_cat": "science_technology", "newsdata_cat": "technology"},
+            "ai_agent": {"base_q": "AI Agent automation", "kor_name": "AI Agents", "thenews_cat": "tech", "currents_cat": "science_technology", "newsdata_cat": "technology"},
+            "hardware": {"base_q": "Next-gen computing hardware", "kor_name": "Computing HW", "thenews_cat": "tech", "currents_cat": "science_technology", "newsdata_cat": "technology"},
+            "game": {"base_q": "Future of gaming industry", "kor_name": "Next-Gen Game", "thenews_cat": "entertainment", "currents_cat": "arts_culture_entertainment", "newsdata_cat": "entertainment"},
+            "business": {"base_q": "Tech business strategy", "kor_name": "Strategy & Biz", "thenews_cat": "business", "currents_cat": "economy_business_finance", "newsdata_cat": "business"},
+            "tech_biz": {"base_q": "Global tech market policy", "kor_name": "Market Trend", "thenews_cat": "business", "currents_cat": "economy_business_finance", "newsdata_cat": "business"}
         }
 
     def _is_safe(self, api_name, res):

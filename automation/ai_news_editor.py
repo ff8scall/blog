@@ -33,11 +33,17 @@ class NewsEditor:
                     clean_json = res[start_idx:end_idx+1]
                     try:
                         draft = json.loads(clean_json, strict=False)
-                        # [V10.9] 카테고리 보정
+                        # [V13.0] 고도화된 카테고리 보정 (3개 클러스터 구조 지원)
                         cat = draft.get('category', 'tech-biz').lower()
-                        if any(k in cat for k in ['ai', 'agent', '기술', '에이전트']): draft['category'] = 'ai-tech'
-                        elif any(k in cat for k in ['hard', 'chip', 'semic', '하드']): draft['category'] = 'hardware'
-                        elif any(k in cat for k in ['game', '플레이', '게임']): draft['category'] = 'game'
+                        text_pool = f"{cat} {draft.get('kor_title', '')} {draft.get('eng_title', '')}".lower()
+                        
+                        if any(k in text_pool for k in ['agent', '에이전트']): draft['category'] = 'ai-agents'
+                        elif any(k in text_pool for k in ['ai', '기술', 'insight']): draft['category'] = 'ai-tech'
+                        elif any(k in text_pool for k in ['hard', 'chip', 'hw', '컴퓨팅']): draft['category'] = 'hardware'
+                        elif any(k in text_pool for k in ['game', '플레이', '게임']): draft['category'] = 'game'
+                        elif any(k in text_pool for k in ['biz', '비즈니스', 'trend']): draft['category'] = 'tech-biz'
+                        elif any(k in text_pool for k in ['strategy', '전략', '수익']): draft['category'] = 'monetization'
+                        else: draft['category'] = 'ai-tech' # Fallback
                         
                         # [V12.1] 원본 메타데이터 보존 (이미지 및 주소 유실 방지)
                         draft['original_image_url'] = article.get('urlToImage')

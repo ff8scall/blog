@@ -30,57 +30,97 @@ enableRobotsTXT = true
       siteTag = "AI STRATEGY MAGAZINE"
       latestPostTitle = "Latest Intelligence"
 
-# ── KO Menu ──
+# ── KO Menu (3 Clusters) ──
 [[languages.ko.menu.main]]
-  name = "AI-기술"
+  name = "INTELLIGENCE (AI)"
+  identifier = "intel"
+  weight = 10
+[[languages.ko.menu.main]]
+  name = "AI Insight"
+  parent = "intel"
   url = "/categories/ai-tech/"
-  weight = 1
+  weight = 11
 [[languages.ko.menu.main]]
-  name = "AI-에이전트"
+  name = "AI Agents"
+  parent = "intel"
   url = "/categories/ai-agents/"
-  weight = 2
-[[languages.ko.menu.main]]
-  name = "하드웨어"
-  url = "/categories/hardware/"
-  weight = 3
-[[languages.ko.menu.main]]
-  name = "게임"
-  url = "/categories/game/"
-  weight = 4
-[[languages.ko.menu.main]]
-  name = "수익화-전략"
-  url = "/categories/monetization/"
-  weight = 5
-[[languages.ko.menu.main]]
-  name = "테크-비즈니스"
-  url = "/categories/tech-biz/"
-  weight = 6
+  weight = 12
 
-# ── EN Menu ──
+[[languages.ko.menu.main]]
+  name = "PHYSICAL (HW/GAME)"
+  identifier = "phys"
+  weight = 20
+[[languages.ko.menu.main]]
+  name = "Computing HW"
+  parent = "phys"
+  url = "/categories/hardware/"
+  weight = 21
+[[languages.ko.menu.main]]
+  name = "Next-Gen Game"
+  parent = "phys"
+  url = "/categories/game/"
+  weight = 22
+
+[[languages.ko.menu.main]]
+  name = "STRATEGY (BIZ)"
+  identifier = "strat"
+  weight = 30
+[[languages.ko.menu.main]]
+  name = "Strategy & Biz"
+  parent = "strat"
+  url = "/categories/monetization/"
+  weight = 31
+[[languages.ko.menu.main]]
+  name = "Market Trend"
+  parent = "strat"
+  url = "/categories/tech-biz/"
+  weight = 32
+
+# ── EN Menu (3 Clusters) ──
 [[languages.en.menu.main]]
-  name = "AI-Tech"
+  name = "INTELLIGENCE"
+  identifier = "intel_en"
+  weight = 10
+[[languages.en.menu.main]]
+  name = "AI Technology"
+  parent = "intel_en"
   url = "/categories/ai-tech/"
-  weight = 1
+  weight = 11
 [[languages.en.menu.main]]
-  name = "AI-Agents"
+  name = "AI Agents"
+  parent = "intel_en"
   url = "/categories/ai-agents/"
-  weight = 2
+  weight = 12
+
+[[languages.en.menu.main]]
+  name = "PHYSICAL"
+  identifier = "phys_en"
+  weight = 20
 [[languages.en.menu.main]]
   name = "Hardware"
+  parent = "phys_en"
   url = "/categories/hardware/"
-  weight = 3
+  weight = 21
 [[languages.en.menu.main]]
   name = "Gaming"
-  url = "/categories/gaming/"
-  weight = 4
+  parent = "phys_en"
+  url = "/categories/game/"
+  weight = 22
+
+[[languages.en.menu.main]]
+  name = "STRATEGY"
+  identifier = "strat_en"
+  weight = 30
 [[languages.en.menu.main]]
   name = "Monetization"
+  parent = "strat_en"
   url = "/categories/monetization/"
-  weight = 5
+  weight = 31
 [[languages.en.menu.main]]
-  name = "Tech-Biz"
+  name = "Tech Business"
+  parent = "strat_en"
   url = "/categories/tech-biz/"
-  weight = 6
+  weight = 32
 
 [params]
   theme = "lego-sia-premium"
