@@ -147,6 +147,9 @@ def main():
     
     start_time = datetime.now()
     logger.info("Executive Intelligence Engine V3.0.15 Starting...")
+    
+    # [V3.0.21] 배포 및 가동 가독성: 텔레그램 시작 알림 추가
+    telegram.send_resp("🚀 **ENGINE ACTIVATED (V3.0.21)**\n- Massive Sniper & Diversity Logic online.\n- Initializing 12-category intelligence harvest...")
 
     cat_issued = {cat: 0 for cat in CATEGORY_BUDGETS}
     cancel_stats = {"duplicate": 0, "review": 0, "budget": 0, "draft_fail": 0}
@@ -176,6 +179,10 @@ def main():
         return
 
     article_groups = [[a] for a in new_articles]
+    # [V3.0.25] 공평성 강화: 대량 범주(future-sw 등)가 다른 희소 범주를 밀어내지 않도록 전체 셔플
+    import random as rand
+    rand.shuffle(article_groups)
+    
     scored_groups = sorted([(9.0, g) for g in article_groups], key=lambda x: x[0], reverse=True)
 
     for score, group in scored_groups:
@@ -185,7 +192,20 @@ def main():
             logger.info(f"Stopped: Budget reached ({limit_threshold})")
             break
 
-        is_guide = score >= 8.5 and any(k in group[0]['title'].lower() for k in ['how to', '설치', '방법', 'optimize'])
+        # [V3.0.23] 15초 인터그리티 펄스: API 할당량 보호 및 집필 품질 보장 (Throttling)
+        if published_count > 0:
+            logger.info("Throttling for API integrity (15s wait)...")
+            time.sleep(15)
+        
+        # [V3.0.23] 서킷 브레이커: 모든 AI 공급자가 소진된 경우 즉시 종료 (Rescuing logic)
+        if editor.writer.is_all_exhausted():
+            logger.error("CRITICAL: All AI providers exhausted. Triggering Circuit Breaker.")
+            telegram.send_resp("⚠️ **CIRCUIT BREAKER TRIGGERED**\n- 모든 AI 할당량이 소진되었습니다.\n- 남은 기사들은 다음 기동 시 재시도됩니다.")
+            break
+
+        # [V3.0.25] 가이드 트리거 확장: 벤치마크, 로드맵, 비교 분석 등 심층 분석 키워드 추가
+        guide_triggers = ['how to', '설치', '방법', 'optimize', 'benchmark', 'comparison', 'roadmap', 'tutorial', 'analysis', 'guide']
+        is_guide = score >= 8.5 and any(k in group[0]['title'].lower() for k in guide_triggers)
         
         drafts = editor.review_batch(group, recent_posts=history.get_recent_posts(limit=10))
         ai_calls += 2
@@ -217,6 +237,10 @@ def main():
                 published_urls.append(full_url)
                 logger.info(f"Published: {sync_slug} ({cat}) -> {local_url}")
                 
+                # [V3.0.25] 가이드 트리거 정밀화: AI가 매긴 실제 점수와 키워드 결합
+                guide_triggers = ['how to', '설치', '방법', 'optimize', 'benchmark', 'comparison', 'roadmap', 'tutorial', 'analysis', 'guide']
+                is_guide = score >= 8.5 and any(k in draft.get('kor_title', '').lower() for k in guide_triggers)
+                
                 if is_guide and published_guides < 3:
                     logger.info(f"Writing Strategic Guide for: {sync_slug}")
                     g_ko = guide_editor.write_guide(draft, lang='ko')
@@ -239,12 +263,18 @@ def main():
 • 예산 초과: {cancel_stats['budget']}건
 • 초안 실패: {cancel_stats['draft_fail']}건"""
 
-    report = f"""
-✅ **STRATEGIC REPORT COMPLETE**
+    # [V3.0.26] 발행 카테고리 상세 내역 추가
+    pub_list = "\n".join([f"- {CAT_MAP.get(k, k)}: {v}건" for k, v in cat_issued.items() if v > 0])
+    
+    report = f"""✅ **STRATEGIC REPORT COMPLETE**
 
-📦 **수집 통계**
+📦 **수집/발행 통계**
 {quota_info}
-📑 후보군: {len(raw_news)}건 -> 필터링: {len(new_articles)}건
+---
+**🚀 최종 발행 내역**
+{pub_list}
+
+📑 후보군: {len(raw_news)}건 -> 필터링: {published_count + sum(cancel_stats.values())}건
 
 🚫 **취소 및 필터링 내역 (128/126 미스터리)**
 {cancel_breakdown}

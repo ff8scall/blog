@@ -122,10 +122,10 @@ class NewsHarvester:
             if any(k in text for k in ["revenue", "saas", "pricing"]): return "monetization"
             return "market-trend"
         
-        # AI/Software priority
-        if "agent" in text or "autonomous" in text: return "ai-agent"
-        if "policy" in text or "regulation" in text or "antitrust" in text: return "ai-policy"
-        if "llm" in text or "gpt" in text or "transformer" in text or "model" in text: return "llm-tech"
+        # AI/Software priority (More Granular)
+        if any(k in text for k in ["agent", "autonomous", "planning", "tool-use", "reasoning"]): return "ai-agent"
+        if any(k in text for k in ["policy", "regulation", "law", "antitrust", "ethics", "guideline"]): return "ai-policy"
+        if any(k in text for k in ["llm", "gpt", "transformer", "diffusion", "rag ", "vector", "inference", "fine-tune"]): return "llm-tech"
         
         return "future-sw"
 
@@ -151,10 +151,14 @@ class NewsHarvester:
         results = []
         stats = {cat: 0 for cat in self.categories_config}
         
-        # 1. RSS 처리 (Tier 시스템 적용)
+        # 1. RSS 처리 (Tier 시스템 적용 및 카테고리별 수량 캡핑)
         rss_data = self._fetch_rss_v13()
         for item in rss_data:
             cat = self._categorize_article(item['title'], item['description'])
+            
+            # [V3.0.26] 수량 캡핑: 특정 범주(건수가 많은 future-sw 등)가 리포트를 독점하지 않도록 최대 20건으로 제한
+            if stats[cat] >= 20: continue
+            
             item['eng_category_slug'] = cat
             item['source_weight'] = self._get_source_weight(item.get('source_name', 'Unknown'))
             item['content_summary'] = self.extract_core_sentences(item.get('description', ''))

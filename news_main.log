@@ -944,3 +944,426 @@
 2026-04-12 22:17:35,654 [INFO] Published: the-physics-of-perfection-disrupting-the-premium-i-1f0eab (market-trend) -> /posts/2026/04/the-physics-of-perfection-disrupting-the-premium-i-1f0eab/
 2026-04-12 22:17:35,656 [INFO] AFC is enabled with max remote calls: 10.
 2026-04-12 22:17:36,204 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:17:38,207 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:17:49,715 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 503 Service Unavailable"
+2026-04-12 22:17:51,725 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:18:07,907 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-04-12 22:18:07,913 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:18:08,082 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:18:10,094 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:18:43,521 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-04-12 22:18:43,541 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:18:44,045 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:18:46,060 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:18:57,813 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2026-04-12 22:18:57,820 [INFO] Published: geopolitical-shocks-undermine-us-energy-dominance--01a1cf (market-trend) -> /posts/2026/04/geopolitical-shocks-undermine-us-energy-dominance--01a1cf/
+2026-04-12 22:18:57,822 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:18:58,355 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:19:00,368 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:19:08,704 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent "HTTP/1.1 200 OK"
+2026-04-12 22:19:08,707 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:19:22,803 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent "HTTP/1.1 200 OK"
+2026-04-12 22:19:22,822 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:19:23,487 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:19:25,495 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:19:25,678 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:19:27,686 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:19:27,863 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:19:29,864 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:19:30,043 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:19:35,761 [INFO] Published: the-strategic-resurgence-of-dedicated-music-player-d29290 (market-trend) -> /posts/2026/04/the-strategic-resurgence-of-dedicated-music-player-d29290/
+2026-04-12 22:19:35,762 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:19:45,095 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent "HTTP/1.1 200 OK"
+2026-04-12 22:19:45,097 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:19:45,256 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:19:47,258 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:19:47,408 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:20:00,754 [INFO] Published: ankers-eufymake-e1-a-game-changer-in-modern-printi-ce736d (future-sw) -> /posts/2026/04/ankers-eufymake-e1-a-game-changer-in-modern-printi-ce736d/
+2026-04-12 22:20:21,612 [INFO] Published: frances-bold-move-towards-digital-sovereignty-migr-1ba0df (future-sw) -> /posts/2026/04/frances-bold-move-towards-digital-sovereignty-migr-1ba0df/
+2026-04-12 22:20:40,707 [INFO] Published: security-challenges-for-tech-leaders-the-case-of-s-8a9e61 (ai-policy) -> /posts/2026/04/security-challenges-for-tech-leaders-the-case-of-s-8a9e61/
+2026-04-12 22:21:04,032 [INFO] Published: meow-technologies-and-the-new-era-of-agentic-banki-51eea2 (ai-agent) -> /posts/2026/04/meow-technologies-and-the-new-era-of-agentic-banki-51eea2/
+2026-04-12 22:21:31,133 [INFO] Executive Intelligence Engine V3.0.15 Starting...
+2026-04-12 22:21:35,866 [INFO] Published: enhancing-productivity-the-integration-of-google-n-88b283 (future-sw) -> /posts/2026/04/enhancing-productivity-the-integration-of-google-n-88b283/
+2026-04-12 22:21:50,416 [INFO] Skipped (Duplicate): Walmart-owned Flipkart, Amazon are squeezing India
+2026-04-12 22:21:50,417 [INFO] Skipped (Duplicate): Kalshi wins temporary pause in Arizona criminal ca
+2026-04-12 22:21:50,419 [INFO] Skipped (Duplicate): AMC will stream ‘The Audacity’ premiere in 21 part
+2026-04-12 22:21:50,419 [INFO] Skipped (Duplicate): Sam Altman responds to ‘incendiary’ New Yorker art
+2026-04-12 22:21:50,420 [INFO] Skipped (Duplicate): Nvidia-backed SiFive hits $3.65 billion valuation 
+2026-04-12 22:21:50,421 [INFO] Skipped (Duplicate): NASA Artemis II splashes down in Pacific Ocean in 
+2026-04-12 22:21:50,421 [INFO] Skipped (Duplicate): How to watch NASA’s Artemis II splash back down to
+2026-04-12 22:21:50,422 [INFO] Skipped (Duplicate): Anthropic temporarily banned OpenClaw’s creator fr
+2026-04-12 22:21:50,423 [INFO] Skipped (Duplicate): The AI code wars are heating up
+2026-04-12 22:21:50,424 [INFO] Skipped (Duplicate): Allow me to explain why I love this camera that ca
+2026-04-12 22:21:50,424 [INFO] Skipped (Duplicate): The Netherlands is the first European country to a
+2026-04-12 22:21:50,425 [INFO] Skipped (Duplicate): Google says Polymarket bets showing up in News was
+2026-04-12 22:21:50,426 [INFO] Skipped (Duplicate): Pokémon Champions is off to a rough start
+2026-04-12 22:21:50,426 [INFO] Skipped (Duplicate): Your article about AI doesn’t need AI art
+2026-04-12 22:21:50,428 [INFO] Skipped (Duplicate): Google’s latest Nest Doorbells just hit their lowe
+2026-04-12 22:21:50,428 [INFO] Skipped (Duplicate): My baby deer plushie told me that Mitski&#8217;s d
+2026-04-12 22:21:50,429 [INFO] Skipped (Duplicate): ‘The Audacity’ Is the Broligarchy Takedown You Wer
+2026-04-12 22:21:50,430 [INFO] Skipped (Duplicate): Why Is It So Hard to Fix an Electric Bike? (2026)
+2026-04-12 22:21:50,430 [INFO] Skipped (Duplicate): Best 2-in-1 Laptops (2026): Microsoft, Lenovo, and
+2026-04-12 22:21:50,431 [INFO] Skipped (Duplicate): There’s a Secret Ingredient to Making Luxury Ice a
+2026-04-12 22:21:50,432 [INFO] Skipped (Duplicate): The Screen Time Maximalists Who Spend an Ungodly A
+2026-04-12 22:21:50,433 [INFO] Skipped (Duplicate): Mammotion Spino E1 Review: A Budget Pool Bot That 
+2026-04-12 22:21:50,433 [INFO] Skipped (Duplicate): The 3 Best Mug Warmers of 2026: Better Than the Em
+2026-04-12 22:21:50,434 [INFO] Skipped (Duplicate): ‘Crimson Desert’ Is a Cat Dad Simulator
+2026-04-12 22:21:50,435 [INFO] Skipped (Duplicate): Shock from Iran war has Trump's vision for US ener
+2026-04-12 22:21:50,436 [INFO] Skipped (Duplicate): AI models are terrible at betting on soccer—especi
+2026-04-12 22:21:50,436 [INFO] Skipped (Duplicate): The Artemis II mission has ended. Where does NASA 
+2026-04-12 22:21:50,437 [INFO] Skipped (Duplicate): Four astronauts are back home after a daring ride 
+2026-04-12 22:21:50,438 [INFO] Skipped (Duplicate): Californians sue over AI tool that records doctor 
+2026-04-12 22:21:50,439 [INFO] Skipped (Duplicate): New paper argues history, not mantle plume, powers
+2026-04-12 22:21:50,439 [INFO] Skipped (Duplicate): F1 moves a step closer to fixing its 2026 hybrid p
+2026-04-12 22:21:50,440 [INFO] Skipped (Duplicate): Report: US demands Reddit unmask ICE critic, summo
+2026-04-12 22:21:50,441 [INFO] Skipped (Duplicate): Rockstar Games has confirmed it was hit by third-p
+2026-04-12 22:21:50,442 [INFO] Skipped (Duplicate): The first European country to get Tesla’s Full Sel
+2026-04-12 22:21:50,443 [INFO] Skipped (Duplicate): IBM settles its DEI lawsuit with the DOJ for $17 m
+2026-04-12 22:21:50,444 [INFO] Skipped (Duplicate): Engadget review recap: ASUS ZenBook A16, AirPods M
+2026-04-12 22:21:50,444 [INFO] Skipped (Duplicate): X's messaging app, XChat, may be available soon
+2026-04-12 22:21:50,445 [INFO] Skipped (Duplicate): Marauding minotaurs, more CloverPit and other new 
+2026-04-12 22:21:50,446 [INFO] Skipped (Duplicate): The Artemis II astronauts are back after a 10-day 
+2026-04-12 22:21:50,446 [INFO] Skipped (Duplicate): Epic is reportedly building an extraction shooter 
+2026-04-12 22:21:50,447 [INFO] Skipped (Duplicate): Hands-on with Belkin’s newest 25W compact MagSafe 
+2026-04-12 22:21:50,448 [INFO] Skipped (Duplicate): This accessory lets you play Switch 2 games on you
+2026-04-12 22:21:50,449 [INFO] Skipped (Duplicate): These are the best new MacBook deals right now: Ap
+2026-04-12 22:21:50,450 [INFO] Skipped (Duplicate): Indie App Spotlight: ‘PackGoat’ intelligently help
+2026-04-12 22:21:50,451 [INFO] Skipped (Duplicate): Here’s why AirPods Pro 3 are more upgrade worthy t
+2026-04-12 22:21:50,451 [INFO] Skipped (Duplicate): At least for now, Liquid Glass in Pixelmator Pro r
+2026-04-12 22:21:50,452 [INFO] Skipped (Duplicate): Several Mac mini and Mac Studio configs are now co
+2026-04-12 22:21:50,453 [INFO] Skipped (Duplicate): Apple @ Work: How to add an existing Mac to Apple 
+2026-04-12 22:21:50,453 [INFO] Skipped (Duplicate): The World Is Basically Begging for Another iPod
+2026-04-12 22:21:50,454 [INFO] Skipped (Duplicate): Anker’s EufyMake E1 Finally Brings Printers Out of
+2026-04-12 22:21:50,455 [INFO] Skipped (Duplicate): OpenAI Says Elon Musk Is ‘Injecting Chaos’ with Re
+2026-04-12 22:21:50,455 [INFO] Skipped (Duplicate): Google Displayed Polymarket Bets as News ‘In Error
+2026-04-12 22:21:50,456 [INFO] Skipped (Duplicate): ‘Marvel Rivals’ Wants to Start Being More Than Jus
+2026-04-12 22:21:50,457 [INFO] Skipped (Duplicate): ‘How Do We Make Sure That Claude Behaves Itself?’:
+2026-04-12 22:21:50,458 [INFO] Skipped (Duplicate): See the Next ‘Hunger Games’ in This Trip Down Memo
+2026-04-12 22:21:50,459 [INFO] Skipped (Duplicate): Indie Animation Is Having a Moment on YouTube
+2026-04-12 22:21:50,459 [INFO] Skipped (Duplicate): SaaS on the Beach returns to Barcelona with a foun
+2026-04-12 22:21:50,460 [INFO] Skipped (Duplicate): UK startup Altilium bags £18.5m to build Britain’s
+2026-04-12 22:21:50,461 [INFO] Skipped (Duplicate): Estonia is the rare EU country opposing bans on ch
+2026-04-12 22:21:50,462 [INFO] Skipped (Duplicate): AI is making us faster, more productive, and worse
+2026-04-12 22:21:50,462 [INFO] Skipped (Duplicate): AI can screen 15 million molecules in a day. It st
+2026-04-12 22:21:50,463 [INFO] Skipped (Duplicate): France orders all government ministries to ditch W
+2026-04-12 22:21:50,464 [INFO] Skipped (Duplicate): Police arrest 20-year-old after Molotov cocktail t
+2026-04-12 22:21:50,465 [INFO] Skipped (Duplicate): Meow Technologies launches the first agentic banki
+2026-04-12 22:21:50,465 [INFO] Skipped (Duplicate): Google Brings NotebookLM Directly Into Gemini
+2026-04-12 22:21:50,505 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:21:50,871 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:21:52,880 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:21:53,200 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:21:54,987 [INFO] Published: 2026-laptop-repairability-rankings-a-sustainabilit-ab6fd1 (market-trend) -> /posts/2026/04/2026-laptop-repairability-rankings-a-sustainabilit-ab6fd1/
+2026-04-12 22:21:55,203 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:21:55,537 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:21:55,967 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:21:56,332 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:21:57,553 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:21:58,067 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:21:58,342 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:21:58,503 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:22:00,074 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:22:00,397 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:22:02,402 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:22:02,551 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:22:05,397 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:22:05,557 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:22:07,562 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:22:07,718 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:22:32,462 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:22:32,959 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:22:34,975 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:22:35,139 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:22:39,239 [INFO] Published: the-rise-of-arm-cpus-in-laptop-technology-insights-e3ce6e (future-sw) -> /posts/2026/04/the-rise-of-arm-cpus-in-laptop-technology-insights-e3ce6e/
+2026-04-12 22:23:04,126 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:23:04,716 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:23:06,732 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:23:07,062 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:23:07,493 [INFO] Published: navigating-cybersecurity-policy-in-the-era-of-stat-9767fb (ai-policy) -> /posts/2026/04/navigating-cybersecurity-policy-in-the-era-of-stat-9767fb/
+2026-04-12 22:23:09,071 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:23:09,628 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:23:11,635 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:23:11,947 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:23:13,962 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:23:14,132 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:23:16,135 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 22:23:16,292 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 22:23:21,332 [INFO] Published: analysis-of-laptop-repairability-in-2026-trends-an-ab6fd1 (future-sw) -> /posts/2026/04/analysis-of-laptop-repairability-in-2026-trends-an-ab6fd1/
+2026-04-12 22:23:29,492 [INFO] Published: googles-gemini-enhancements-a-new-era-in-mental-he-cd2043 (ai-policy) -> /posts/2026/04/googles-gemini-enhancements-a-new-era-in-mental-he-cd2043/
+2026-04-12 22:24:08,756 [INFO] Published: the-next-era-of-laptops-embracing-arm-cpus-for-bet-e3ce6e (future-sw) -> /posts/2026/04/the-next-era-of-laptops-embracing-arm-cpus-for-bet-e3ce6e/
+2026-04-12 22:24:19,849 [INFO] Published: innovations-in-intels-nova-lake-architecture-4817d2 (future-sw) -> /posts/2026/04/innovations-in-intels-nova-lake-architecture-4817d2/
+2026-04-12 22:24:20,917 [INFO] Published: global-cybersecurity-risks-a-strategic-review-9767fb (ai-policy) -> /posts/2026/04/global-cybersecurity-risks-a-strategic-review-9767fb/
+2026-04-12 22:24:43,618 [INFO] Published: sonys-playerbase-program-a-new-era-in-gaming-perso-e54d4f (game-tech) -> /posts/2026/04/sonys-playerbase-program-a-new-era-in-gaming-perso-e54d4f/
+2026-04-12 22:24:56,740 [INFO] Published: googles-strategic-enhancements-to-gemini-for-menta-cd2043 (ai-policy) -> /posts/2026/04/googles-strategic-enhancements-to-gemini-for-menta-cd2043/
+2026-04-12 22:25:18,414 [INFO] Published: intel-nova-lake-transforming-cpu-socket-technology-4817d2 (hpc-infra) -> /posts/2026/04/intel-nova-lake-transforming-cpu-socket-technology-4817d2/
+2026-04-12 22:25:36,309 [WARNING] Cancelled (Review Low Score): enhancements-in-google-chrome-a-focus-on-user-expe-b9e843
+2026-04-12 22:25:59,648 [INFO] Published: sonys-playerbase-program-revolutionizes-user-engag-e54d4f (game-tech) -> /posts/2026/04/sonys-playerbase-program-revolutionizes-user-engag-e54d4f/
+2026-04-12 22:26:08,759 [INFO] Published: efficiency-techniques-in-the-original-windows-task-d09e42 (future-sw) -> /posts/2026/04/efficiency-techniques-in-the-original-windows-task-d09e42/
+2026-04-12 22:26:22,931 [WARNING] Cancelled (Review Low Score): enhancements-in-google-chrome-with-vertical-tabs-a-b9e843
+2026-04-12 22:26:26,175 [INFO] Published: running-doom-on-a-40-year-old-printer-controller-97c8fc (future-sw) -> /posts/2026/04/running-doom-on-a-40-year-old-printer-controller-97c8fc/
+2026-04-12 22:26:27,960 [WARNING] Cancelled (Draft Fail): Keychron Q6 Ultra 8K Review: 660 hours of battery 
+2026-04-12 22:26:27,961 [WARNING] Cancelled (Draft Fail): Startup secures $30 million contract to 3D print j
+2026-04-12 22:26:27,962 [WARNING] Cancelled (Draft Fail): Linux 7.0 enables three new AI-specific keys for k
+2026-04-12 22:26:27,963 [WARNING] Cancelled (Draft Fail): $27 platypus PCIe adapter converts half-height GPU
+2026-04-12 22:26:27,964 [WARNING] Cancelled (Draft Fail): South Korea’s telecom giants surprise 7 million us
+2026-04-12 22:26:27,964 [WARNING] Cancelled (Draft Fail): Valve engineer shocks Linux community with game-ch
+2026-04-12 22:26:27,965 [WARNING] Cancelled (Draft Fail): How Better Hardware Changed Online Betting and Gam
+2026-04-12 22:26:27,966 [WARNING] Cancelled (Draft Fail): Drip Casino Canada: Bonuses, Games and Everything 
+2026-04-12 22:26:27,967 [WARNING] Cancelled (Draft Fail): CS2 System Requirements for PC and Mac
+2026-04-12 22:26:27,967 [WARNING] Cancelled (Draft Fail): How Poor Record-Keeping Creates Expensive Mistakes
+2026-04-12 22:26:27,968 [WARNING] Cancelled (Draft Fail): Why Hardware and Tech Publishers Are Investing in 
+2026-04-12 22:26:27,969 [WARNING] Cancelled (Draft Fail): Gaming PC in 2026: Recommendations from eSports Pl
+2026-04-12 22:26:27,970 [WARNING] Cancelled (Draft Fail): GameZone Events 2026: Tongits Action, Fresh Games,
+2026-04-12 22:26:27,970 [WARNING] Cancelled (Draft Fail): How Advanced Manufacturing Technology Is Redefinin
+2026-04-12 22:26:27,971 [WARNING] Cancelled (Draft Fail): This Week in Gaming (Week 16)
+2026-04-12 22:26:27,972 [WARNING] Cancelled (Draft Fail): Microsoft Apologizes for Battery-Less Xbox Control
+2026-04-12 22:26:27,973 [WARNING] Cancelled (Draft Fail): GoDeal24 Spring Software Sale: Get Windows 11 and 
+2026-04-12 22:26:27,973 [WARNING] Cancelled (Draft Fail): ONEXStation Launches as $2,999 Ryzen AI Max+ 395 M
+2026-04-12 22:26:27,974 [WARNING] Cancelled (Draft Fail): Epic Games Plans Standalone Disney-Themed Extracti
+2026-04-12 22:26:27,975 [WARNING] Cancelled (Draft Fail): (PR) HYTE Introduces Sakura Miko hololive Y70 Case
+2026-04-12 22:26:27,976 [WARNING] Cancelled (Draft Fail): Block Ads & Trackers Across 9 Devices for Just $16
+2026-04-12 22:26:27,977 [WARNING] Cancelled (Draft Fail): Philips Launches Evnia 27M2G5800 27-inch 5K Dual-M
+2026-04-12 22:26:27,977 [WARNING] Cancelled (Draft Fail): 'We’re Not Going to do a Dead by Daylight 2' – Dev
+2026-04-12 22:26:27,978 [WARNING] Cancelled (Draft Fail): One Deranged Pokémon Pokopia Player Has Slurped Up
+2026-04-12 22:26:27,979 [WARNING] Cancelled (Draft Fail): 'Any Update Is a Bonus Not a Right' Says Peak Dev 
+2026-04-12 22:26:27,980 [WARNING] Cancelled (Draft Fail): Peaky Blinders Sequel Series Casts Jamie Bell, Cha
+2026-04-12 22:26:27,980 [WARNING] Cancelled (Draft Fail): Brian Cox Joins Cast of Dexter: Resurrection Seaso
+2026-04-12 22:26:27,981 [WARNING] Cancelled (Draft Fail): Disney Reveals Episode Titles and Release Times fo
+2026-04-12 22:26:27,982 [WARNING] Cancelled (Draft Fail): The Dungeon Crawler TV Series Is Officially Confir
+2026-04-12 22:26:27,982 [WARNING] Cancelled (Draft Fail): The Bonfire of the Vanities: Apple TV Series Adapt
+2026-04-12 22:26:27,983 [WARNING] Cancelled (Draft Fail): To Stand Out, This TTRPG Podcast Network Chose The
+2026-04-12 22:26:27,984 [WARNING] Cancelled (Draft Fail): Ex-Overwatch Director Says Tracer's Butt Was Never
+2026-04-12 22:26:27,985 [WARNING] Cancelled (Draft Fail): All Free Mystery Gifts In Pokemon Champions
+2026-04-12 22:26:27,986 [WARNING] Cancelled (Draft Fail): As Gaming Grows More Expensive, Investing In A PC 
+2026-04-12 22:26:27,987 [WARNING] Cancelled (Draft Fail): A Love Letter To Gaming's Many Weird Moons
+2026-04-12 22:26:27,987 [WARNING] Cancelled (Draft Fail): Fortnite Adding An Arc Raiders-Style Game With Dis
+2026-04-12 22:26:27,988 [WARNING] Cancelled (Draft Fail): After Years Of Nintendo Exclusivity, This Beloved 
+2026-04-12 22:26:27,989 [WARNING] Cancelled (Draft Fail): PUBG Dev On Highguard And Concord Struggles: It's 
+2026-04-12 22:26:27,989 [WARNING] Cancelled (Draft Fail): Karl Urban Wants To Play John Marston In A Red Dea
+2026-04-12 22:26:27,990 [WARNING] Cancelled (Draft Fail): The Dragon Age: Inquisition Servers Are Finally Go
+2026-04-12 22:26:27,991 [WARNING] Cancelled (Draft Fail): The New Faces Of Death Is A Fun Stab At The Grisly
+2026-04-12 22:26:27,992 [WARNING] Cancelled (Draft Fail): Rockstar Games Hacked, Team Behind It Threaten A M
+2026-04-12 22:26:27,992 [WARNING] Cancelled (Draft Fail): Ex-Bethesda Exec Says The Elder Scrolls 6 Maker Is
+2026-04-12 22:26:27,993 [WARNING] Cancelled (Draft Fail): Epic Is Reportedly Making A Disney-Themed Extracti
+2026-04-12 22:26:27,994 [WARNING] Cancelled (Draft Fail): YouTuber Who Lost Lawsuit To Donkey Kong High Scor
+2026-04-12 22:26:27,995 [WARNING] Cancelled (Draft Fail): Crimson Desert Devs Are Giving Fans Everything The
+2026-04-12 22:26:27,995 [WARNING] Cancelled (Draft Fail): Far Cry 2 review (2008)
+2026-04-12 22:26:27,997 [WARNING] Cancelled (Draft Fail): Anno 117's first DLC will let you disregard histor
+2026-04-12 22:26:27,997 [WARNING] Cancelled (Draft Fail): Terraforming survival game The Planet Crafter gets
+2026-04-12 22:26:27,998 [WARNING] Cancelled (Draft Fail): Tribal survival game Soulmask leaves early access 
+2026-04-12 22:26:27,999 [WARNING] Cancelled (Draft Fail): Marvel Rivals creative director says it's going to
+2026-04-12 22:26:28,000 [WARNING] Cancelled (Draft Fail): Wizards of the Coast is uploading the old Dungeons
+2026-04-12 22:26:28,001 [WARNING] Cancelled (Draft Fail): 1000xResist developer added a video sequence 'out 
+2026-04-12 22:26:28,002 [WARNING] Cancelled (Draft Fail): Fighting game YouTuber offers $10,000 bounty for u
+2026-04-12 22:26:28,562 [INFO] Published: optimizing-system-performance-through-innovative-d-d09e42 (llm-tech) -> /posts/2026/04/optimizing-system-performance-through-innovative-d-d09e42/
+2026-04-12 22:26:28,955 [INFO] Master execution cycle completed.
+2026-04-12 22:26:30,873 [WARNING] Cancelled (Draft Fail): Tech enthusiast gets Doom to run on a 40-year-old 
+2026-04-12 22:26:30,875 [WARNING] Cancelled (Draft Fail): Keychron Q6 Ultra 8K Review: 660 hours of battery 
+2026-04-12 22:26:30,876 [WARNING] Cancelled (Draft Fail): Startup secures $30 million contract to 3D print j
+2026-04-12 22:26:30,877 [WARNING] Cancelled (Draft Fail): Linux 7.0 enables three new AI-specific keys for k
+2026-04-12 22:26:30,878 [WARNING] Cancelled (Draft Fail): $27 platypus PCIe adapter converts half-height GPU
+2026-04-12 22:26:30,878 [WARNING] Cancelled (Draft Fail): South Korea’s telecom giants surprise 7 million us
+2026-04-12 22:26:30,879 [WARNING] Cancelled (Draft Fail): Valve engineer shocks Linux community with game-ch
+2026-04-12 22:26:30,880 [WARNING] Cancelled (Draft Fail): How Better Hardware Changed Online Betting and Gam
+2026-04-12 22:26:30,881 [WARNING] Cancelled (Draft Fail): Drip Casino Canada: Bonuses, Games and Everything 
+2026-04-12 22:26:30,881 [WARNING] Cancelled (Draft Fail): CS2 System Requirements for PC and Mac
+2026-04-12 22:26:30,882 [WARNING] Cancelled (Draft Fail): How Poor Record-Keeping Creates Expensive Mistakes
+2026-04-12 22:26:30,883 [WARNING] Cancelled (Draft Fail): Why Hardware and Tech Publishers Are Investing in 
+2026-04-12 22:26:30,883 [WARNING] Cancelled (Draft Fail): Gaming PC in 2026: Recommendations from eSports Pl
+2026-04-12 22:26:30,885 [WARNING] Cancelled (Draft Fail): GameZone Events 2026: Tongits Action, Fresh Games,
+2026-04-12 22:26:30,885 [WARNING] Cancelled (Draft Fail): How Advanced Manufacturing Technology Is Redefinin
+2026-04-12 22:26:30,886 [WARNING] Cancelled (Draft Fail): This Week in Gaming (Week 16)
+2026-04-12 22:26:30,887 [WARNING] Cancelled (Draft Fail): Microsoft Apologizes for Battery-Less Xbox Control
+2026-04-12 22:26:30,888 [WARNING] Cancelled (Draft Fail): GoDeal24 Spring Software Sale: Get Windows 11 and 
+2026-04-12 22:26:30,888 [WARNING] Cancelled (Draft Fail): ONEXStation Launches as $2,999 Ryzen AI Max+ 395 M
+2026-04-12 22:26:30,889 [WARNING] Cancelled (Draft Fail): Epic Games Plans Standalone Disney-Themed Extracti
+2026-04-12 22:26:30,890 [WARNING] Cancelled (Draft Fail): (PR) HYTE Introduces Sakura Miko hololive Y70 Case
+2026-04-12 22:26:30,890 [WARNING] Cancelled (Draft Fail): Block Ads & Trackers Across 9 Devices for Just $16
+2026-04-12 22:26:30,891 [WARNING] Cancelled (Draft Fail): Philips Launches Evnia 27M2G5800 27-inch 5K Dual-M
+2026-04-12 22:26:30,892 [WARNING] Cancelled (Draft Fail): 'We’re Not Going to do a Dead by Daylight 2' – Dev
+2026-04-12 22:26:30,893 [WARNING] Cancelled (Draft Fail): One Deranged Pokémon Pokopia Player Has Slurped Up
+2026-04-12 22:26:30,894 [WARNING] Cancelled (Draft Fail): 'Any Update Is a Bonus Not a Right' Says Peak Dev 
+2026-04-12 22:26:30,895 [WARNING] Cancelled (Draft Fail): Peaky Blinders Sequel Series Casts Jamie Bell, Cha
+2026-04-12 22:26:30,895 [WARNING] Cancelled (Draft Fail): Brian Cox Joins Cast of Dexter: Resurrection Seaso
+2026-04-12 22:26:30,896 [WARNING] Cancelled (Draft Fail): Disney Reveals Episode Titles and Release Times fo
+2026-04-12 22:26:30,897 [WARNING] Cancelled (Draft Fail): The Dungeon Crawler TV Series Is Officially Confir
+2026-04-12 22:26:30,897 [WARNING] Cancelled (Draft Fail): The Bonfire of the Vanities: Apple TV Series Adapt
+2026-04-12 22:26:30,898 [WARNING] Cancelled (Draft Fail): To Stand Out, This TTRPG Podcast Network Chose The
+2026-04-12 22:26:30,899 [WARNING] Cancelled (Draft Fail): Ex-Overwatch Director Says Tracer's Butt Was Never
+2026-04-12 22:26:30,900 [WARNING] Cancelled (Draft Fail): All Free Mystery Gifts In Pokemon Champions
+2026-04-12 22:26:30,901 [WARNING] Cancelled (Draft Fail): As Gaming Grows More Expensive, Investing In A PC 
+2026-04-12 22:26:30,902 [WARNING] Cancelled (Draft Fail): A Love Letter To Gaming's Many Weird Moons
+2026-04-12 22:26:30,902 [WARNING] Cancelled (Draft Fail): Fortnite Adding An Arc Raiders-Style Game With Dis
+2026-04-12 22:26:30,903 [WARNING] Cancelled (Draft Fail): After Years Of Nintendo Exclusivity, This Beloved 
+2026-04-12 22:26:30,903 [WARNING] Cancelled (Draft Fail): PUBG Dev On Highguard And Concord Struggles: It's 
+2026-04-12 22:26:30,904 [WARNING] Cancelled (Draft Fail): Karl Urban Wants To Play John Marston In A Red Dea
+2026-04-12 22:26:30,905 [WARNING] Cancelled (Draft Fail): The Dragon Age: Inquisition Servers Are Finally Go
+2026-04-12 22:26:30,906 [WARNING] Cancelled (Draft Fail): The New Faces Of Death Is A Fun Stab At The Grisly
+2026-04-12 22:26:30,907 [WARNING] Cancelled (Draft Fail): Rockstar Games Hacked, Team Behind It Threaten A M
+2026-04-12 22:26:30,907 [WARNING] Cancelled (Draft Fail): Ex-Bethesda Exec Says The Elder Scrolls 6 Maker Is
+2026-04-12 22:26:30,908 [WARNING] Cancelled (Draft Fail): Epic Is Reportedly Making A Disney-Themed Extracti
+2026-04-12 22:26:30,909 [WARNING] Cancelled (Draft Fail): YouTuber Who Lost Lawsuit To Donkey Kong High Scor
+2026-04-12 22:26:30,910 [WARNING] Cancelled (Draft Fail): Crimson Desert Devs Are Giving Fans Everything The
+2026-04-12 22:26:30,910 [WARNING] Cancelled (Draft Fail): Far Cry 2 review (2008)
+2026-04-12 22:26:30,911 [WARNING] Cancelled (Draft Fail): Anno 117's first DLC will let you disregard histor
+2026-04-12 22:26:30,912 [WARNING] Cancelled (Draft Fail): Terraforming survival game The Planet Crafter gets
+2026-04-12 22:26:30,913 [WARNING] Cancelled (Draft Fail): Tribal survival game Soulmask leaves early access 
+2026-04-12 22:26:30,913 [WARNING] Cancelled (Draft Fail): Marvel Rivals creative director says it's going to
+2026-04-12 22:26:30,914 [WARNING] Cancelled (Draft Fail): Wizards of the Coast is uploading the old Dungeons
+2026-04-12 22:26:30,915 [WARNING] Cancelled (Draft Fail): 1000xResist developer added a video sequence 'out 
+2026-04-12 22:26:30,916 [WARNING] Cancelled (Draft Fail): Fighting game YouTuber offers $10,000 bounty for u
+2026-04-12 22:26:32,047 [INFO] Master execution cycle completed.
+2026-04-12 23:10:11,108 [INFO] Executive Intelligence Engine V3.0.15 Starting...
+2026-04-12 23:10:35,525 [INFO] Skipped (Duplicate): Walmart-owned Flipkart, Amazon are squeezing India
+2026-04-12 23:10:35,526 [INFO] Skipped (Duplicate): Kalshi wins temporary pause in Arizona criminal ca
+2026-04-12 23:10:35,527 [INFO] Skipped (Duplicate): AMC will stream ‘The Audacity’ premiere in 21 part
+2026-04-12 23:10:35,527 [INFO] Skipped (Duplicate): Sam Altman responds to ‘incendiary’ New Yorker art
+2026-04-12 23:10:35,528 [INFO] Skipped (Duplicate): Nvidia-backed SiFive hits $3.65 billion valuation 
+2026-04-12 23:10:35,529 [INFO] Skipped (Duplicate): NASA Artemis II splashes down in Pacific Ocean in 
+2026-04-12 23:10:35,529 [INFO] Skipped (Duplicate): How to watch NASA’s Artemis II splash back down to
+2026-04-12 23:10:35,531 [INFO] Skipped (Duplicate): The AI code wars are heating up
+2026-04-12 23:10:35,532 [INFO] Skipped (Duplicate): Allow me to explain why I love this camera that ca
+2026-04-12 23:10:35,532 [INFO] Skipped (Duplicate): The Netherlands is the first European country to a
+2026-04-12 23:10:35,533 [INFO] Skipped (Duplicate): Google says Polymarket bets showing up in News was
+2026-04-12 23:10:35,534 [INFO] Skipped (Duplicate): Pokémon Champions is off to a rough start
+2026-04-12 23:10:35,535 [INFO] Skipped (Duplicate): Your article about AI doesn’t need AI art
+2026-04-12 23:10:35,535 [INFO] Skipped (Duplicate): ‘The Audacity’ Is the Broligarchy Takedown You Wer
+2026-04-12 23:10:35,536 [INFO] Skipped (Duplicate): Why Is It So Hard to Fix an Electric Bike? (2026)
+2026-04-12 23:10:35,537 [INFO] Skipped (Duplicate): Best 2-in-1 Laptops (2026): Microsoft, Lenovo, and
+2026-04-12 23:10:35,537 [INFO] Skipped (Duplicate): There’s a Secret Ingredient to Making Luxury Ice a
+2026-04-12 23:10:35,538 [INFO] Skipped (Duplicate): The Screen Time Maximalists Who Spend an Ungodly A
+2026-04-12 23:10:35,539 [INFO] Skipped (Duplicate): Mammotion Spino E1 Review: A Budget Pool Bot That 
+2026-04-12 23:10:35,540 [INFO] Skipped (Duplicate): The 3 Best Mug Warmers of 2026: Better Than the Em
+2026-04-12 23:10:35,541 [INFO] Skipped (Duplicate): ‘Crimson Desert’ Is a Cat Dad Simulator
+2026-04-12 23:10:35,542 [INFO] Skipped (Duplicate): Shock from Iran war has Trump's vision for US ener
+2026-04-12 23:10:35,543 [INFO] Skipped (Duplicate): AI models are terrible at betting on soccer—especi
+2026-04-12 23:10:35,543 [INFO] Skipped (Duplicate): The Artemis II mission has ended. Where does NASA 
+2026-04-12 23:10:35,545 [INFO] Skipped (Duplicate): Four astronauts are back home after a daring ride 
+2026-04-12 23:10:35,545 [INFO] Skipped (Duplicate): Californians sue over AI tool that records doctor 
+2026-04-12 23:10:35,546 [INFO] Skipped (Duplicate): New paper argues history, not mantle plume, powers
+2026-04-12 23:10:35,547 [INFO] Skipped (Duplicate): F1 moves a step closer to fixing its 2026 hybrid p
+2026-04-12 23:10:35,547 [INFO] Skipped (Duplicate): Report: US demands Reddit unmask ICE critic, summo
+2026-04-12 23:10:35,548 [INFO] Skipped (Duplicate): Rockstar Games has confirmed it was hit by third-p
+2026-04-12 23:10:35,549 [INFO] Skipped (Duplicate): The first European country to get Tesla’s Full Sel
+2026-04-12 23:10:35,549 [INFO] Skipped (Duplicate): IBM settles its DEI lawsuit with the DOJ for $17 m
+2026-04-12 23:10:35,550 [INFO] Skipped (Duplicate): Engadget review recap: ASUS ZenBook A16, AirPods M
+2026-04-12 23:10:35,551 [INFO] Skipped (Duplicate): X's messaging app, XChat, may be available soon
+2026-04-12 23:10:35,551 [INFO] Skipped (Duplicate): Marauding minotaurs, more CloverPit and other new 
+2026-04-12 23:10:35,552 [INFO] Skipped (Duplicate): The Artemis II astronauts are back after a 10-day 
+2026-04-12 23:10:35,553 [INFO] Skipped (Duplicate): Epic is reportedly building an extraction shooter 
+2026-04-12 23:10:35,554 [INFO] Skipped (Duplicate): Hands-on with Belkin’s newest 25W compact MagSafe 
+2026-04-12 23:10:35,555 [INFO] Skipped (Duplicate): This accessory lets you play Switch 2 games on you
+2026-04-12 23:10:35,556 [INFO] Skipped (Duplicate): These are the best new MacBook deals right now: Ap
+2026-04-12 23:10:35,556 [INFO] Skipped (Duplicate): Indie App Spotlight: ‘PackGoat’ intelligently help
+2026-04-12 23:10:35,557 [INFO] Skipped (Duplicate): Here’s why AirPods Pro 3 are more upgrade worthy t
+2026-04-12 23:10:35,558 [INFO] Skipped (Duplicate): At least for now, Liquid Glass in Pixelmator Pro r
+2026-04-12 23:10:35,558 [INFO] Skipped (Duplicate): Several Mac mini and Mac Studio configs are now co
+2026-04-12 23:10:35,560 [INFO] Skipped (Duplicate): The World Is Basically Begging for Another iPod
+2026-04-12 23:10:35,560 [INFO] Skipped (Duplicate): Anker’s EufyMake E1 Finally Brings Printers Out of
+2026-04-12 23:10:35,561 [INFO] Skipped (Duplicate): OpenAI Says Elon Musk Is ‘Injecting Chaos’ with Re
+2026-04-12 23:10:35,562 [INFO] Skipped (Duplicate): Google Displayed Polymarket Bets as News ‘In Error
+2026-04-12 23:10:35,562 [INFO] Skipped (Duplicate): ‘Marvel Rivals’ Wants to Start Being More Than Jus
+2026-04-12 23:10:35,563 [INFO] Skipped (Duplicate): ‘How Do We Make Sure That Claude Behaves Itself?’:
+2026-04-12 23:10:35,564 [INFO] Skipped (Duplicate): See the Next ‘Hunger Games’ in This Trip Down Memo
+2026-04-12 23:10:35,565 [INFO] Skipped (Duplicate): SaaS on the Beach returns to Barcelona with a foun
+2026-04-12 23:10:35,565 [INFO] Skipped (Duplicate): UK startup Altilium bags £18.5m to build Britain’s
+2026-04-12 23:10:35,566 [INFO] Skipped (Duplicate): Estonia is the rare EU country opposing bans on ch
+2026-04-12 23:10:35,567 [INFO] Skipped (Duplicate): AI is making us faster, more productive, and worse
+2026-04-12 23:10:35,567 [INFO] Skipped (Duplicate): AI can screen 15 million molecules in a day. It st
+2026-04-12 23:10:35,568 [INFO] Skipped (Duplicate): France orders all government ministries to ditch W
+2026-04-12 23:10:35,569 [INFO] Skipped (Duplicate): Police arrest 20-year-old after Molotov cocktail t
+2026-04-12 23:10:35,569 [INFO] Skipped (Duplicate): Meow Technologies launches the first agentic banki
+2026-04-12 23:10:35,570 [INFO] Skipped (Duplicate): Google Brings NotebookLM Directly Into Gemini
+2026-04-12 23:10:35,571 [INFO] Skipped (Duplicate): Apple and Lenovo Rank as Least Repairable Laptop B
+2026-04-12 23:10:35,571 [INFO] Skipped (Duplicate): Nvidia N1 Engineering Motherboard Shows ARM CPUs C
+2026-04-12 23:10:35,572 [INFO] Skipped (Duplicate): Russia Behind Recent TP-Link Router Hacking, Accor
+2026-04-12 23:10:35,573 [INFO] Skipped (Duplicate): Google Rolls Out Major Changes to How Gemini Handl
+2026-04-12 23:10:35,574 [INFO] Skipped (Duplicate): Intel Nova Lake to Introduce Dual CPU Socket Retai
+2026-04-12 23:10:35,574 [INFO] Skipped (Duplicate): Sony's New Playerbase Program Scans PlayStation Fa
+2026-04-12 23:10:35,575 [INFO] Skipped (Duplicate): Veteran Microsoft engineer says original Task Mana
+2026-04-12 23:10:35,576 [INFO] Skipped (Duplicate): Tech enthusiast gets Doom to run on a 40-year-old 
+2026-04-12 23:10:35,608 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:10:35,969 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:10:37,972 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:10:38,316 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:10:40,330 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:10:40,685 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:10:42,701 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:10:43,242 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:10:45,250 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:10:45,582 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:10:47,592 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:10:47,789 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:11:19,158 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:11:19,618 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:11:21,626 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:11:21,778 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:11:23,781 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:11:24,141 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:11:26,149 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:11:26,315 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:11:28,333 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:11:28,510 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:11:30,520 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:11:30,683 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:11:35,682 [INFO] Published: slate-auto-an-in-depth-look-at-the-bezos-backed-el-4cf544 (startups-vc) -> /posts/2026/04/slate-auto-an-in-depth-look-at-the-bezos-backed-el-4cf544/
+2026-04-12 23:11:35,683 [INFO] Throttling for API integrity (15s wait)...
+2026-04-12 23:12:09,158 [INFO] Published: hisense-ur9-a-game-changer-in-rgb-led-television-t-4c468a (future-sw) -> /posts/2026/04/hisense-ur9-a-game-changer-in-rgb-led-television-t-4c468a/
+2026-04-12 23:12:09,158 [INFO] Throttling for API integrity (15s wait)...
+2026-04-12 23:12:50,712 [WARNING] Cancelled (Review Low Score): the-enduring-legacy-of-the-western-electric-500-ph-eaa1c4
+2026-04-12 23:12:50,712 [INFO] Throttling for API integrity (15s wait)...
+2026-04-12 23:13:44,720 [INFO] Published: analysis-of-refurbished-iphones-under-500-for-2026-9dc98a (market-trend) -> /posts/2026/04/analysis-of-refurbished-iphones-under-500-for-2026-9dc98a/
+2026-04-12 23:13:44,720 [INFO] Throttling for API integrity (15s wait)...
+2026-04-12 23:14:18,209 [INFO] Published: navigating-the-landscape-of-media-leaks-strategic--d7f307 (market-trend) -> /posts/2026/04/navigating-the-landscape-of-media-leaks-strategic--d7f307/
+2026-04-12 23:14:18,209 [INFO] Throttling for API integrity (15s wait)...
+2026-04-12 23:14:51,242 [INFO] Published: google-chrome-innovations-embracing-vertical-tabs--b9e843 (future-sw) -> /posts/2026/04/google-chrome-innovations-embracing-vertical-tabs--b9e843/
+2026-04-12 23:14:51,242 [INFO] Throttling for API integrity (15s wait)...
+2026-04-12 23:15:40,388 [INFO] Published: keychron-q6-ultra-8k-the-future-of-gaming-keyboard-9f1a94 (game-tech) -> /posts/2026/04/keychron-q6-ultra-8k-the-future-of-gaming-keyboard-9f1a94/
+2026-04-12 23:15:40,388 [INFO] Throttling for API integrity (15s wait)...
+2026-04-12 23:16:16,242 [INFO] Published: transformative-impact-of-3d-printing-on-aerospace--b76876 (future-sw) -> /posts/2026/04/transformative-impact-of-3d-printing-on-aerospace--b76876/
+2026-04-12 23:16:16,242 [INFO] Throttling for API integrity (15s wait)...
+2026-04-12 23:16:54,908 [INFO] Published: linux-kernel-70-revolutionizing-ai-interaction-thr-6c3f03 (future-sw) -> /posts/2026/04/linux-kernel-70-revolutionizing-ai-interaction-thr-6c3f03/
+2026-04-12 23:16:54,908 [INFO] Throttling for API integrity (15s wait)...
+2026-04-12 23:17:33,523 [INFO] Published: revolutionizing-pc-customization-the-impact-of-a-n-3ce6a8 (future-sw) -> /posts/2026/04/revolutionizing-pc-customization-the-impact-of-a-n-3ce6a8/
+2026-04-12 23:17:33,524 [INFO] Throttling for API integrity (15s wait)...
+2026-04-12 23:18:04,709 [INFO] Published: south-koreas-landmark-initiative-for-universal-int-1b0b39 (ai-policy) -> /posts/2026/04/south-koreas-landmark-initiative-for-universal-int-1b0b39/
+2026-04-12 23:18:04,709 [INFO] Throttling for API integrity (15s wait)...
+2026-04-12 23:18:50,865 [INFO] Published: revolutionizing-vram-management-for-linux-gaming-a-596b19 (future-sw) -> /posts/2026/04/revolutionizing-vram-management-for-linux-gaming-a-596b19/
+2026-04-12 23:18:50,865 [INFO] Throttling for API integrity (15s wait)...
+2026-04-12 23:19:33,264 [INFO] Published: the-transformative-role-of-hardware-advancements-i-788c21 (market-trend) -> /posts/2026/04/the-transformative-role-of-hardware-advancements-i-788c21/
+2026-04-12 23:19:33,264 [INFO] Throttling for API integrity (15s wait)...
+2026-04-12 23:20:22,171 [INFO] Published: drip-casinos-strategic-bonus-structure-and-market--22d2a8 (market-trend) -> /posts/2026/04/drip-casinos-strategic-bonus-structure-and-market--22d2a8/
+2026-04-12 23:20:22,172 [INFO] Throttling for API integrity (15s wait)...
+2026-04-12 23:20:59,549 [INFO] Published: system-requirements-for-counter-strike-2-cs2-a-gui-19e52f (game-tech) -> /posts/2026/04/system-requirements-for-counter-strike-2-cs2-a-gui-19e52f/
+2026-04-12 23:20:59,549 [INFO] Throttling for API integrity (15s wait)...
+2026-04-12 23:21:38,715 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:21:39,097 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:21:41,103 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:21:41,262 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:21:47,249 [INFO] Published: the-critical-importance-of-effective-record-keepin-a6ee5e (ai-policy) -> /posts/2026/04/the-critical-importance-of-effective-record-keepin-a6ee5e/
+2026-04-12 23:21:47,250 [INFO] Writing Strategic Guide for: the-critical-importance-of-effective-record-keepin-a6ee5e
+2026-04-12 23:21:47,250 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:21:47,623 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:21:49,637 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:21:49,983 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:21:51,992 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:21:52,325 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:21:54,336 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:21:54,914 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:21:56,916 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:21:57,248 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:21:59,254 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:21:59,435 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:22:02,398 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:22:02,559 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:22:04,565 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:22:04,740 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:22:10,690 [INFO] Throttling for API integrity (15s wait)...
+2026-04-12 23:22:26,752 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:22:27,078 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:22:29,080 [INFO] AFC is enabled with max remote calls: 10.
+2026-04-12 23:22:29,262 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-04-12 23:22:33,835 [WARNING] Cancelled (Draft Fail): Why Hardware and Tech Publishers Are Investing in 
+2026-04-12 23:22:33,835 [INFO] Throttling for API integrity (15s wait)...
+2026-04-12 23:22:48,841 [ERROR] CRITICAL: All AI providers exhausted. Triggering Circuit Breaker.
+2026-04-12 23:22:50,744 [INFO] Master execution cycle completed.

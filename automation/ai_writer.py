@@ -116,12 +116,18 @@ class AIWriter:
                     }), timeout=30
                 )
                 if response.status_code == 429:
-                    print(f" [!] Groq Rate Limit reached. Disabling.")
+                    rem_req = response.headers.get("x-ratelimit-remaining-requests")
+                    reset_in = response.headers.get("x-ratelimit-reset-requests")
+                    print(f" [!] Groq Rate Limit. Remaining: {rem_req}, Reset in: {reset_in}")
                     self.failed_providers.add("groq")
                     return None
                     
                 data = response.json()
                 if "choices" in data:
+                    # 잔량 정보 실시간 로깅 (운영자 가이드용)
+                    rem_req = response.headers.get("x-ratelimit-remaining-requests")
+                    if rem_req and int(rem_req) < 5:
+                        print(f" [!] Groq Low Quota Warning: {rem_req} left.")
                     return data["choices"][0]["message"]["content"]
                 else:
                     print(f" [!] groq Error Body: {data}")
@@ -143,7 +149,7 @@ class AIWriter:
                     }), timeout=60
                 )
                 if response.status_code in [402, 403, 429]:
-                    print(f" [!] OpenRouter Quota/Limit issue ({response.status_code}). Disabling.")
+                    print(f" [!] OpenRouter Limit ({response.status_code}). Body: {response.text[:100]}")
                     self.failed_providers.add("openrouter")
                     return None
                     
