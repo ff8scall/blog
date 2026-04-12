@@ -1,12 +1,13 @@
 import os
-import requests
-import time
 import sys
+import time
+import requests
+import json
 import feedparser
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 
-# [V12.2] 인코딩 및 환경 설정
+# [V13.0 Unchained Net] 인코딩 및 환경 설정
 try:
     sys.stdout.reconfigure(encoding='utf-8')
 except:
@@ -16,6 +17,7 @@ load_dotenv(os.path.join(os.path.dirname(__file__), '.env'))
 
 class NewsHarvester:
     def __init__(self, test_mode=False):
+        self.whitelist_path = os.path.join(os.path.dirname(__file__), '..', 'docs_private', 'rss_feeds.json')
         self.keys = {
             "gnews": os.getenv("GNEWS_API_KEY"),
             "newsapi": os.getenv("NEWSAPI_ORG_KEY"),
@@ -153,6 +155,48 @@ class NewsHarvester:
         except: pass
         return []
 
+    def _categorize_article(self, title, desc):
+        # [V13.0] 키워드 기반 지능형 카테고리 매핑
+        text = f"{title} {desc}".lower()
+        if any(k in text for k in ["ai", "llm", "gpt", "neural", "agent", "deep learning"]): 
+            if "agent" in text: return "AI-에이전트"
+            return "AI-기술"
+        if any(k in text for k in ["gpu", "processor", "chip", "semiconductor", "hbm", "hw", "hardware"]): return "하드웨어"
+        if any(k in text for k in ["game", "gaming", "unreal", "unity", "nintendo", "xbox", "ps5"]): return "게임"
+        if any(k in text for k in ["business", "startup", "vc", "founder", "ipo", "monetization"]): return "수익화-전략"
+        return "테크-비즈니스"
+
+    def _fetch_rss_v13(self):
+        # [V13.0] 화이트리스트 기반 광역 RSS 수집
+        articles = []
+        try:
+            if not os.path.exists(self.whitelist_path): return []
+            with open(self.whitelist_path, "r") as f:
+                whitelist = json.load(f)
+            
+            for category, sources in whitelist.items():
+                for source in sources:
+                    try:
+                        feed = feedparser.parse(source["url"])
+                        for entry in feed.entries[:8]: # 소스당 8개 최신 기사
+                            img = None
+                            if 'links' in entry:
+                                for link in entry.links:
+                                    if 'image' in link.get('type', ''): img = link.href
+                            
+                            # 데이터 정규화 및 자동 카테고리 분류
+                            kat = self._categorize_article(entry.title, entry.get('summary', ''))
+                            articles.append(self._normalize({
+                                "title": entry.title,
+                                "description": entry.get('summary', ''),
+                                "url": entry.link,
+                                "urlToImage": img
+                            }, source["name"], kat))
+                    except: pass
+        except Exception as e:
+            print(f" [!] RSS V13 Error: {e}")
+        return articles
+
     def _fetch_kr_rss(self):
         rss_url = "https://www.itworld.co.kr/rss/feed/index.php"
         articles = []
@@ -166,9 +210,30 @@ class NewsHarvester:
     def fetch_all(self, limit_per_cat=8):
         all_unique_news = []
         seen_urls = set()
-        stats = {"NewsAPI": 0, "TheNewsAPI": 0, "GNews": 0, "Currents": 0, "NewsData": 0, "KR-RSS": 0}
+        seen_titles = set() # [V13.0] 제목 기반 중복 제거용
+        stats = {"NewsAPI": 0, "TheNewsAPI": 0, "GNews": 0, "Currents": 0, "NewsData": 0, "KR-RSS": 0, "RSS-V13": 0}
         
-        # [V12.2] 전략적 우선순위 리스트 (NewsData를 핵심 폴백으로 배치)
+        print(f"[*] Starting Intelligent Hybrid Harvest (V13.0: RSS-First)...")
+        
+        # [STEP 1] RSS 그물망 수집 (The Net)
+        print("[*] Stage 1: Harvesting from Global RSS Whitelist...")
+        rss_pool = self._fetch_rss_v13()
+        stats["RSS-V13"] = len(rss_pool)
+        
+        # [STEP 2] 카테고 별 기사 풀 생성 (준비)
+        category_pools = {k["kor_name"]: [] for k in self.categories_config.values()}
+        
+        # RSS 기사들을 카테고리별로 분류 및 중복 제거
+        for art in rss_pool:
+            title_norm = "".join(art["title"].lower().split()) # 공백 제거 정규화
+            if title_norm not in seen_titles and art["url"] not in seen_urls:
+                cat = art.get("category", "테크-비즈니스")
+                if cat in category_pools:
+                    category_pools[cat].append(art)
+                    seen_titles.add(title_norm)
+                    seen_urls.add(art["url"])
+
+        # [STEP 3] 부족한 카테고리만 API 저격총(Sniper) 동원
         strategy_map = {
             "ai_tech": ["NewsAPI", "NewsData", "TheNewsAPI", "GNews", "Currents"],
             "ai_agent": ["NewsAPI", "NewsData", "TheNewsAPI", "Currents", "GNews"],
@@ -177,49 +242,56 @@ class NewsHarvester:
             "business": ["TheNewsAPI", "NewsData", "Currents", "NewsAPI", "GNews"],
             "tech_biz": ["TheNewsAPI", "NewsData", "Currents", "NewsAPI", "GNews"]
         }
-        
-        print(f"[*] Starting Hybrid Strategic Harvest (V12.2: Ultra-Enhanced Strategy)...")
+
         for internal_key, config in self.categories_config.items():
             kor_name = config["kor_name"]
-            query = self._get_dynamic_query(internal_key)
-            thenews_cat = config.get("thenews_cat", "tech")
-            cur_cat = config.get("currents_cat", "general")
-            nd_cat = config.get("newsdata_cat", "technology")
+            current_count = len(category_pools[kor_name])
             
-            print(f"[*] Analyzing Strategy for: {kor_name} (Query: {query})")
-            priorities = strategy_map.get(internal_key, ["NewsAPI", "NewsData", "TheNewsAPI", "GNews", "Currents"])
-            
-            for api_name in priorities:
-                if self.test_mode and api_name != "Currents": continue
-                if api_name.lower() in self.exhausted: continue 
-                try:
-                    res = []
-                    if api_name == "NewsAPI": res = self._fetch_newsapi(query, kor_name, limit_per_cat)
-                    elif api_name == "TheNewsAPI": res = self._fetch_thenewsapi(query, kor_name, thenews_cat, limit_per_cat)
-                    elif api_name == "GNews": res = self._fetch_gnews(query, kor_name, limit_per_cat)
-                    elif api_name == "Currents": res = self._fetch_currents(query, kor_name, cur_cat, limit_per_cat)
-                    elif api_name == "NewsData": res = self._fetch_newsdata(query, kor_name, nd_cat, limit_per_cat)
+            # 기사가 부족할 때만 API 호출 (쿼터 절약)
+            if current_count < (limit_per_cat // 2):
+                print(f"[*] Stage 2: Snipering for {kor_name} (Current: {current_count})")
+                query = self._get_dynamic_query(internal_key)
+                nd_cat = config.get("newsdata_cat", "technology")
+                thenews_cat = config.get("thenews_cat", "tech")
+                cur_cat = config.get("currents_cat", "general")
+                
+                priorities = strategy_map.get(internal_key, ["NewsAPI", "NewsData"])
+                for api_name in priorities:
+                    if api_name.lower() in self.exhausted: continue
+                    try:
+                        res = []
+                        if api_name == "NewsAPI": res = self._fetch_newsapi(query, kor_name, limit_per_cat)
+                        elif api_name == "TheNewsAPI": res = self._fetch_thenewsapi(query, kor_name, thenews_cat, limit_per_cat)
+                        elif api_name == "GNews": res = self._fetch_gnews(query, kor_name, limit_per_cat)
+                        elif api_name == "Currents": res = self._fetch_currents(query, kor_name, cur_cat, limit_per_cat)
+                        elif api_name == "NewsData": res = self._fetch_newsdata(query, kor_name, nd_cat, limit_per_cat)
 
-                    if res:
-                        stats[api_name] += len(res)
-                        for article in res:
-                            if article["url"] and article["url"] not in seen_urls:
-                                all_unique_news.append(article)
-                                seen_urls.add(article["url"])
-                    
-                    if len(res) >= max(1, limit_per_cat // 2):
-                        print(f"    [+] {api_name} provided sufficient depth ({len(res)} articles). Moving to next category.")
-                        break
-                    time.sleep(1)
-                except: pass
+                        if res:
+                            stats[api_name] += len(res)
+                            for art in res:
+                                t_norm = "".join(art["title"].lower().split())
+                                if t_norm not in seen_titles and art["url"] not in seen_urls:
+                                    category_pools[kor_name].append(art)
+                                    seen_titles.add(t_norm)
+                                    seen_urls.add(art["url"])
+                            
+                            if len(category_pools[kor_name]) >= limit_per_cat:
+                                break
+                        time.sleep(1)
+                    except: pass
             
-            print(f"    [V] {kor_name} stage: Current pool size {len(all_unique_news)}")
+            # 최종 결과 리스트에 병합
+            all_unique_news.extend(category_pools[kor_name][:limit_per_cat])
+            print(f"    [V] {kor_name} stage: Final size {len(category_pools[kor_name][:limit_per_cat])}")
 
+        # 한국 RSS 추가 (보너스)
         kr_res = self._fetch_kr_rss()
-        for article in (kr_res or []):
-            if article["url"] and article["url"] not in seen_urls:
-                all_unique_news.append(article)
-                seen_urls.add(article["url"])
+        for art in (kr_res or []):
+            t_norm = "".join(art["title"].lower().split())
+            if t_norm not in seen_titles and art["url"] not in seen_urls:
+                all_unique_news.append(art)
+                seen_titles.add(t_norm)
+                seen_urls.add(art["url"])
                 stats["KR-RSS"] += 1
         
         print(f"[*] Final Intelligence Pool: {len(all_unique_news)} candidates.")
