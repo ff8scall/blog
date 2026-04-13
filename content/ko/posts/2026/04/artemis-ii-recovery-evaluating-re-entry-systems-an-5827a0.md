@@ -1,10 +1,12 @@
-﻿---
+---
 title: "아르테미스 II 회수 작전: 재진입 시스템 검증 전략 가이드"
 date: "2026-04-12T19:19:28+09:00"
 description: "오리온 캡슐의 성공적인 회수를 통해 미래 유인 달 탐사의 안정성을 확보하는 기술적 검증 프레임워크를 제시합니다."
-type: "guides"
-difficulty: "Advanced"
+image: "/images/fallbacks/tech-biz.jpg"
+clusters: ["physical"]
 categories: ["space-tech"]
+tags: []
+featured: false
 ---
 ### 1. 개요: 회수 작전의 기술적 중요성
 아르테미스 II 미션의 회수 단계는 단순한 귀환이 아닙니다. 달 궤도에서 복귀하는 오리온 캡슐이 겪는 고속 재진입 환경을 분석하여, 차기 유인 달 착륙 미션(Artemis III)의 설계 사양을 확정하는 **데이터 마이닝의 핵심 과정**입니다.

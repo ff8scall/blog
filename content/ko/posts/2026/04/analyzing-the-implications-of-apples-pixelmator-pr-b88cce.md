@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Apple의 Pixelmator Pro 통합에 따른 영향 분석"
 date: "2026-04-13T08:29:29+09:00"
 description: "이 보고서는 Apple Creator Studio에 통합된 Pixelmator Pro의 기능과 기존 사용자가 겪는 독점성 관련 문제를 살펴봅니다."

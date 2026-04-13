@@ -1,4 +1,4 @@
-﻿---
+---
 title: "Pokémon Champions: 폐쇄형 보상 생태계를 활용한 리텐션 극대화 전략"
 date: "2026-04-12T17:40:21+09:00"
 description: "외부 플랫폼(Pokémon Home)과 연계된 보상 설계를 통한 사용자 락인(Lock-in) 효과 창출"

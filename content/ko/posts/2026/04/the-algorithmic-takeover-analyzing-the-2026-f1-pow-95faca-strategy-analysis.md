@@ -1,9 +1,9 @@
-﻿---
+---
 title: "알고리즘이 지배하는 F1: 2026년형 하이브리드 파워 유닛의 딜레마"
 date: "2026-04-12T19:31:32+09:00"
 description: "2026년 F1의 대대적인 하이브리드 개편으로 전기 출력 비중이 50%까지 상승"
 image: "/images/fallbacks/ai-agents.jpg"
-clusters: ["physical"]
+clusters: ["intelligence"]
 categories: ["robot-tech"]
 tags: ["테크전략", "인사이트"]
 featured: false

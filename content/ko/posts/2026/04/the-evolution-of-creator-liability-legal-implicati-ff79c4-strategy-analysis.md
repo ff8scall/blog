@@ -1,4 +1,4 @@
-﻿---
+---
 title: "크리에이터 경제의 새로운 리스크: 'Jobst vs. Mitchell' 소송으로 본 법적 공방의 진화"
 date: "2026-04-12T17:46:20+09:00"
 description: "칼 잡스트(Karl Jobst)와 빌리 미첼(Billy Mitchell) 간의 법적 다툼이 '정신적 고통'을 사유로 한 '본인 소송(Pro Se)'으로 격화됨."

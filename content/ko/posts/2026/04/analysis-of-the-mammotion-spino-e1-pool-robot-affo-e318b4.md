@@ -1,9 +1,9 @@
-﻿---
+---
 title: "매모션 스피노 E1 수영장 로봇 청소기 분석: 가격 대비 효율성"
 date: "2026-04-13T08:25:16+09:00"
 description: "매모션 스피노 E1 수영장 로봇 청소기는 예산을 고려한 소비자에게 비용 효율적인 솔루션을 제공하지만, 성능이 높이 평가되는 청소 효율성과 적응성에는 부족함이 있을 수 있습니다."
 image: "/images/fallbacks/hardware.jpg"
-clusters: ["physical"]
+clusters: ["intelligence"]
 categories: ["robot-tech"]
 tags: ["테크전략", "인사이트"]
 featured: false

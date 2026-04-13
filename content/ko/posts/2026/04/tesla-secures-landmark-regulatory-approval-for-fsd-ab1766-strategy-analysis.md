@@ -1,9 +1,9 @@
-﻿---
+---
 title: "테슬라 FSD(Supervised), 네덜란드 RDW 승인 획득… 유럽 자율주행 시장 진출의 교두보 마련"
 date: "2026-04-12T19:33:07+09:00"
 description: "테슬라의 FSD(Supervised) 시스템이 네덜란드 차량국(RDW)으로부터 유럽 최초로 형식 승인을 획득함"
 image: "/images/fallbacks/ai-agents.jpg"
-clusters: ["physical"]
+clusters: ["intelligence"]
 categories: ["robot-tech"]
 tags: ["테크전략", "인사이트"]
 featured: false

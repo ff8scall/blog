@@ -1,4 +1,4 @@
-﻿---
+---
 title: "고성능 APU 기반 AI 미니 PC의 부상: ONEXStation으로 보는 워크스테이션의 미래"
 date: "2026-04-12T17:12:24+09:00"
 description: "AMD 'Strix Halo' 아키텍처를 탑재한 ONEXStation이 기존 미니 PC의 개념을 전문가용 AI 워크스테이션으로 재정의함"

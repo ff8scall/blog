@@ -1,9 +1,9 @@
-﻿---
+---
 title: "저가형 자동화의 함정: 매모션 스피노 E1(Mammotion Spino E1) 기술 분석"
 date: "2026-04-12T19:26:36+09:00"
 description: "매모션 스피노 E1은 가격 경쟁력을 앞세웠으나, 센서 및 기구 설계의 한계로 인해 성능 효율성 측면에서 시장 기대치에 미치지 못함."
 image: "/images/fallbacks/hardware.jpg"
-clusters: ["physical"]
+clusters: ["intelligence"]
 categories: ["robot-tech"]
 tags: ["테크전략", "인사이트"]
 featured: false

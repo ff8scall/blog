@@ -1,9 +1,9 @@
-﻿---
+---
 title: "벡터 역학의 진화: 자율형 해충 포획 시스템의 미래"
 date: "2026-04-12T19:28:36+09:00"
 description: "모기의 비행 경로와 감각 체계를 정량적으로 분석하여 차세대 포획 하드웨어 설계의 지표로 활용"
 image: "/images/fallbacks/ai-agents.jpg"
-clusters: ["strategy"]
+clusters: ["intelligence"]
 categories: ["bio-tech"]
 tags: ["테크전략", "인사이트"]
 featured: false

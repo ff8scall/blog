@@ -1,9 +1,9 @@
-﻿---
+---
 title: "의료 AI의 역습: 임상 문서화 도구와 데이터 프라이버시 법적 공방"
 date: "2026-04-12T19:30:20+09:00"
 description: "최근 캘리포니아에서 제기된 소송은 환자 데이터 주권과 AI 의료 기록 도구 간의 심각한 마찰을 시사함."
 image: "/images/fallbacks/ai-tech.jpg"
-clusters: ["strategy"]
+clusters: ["intelligence"]
 categories: ["bio-tech"]
 tags: ["테크전략", "인사이트"]
 featured: false

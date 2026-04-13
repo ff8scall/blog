@@ -1,9 +1,9 @@
-﻿---
+---
 title: "테슬라 FSD 유럽 상륙: 네덜란드 RDW 승인으로 본 자율주행 시장의 변곡점"
 date: "2026-04-12T19:20:28+09:00"
 description: "네덜란드 차량국(RDW)이 테슬라의 FSD(Supervised) 운행을 공식 승인하며 유럽 내 자율주행 시장의 물꼬를 텄습니다."
 image: "/images/fallbacks/ai-agents.jpg"
-clusters: ["physical"]
+clusters: ["intelligence"]
 categories: ["robot-tech"]
 tags: ["테크전략", "인사이트"]
 featured: false

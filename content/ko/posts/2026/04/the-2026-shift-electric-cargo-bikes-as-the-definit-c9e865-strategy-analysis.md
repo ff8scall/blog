@@ -1,9 +1,9 @@
-﻿---
+---
 title: "2026 모빌리티 리포트: 전기 화물 자전거(E-Cargo)가 자동차를 대체하는 방식"
 date: "2026-04-12T19:27:58+09:00"
 description: "전기 화물 자전거가 단순 취미용을 넘어 도심형 물류 및 가족 이동 수단으로 진화"
 image: "/images/fallbacks/tech-biz.jpg"
-clusters: ["strategy"]
+clusters: ["intelligence"]
 categories: ["energy-tech"]
 tags: ["테크전략", "인사이트"]
 featured: false

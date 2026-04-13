@@ -1,9 +1,9 @@
-﻿---
+---
 title: "‘컴포트 게이밍(Comfort Gaming)’의 전략적 가치와 레거시 하드웨어의 생존"
 date: "2026-04-12T19:26:21+09:00"
 description: "레거시 하드웨어(Wii U 등)를 유지하는 사용자들의 '컴포트 게이밍' 행태 분석"
 image: "/images/fallbacks/gaming.jpg"
-clusters: ["strategy"]
+clusters: ["intelligence"]
 categories: ["energy-tech"]
 tags: ["테크전략", "인사이트"]
 featured: false

@@ -1,9 +1,9 @@
-﻿---
+---
 title: "전략 분석: 닌텐도 스위치 2의 독자 규격 전환과 액세서리 생태계 재편"
 date: "2026-04-12T19:25:38+09:00"
 description: "닌텐도 스위치 2는 독자적인 무선 프로토콜과 USB-C 영상 출력 규격을 도입하여 하드웨어 보안 및 품질 제어를 강화함."
 image: "/images/fallbacks/ai-agents.jpg"
-clusters: ["strategy"]
+clusters: ["intelligence"]
 categories: ["energy-tech"]
 tags: ["테크전략", "인사이트"]
 featured: false

@@ -1,4 +1,4 @@
-﻿---
+---
 title: "AI 투명성의 역설: 'Graveyard Keeper 2' 사례를 통해 본 게임 개발 전략"
 date: "2026-04-12T17:50:13+09:00"
 description: "게임 개발사의 내부적인 AI R&D와 외부 대중의 'AI-washing' 불신 사이의 극심한 괴리 분석"
