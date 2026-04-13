@@ -5,9 +5,14 @@ import time
 import hashlib
 import requests
 import logging
+import asyncio
 from datetime import datetime
-from difflib import SequenceMatcher
+from dotenv import load_dotenv
 from news_harvester import NewsHarvester
+
+# [V3.0.32] Environment Auto-Loader
+load_dotenv()
+
 from ai_news_editor import NewsEditor
 from ai_guide_editor import GuideEditor
 from ai_writer import AIWriter
@@ -35,7 +40,7 @@ CATEGORY_BUDGETS = {
     "llm-tech": 6, "ai-agent": 6, "ai-policy": 3, "future-sw": 5,
     "semi-hbm": 6, "hpc-infra": 5, "robotics": 3,
     "monetization": 4, "startups-vc": 5, "market-trend": 3,
-    "game-tech": 4, "spatial-tech": 5
+    "game-tech": 4, "spatial-tech": 5, "ai-tools": 3
 }
 
 def sanitize_slug(text):
@@ -54,18 +59,14 @@ CAT_MAP = {
 }
 
 FALLBACK_MAP = {
-    "llm-tech": "llm-tech",
-    "ai-agent": "ai-agent",
-    "ai-policy": "ai-policy",
-    "future-sw": "future-sw",
-    "semi-hbm": "semi-hbm",
-    "hpc-infra": "hpc-infra",
-    "robotics": "robotics",
-    "monetization": "monetization",
-    "startups-vc": "startups-vc",
-    "market-trend": "market-trend",
-    "game-tech": "game-tech",
-    "spatial-tech": "spatial-tech"
+    "llm-tech": "llm-tech", "ai-agent": "ai-agent", "ai-policy": "ai-policy", "future-sw": "future-sw",
+    "semi-hbm": "semi-hbm", "hpc-infra": "hpc-infra", "robotics": "robotics",
+    "monetization": "monetization", "startups-vc": "startups-vc", "market-trend": "market-trend",
+    "game-tech": "game-tech", "spatial-tech": "spatial-tech",
+    "LLM·생성AI": "llm-tech", "AI 에이전트": "ai-agent", "AI 규제/정책": "ai-policy", "미래 SW/개발": "future-sw",
+    "차세대 반도체": "semi-hbm", "HPC/인프라": "hpc-infra", "로보틱스": "robotics",
+    "수익화 전략": "monetization", "비지니스/VC": "startups-vc", "시장 트렌드": "market-trend",
+    "게임 테크": "game-tech", "공간 컴퓨팅": "spatial-tech"
 }
 
 def download_image(url, category_slug, slug):
@@ -158,7 +159,7 @@ categories: ["{guide_data.get('guide_type', 'ai-tools')}"]
         f.write(content)
     return True
 
-def main():
+async def main():
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=1)
@@ -185,11 +186,14 @@ def main():
     cancel_stats = {"duplicate": 0, "review": 0, "budget": 0, "draft_fail": 0}
     
     target_cats = [args.category] if args.category else None
+    
+    harvest_start = datetime.now()
     raw_news, harvest_stats = harvester.fetch_all(
         limit_per_cat=args.limit, 
         rss_only=args.rss_only, 
         target_cats=target_cats
     )
+    harvest_duration = (datetime.now() - harvest_start).total_seconds()
     
     new_articles = []
     for a in raw_news:
@@ -216,9 +220,9 @@ def main():
     scored_groups = sorted([(9.0, g) for g in article_groups], key=lambda x: x[0], reverse=True)
 
     for score, group in scored_groups:
-        limit_threshold = args.limit if args.category else 35
+        limit_threshold = args.limit if (args.category or args.limit > 1) else 35
         if published_count >= limit_threshold:
-            cancel_stats["budget"] += (len(scored_groups) - published_count)
+            cancel_stats["budget"] = len(scored_groups) - published_count
             logger.info(f"Stopped: Budget reached ({limit_threshold})")
             break
 
@@ -231,6 +235,7 @@ def main():
         if shared_writer.is_all_exhausted():
             logger.error("CRITICAL: Essential AI providers (Gemini, GitHub, Groq) exhausted. Triggering Circuit Breaker.")
             telegram.send_resp("⚠️ **CIRCUIT BREAKER TRIGGERED**\n- 핵심 AI (Gemini, GitHub) 할당량이 모두 소진되었습니다.\n- 남은 기사들은 다음 기동 시 재시도됩니다.")
+            cancel_stats["budget"] += (len(scored_groups) - (published_count + cancel_stats["review"] + cancel_stats["draft_fail"]))
             break
 
         # [V3.0.25] 가이드 트리거 확장: 벤치마크, 로드맵, 비교 분석 등 심층 분석 키워드 추가
@@ -293,25 +298,34 @@ def main():
 • 예산 초과: {cancel_stats['budget']}건
 • 초안 실패: {cancel_stats['draft_fail']}건"""
 
-    # [V3.0.26] 발행 카테고리 상세 내역 추가
+    # [V4.8] 최종 결과 리포트 생성 및 전송
+    CAT_MAP = {
+        "llm-tech": "LLM·생성AI", "ai-agent": "AI 에이전트", "ai-policy": "AI 윤리·정책",
+        "future-sw": "차세대 SW", "semi-hbm": "차세대 반도체", "hpc-infra": "HPC·인프라",
+        "robotics": "로보틱스", "monetization": "수익화 모델", "startups-vc": "스타트업·VC",
+        "market-trend": "시장 트렌드", "game-tech": "게임 테크", "spatial-tech": "공간 테크"
+    }
+
     pub_list = "\n".join([f"- {CAT_MAP.get(k, k)}: {v}건" for k, v in cat_issued.items() if v > 0])
     
-    report = f"""✅ **STRATEGIC REPORT COMPLETE**
+    report = f"""✅ **LEGISLATIVE V3 STRATEGIC REPORT**
 
 📦 **수집/발행 통계**
 {quota_info}
+- 수집 소요: {harvest_duration:.1f}s (고속 비동기 엔진)
 ---
 **🚀 최종 발행 내역**
 {pub_list}
 
-📑 후보군: {len(raw_news)}건 -> 필터링: {published_count + sum(cancel_stats.values())}건
+📑 후보군: {len(raw_news)}건 (중복 {cancel_stats['duplicate']}건 제외)
+📑 필터링 완수: {published_count + sum(cancel_stats.values())}건
 
-🚫 **취소 및 필터링 내역 (128/126 미스터리)**
+🚫 **취소 및 필터링 내역**
 {cancel_breakdown}
 
 🤖 **AI 작업 통계**
 - Gemini Calls: {ai_calls}회
-- 성공률: {(published_count/len(new_articles)*100 if new_articles else 0):.1f}%
+- 제작 성공률: {((published_count / len(new_articles) * 100) if new_articles else 0):.1f}% (새 소식 {len(new_articles)}건 대비)
 
 🚀 **발행 결과**
 - 최종 발행: {published_count}건 (가이드: {published_guides}건)
@@ -320,4 +334,8 @@ def main():
     telegram.send_resp(report)
     logger.info("Master execution cycle completed.")
 
-if __name__ == "__main__": main()
+if __name__ == "__main__": 
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("\n [!] Execution interrupted by user.")

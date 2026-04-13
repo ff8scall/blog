@@ -19,7 +19,7 @@ GUIDE_JSON_SCHEMA = """
 
 class GuideEditor:
     """[V3.0] 글로벌 가이드 에디터: 다국어 집필 및 안정적 파싱"""
-    def __init__(self, model_name="gemini-2.0-flash", writer=None):
+    def __init__(self, model_name=None, writer=None):
         self.model_name = model_name
         self.writer = writer if writer else AIWriter()
 

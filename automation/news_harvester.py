@@ -186,16 +186,35 @@ class NewsHarvester:
             print(f" [*] Sniping: {cat_key} -> Query: {query} (Need: {needed})")
             
             # NewsAPI as primary sniper
+            api_results = []
             if "newsapi" not in self.exhausted:
                 api_results = self._fetch_newsapi(query, config['kor_name'], needed)
-                for item in api_results:
-                    item['eng_category_slug'] = cat_key
-                    item['source_weight'] = self._get_source_weight(item.get('source_name', 'Unknown'))
-                    item['content_summary'] = self.extract_core_sentences(item.get('description', ''))
-                    results.append(item)
-                    stats[cat_key] += 1
+                
+            # GNews as secondary sniper (Fallback)
+            if not api_results and "gnews" not in self.exhausted:
+                api_results = self._fetch_gnews(query, config['kor_name'], needed)
+
+            for item in api_results:
+                item['eng_category_slug'] = cat_key
+                item['source_weight'] = self._get_source_weight(item.get('source_name', 'Unknown'))
+                item['content_summary'] = self.extract_core_sentences(item.get('description', ''))
+                results.append(item)
+                stats[cat_key] += 1
                     
         return results, stats
+
+    def _fetch_gnews(self, query, kor_name, limit):
+        if not self.keys['gnews'] or "gnews" in self.exhausted: return []
+        
+        url = f"https://gnews.io/api/v4/search?q={query}&lang=en&max={limit}&token={self.keys['gnews']}"
+        try:
+            res = requests.get(url, timeout=12)
+            if self._is_safe("gnews", res):
+                data = res.json()
+                articles = data.get("articles", [])
+                return [self._normalize(a, a.get("source", {}).get("name", "GNews"), kor_name) for a in articles]
+        except: pass
+        return []
 
     def _fetch_newsapi(self, query, kor_name, limit):
         if not self.keys['newsapi'] or "newsapi" in self.exhausted: return []
