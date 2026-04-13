@@ -1,0 +1,109 @@
+{{ define "main" }}
+<div class="section-page cluster-layout">
+  <div class="container">
+    
+    <header class="section-header cluster-header">
+      <nav class="breadcrumb">
+        <a href="{{ .Site.BaseURL | relLangURL }}">Home</a> 
+        <span class="sep">/</span> 
+        <span class="active">{{ .Title }} Section</span>
+      </nav>
+      
+      <div class="header-content">
+        <h1 class="section-title">{{ .Title }}</h1>
+        {{ with .Description }}
+          <p class="section-desc">{{ . | markdownify }}</p>
+        {{ end }}
+      </div>
+
+      <!-- 하위 카테고리 바로가기 배지 -->
+      <div class="cluster-subtypes">
+        <span class="label">Categories:</span>
+        <div class="badges">
+          {{ $currentCluster := .Data.Term }}
+          {{ if eq $currentCluster "intelligence" }}
+            <a href="/categories/llm-tech" class="badge">LLM & 모델링</a>
+            <a href="/categories/ai-agent" class="badge">자율 에이전트</a>
+            <a href="/categories/ai-policy" class="badge">AI 규제 · 정책</a>
+            <a href="/categories/future-sw" class="badge">미래 SW</a>
+          {{ else if eq $currentCluster "physical" }}
+            <a href="/categories/semi-hbm" class="badge">차세대 반도체</a>
+            <a href="/categories/hpc-infra" class="badge">고성능 컴퓨팅 (HPC)</a>
+            <a href="/categories/robotics" class="badge">로보틱스</a>
+          {{ else if eq $currentCluster "strategy" }}
+            <a href="/categories/monetization" class="badge">수익화 전략</a>
+            <a href="/categories/startups-vc" class="badge">스타트업 & VC</a>
+            <a href="/categories/market-trend" class="badge">글로벌 트렌드</a>
+          {{ else if eq $currentCluster "digital" }}
+            <a href="/categories/game-tech" class="badge">게임 테크</a>
+            <a href="/categories/spatial-tech" class="badge">공간 컴퓨팅 (Spatial)</a>
+          {{ end }}
+        </div>
+      </div>
+    </header>
+
+    <div class="card-grid">
+      {{ range .Paginator.Pages }}
+        {{ partial "card.html" . }}
+      {{ end }}
+    </div>
+
+    <div class="pagination-wrapper">
+      {{ template "_internal/pagination.html" . }}
+    </div>
+
+  </div>
+</div>
+
+<style>
+.cluster-header {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.cluster-layout .breadcrumb {
+  font-size: 0.85rem;
+  opacity: 0.6;
+  margin-bottom: 1rem;
+}
+.cluster-layout .breadcrumb a { color: inherit; text-decoration: none; }
+.cluster-layout .breadcrumb a:hover { text-decoration: underline; }
+.cluster-layout .section-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.cluster-layout .section-desc {
+  font-size: 1.1rem;
+  opacity: 0.8;
+  max-width: 800px;
+  line-height: 1.6;
+}
+.cluster-subtypes {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.cluster-subtypes .label { font-size: 0.9rem; font-weight: 600; opacity: 0.5; }
+.cluster-subtypes .badges { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.cluster-subtypes .badge {
+  padding: 0.4rem 1rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50px;
+  font-size: 0.85rem;
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.cluster-subtypes .badge:hover {
+  background: rgba(255,255,255,0.15);
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.3);
+}
+</style>
+{{ end }}

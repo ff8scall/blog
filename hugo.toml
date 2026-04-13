@@ -3,6 +3,11 @@ title = '레고-시아 전략 매거진'
 defaultContentLanguage = 'ko'
 hasCJKLanguage = true
 
+[taxonomies]
+  category = 'categories'
+  tag = 'tags'
+  cluster = 'clusters'
+
 [languages]
   [languages.ko]
     languageName = "한국어"
@@ -10,9 +15,9 @@ hasCJKLanguage = true
     weight = 1
     [languages.ko.menu]
       [[languages.ko.menu.main]]
-        name = "INTELLIGENCE (AI)"
+        name = "인공지능 (AI)"
         identifier = "intelligence"
-        url = "/categories/llm-tech"
+        url = "/clusters/intelligence"
         weight = 1
       [[languages.ko.menu.main]]
         name = "STRATEGIC GUIDES"
@@ -38,7 +43,7 @@ hasCJKLanguage = true
         weight = 2
       [[languages.ko.menu.main]]
         parent = "intelligence"
-        name = "글로벌 규제·정책"
+        name = "AI 규제 · 정책"
         url = "/categories/ai-policy"
         weight = 3
       [[languages.ko.menu.main]]
@@ -48,13 +53,13 @@ hasCJKLanguage = true
         weight = 4
         
       [[languages.ko.menu.main]]
-        name = "PHYSICAL (HW/ROBOT)"
+        name = "하드웨어 & 로봇"
         identifier = "physical"
-        url = "/categories/semi-hbm"
+        url = "/clusters/physical"
         weight = 2
       [[languages.ko.menu.main]]
         parent = "physical"
-        name = "반도체 & 메모리"
+        name = "차세대 반도체"
         url = "/categories/semi-hbm"
         weight = 1
       [[languages.ko.menu.main]]
@@ -69,9 +74,9 @@ hasCJKLanguage = true
         weight = 3
 
       [[languages.ko.menu.main]]
-        name = "STRATEGY (BIZ)"
+        name = "비즈니스 전략"
         identifier = "strategy"
-        url = "/categories/monetization"
+        url = "/clusters/strategy"
         weight = 3
       [[languages.ko.menu.main]]
         parent = "strategy"
@@ -85,14 +90,14 @@ hasCJKLanguage = true
         weight = 2
       [[languages.ko.menu.main]]
         parent = "strategy"
-        name = "글로벌 시장동향"
+        name = "글로벌 트렌드"
         url = "/categories/market-trend"
         weight = 3
 
       [[languages.ko.menu.main]]
-        name = "DIGITAL (GAME/XR)"
+        name = "게임 & 공간 컴퓨팅"
         identifier = "digital"
-        url = "/categories/game-tech"
+        url = "/clusters/digital"
         weight = 4
       [[languages.ko.menu.main]]
         parent = "digital"
@@ -101,7 +106,7 @@ hasCJKLanguage = true
         weight = 1
       [[languages.ko.menu.main]]
         parent = "digital"
-        name = "공간 컴퓨팅"
+        name = "공간 컴퓨팅 (Spatial)"
         url = "/categories/spatial-tech"
         weight = 2
 
@@ -113,7 +118,7 @@ hasCJKLanguage = true
       [[languages.en.menu.main]]
         name = "INTELLIGENCE (AI)"
         identifier = "intelligence-en"
-        url = "/en/categories/llm-tech"
+        url = "/en/clusters/intelligence"
         weight = 1
       [[languages.en.menu.main]]
         parent = "intelligence-en"
@@ -139,7 +144,7 @@ hasCJKLanguage = true
       [[languages.en.menu.main]]
         name = "PHYSICAL (HW/ROBOT)"
         identifier = "physical-en"
-        url = "/en/categories/semi-hbm"
+        url = "/en/clusters/physical"
         weight = 2
       [[languages.en.menu.main]]
         parent = "physical-en"
@@ -160,7 +165,7 @@ hasCJKLanguage = true
       [[languages.en.menu.main]]
         name = "STRATEGY (BIZ)"
         identifier = "strategy-en"
-        url = "/en/categories/monetization"
+        url = "/en/clusters/strategy"
         weight = 3
       [[languages.en.menu.main]]
         parent = "strategy-en"
@@ -181,7 +186,7 @@ hasCJKLanguage = true
       [[languages.en.menu.main]]
         name = "DIGITAL (GAME/XR)"
         identifier = "digital-en"
-        url = "/en/categories/game-tech"
+        url = "/en/clusters/digital"
         weight = 4
       [[languages.en.menu.main]]
         parent = "digital-en"
