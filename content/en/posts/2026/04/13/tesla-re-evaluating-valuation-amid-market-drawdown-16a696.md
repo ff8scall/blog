@@ -14,7 +14,7 @@ featured: false
 
 ***
 
-# TECH & INVESTMENT ANALYTICS REPORT
+## TECH & INVESTMENT ANALYTICS REPORT
 ## Tesla, Inc. (TSLA): Re-Evaluating Valuation Amid Market Drawdown
 
 **Date:** [Current Date]

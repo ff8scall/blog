@@ -10,7 +10,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# Technical Report: Optimization of VRAM Resource Allocation in Linux Environments for Low-Memory GPUs
+## Technical Report: Optimization of VRAM Resource Allocation in Linux Environments for Low-Memory GPUs
 
 **Date:** October 26, 2023
 **Source Synthesis:** TechPowerUp (Based on work by Valve Developer, Natalie Vock)

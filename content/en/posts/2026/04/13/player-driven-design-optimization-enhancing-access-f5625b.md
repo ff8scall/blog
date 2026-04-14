@@ -10,7 +10,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# TECH REPORT: Player-Driven Design Optimization for High-Complexity Endgame Content
+## TECH REPORT: Player-Driven Design Optimization for High-Complexity Endgame Content
 
 **Project Title:** Analysis of Player-Generated Solutions for Enhancing Accessibility in High-Stakes Raid Environments
 **Source Material:** IGN (Fan Community Discussion Analysis)

@@ -9,7 +9,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# Tech Report: Analysis of Access Restrictions Following Pricing Adjustment
+## Tech Report: Analysis of Access Restrictions Following Pricing Adjustment
 
 **Report ID:** TR-2024-AC-001
 **Date:** October 26, 2023 (Hypothetical Date)

@@ -10,7 +10,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# Tech Report: Analysis of Point-of-Use Filtration Systems for Advanced Contaminant Mitigation
+## Tech Report: Analysis of Point-of-Use Filtration Systems for Advanced Contaminant Mitigation
 
 **Report Title:** Evaluating Next-Generation Water Filtration Pitchers: Efficacy Against PFAS, Microplastics, and Heavy Metals (2026 Market Analysis)
 

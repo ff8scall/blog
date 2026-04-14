@@ -1,7 +1,7 @@
-﻿---
+---
 title: "AMD와 삼성, 차세대 AI 메모리 인터커넥트 전략적 파트너십 구축: HBM4를 통한 MI455X 플랫폼 혁신"
 date: "2026-04-13T23:56:19+09:00"
-description: ""
+description: "AMD와 삼성이 차세대 AI 가속기 MI455X 플랫폼을 위해 HBM4 및 DDR5 메모리를 공동 개발하는 전략적 파트너십을 체결하여 데이터 센터의 대역폭 병목 현상 해결에 나섰습니다."
 image: "/images/posts/2026/04/13/amd-and-samsung-forge-strategic-partnership-for-ne-40d6eb.jpg"
 clusters: ["gpu-hardware"]
 categories: ["gpu-chips"]
@@ -10,7 +10,7 @@ featured: false
 ---
 
 ## 전략 심층 분석
-# 기술 보고서: 반도체 및 AI 하드웨어
+## 기술 보고서: 반도체 및 AI 하드웨어
 ***
 
 ## 차세대 AI 메모리 인터커넥트 전략적 파트너십 구축: AMD와 삼성

@@ -9,7 +9,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# Tech Analysis Report: Deconstructing the Nomenclature of Generative AI
+## Tech Analysis Report: Deconstructing the Nomenclature of Generative AI
 
 **Source Context:** TechCrunch Article, "From LLMs to hallucinations, here’s a simple guide to common AI terms"
 **Report Focus:** Synthesis and formal definition of critical terminology emerging from the Generative AI sector.

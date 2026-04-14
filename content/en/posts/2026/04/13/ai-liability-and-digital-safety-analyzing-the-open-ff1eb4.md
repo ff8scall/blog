@@ -13,7 +13,7 @@ featured: true
 
 ***
 
-# TECH REPORT: AI LABILITY AND DIGITAL SAFETY
+## TECH REPORT: AI LABILITY AND DIGITAL SAFETY
 ## The Alleged Role of Generative AI in Targeted Harassment: Analyzing the OpenAI Lawsuit
 
 **Date:** October 26, 2023 (Simulated)

@@ -10,7 +10,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# Technical Performance Assessment Report: CopprLink eGPU Standard
+## Technical Performance Assessment Report: CopprLink eGPU Standard
 
 **Report ID:** TPA-2024-CPL-001
 **Date:** October 26, 2024

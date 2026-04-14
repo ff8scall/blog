@@ -10,7 +10,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# TECH REPORT: Analysis of BYD Denza Z9 GT Performance and Market Viability
+## TECH REPORT: Analysis of BYD Denza Z9 GT Performance and Market Viability
 
 **Source:** Wired (Media Analysis)
 **Date:** October 26, 2023

@@ -10,7 +10,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# TECH REPORT: POST-ARTEMIS II ARCHITECTURE AND THE SUSTAINMENT OF LUNAR EXPLORATION
+## TECH REPORT: POST-ARTEMIS II ARCHITECTURE AND THE SUSTAINMENT OF LUNAR EXPLORATION
 
 **Source Material Synthesis:** Ars Technica Analysis (Artemis II Mission Review)
 **Date:** October 2023

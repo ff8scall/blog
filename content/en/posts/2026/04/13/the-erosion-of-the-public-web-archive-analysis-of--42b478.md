@@ -10,7 +10,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# TECH REPORT: Digital Preservation & Information Integrity
+## TECH REPORT: Digital Preservation & Information Integrity
 
 ## The Erosion of the Public Web Archive: Analysis of the Threat to the Wayback Machine
 

@@ -10,7 +10,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# Tech Report: Limitations of Large Language Models in Complex Predictive Modeling – The Case of Soccer Analysis
+## Tech Report: Limitations of Large Language Models in Complex Predictive Modeling – The Case of Soccer Analysis
 
 **Date:** October 26, 2023 (Simulated)
 **Source Material:** Ars Technica analysis regarding AI performance in sports prediction.

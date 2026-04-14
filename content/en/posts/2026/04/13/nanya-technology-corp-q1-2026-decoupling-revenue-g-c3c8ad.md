@@ -10,7 +10,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# Tech Industry Financial Analysis Report
+## Tech Industry Financial Analysis Report
 ## Nanya Technology Corporation (NTC) Q1 2026 Financial Performance Review
 
 **Date:** [Current Date]

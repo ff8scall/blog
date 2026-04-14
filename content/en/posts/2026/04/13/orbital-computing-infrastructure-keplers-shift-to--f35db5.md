@@ -11,7 +11,7 @@ featured: false
 ## Strategic Deep-Dive
 ***
 
-# Tech Industry Analysis Report: Orbital Computing Infrastructure
+## Tech Industry Analysis Report: Orbital Computing Infrastructure
 
 **Subject:** Commercial Deployment of Large-Scale Geospatial Compute Clusters
 **Source Material:** TechCrunch Coverage (Kepler Communications)

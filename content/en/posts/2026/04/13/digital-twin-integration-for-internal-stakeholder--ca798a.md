@@ -14,7 +14,7 @@ featured: false
 
 ***
 
-# TECH REPORT: Digital Twin Integration for Internal Stakeholder Engagement
+## TECH REPORT: Digital Twin Integration for Internal Stakeholder Engagement
 ## Meta Platforms, Inc. – Deployment of CEO-Level Conversational AI Avatar
 
 | **Prepared For:** | Executive Technology Steering Committee |

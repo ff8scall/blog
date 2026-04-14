@@ -9,7 +9,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# Tech Report: Maximizing OneDrive Operational Efficiency
+## Tech Report: Maximizing OneDrive Operational Efficiency
 ***
 
 **Prepared For:** General Enterprise Users / Knowledge Management Teams

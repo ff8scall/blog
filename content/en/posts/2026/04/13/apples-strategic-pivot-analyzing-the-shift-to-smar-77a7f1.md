@@ -9,7 +9,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# TECH INTELLIGENCE REPORT: APPLE AR/MR STRATEGY
+## TECH INTELLIGENCE REPORT: APPLE AR/MR STRATEGY
 
 **Report Title:** Analysis of Apple's Smart Glasses Development: Strategic Pivot and Design Iteration
 **Source Material:** TechCrunch Reporting

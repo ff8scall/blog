@@ -1,7 +1,7 @@
-﻿---
+---
 title: "Hyper Photonix 1.6T Silicon Photonics Transceiver: Solving the Bandwidth Bottleneck for Exascale AI Computing"
 date: "2026-04-13T23:14:00+09:00"
-description: ""
+description: "Hyper Photonix demonstrated a 1.6T Silicon Photonics transceiver at OFC 2026, using 4-core multicore fiber to solve bandwidth bottlenecks for exascale AI computing."
 image: "/images/posts/2026/04/13/hyper-photonix-16t-silicon-photonics-transceiver-s-812f43.jpg"
 clusters: ["ai-models-tools"]
 categories: ["data-center-networking"]
@@ -12,7 +12,7 @@ featured: false
 ## Strategic Deep-Dive
 ***
 
-# TECH REPORT: Advanced Data Center Interconnect Solutions
+## TECH REPORT: Advanced Data Center Interconnect Solutions
 
 ## Hyper Photonix 1.6T Silicon Photonics Transceiver for AI Scaling
 

@@ -9,7 +9,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# Tech Report: Advanced Image Manipulation Capabilities within Microsoft PowerPoint
+## Tech Report: Advanced Image Manipulation Capabilities within Microsoft PowerPoint
 
 **Report ID:** TR-PPT-IMG-2024-001
 **Date:** October 26, 2024

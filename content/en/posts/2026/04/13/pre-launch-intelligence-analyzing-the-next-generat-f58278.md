@@ -12,7 +12,7 @@ featured: false
 Industry intelligence suggests Valve is preparing for a major hardware rollout, focusing on wireless connectivity and a comprehensive peripheral ecosystem for the next-gen Steam Controller.
 
 ## Strategic Deep-Dive
-# Tech Report: Analysis of Anticipated Steam Controller Launch Preparations
+## Tech Report: Analysis of Anticipated Steam Controller Launch Preparations
 
 **Report ID:** TP-2024-SC-001
 **Date:** October 26, 2024

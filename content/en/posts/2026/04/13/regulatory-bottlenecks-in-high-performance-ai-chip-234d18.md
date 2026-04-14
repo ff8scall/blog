@@ -10,7 +10,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# Tech Policy and Market Analysis Report
+## Tech Policy and Market Analysis Report
 
 ## Subject: Regulatory Bottlenecks in High-Performance AI Chip Exports to China
 **Source Material Basis:** Tom's Hardware (Reporting on U.S. Export Control Issues)

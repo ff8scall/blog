@@ -10,7 +10,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# TECH INDUSTRY ANALYSIS REPORT: MARKET FAIRNESS AND CONSUMER PROTECTION
+## TECH INDUSTRY ANALYSIS REPORT: MARKET FAIRNESS AND CONSUMER PROTECTION
 
 **Report Title:** Analysis of Class-Action Settlement Against NZXT Regarding PC Rental Schemes
 **Date:** October 26, 2023 (Based on Source Data)

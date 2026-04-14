@@ -14,7 +14,7 @@ featured: false
 
 ***
 
-# 🤖 TECH REPORT: Optimus V3
+## 🤖 TECH REPORT: Optimus V3
 ## Assessment of General-Purpose Humanoid Robotics for Mass Deployment
 
 **Report ID:** NBF-TR-2026-04-02

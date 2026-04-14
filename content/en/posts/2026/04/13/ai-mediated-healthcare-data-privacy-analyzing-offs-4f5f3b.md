@@ -10,7 +10,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# TECH REPORT: AI-MEDIATED HEALTHCARE DATA PRIVACY
+## TECH REPORT: AI-MEDIATED HEALTHCARE DATA PRIVACY
 ## Analysis of Offsite Processing of Protected Health Information (PHI) via AI Transcription Tools
 
 ---

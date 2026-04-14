@@ -10,7 +10,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# Tech Report: AdGuard Family Plan Analysis
+## Tech Report: AdGuard Family Plan Analysis
 
 ## Title: Comprehensive Device-Level Content Filtering and Privacy Shielding with AdGuard Family Plan
 

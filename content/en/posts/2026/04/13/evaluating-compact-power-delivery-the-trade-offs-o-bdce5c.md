@@ -10,7 +10,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# TECH REPORT: POWER DELIVERY ANALYSIS
+## TECH REPORT: POWER DELIVERY ANALYSIS
 
 ## Acer Predator GX850 SFX Power Supply Unit
 **Model Reviewed:** Acer Predator GX850 SFX

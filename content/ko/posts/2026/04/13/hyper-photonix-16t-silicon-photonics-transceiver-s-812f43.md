@@ -1,7 +1,7 @@
-﻿---
+---
 title: "하이퍼 포토닉스 1.6T 실리콘 포토닉스 트랜시버: 엑사스케일 AI 컴퓨팅의 대역폭 병목 현상 해결"
 date: "2026-04-13T23:14:00+09:00"
-description: ""
+description: "하이퍼 포토닉스는 OFC 2026에서 4코어 멀티코어 광섬유를 활용한 1.6T 실리콘 포토닉스 트랜시버를 시연하며, 엑사스케일 AI 컴퓨팅의 대역폭 병목 현상을 해결하는 혁신을 선보였습니다."
 image: "/images/posts/2026/04/13/hyper-photonix-16t-silicon-photonics-transceiver-s-812f43.jpg"
 clusters: ["ai-models-tools"]
 categories: ["data-center-networking"]
@@ -12,7 +12,7 @@ featured: false
 ## 전략적 심층 분석
 ***
 
-# 기술 보고서: 첨단 데이터센터 인터커넥트 솔루션
+## 기술 보고서: 첨단 데이터센터 인터커넥트 솔루션
 
 ## AI 스케일링을 위한 하이퍼 포토닉스 1.6T 실리콘 포토닉스 트랜시버
 

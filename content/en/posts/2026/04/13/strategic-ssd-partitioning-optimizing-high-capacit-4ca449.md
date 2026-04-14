@@ -9,7 +9,7 @@ featured: true
 ---
 
 ## Strategic Deep-Dive
-# Tech Report: Optimizing High-Capacity Solid State Drives (SSDs)
+## Tech Report: Optimizing High-Capacity Solid State Drives (SSDs)
 ## The Strategic Importance of Disk Partitioning on 4TB+ Volumes
 
 **Date:** October 26, 2023

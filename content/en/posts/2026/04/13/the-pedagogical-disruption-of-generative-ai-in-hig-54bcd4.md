@@ -10,7 +10,7 @@ featured: true
 ---
 
 ## Strategic Deep-Dive
-# Tech Report: The Pedagogical Disruption of Generative AI in Higher Education
+## Tech Report: The Pedagogical Disruption of Generative AI in Higher Education
 
 **Source Material Context:** Analysis of instructor sentiment regarding the integration of Large Language Models (LLMs) into academic assessment.
 **Original Source:** Ars Technica (Synthesized Academic Commentary)
