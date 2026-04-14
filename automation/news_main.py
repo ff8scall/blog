@@ -5,9 +5,40 @@ import time
 import hashlib
 import requests
 import logging
+import urllib.parse
 from datetime import datetime
 from dotenv import load_dotenv
 from news_harvester import NewsHarvester
+
+class StateTracker:
+    """[V9.0] Job State Management: Ensures resumable & atomic operations"""
+    def __init__(self, state_file="automation/job_state.json"):
+        self.state_file = state_file
+        os.makedirs(os.path.dirname(self.state_file), exist_ok=True)
+        self.state = self.load_state()
+
+    def load_state(self):
+        if os.path.exists(self.state_file):
+            try:
+                with open(self.state_file, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            except:
+                return {"guides": {}, "news": {}}
+        return {"guides": {}, "news": {}}
+
+    def save_state(self):
+        with open(self.state_file, 'w', encoding='utf-8') as f:
+            json.dump(self.state, f, indent=4, ensure_ascii=False)
+
+    def is_done(self, section, slug, lang):
+        return lang in self.state.get(section, {}).get(slug, [])
+
+    def mark_done(self, section, slug, lang):
+        if section not in self.state: self.state[section] = {}
+        if slug not in self.state[section]: self.state[section][slug] = []
+        if lang not in self.state[section][slug]:
+            self.state[section][slug].append(lang)
+            self.save_state()
 
 # [V3.0.32] Environment Auto-Loader
 load_dotenv()
@@ -73,12 +104,12 @@ def download_image(url, category_slug, slug):
     # [V3.0.31] Protocol-relative URL fix
     if url.startswith('//'): url = 'https:' + url
     
-    year_month = datetime.now().strftime('%Y/%m')
-    img_dir = f"static/images/posts/{year_month}"
+    date_dir = datetime.now().strftime('%Y/%m/%d')
+    img_dir = f"static/images/posts/{date_dir}"
     os.makedirs(img_dir, exist_ok=True)
     
     img_path = f"{img_dir}/{slug}.jpg"
-    web_url = f"/images/posts/{year_month}/{slug}.jpg"
+    web_url = f"/images/posts/{date_dir}/{slug}.jpg"
     
     try:
         resp = requests.get(url, timeout=(3, 10), headers={'User-Agent': 'Mozilla/5.0'})
@@ -89,40 +120,65 @@ def download_image(url, category_slug, slug):
     
     return f"/images/fallbacks/{fallback_key}.jpg"
 
+def generate_and_save_thumbnail(image_prompt_core, slug_name):
+    """[V8.0] 일자별 이미지 폴더 구조 (YYYY/MM/DD)"""
+    aesthetic_base = ", minimalist dark mode tech aesthetic, isometric view, clean smooth surfaces, 8k resolution, highly detailed corporate editorial illustration --no text, no humans, no robots, no faces"
+    
+    final_prompt = (image_prompt_core if image_prompt_core else "Abstract tech geometry") + aesthetic_base
+    logger.info(f"[IMAGE] Creating thumbnail for {slug_name}")
+    
+    encoded_prompt = urllib.parse.quote(final_prompt)
+    image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=1200&height=630&nologo=true"
+    
+    try:
+        response = requests.get(image_url, timeout=30)
+        if response.status_code == 200:
+            date_dir = datetime.now().strftime("%Y/%m/%d")
+            save_dir = f"static/images/posts/{date_dir}"
+            os.makedirs(save_dir, exist_ok=True)
+            
+            save_path = f"{save_dir}/{slug_name}.jpg"
+            with open(save_path, 'wb') as f:
+                f.write(response.content)
+            return f"/images/posts/{date_dir}/{slug_name}.jpg"
+    except Exception as e:
+        logger.error(f"[IMAGE] Failed: {e}")
+    return "/images/default-tech-bg.jpg"
+
 def create_hugo_post(article, lang='ko'):
-    year, month = datetime.now().strftime('%Y'), datetime.now().strftime('%m')
-    base_path = f"content/{lang}/posts/{year}/{month}"
-    os.makedirs(base_path, exist_ok=True)
+    """[V8.0] 일자별 콘텐츠 폴더 구조 (YYYY/MM/DD)"""
+    date_path = datetime.now().strftime("%Y/%m/%d")
+    target_dir = f"content/{lang}/posts/{date_path}"
+    os.makedirs(target_dir, exist_ok=True)
     
     slug = article['sync_slug']
     cat_safe = sanitize_slug(article.get('category', 'ai-models'))
     img_url = download_image(article.get('original_image_url'), cat_safe, slug)
     
-    is_featured = "true" if article.get('score', 0) >= 9.5 else "false"
-
+    filepath = os.path.join(target_dir, f"{slug}.md")
+    
     if lang == 'ko':
         title = article.get('kor_title', '제목 없음')
-        summary_list = article.get('kor_summary', [])
-        if not isinstance(summary_list, list): summary_list = [summary_list]
-        summary_text = "\n".join([f"- {s}" for s in summary_list])
-        desc_val = article.get('description', summary_list[0] if summary_list else title)
+        desc_val = article.get('kor_summary', [title])[0]
         tags_val = json.dumps(article.get('kor_keywords', []), ensure_ascii=False)
         date_str = datetime.now().strftime('%Y-%m-%dT%H:%M:%S+09:00')
-        
-        # [V3.2] 동적 부제(Dynamic Subtitles) 반영
-        analysis_title = article.get('kor_analysis_title', '기술 분석 및 상세')
-        insight_title = article.get('kor_insight_title', '시사점 및 전망')
+        analysis_title = article.get('kor_analysis_title', '상세 분석')
+        insight_title = article.get('kor_insight_title', '인사이트')
+        summary_text = "\n".join([f"- {s}" for s in article.get('kor_summary', [])])
         content_body = f"## 핵심 요약\n{summary_text}\n\n## {analysis_title}\n{article.get('kor_content')}\n\n## {insight_title}\n{article.get('kor_insight')}"
     else:
         title = article.get('eng_title', 'Untitled')
-        desc_val = article.get('eng_summary', title)
+        eng_sum = article.get('eng_summary')
+        desc_val = eng_sum if eng_sum else title
         tags_val = json.dumps(article.get('eng_keywords', []), ensure_ascii=False)
         date_str = datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ')
-        content_body = f"## Executive Summary\n{article.get('eng_summary')}\n\n## Strategic Deep-Dive\n{article.get('eng_content', 'Content not localized yet.')}"
+        summary_section = f"## Executive Summary\n{eng_sum}\n\n" if eng_sum else ""
+        content_body = f"{summary_section}## Strategic Deep-Dive\n{article.get('eng_content', 'Content not localized yet.')}"
 
-    # [V0.2.2 Fix] Essential YAML/Hugo Quote Escaping (Replace " with ')
+    img_path = generate_and_save_thumbnail(article.get('image_prompt_core'), slug)
     safe_title = title.replace('"', "'")
-    safe_desc = desc_val[:150].replace('"', "'")
+    safe_desc = desc_val.replace('"', "'")
+    is_featured = "true" if article.get('featured') else "false"
 
     post_md = f"""---
 title: "{safe_title}"
@@ -136,7 +192,7 @@ featured: {is_featured}
 ---
 {content_body}
 """
-    with open(f"{base_path}/{slug}.md", "w", encoding="utf-8-sig") as f:
+    with open(filepath, "w", encoding="utf-8-sig") as f:
         f.write(post_md)
     return True
 
@@ -157,85 +213,56 @@ categories: ["{guide_data.get('guide_type', 'ai-tools')}"]
         f.write(content)
     return True
 
+def manage_news_pipeline(limit=10):
+    """지능형 뉴스 발행 파이프라인 (V9.0 복원력 추가)"""
+    logger.info(f"Executive Intelligence Engine V3.1 starting with limit={limit}...")
+    
+    harvester = NewsHarvester()
+    editor = NewsEditor(writer=AIWriter())
+    tracker = StateTracker()
+    
+    # 1. 뉴스 수집
+    news_items = harvester.fetch_all(limit_per_cat=limit)[0]
+    
+    count = 0
+    for item in news_items:
+        if count >= limit: break
+        
+        safe_slug = sanitize_slug(item['title'])
+        # [V9.0] Skip if already done
+        if tracker.is_done("news", safe_slug, "en") and tracker.is_done("news", safe_slug, "ko"):
+            continue
+
+        try:
+            # 2. 뉴스 분석 및 집필 (영문/한글 통합 데이터 생성)
+            article_data = editor.review_batch([item])[0]
+            if article_data:
+                article_data['sync_slug'] = safe_slug
+                
+                # 3. Hugo 포스트 생성 (영문)
+                if not tracker.is_done("news", safe_slug, "en"):
+                    create_hugo_post(article_data, lang='en')
+                    tracker.mark_done("news", safe_slug, "en")
+                
+                # 4. Hugo 포스트 생성 (한글)
+                if not tracker.is_done("news", safe_slug, "ko"):
+                    create_hugo_post(article_data, lang='ko')
+                    tracker.mark_done("news", safe_slug, "ko")
+                
+                count += 1
+                logger.info(f"Published: {safe_slug}")
+                time.sleep(10)
+        except Exception as e:
+            logger.error(f"Failed to process {item['title']}: {e}")
+
+    logger.info("Master execution cycle completed.")
+
 def main():
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=4)
-    parser.add_argument("--category", type=str, default=None)
-    parser.add_argument("--rss-only", action="store_true")
     args = parser.parse_args()
-
-    shared_writer = AIWriter()
-    harvester = NewsHarvester()
-    editor = NewsEditor(writer=shared_writer)
-    guide_editor = GuideEditor(writer=shared_writer)
-    history = HistoryManager()
-    reviewer = EditorInChief(writer=shared_writer)
-    telegram = TelegramRemote()
-    
-    start_time = datetime.now()
-    logger.info(f"Executive Intelligence Engine V3.1 starting with limit={args.limit}...")
-    
-    telegram.send_resp("🚀 **ENGINE ACTIVATED (V3.1)**\n- Optimized Sync Engine.\n- Initializing intelligence harvest...")
-
-    cat_issued = {cat: 0 for cat in CATEGORY_BUDGETS}
-    cancel_stats = {"duplicate": 0, "review": 0, "budget": 0, "draft_fail": 0}
-    
-    target_cats = [args.category] if args.category else None
-    
-    # [Fix] Use args.limit correctly
-    raw_news, harvest_stats = harvester.fetch_all(
-        limit_per_cat=args.limit, 
-        rss_only=args.rss_only, 
-        target_cats=target_cats
-    )
-    
-    new_articles = []
-    for a in raw_news:
-        if history.is_already_processed(a['url']):
-            cancel_stats["duplicate"] += 1
-        else:
-            new_articles.append(a)
-    
-    published_count = 0; ai_calls = 0
-    
-    if not new_articles:
-        logger.warning(f"Process ended: {cancel_stats['duplicate']} articles skipped as duplicates.")
-        return
-
-    # [Strategic Shuffle]
-    import random as rand
-    rand.shuffle(new_articles)
-    
-    for article in new_articles:
-        if published_count >= args.limit * len(CATEGORY_BUDGETS): break
-
-        if published_count > 0:
-            time.sleep(15)
-        
-        # [V3.1] Simplified processing loop
-        drafts = editor.review_batch([article], recent_posts=history.get_recent_posts(limit=10))
-        ai_calls += 2
-        if not drafts:
-            cancel_stats["draft_fail"] += 1
-            continue
-        
-        sync_slug = f"{sanitize_slug(drafts[0]['eng_title'])}-{hash_slug(article['url'])}"
-
-        for draft in drafts:
-            cat = draft.get('category', 'ai-models')
-            draft['sync_slug'] = sync_slug
-            
-            if reviewer.review_article(draft).get('decision') != 'PASS':
-                cancel_stats["review"] += 1
-                continue
-
-            if create_hugo_post(draft, lang='ko') and create_hugo_post(draft, lang='en'):
-                history.add_to_history(article['url'], article['title'], local_url=sync_slug)
-                cat_issued[cat] += 1; published_count += 1
-                logger.info(f"Published: {sync_slug}")
-
-    logger.info("Master execution cycle completed.")
+    manage_news_pipeline(limit=args.limit)
 
 if __name__ == "__main__": 
     main()

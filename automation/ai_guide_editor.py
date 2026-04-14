@@ -1,91 +1,95 @@
-import json
 import os
 import re
 import logging
+from datetime import datetime
 from ai_writer import AIWriter
 
 logger = logging.getLogger("LegoSia.GuideEditor")
 
-GUIDE_JSON_SCHEMA = """
-{
-    "guide_title": "Technical Documentation Title",
-    "guide_summary": "Technical objective and summary (1-sentence)",
-    "guide_type": "Framework/Category",
-    "difficulty": "Intermediate | Advanced",
-    "guide_content": "Technical Markdown content following Phase 1-4 structure",
-    "tags": ["cli", "backend", "api"]
-}
-"""
-
 class GuideEditor:
-    """[V6.0] 전문 엔지니어용 기술 가이드 에디터: CLI 및 코드 중심"""
-    def __init__(self, model_name=None, writer=None):
+    """[V7.3] Anti-Laziness Translation Pipeline: EN 1:1 Clone to KO"""
+    def __init__(self, model_name="gemma4:latest", writer=None):
         self.model_name = model_name
         self.writer = writer if writer else AIWriter()
 
-    def _extract_json_safe(self, text):
-        if not text: return None
-        stack = []
-        start = -1
-        for i, char in enumerate(text):
-            if char == '{':
-                if start == -1: start = i
-                stack.append('{')
-            elif char == '}':
-                if stack:
-                    stack.pop()
-                    if not stack:
-                        try: return json.loads(text[start:i+1], strict=False)
-                        except: return None
-        return None
-
-    def write_guide(self, news_draft, lang='ko'):
-        """[V6.0] 실무자용 심층 기술 문서 집필"""
-        summary = news_draft.get('kor_summary', '')
-        if isinstance(summary, list): summary = " ".join(summary)
-            
-        language_name = "Korean" if lang == 'ko' else "English"
+    def write_english_guide(self, news_draft):
+        """1단계: 최고의 지능으로 영문 오리지널 가이드 생성"""
+        title = news_draft.get('kor_title', 'Strategic Guide')
+        tech_context = news_draft.get('kor_content', 'Standard technical implementation.')
         
         prompt = f"""
-            [STRICT TECHNICAL DOCUMENTATION PROTOCOL]:
-            1. TARGET AUDIENCE: System Engineers and Backend Developers.
-            2. TONE & STYLE: 
-               - Dry, concise, and professional. 
-               - NO emojis, NO greetings, NO flowery language.
-               - Use standard Markdown headers (### Phase X).
-            3. CONTENT STRUCTURE (MANDATORY):
-               - ### Overview: Technical objectives and architecture.
-               - ### Phase 1: Infrastructure & Environment Setup
-                 - MUST include exact CLI commands (e.g. conda create, pip install).
-                 - Specify required CUDA and Python versions.
-               - ### Phase 2: Core Implementation & Engine Setup
-                 - Specify backend framework (e.g. ComfyUI, FastAPI, Diffusers).
-                 - Detailed model weights and loading logic.
-               - ### Phase 3: Hardware Tuning & API Integration
-                 - VRAM management: Specific params for limited memory (e.g. 12GB).
-                 - Provide actual JSON API request/response samples.
-               - ### Phase 4: Training & Optimization
-                 - LoRA/Fine-tuning params (e.g. 8-bit Adam, Learning Rate).
-                 - Requirements for high-end scaling (24GB+).
-            4. FORMATTING: Use code blocks (```bash, ```python, ```json) for all technical data.
+[PERSONA]
+You are a 10-year senior engineer and top-tier technical instructor.
 
-            [OUTPUT STRUCTURE]: {GUIDE_JSON_SCHEMA}
-            [INPUT CONTEXT]:
-            - TOPIC: {news_draft.get('kor_title')}
-            - OBJECTIVE: {summary}
-            - TECHNICAL DATA: {news_draft.get('kor_content', '')}
-            """
-            
-        res = self.writer.generate_content(prompt, model=self.model_name)
-        result = self._extract_json_safe(res)
+[ABSOLUTE CONSTRAINTS]
+1. Output ONLY Markdown format. NO JSON.
+2. Skip greetings. Start directly with the YAML frontmatter.
+3. Include specific CLI commands and [Expected Results] for every step.
+4. Generate a 1-sentence English prompt for the thumbnail image in 'image'. 
+   - RULE: MUST be abstract 3D objects and data-centric flow.
+   - FORBIDDEN: No humans, no robots, no text, no screens, no keyboards, no faces.
+
+[OUTPUT SKELETON]
+---
+title: "[Practical Guide] {title} Implementation"
+date: "{datetime.now().strftime('%Y-%m-%dT%H:%M:%S+09:00')}"
+description: "How to achieve the goal in 1 line."
+type: "posts"
+clusters: ["guides"]
+categories: ["tutorials"]
+tags: ["guide", "tutorial"]
+difficulty: "Advanced"
+time_to_complete: "15 minutes"
+image: "Glowing crystalline neural nodes connected by thin data streams, neon blue and deep purple"
+---
+
+## 🎯 Overview
+(Technical objectives)
+
+## 🚀 Phase 1. Infrastructure Setup
+* **Step 1-1.** Action description
+  * `command here`
+  * **Expected Result:** ...
+
+[TARGET TOPIC]: {title}
+[TECHNICAL CONTEXT]: {tech_context}
+"""
+        raw_en = self.writer.generate_content(prompt, model=self.model_name)
+        return self._clean_markdown(raw_en)
+
+    def translate_to_korean(self, en_markdown):
+        """2단계: [매우 중요] 생략 없는 1:1 완벽 번역 강제 (Anti-Laziness)"""
+        if not en_markdown: return None
         
-        if result and 'guide_content' in result:
-            # 보정 로직: 한글 가독성을 위한 최소한의 줄바꿈 (문장 끝 . 뒤에 강제 \n\n)
-            # 단, 코드 블록 내부 등은 건드리지 않도록 정교한 처리가 필요하나 
-            # 일단 단순 적용 후 테스트하겠습니다.
-            content = result['guide_content']
-            # 불필요한 이모지 잔재가 생성될 경우 강제 삭제
-            content = re.sub(r'[\u1F600-\u1F64F\u1F300-\u1F5FF\u1F680-\u1F6FF\u2600-\u26FF\u2700-\u27BF]', '', content)
-            result['guide_content'] = content
+        prompt = f"""
+[TASK]
+Translate the following English technical guide into highly professional Korean.
+
+[STRICT RULES - ANTI-LAZINESS]
+1. 1:1 FULL TRANSLATION: You MUST translate every single section, phase, and step. DO NOT skip, summarize, or omit anything.
+2. CODE PRESERVATION: Keep all Markdown code blocks (```bash, etc.), CLI commands, and technical terms exactly as they are in English.
+3. TONE: Use a clean, professional Korean tone (e.g., "~를 실행하십시오", "다음 명령어를 입력합니다").
+4. NO EMOJIS: Maintain the exact formatting (---, >, *, etc.).
+5. YAML FRONTMATTER: Maintain the exact YAML structure, but translate the 'title' and 'description' values into Korean.
+
+[ENGLISH GUIDE SOURCE]
+{en_markdown}
+"""
+        raw_ko = self.writer.generate_content(prompt, model=self.model_name)
+        return self._clean_markdown(raw_ko)
+
+    def _clean_markdown(self, raw_text):
+        """마크다운 백틱 클리닝 및 안전 파싱 (V7.3)"""
+        if not raw_text: return ""
+        clean = raw_text.strip()
+        
+        # ```markdown 또는 ``` 래핑 제거 로직 강화
+        if clean.startswith("```"):
+            clean = re.sub(r'^```(markdown)?\n', '', clean)
+            clean = re.sub(r'\n```$', '', clean)
+        
+        # 잡설 제거 (첫 번째 --- 지점부터 시작)
+        if "---" in clean:
+            clean = clean[clean.find("---"):]
             
-        return result
+        return clean.strip()

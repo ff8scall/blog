@@ -1,132 +1,179 @@
-import json
 import os
-import re
+import sys
 import time
+import json
 import logging
-import subprocess
-from ai_guide_editor import GuideEditor
-from ai_news_editor import NewsEditor
+import re
 from datetime import datetime
+from ai_guide_editor import GuideEditor
 
-# 로깅 설정
+# [로그 설정]
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("LegoSia.NightShift")
 
+class StateTracker:
+    """[V9.0] Job State Management: Ensures resumable & atomic operations"""
+    def __init__(self, state_file="automation/job_state.json"):
+        self.state_file = state_file
+        self.state = self.load_state()
+
+    def load_state(self):
+        if os.path.exists(self.state_file):
+            try:
+                with open(self.state_file, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            except:
+                return {"guides": {}, "news": {}}
+        return {"guides": {}, "news": {}}
+
+    def save_state(self):
+        with open(self.state_file, 'w', encoding='utf-8') as f:
+            json.dump(self.state, f, indent=4, ensure_ascii=False)
+
+    def is_done(self, section, slug, lang):
+        return lang in self.state.get(section, {}).get(slug, [])
+
+    def mark_done(self, section, slug, lang):
+        if section not in self.state: self.state[section] = {}
+        if slug not in self.state[section]: self.state[section][slug] = []
+        if lang not in self.state[section][slug]:
+            self.state[section][slug].append(lang)
+            self.save_state()
+
+def sanitize_filename(filename):
+    clean = re.sub(r'[\\/*?:"<>|]', "", filename)
+    return clean.replace(" ", "-")
+
 GUIDE_TOPICS = [
-    {
-        "title": "Gemma 4 Local Server Setup Guide (Ollama/Windows)", 
-        "summary": "Building a private LLM server using Ollama with Gemma 4 on Windows 11.",
-        "tech_data": "Backend: Ollama v0.1.28+, CUDA 12.1. Framework: FastAPI for API wrapper. Requirements: RTX 3060+ (12GB)."
-    },
-    {
-        "title": "Stable Diffusion 3.5 Local Installation and LoRA Training", 
-        "summary": "Step-by-step technical guide for SD 3.5 inference and fine-tuning on consumer GPUs.",
-        "tech_data": "Backend: ComfyUI or SD-forge. Training: Kohya_ss. Requirements: 12GB VRAM (Inference w/ quantized fp8), 24GB VRAM (Training)."
-    },
-    {
-        "title": "Claude 3 API Integration with Local RAG Systems", 
-        "summary": "Architecting a hybrid AI system using Anthropics Claude 3 and local vector databases.",
-        "tech_data": "Framework: LangChain. Backend: ChromaDB (Local). API: Claude 3 Sonnet/Opus for reasoning."
-    },
-    {
-        "title": "VRAM Optimization for AI workloads on 8-12GB GPUs", 
-        "summary": "Deep-dive into memory management for running heavy models on limited hardware.",
-        "tech_data": "Techniques: xformers, 8-bit Adam optimizer, Gradient Checkpointing, CPU Offloading, Quantization (bnb)."
-    }
+    {"title": "Gemma 4 Local Server Setup Guide (Ollama/Windows)", "summary": "Full Implementation of Local LLM", "tech_data": "Ollama, Windows, NVIDIA GPU, REST API Integration"},
+    {"title": "Stable Diffusion 3.5 Local Installation and LoRA Training", "summary": "Setup and personal character training", "tech_data": "SD 3.5 Large, ComfyUI/Forge, LoRA Fine-tuning workflow"},
+    {"title": "Claude 3 API Integration with Local RAG Systems", "summary": "Building a private knowledge base with Anthropic", "tech_data": "Claude 3.5 Sonnet, LangChain, FAISS Vector DB, Python"},
+    {"title": "VRAM Optimization for AI workloads on 8-12GB GPUs", "summary": "How to run large models on consumer hardware", "tech_data": "Quantization (GGUF/EXL2), Xformers, Flash Attention, Virtual Memory tricks"},
+    {"title": "Fine-Tuning Llama 3 on Personal Data (Unsloth)", "summary": "Lightning fast fine-tuning guide", "tech_data": "Unsloth, QLoRA, HuggingFace Dataset, Python"},
+    {"title": "Building a Local AI Coding Agent (Continue.dev/Aider)", "summary": "Automating your private dev workflow", "tech_data": "VS Code, Continue, DeepSeek Coder, Local LLM setup"},
+    {"title": "Running Flux.1 (Black Forest Labs) on Windows", "summary": "High-fidelity local image generation", "tech_data": "Flux.1 [dev], GGUF version, Win-AMD/NVIDIA optimization"},
+    {"title": "Real-time Voice AI with Whisper & Piper TTS", "summary": "Low-latency private voice interaction", "tech_data": "Whisper CTranslate2, Piper TTS, Python sounddevice"},
+    {"title": "Setting up a Private PDF Analyzer (Nomic/PrivateGPT)", "summary": "Analysis of corporate documents without leaks", "tech_data": "Nomic Embed, LlamaCpp, Streamlit UI, local storage"}
 ]
 
-def sanitize_filename(text):
-    """[V6.0] Windows compatible filename sanitizer"""
-    if not text: return "topic"
-    clean = re.sub(r'[^a-zA-Z0-9가-힣\s-]', '', text).strip()
-    return re.sub(r'\s+', '-', clean)[:50]
-
-def git_commit_backup():
-    """[V6.0] Automated Git commit for data safety"""
-    try:
-        subprocess.run(["git", "add", "content/"], check=True)
-        subprocess.run(["git", "commit", "-m", f"Auto-backup: {datetime.now().strftime('%Y-%m-%d %H:%M')}"], check=False)
-        logger.info("[GIT] Content backed up.")
-    except Exception as e:
-        logger.warning(f"[GIT] Error: {e}")
-
-def run_news_engine(limit=10):
-    """[V6.0] News harvesting with bilingual support"""
-    logger.info(f"[NEWS] Engine starting with limit {limit}")
-    try:
-        subprocess.run(["python", "automation/news_main.py", "--limit", str(limit)], check=True)
-        git_commit_backup()
-    except Exception as e:
-        logger.error(f"[NEWS] Error: {e}")
-
 def run_guide_engine():
-    """[V6.0] Technical Guide generation with Deep Search context"""
-    logger.info("[GUIDE] Technical documentation loop starting")
+    logger.info("[GUIDE] Resilient Engine V9.0 starting")
     editor = GuideEditor(model_name="gemma4:latest")
+    tracker = StateTracker()
     
     for topic in GUIDE_TOPICS:
         try:
             safe_slug = sanitize_filename(topic['title'])
-            logger.info(f"[GUIDE] Writing: {topic['title']}")
             
-            # [V6.0] Technical Injection: Provide real frameworks and constraints
-            rich_context = f"""
-            TECHNICAL CONSTRAINTS FOR {topic['title']}:
-            - {topic['tech_data']}
-            - Objective: Produce a professional CLI-based manual following Phase 1-4.
-            - Format: No flowery intro. Start with Overview then Phase 1.
-            """
-            
+            # [V9.0] Skip if both EN and KO are already finished
+            if tracker.is_done("guides", safe_slug, "en") and tracker.is_done("guides", safe_slug, "ko"):
+                logger.info(f"[GUIDE] Skipping {safe_slug} - Already completed.")
+                continue
+
             news_draft = {
                 "kor_title": topic['title'],
                 "kor_summary": topic['summary'],
-                "kor_content": rich_context, 
+                "kor_content": f"TECHNICAL CONSTRAINTS: {topic['tech_data']}", 
                 "sync_slug": safe_slug
             }
             
-            # KO/EN generation
-            for lang in ['ko', 'en']:
-                guide = editor.write_guide(news_draft, lang=lang)
-                if guide:
-                    create_guide_post_manual(guide, news_draft, lang=lang)
+            # Step 1: English (Only if not done)
+            guide_en = None
+            if not tracker.is_done("guides", safe_slug, "en"):
+                logger.info(f"[GUIDE] Step 1: Writing English Original for {safe_slug}")
+                guide_en = editor.write_english_guide(news_draft)
+                if guide_en:
+                    save_guide_file(guide_en, news_draft, lang='en')
+                    tracker.mark_done("guides", safe_slug, "en")
+            
+            # Step 2: Korean (Only if not done)
+            if not tracker.is_done("guides", safe_slug, "ko"):
+                logger.info(f"[GUIDE] Step 2: Translating {safe_slug} to Korean")
+                if not guide_en:
+                    # In a real recovery, we might read the file from disk here
+                    # To keep it simple, we re-gen EN if not in memory (fast in local anyway)
+                    guide_en = editor.write_english_guide(news_draft)
+                
+                guide_ko = editor.translate_to_korean(guide_en)
+                if guide_ko:
+                    save_guide_file(guide_ko, news_draft, lang='ko')
+                    tracker.mark_done("guides", safe_slug, "ko")
             
             git_commit_backup()
-            time.sleep(15)
+            time.sleep(20)
         except Exception as e:
-            logger.error(f"[GUIDE] Critical failure on {topic['title']}: {e}")
+            logger.error(f"[GUIDE] V9.0 Pipeline failed on {topic['title']}: {e}")
 
-def create_guide_post_manual(guide_data, news_draft, lang='ko'):
-    date_path = datetime.now().strftime("%Y/%m")
+import urllib.parse
+import requests
+
+def generate_and_save_thumbnail(gemma_markdown, slug_name):
+    """[V7.5] Controlled Freedom: AI Subject + Hardcoded Aesthetic Base"""
+    match = re.search(r'image:\s*"([^"]+)"', gemma_markdown)
+    core_subject = match.group(1) if match else "Abstract tech geometric neural networks"
+    
+    aesthetic_base = ", minimalist dark mode tech aesthetic, isometric view, clean smooth surfaces, 8k resolution, highly detailed corporate editorial illustration --no text, no humans, no robots, no faces"
+    
+    final_prompt = core_subject + aesthetic_base
+    logger.info(f"[IMAGE] Creating thumbnail for {slug_name}: {core_subject[:50]}...")
+    
+    encoded_prompt = urllib.parse.quote(final_prompt)
+    image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=1200&height=630&nologo=true"
+    
+    try:
+        response = requests.get(image_url, timeout=30)
+        if response.status_code == 200:
+            date_dir = datetime.now().strftime("%Y/%m/%d")
+            save_dir = f"static/images/posts/{date_dir}"
+            os.makedirs(save_dir, exist_ok=True)
+            
+            save_path = f"{save_dir}/{slug_name}.jpg"
+            with open(save_path, 'wb') as f:
+                f.write(response.content)
+            logger.info(f"[IMAGE] Thumbnail saved: {save_path}")
+            return f"/images/posts/{date_dir}/{slug_name}.jpg"
+    except Exception as e:
+        logger.error(f"[IMAGE] Generation failed: {e}")
+    return "/images/default-tech-bg.jpg"
+
+def save_guide_file(markdown_content, news_draft, lang='ko'):
+    """[V8.0] 일자별 폴더 구조 적용 (YYYY/MM/DD)"""
+    date_path = datetime.now().strftime("%Y/%m/%d")
     target_dir = f"content/{lang}/guides/{date_path}"
     os.makedirs(target_dir, exist_ok=True)
     
     safe_filename = sanitize_filename(news_draft['sync_slug'])
-    filepath = os.path.join(target_dir, f"{datetime.now().strftime('%d')}-{safe_filename}.md")
+    filepath = os.path.join(target_dir, f"{safe_filename}.md")
     
-    date_str = datetime.now().strftime('%Y-%m-%dT%H:%M:%S+09:00') if lang == 'ko' else datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ')
+    # [V7.6] Force Real-time Sync (HH:MM:SS)
+    current_time = datetime.now().strftime('%Y-%m-%dT%H:%M:%S+09:00') if lang == 'ko' else datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ')
     
-    safe_title = guide_data.get('guide_title', 'No Title').replace('"', "'")
-    safe_summary = guide_data.get('guide_summary', '').replace('"', "'")
+    # [V7.5] Generate Thumbnail and link in Markdown
+    img_path = generate_and_save_thumbnail(markdown_content, f"guide-{safe_filename}")
     
+    # [Hotfix] Use 'image' singular field
+    if img_path:
+        markdown_content = markdown_content.replace('description: "', f'image: "{img_path}"\ndescription: "')
+    
+    # Force Timestamp Update in Frontmatter
+    markdown_content = re.sub(r'date: ".*"', f'date: "{current_time}"', markdown_content)
+
     try:
         with open(filepath, 'w', encoding='utf-8-sig') as f:
-            f.write("---\n")
-            f.write(f'title: "{safe_title}"\n')
-            f.write(f"date: {date_str}\n")
-            f.write(f'summary: "{safe_summary}"\n')
-            f.write(f"clusters: [\"guides\"]\n")
-            f.write(f"categories: [\"tutorials\"]\n")
-            f.write(f"difficulty: \"{guide_data.get('difficulty', 'Advanced')}\"\n")
-            f.write(f"tags: {json.dumps(guide_data.get('tags', []), ensure_ascii=False)}\n")
-            f.write("---\n\n")
-            f.write(guide_data.get('guide_content', ''))
+            f.write(markdown_content)
         return True
     except Exception as e:
         logger.error(f"[FILE] Error in {lang}: {e}")
         return False
 
+def git_commit_backup():
+    try:
+        os.system("git add .")
+        ctime = datetime.now().strftime("%Y-%m-%d %H:%M")
+        os.system(f'git commit -m "Auto-backup: {ctime}"')
+        logger.info("[GIT] Content backed up.")
+    except:
+        pass
+
 if __name__ == "__main__":
-    logger.info("[NIGHT-SHIFT] Starting Master Loop V6.0")
     run_guide_engine()
-    run_news_engine(limit=10)
-    logger.info("[NIGHT-SHIFT] Completed")

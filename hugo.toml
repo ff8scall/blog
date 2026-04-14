@@ -2,6 +2,7 @@ baseURL = 'https://news.lego-sia.com'
 title = '레고-시아 AI 테크 인텔리전스'
 defaultContentLanguage = 'ko'
 hasCJKLanguage = true
+paginate = 12
 
 [taxonomies]
   category = 'categories'

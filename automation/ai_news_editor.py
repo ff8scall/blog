@@ -28,12 +28,13 @@ NEWS_JSON_SCHEMA = """
     "score": 1~10,
     "cluster": "ai-models-tools",
     "category": "ai-models",
-    "eng_title": "...",
-    "eng_keywords": ["Keyword1", "Keyword2", "Brand", "Industry", "Trend"],
-    "eng_content": "### Section Title\n\nContent...",
-    "kor_title": "...",
+    "eng_title": "Brief English Title",
+    "eng_summary": "1-sentence English description for SEO",
+    "eng_keywords": ["Keyword1", "Keyword2"],
+    "eng_content": "### Section Title\n\nFull English Content...",
+    "kor_title": "한국어 제목",
     "kor_summary": ["핵심 포인트 1", "핵심 포인트 2"],
-    "kor_keywords": ["개체명", "기술명", "트렌드", "전망", "가격/성능"],
+    "kor_keywords": ["키워드1", "키워드2"],
     "kor_analysis_title": "Dyanmic keyword-rich subtitle (e.g., 'HBM4 기술의 성능 병목 해결')",
     "kor_content": "### 세부 부제\n\n본문...",
     "kor_insight_title": "Dynamic subtitle (e.g., '엔비디아의 독점 체제에 미칠 영향')",
@@ -190,20 +191,22 @@ class NewsEditor:
             [TASK]: Localize the English report into a professional Korean tech paper. 
             {history_context}
             [STRICT RULES]: 
-            1. 100% Korean Integrity. No Gibberish. Professional Journalism Tone.
+            1. LANGUAGE SEPARATION:
+               - ALL 'eng_' fields MUST BE IN ENGLISH.
+               - ALL 'kor_' fields MUST BE IN KOREAN.
             2. CATEGORY SELECTION: Choose EXACTLY ONE from: [ai-models, ai-tools, gpu-chips, pc-robotics, game-optimization, ai-gameplay, tutorials, compare]. 
-               - [ai-models]: For broad AI trends, industrial strategy, market analysis, and LLM updates. (e.g., 'AI energy market crisis' belongs here!)
+               - [ai-models]: For broad AI trends, industrial strategy, market analysis, and LLM updates.
                - [ai-tools]: ONLY for specific software, apps, or 'how-to' use a single tech tool.
-               - [compare]: For direct VS tests or tool/hardware head-to-heads (e.g., RTX 5090 vs 4090).
             3. FORMATTING (STRICT [V5.1]): 
-               - DO NOT USE '###' for subheadings. 
+               - DO NOT USE '###' for subheadings in Korean content. 
                - USE '> Subtitle Text' (blockquote style) for ALL subheadings/titles.
-            4. READABILITY (STRICT):
-               - NEVER write long paragraphs. 
+            4. READABILITY:
                - MAX 2 SENTENCES PER PARAGRAPH. 
                - USE DOUBLE NEWLINES (\n\n) FREQUENTLY. 
-               - Keep each sentence concise. Break complex sentences.
             5. CONTENT DENSITY: Each section under a subheading MUST contain at least 4-5 substantial sentences (broken into 2 paragraphs). Deep contextual 'WHY' and 'HOW' only. 
+            6. THUMBNAIL PROMPT: Generate a 1-sentence English prompt for the thumbnail image in the 'image_prompt_core' field.
+               - RULE: Must be abstract 3D objects related to the tech topic. 
+               - FORBIDDEN: No humans, no robots, no text, no screens, no keyboards, no faces.
 
             [OUTPUT STRUCTURE]: {NEWS_JSON_SCHEMA}
             [REPORT CONTEXT]: {event_report_en}
