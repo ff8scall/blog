@@ -1,7 +1,7 @@
-﻿---
+---
 title: "비교 거버넌스 및 개발 데이터 분석: 정책 정교화를 위한 AI/LLMs 통합"
 date: "2026-04-13T23:47:46+09:00"
-description: ""
+description: "텔랑가나와 케랄라 주 간의 개발 데이터 및 거버넌스 모델을 AI 및 LLM 통합 관점에서 비교 분석한 전략 보고서입니다."
 image: "/images/posts/2026/04/13/comparative-governance-and-developmental-data-anal-364a51.jpg"
 clusters: ["guides"]
 categories: ["compare"]
@@ -10,7 +10,7 @@ featured: false
 ---
 
 ## 전략 심층 분석 (Strategic Deep-Dive)
-# 기술 보고서: 비교 거버넌스 및 개발 분석 (TECH REPORT: Comparative Governance and Development Analysis)
+## 기술 보고서: 비교 거버넌스 및 개발 분석 (TECH REPORT: Comparative Governance and Development Analysis)
 
 ## 레반트 레디의 케랄라 개발 지표 및 거버넌스 프레임워크 비판 (Revanth Reddy's Critique of Kerala's Development Metrics and Governance Framework)
 

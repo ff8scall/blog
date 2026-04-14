@@ -1,7 +1,7 @@
-﻿---
+---
 title: "India's AI Growth Trajectory: Shifting Focus from Models to Utility"
 date: "2026-04-13T23:10:12+09:00"
-description: ""
+description: "A strategic analysis of India's shift from foundational AI model development to a dominant role in practical AI applications and utility layers."
 image: "/images/posts/2026/04/13/indias-ai-growth-trajectory-shifting-focus-from-mo-e6af3c.jpg"
 clusters: ["ai-models-tools"]
 categories: ["ai"]
@@ -10,7 +10,7 @@ featured: false
 ---
 
 ## Strategic Deep-Dive
-# Tech Report: The Application Layer Advantage
+## Tech Report: The Application Layer Advantage
 ## India's AI Growth Trajectory: Shifting Focus from Models to Utility
 
 **Source Synthesis:** Business Today

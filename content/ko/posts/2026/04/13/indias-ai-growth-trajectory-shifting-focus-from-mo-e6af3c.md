@@ -1,7 +1,7 @@
-﻿---
+---
 title: "인도의 AI 성장 궤적: 모델에서 유틸리티로 초점 이동"
 date: "2026-04-13T23:10:12+09:00"
-description: ""
+description: "인도가 모델 개발 중심에서 실용적인 AI 애플리케이션 및 유틸리티 중심으로 이동하며 거두고 있는 전략적 성과를 분석한 보고서입니다."
 image: "/images/posts/2026/04/13/indias-ai-growth-trajectory-shifting-focus-from-mo-e6af3c.jpg"
 clusters: ["ai-models-tools"]
 categories: ["ai"]
@@ -10,7 +10,7 @@ featured: false
 ---
 
 ## 전략적 심층 분석
-# 기술 보고서: 애플리케이션 계층의 우위
+## 기술 보고서: 애플리케이션 계층의 우위
 ## 인도의 AI 성장 궤적: 모델에서 유틸리티로 초점 이동
 
 **출처 종합:** 비즈니스 투데이 (Business Today)
