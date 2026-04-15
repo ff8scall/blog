@@ -56,5 +56,6 @@ class NewsService:
             time.sleep(wait_time)
 
 if __name__ == "__main__":
-    service = NewsService(interval_seconds=3600)
+    # Adjusted to 3-hour interval (10800 seconds) for efficiency and quota safety
+    service = NewsService(interval_seconds=10800)
     service.start()

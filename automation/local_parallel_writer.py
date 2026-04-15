@@ -93,8 +93,8 @@ def main():
     # Gaming
     for t in topics['gaming']: tasks.append((t, "ai-gaming", "game-optimization"))
     
-    print(f"--- 5중 병렬 집필 시스템 가동 (총 {len(tasks)}건) ---")
-    with ThreadPoolExecutor(max_workers=5) as executor:
+    print(f"--- 2중 병렬 집필 시스템 가동 (총 {len(tasks)}건) ---")
+    with ThreadPoolExecutor(max_workers=2) as executor:
         for topic, cluster, category in tasks:
             executor.submit(generate_local_article, topic, cluster, category)
 

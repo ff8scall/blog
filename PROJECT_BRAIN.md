@@ -1,22 +1,33 @@
 # 🧠 PROJECT BRAIN: 레고-시아 V0 (Genesis)
 
-> **현재 시점**: 2026-04-13  
-> **상태**: 신규 설계 시스템 초기화 및 동기화 중  
+> **현재 시점**: 2026-04-14  
+> **상태**: V0 초기화 완료 및 1차 대규모 콘텐츠 동기화 완료 (90:90 매칭)
 > **슬로건**: "AI와 게임, 오직 트래픽과 가치에 집중한다."
 
 ## 🏛️ V0 확정 시스템 설계 (System Blueprint)
 
-### 1. 4대 코어 카테고리 (Taxonomy)
-| 클러스터 (대분류) | 슬러그 | 세부 분류 (중분류) | 슬러그 | UI 태그 노출 예시 |
-| :--- | :--- | :--- | :--- | :--- |
-| **AI 모델 & 도구** | `ai-models-tools` | AI 모델·트렌드 | `ai-models` | **AI (AI 모델·트렌드)** |
-| | | AI 도구·사용법 | `ai-tools` | **AI (AI 도구·사용법)** |
-| **GPU & 하드웨어** | `gpu-hardware` | GPU·반도체 | `gpu-chips` | **하드웨어 (GPU·반도체)** |
-| | | AI PC & 로봇 | `pc-robotics` | **하드웨어 (AI PC & 로봇)** |
-| **게임 최적화 & 테크** | `ai-gaming` | 게임 최적화·엔진 | `game-optimization` | **게임 테크 (최적화·엔진)** |
-| | | AI 게임 기술 | `ai-gameplay` | **게임 테크 (AI 게임 기술)** |
-| **전략 가이드** | `guides` | 실전 튜토리얼 | `tutorials` | **가이드 (실전 튜토리얼)** |
-| | | 성능 비교 | `compare` | **가이드 (성능 비교)** |
+### 1. 콘텐츠 클러스터 (Taxonomy)
+현재 사이트는 4개의 대분류(Cluster)와 8개의 소분류(Category)로 구성되어 있습니다.
+
+| 대분류 (Cluster Slug) | 대분류 명 (UI) | 소분류 (Category Slug) | 소분류 명 (Display) |
+| :--- | :--- | :--- | :--- |
+| `ai-models-tools` | **AI** | `ai-models` | AI 모델 · 트렌드 |
+| | | `ai-tools` | AI 도구 · 사용법 |
+| `gpu-hardware` | **하드웨어** | `gpu-chips` | GPU · 반도체 |
+| | | `pc-robotics` | AI PC & 로봇 |
+| `ai-gaming` | **게임 테크** | `game-optimization` | 게임 최적화 · 엔진 |
+| | | `ai-gameplay` | AI 게임 기술 |
+| `guides` | **가이드** | `tutorials` | 실전 튜토리얼 |
+| | | `compare` | 성능 비교 |
+
+---
+
+### 2. 생성 로직 연동 현황 (logic Alignment)
+- **온라인 API 엔진 (`ai_news_editor.py`)**: 상기 8개 카테고리로 자동 분류 및 클러스터 매핑 로직 적용 완료.
+- **로컬 Gemma4 엔진 (`stable_runner.py`)**: 단일 루프 기반 고품질 생성 안정화.
+- **병렬 집필 엔진 (`local_parallel_writer.py`)**: 시스템 프리징 방지를 위해 2개 워커(max_workers=2)로 최적화 완료.
+- **Hugo 연동 (`hugo.toml`)**: 대메뉴 UI 명칭 및 클러스터 슬러그 매칭 완료.
+- **다국어 체계**: `content/en/...` 및 `content/ko/...` 경로에 90:90 대칭 저장 완료.
 
 ### 🎨 UI/UX 매핑 규칙
 - **컬러 코딩**: AI(Blue #3B82F6), 하드웨어(Green #10B981), 게임테크(Purple #8B5CF6), 가이드(Orange #F59E0B)
@@ -38,6 +49,13 @@
 - [x] 뉴스 수집(Harvester) 키워드 8개 그룹 리밸런싱
 - [ ] '실전 가이드' 자동 생성 트리거 로직 구현
 - [x] 뉴스 카드 UI 템플릿 수정 (대/중분류 조합 노출)
+- [x] 온라인 자동화 엔진에서 로컬 Gemma 4 제외 (순수 무료 API 체제 구축)
+- [x] 다중 클라우드 폴백 시스템 구축 (OpenRouter, GitHub Models 연동)
+
+### **V2: 안정화 및 상시 가동 시스템**
+- [ ] 2시간 주기 뉴스 수집-분석-배포 파이프라인 상시 운영
+- [ ] 무료 API 쿼터 자동 모니터링 및 모델 스위칭 로직 강화
+- [ ] 로컬 개발 환경(Gemma 4)과 서버 배포 환경(Online APIs) 완전 분리 운영
 
 ---
 

@@ -27,3 +27,6 @@ docs_private/
 *.db
 *.log
 .news_cache
+__pycache__/
+automation/__pycache__/
+scratch/
