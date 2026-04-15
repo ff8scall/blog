@@ -221,6 +221,7 @@ def process_category(cat, items, editor, tracker, use_local=False, limit=1):
             if article_data_list:
                 article_data = article_data_list[0]
                 article_data['sync_slug'] = safe_slug
+                article_data['category'] = cat  # Force original harvested category
                 
                 # Phase 2: English Post
                 t2 = time.time()
