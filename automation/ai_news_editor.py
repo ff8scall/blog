@@ -40,7 +40,8 @@ NEWS_JSON_SCHEMA = """
     "kor_analysis_title": "Dynamic subtitle (e.g., 'HBM4 기술의 성능 병목 해결')",
     "kor_content": "## 세부 부제\n\n본문...",
     "kor_insight_title": "인사이트 비평",
-    "kor_insight": "## 시사점\n\n전문적인 통찰..."
+    "kor_insight": "## 시사점\n\n전문적인 통찰...",
+    "image_prompt_core": "A symbolic tech visual description (e.g., 'A glowing neural network on a silicon wafer')"
 }
 """
 
@@ -167,52 +168,43 @@ class NewsEditor:
             except: pass
         return None
 
-    def review_batch(self, articles, recent_posts=None, model=None):
+    def review_batch(self, articles, recent_posts=None, model=None, hint_category=None):
         try:
             event_report_en = self._get_full_event_analysis(articles, model=model)
-            if not event_report_en or len(event_report_en) < 300: return []
+            if not event_report_en or len(event_report_en) < 200: return []
 
             history_context = ""
             if recent_posts:
                 titles = [p.get('title', '') for p in recent_posts[:10]]
                 history_context = f"\n[CONTEXT: RECENTLY PUBLISHED TITLES]\n- {chr(10)+'- '.join(titles)}\n"
 
+            hint_str = f"\n[HINT]: The suggested category is '{hint_category}'. Stay accurate to this if possible." if hint_category else ""
+
             localize_prompt = f"""
             [PERSONA]: Tech News Editor & Technical Analyst.
-            [TASK]: Localize the English report into a professional Korean tech article/paper. 
-            [CORE PRINCIPLE]: TOPIC PRESERVATION. Do not metaphorize or generalize. If the source is about a 'Car', write about the 'Car'. If it's about 'Hospitals', write about 'Hospitals'. NEVER force a non-AI topic into an AI strategic report.
+            [TASK]: Localize the English report into a professional Korean tech article.
+            {hint_str}
             {history_context}
             [STRICT RULES]: 
              1. TOPIC FAITHFULNESS & LANGUAGE SEPARATION:
                 - ALL 'eng_' fields MUST BE IN ENGLISH.
                 - ALL 'kor_' fields MUST BE IN KOREAN.
-                - CRITICAL: Use the ORIGINAL SUBJECT in titles and descriptions. (e.g., Do not change 'Porsche' to 'AI Model'.)
-                - STRICT RULE: ALL tables, column names, labels, and technical headers in 'kor_' fields MUST be translated 100% into Korean. No English residues.
-            2. CATEGORY & CLUSTER SELECTION (STRICT):
-               - [CLUSTERS]: Choose from [ai-models-tools, gpu-hardware, ai-gaming, guides].
-               - [CATEGORIES]: Choose EXACTLY ONE from: [ai-models, ai-tools, gpu-chips, pc-robotics, game-optimization, ai-gameplay, tutorials, compare].
-               
-               [MAPPING RULES]:
-               - IF it's broad AI/LLM news -> cluster: "ai-models-tools", category: "ai-models"
-               - IF it's a specific App/Software news -> cluster: "ai-models-tools", category: "ai-tools"
-               - IF it's Chips/Semiconductors/HBM -> cluster: "gpu-hardware", category: "gpu-chips"
-               - IF it's Gadgets/Robotics/EV/Hardware -> cluster: "gpu-hardware", category: "pc-robotics"
-               - IF it's Gaming Industry/Tech/AI in Games -> cluster: "ai-gaming", category: "ai-gameplay"
-               - IF it's Game Benchmarks/Optimization/Drivers -> cluster: "ai-gaming", category: "game-optimization"
-               - IF it's a STEP-BY-STEP 'How-To' GUIDE -> cluster: "guides", category: "tutorials"
-               
-               [CRITICAL]: NEVER use 'tutorials' or 'guides' for general news or product analysis. News about cars, sensors, or devices should go to 'gpu-hardware' + 'pc-robotics'.
-            3. FORMATTING (STRICT [V8.0]): 
-               - NEVER USE H1 ('# ') headers in any content. 
-               - DO NOT USE '###' for subheadings. 
-               - USE '## ' for main section blocks and '> Subtitle Text' (blockquote style) for minor subheadings.
-            4. DESCRIPTION QUALITY:
-               - 'eng_description' and 'kor_description' MUST NOT BE EMPTY. Craft a 1-sentence SEO summary.
-            5. READABILITY & DENSITY:
-               - MAX 2 SENTENCES PER PARAGRAPH. 
-               - USE DOUBLE NEWLINES (\\n\\n) FREQUENTLY. 
-               - Each section MUST contain at least 4-5 substantial sentences. 
-            6. THUMBNAIL PROMPT: Generate a 1-sentence English prompt in 'image_prompt_core'. Abstract 3D objects, no humans/text.
+                - CRITICAL: Maintain original subject (e.g., Cars/Mona Lisa/Hospitals).
+             2. CATEGORY & CLUSTER SELECTION (STRICT):
+                - [CLUSTERS]: Choose from [ai-models-tools, gpu-hardware, ai-gaming, guides].
+                - [CATEGORIES]: Choose EXACTLY ONE from: [ai-models, ai-tools, gpu-chips, pc-robotics, game-optimization, ai-gameplay, tutorials, compare].
+                
+                [MAPPING RULES]:
+                - Broad AI/LLM -> ai-models-tools / ai-models
+                - App/Software/Tools -> ai-models-tools / ai-tools
+                - Chips/Semicon/HBM -> gpu-hardware / gpu-chips
+                - Robotics/EV/Gadgets/Hardware -> gpu-hardware / pc-robotics
+                - AI in Games/Metaverse -> ai-gaming / ai-gameplay
+                - Benchmarks/Drivers/Optimization -> ai-gaming / game-optimization
+                - Step-by-Step How-To -> guides / tutorials
+                - Comparison Reports -> guides / compare
+             3. FORMATTING: Use '## ' for headers. MAX 2 SENTENCES PER PARAGRAPH.
+             4. THUMBNAIL: 'image_prompt_core' should be a concrete 3D tech-aesthetic description.
 
             [OUTPUT STRUCTURE]: {NEWS_JSON_SCHEMA}
             [REPORT CONTEXT]: {event_report_en}
@@ -221,25 +213,29 @@ class NewsEditor:
             draft = self._extract_json_safe(res)
             
             if draft:
-                # [V0.3.2 Post-Processing] Force line-break sanity to prevent long blocks
                 for field in ['kor_content', 'kor_insight']:
                     if draft.get(field):
-                        # Use regex to convert single space after sentence to double newline
                         draft[field] = re.sub(r'([.!?])\s+', r'\1\n\n', draft[field])
                 
-                # [V7.5] 용어 사전 최종 적용 및 정제
                 draft['kor_title'] = self._apply_glossary(draft.get('kor_title', ''))
                 draft['kor_content'] = self._apply_glossary(draft.get('kor_content', ''))
                 draft['kor_insight'] = self._apply_glossary(draft.get('kor_insight', ''))
                 
                 draft['eng_content'] = event_report_en 
-                cat = draft.get('category', 'ai-models')
+                
+                # [Sanity Check] Category & Cluster Alignment
+                cat = draft.get('category', hint_category if hint_category else 'ai-models')
+                # Ensure the category is valid
+                valid_cats = ["ai-models", "ai-tools", "gpu-chips", "pc-robotics", "game-optimization", "ai-gameplay", "tutorials", "compare"]
+                if cat not in valid_cats: cat = hint_category if hint_category in valid_cats else "ai-models"
+                
                 cluster_map = {
                     "ai-models": "ai-models-tools", "ai-tools": "ai-models-tools",
                     "gpu-chips": "gpu-hardware", "pc-robotics": "gpu-hardware",
                     "game-optimization": "ai-gaming", "ai-gameplay": "ai-gaming",
                     "tutorials": "guides", "compare": "guides"
                 }
+                draft['category'] = cat
                 draft['cluster'] = cluster_map.get(cat, "ai-models-tools")
                 draft['original_url'] = articles[0]['url']
                 draft['original_image_url'] = articles[0].get('image')

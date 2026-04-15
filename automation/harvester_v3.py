@@ -78,6 +78,24 @@ class HarvesterV3:
         if any(s.lower() in name_l for s in self.source_tiers["tier2"]): return 0.8
         return 0.6
 
+    def _extract_image(self, entry):
+        """RSS 피드에서 가용한 최고 품질의 이미지 URL 추출"""
+        # 1. Standard media_content
+        if "media_content" in entry and entry["media_content"]:
+            return entry["media_content"][0].get("url")
+        # 2. Enclosures
+        if "links" in entry:
+            for link in entry["links"]:
+                if link.get("rel") == "enclosure" or "image" in link.get("type", ""):
+                    return link.get("href")
+        # 3. Content-based extraction (img tag)
+        content = entry.get("summary", "") + entry.get("content", [{"value": ""}])[0].get("value", "")
+        img_match = re.search(r'<img [^>]*src="([^"]+)"', content)
+        if img_match:
+            return img_match.group(1)
+        # 4. Standard keys
+        return entry.get("urlToImage") or entry.get("image_url") or entry.get("image")
+
     def _normalize_item(self, article, source_name, cat_slug):
         raw_url = article.get("url") or article.get("link", "")
         norm_url = normalize_url(raw_url)
@@ -92,7 +110,7 @@ class HarvesterV3:
             "description": clean_text(article.get("description", "") or article.get("snippet", ""))[:300],
             "url": raw_url,
             "normalized_url": norm_url,
-            "image": article.get("urlToImage") or article.get("image_url") or article.get("image"),
+            "image": self._extract_image(article),
             "publishedAt": article.get("publishedAt") or article.get("pubDate") or datetime.now().isoformat(),
             "source_name": source_name,
             "eng_category_slug": cat_slug,
@@ -157,3 +175,49 @@ class HarvesterV3:
         
         logger.info(f" [+++] RSS Harvest Complete: {len(results)} items found")
         return results, stats
+
+    def dump_to_category_files(self, limit_per_cat=15):
+        """
+        [V4.0] NotebookLM Macro-Synthesis: Dumps clustered articles to category-specific markdown files.
+        Returns a dictionary mapping category to its source file path.
+        """
+        results, stats = self.fetch_all(limit_per_cat=limit_per_cat)
+        
+        # Group by category
+        grouped = {cat: [] for cat in self.categories_config}
+        for item in results:
+            cat = item.get("eng_category_slug", "unknown")
+            if cat in grouped:
+                grouped[cat].append(item)
+                
+        output_files = {}
+        os.makedirs("scratch", exist_ok=True)
+        
+        for cat, items in grouped.items():
+            if not items:
+                continue
+            
+            filepath = f"scratch/{cat}_raw_dump.md"
+            try:
+                with open(filepath, "w", encoding="utf-8") as f:
+                    f.write(f"# LEGO-SIA Global Tech Mega-Trend Source Data: {cat}\n")
+                    f.write(f"**Date Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+                    f.write(f"**Total Articles:** {len(items)}\n\n")
+                    
+                    for idx, a in enumerate(items, 1):
+                        f.write("--------------------------------------------------\n")
+                        f.write(f"## [Source {idx}] {a.get('title', 'Untitled')}\n")
+                        f.write(f"- **Publisher:** {a.get('source_name', 'Unknown')}\n")
+                        f.write(f"- **Category:** {a.get('eng_category_slug', 'N/A')}\n")
+                        f.write(f"- **URL:** {a.get('url', '')}\n\n")
+                        
+                        desc = a.get('description', '').replace('\n', ' ').strip()
+                        f.write(f"**Content Summary:**\n{desc}\n\n")
+                
+                output_files[cat] = filepath
+                logger.info(f" [DUMP] Saved {len(items)} articles to {filepath}")
+            except Exception as e:
+                logger.error(f" [!] Failed to dump {cat}: {e}")
+                
+        return output_files
+

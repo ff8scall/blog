@@ -62,7 +62,7 @@ class AIWriter:
         try:
             response = self.gemini_client.models.generate_content(
                 model=model, contents=prompt,
-                config={'max_output_tokens': 4096, 'temperature': 0.7}
+                config={'max_output_tokens': 8192, 'temperature': 0.7}
             )
             if response and response.text: return response.text
         except Exception as e: logger.warning(f"Gemini API Error ({model}): {e}")

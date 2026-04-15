@@ -15,11 +15,13 @@ import threading
 from concurrent.futures import ThreadPoolExecutor
 
 class StateTracker:
-    """[V9.1] Thread-Safe Job State Management: Ensures resumable & atomic operations"""
-    def __init__(self, state_file="automation/job_state.json"):
+    """[V9.5] Thread-Safe Job State & Article Cache Management: Ensures resumable & atomic operations"""
+    def __init__(self, state_file="automation/job_state.json", cache_dir="automation/cache"):
         self.state_file = state_file
+        self.cache_dir = cache_dir
         self.lock = threading.Lock()
         os.makedirs(os.path.dirname(self.state_file), exist_ok=True)
+        os.makedirs(self.cache_dir, exist_ok=True)
         self.state = self.load_state()
 
     def load_state(self):
@@ -48,6 +50,33 @@ class StateTracker:
             if lang not in self.state[section][slug]:
                 self.state[section][slug].append(lang)
         self.save_state()
+        
+        # 만약 모든 목표 언어(en, ko)가 완료되면 캐시 삭제
+        if self.is_done(section, slug, "en") and self.is_done(section, slug, "ko"):
+            self.clear_cache(slug)
+
+    def save_cache(self, slug, article_data):
+        cache_path = os.path.join(self.cache_dir, f"{slug}.json")
+        with self.lock:
+            with open(cache_path, 'w', encoding='utf-8') as f:
+                json.dump(article_data, f, indent=4, ensure_ascii=False)
+    
+    def load_cache(self, slug):
+        cache_path = os.path.join(self.cache_dir, f"{slug}.json")
+        if os.path.exists(cache_path):
+            with self.lock:
+                try:
+                    with open(cache_path, 'r', encoding='utf-8') as f:
+                        return json.load(f)
+                except:
+                    return None
+        return None
+
+    def clear_cache(self, slug):
+        cache_path = os.path.join(self.cache_dir, f"{slug}.json")
+        if os.path.exists(cache_path):
+            try: os.remove(cache_path)
+            except: pass
 
 # [V3.0.32] Environment Auto-Loader
 load_dotenv()
@@ -95,24 +124,21 @@ CAT_MAP = {
     "tutorials": "실전 튜토리얼", "compare": "성능 비교"
 }
 
-# [V0] Fallback mapping to Major Clusters
+# [V1.0] Alignment with PROJECT_BRAIN clusters
 FALLBACK_MAP = {
-    "ai-models": "ai-models",
-    "ai-tools": "ai-tools",
-    "gpu-chips": "hardware",
-    "pc-robotics": "robotics",
-    "game-optimization": "game-tech",
-    "ai-gameplay": "gaming",
-    "tutorials": "future-sw",
-    "compare": "market-trend"
+    "ai-models": "ai-models-tools",
+    "ai-tools": "ai-models-tools",
+    "gpu-chips": "gpu-hardware",
+    "pc-robotics": "gpu-hardware",
+    "game-optimization": "ai-gaming",
+    "ai-gameplay": "ai-gaming",
+    "tutorials": "guides",
+    "compare": "guides"
 }
 
 def download_image(url, category_slug, slug):
-    """[V3.0] Article Image -> Category Default Image (Fallback Priority)"""
-    fallback_key = FALLBACK_MAP.get(category_slug, "ai-tech")
-    default_fallback = f"/images/fallbacks/{fallback_key}.jpg"
-    
-    if not url: return default_fallback
+    """[V3.5] Article Image -> Return None if fail (to trigger AI generation)"""
+    if not url: return None
     if url.startswith('//'): url = 'https:' + url
     
     date_dir = datetime.now().strftime('%Y/%m/%d')
@@ -130,12 +156,12 @@ def download_image(url, category_slug, slug):
     except Exception as e:
         logger.warning(f"[IMAGE] Download fail ({url}): {e}")
     
-    return default_fallback
+    return None
 
 def generate_and_save_thumbnail(image_prompt_core, slug_name):
     """[V8.0] 일자별 이미지 폴더 구조 (YYYY/MM/DD)"""
-    aesthetic_base = ", minimalist dark mode tech aesthetic, isometric view, clean smooth surfaces, 8k resolution, highly detailed corporate editorial illustration --no text, no humans, no robots, no faces"
-    final_prompt = (image_prompt_core if image_prompt_core else "Abstract tech geometry") + aesthetic_base
+    aesthetic_base = ", high-tech minimalism, cinematic 3D render, dark metallic texture, neon accents, isometric perspective, Unreal Engine 5 aesthetic, 8k resolution --no text, no faces, no humans"
+    final_prompt = (image_prompt_core if image_prompt_core else "Abstract futuristic technology concept") + aesthetic_base
     logger.info(f"[IMAGE] Creating thumbnail for {slug_name}")
     
     encoded_prompt = urllib.parse.quote(final_prompt)
@@ -152,16 +178,26 @@ def generate_and_save_thumbnail(image_prompt_core, slug_name):
             return f"/images/posts/{date_dir}/{slug_name}_gen.jpg"
     except Exception as e:
         logger.error(f"[IMAGE] Failed: {e}")
-    return "/images/default-tech-bg.jpg"
+    return None
 
 def create_hugo_post(article, lang='ko'):
     date_path = datetime.now().strftime("%Y/%m/%d")
     target_dir = f"content/{lang}/posts/{date_path}"
     os.makedirs(target_dir, exist_ok=True)
-    
     slug = article['sync_slug']
     cat_safe = sanitize_slug(article.get('category', 'ai-models'))
+    
+    # [V3.6] Triple-Layer Fallback: 1. Article Image, 2. AI Generated, 3. Category Default
     img_url = download_image(article.get('original_image_url'), cat_safe, slug)
+    
+    if not img_url:
+        img_url = generate_and_save_thumbnail(article.get('image_prompt_core'), slug)
+        if img_url:
+            logger.info(f"[IMAGE] Using AI Generated image for {slug}")
+        else:
+            fallback_key = FALLBACK_MAP.get(cat_safe, "ai-tech")
+            img_url = f"/images/fallbacks/{fallback_key}.jpg"
+            logger.info(f"[IMAGE] Using Category Level-3 fallback for {slug}")
     
     filepath = os.path.join(target_dir, f"{slug}.md")
     if lang == 'ko':
@@ -183,9 +219,7 @@ def create_hugo_post(article, lang='ko'):
         summary_section = f"## Executive Summary\n{summary_val}\n\n" if summary_val else ""
         content_body = f"{summary_section}## Strategic Deep-Dive\n{article.get('eng_content', 'Content not localized yet.')}"
 
-    # [V3.1] Image Priority: 1. Article Image, 2. Category Default
-    # Thumbnail generation is kept as an offline asset but not used as primary frontmatter image to ensure diversity
-    img_path_gen = generate_and_save_thumbnail(article.get('image_prompt_core'), slug)
+    # [V3.1] Frontmatter Generation
     
     safe_title = title.replace('"', "'")
     safe_desc = desc_val.replace('"', "'")
@@ -217,40 +251,57 @@ def process_category(cat, items, editor, tracker, use_local=False, limit=1):
         if processed_count >= limit: break
         
         safe_slug = sanitize_slug(item['title'])
-        if tracker.is_done("news", safe_slug, "ko"): continue
+        # 이미 한 쪽이라도 되었거나 캐시가 있으면 진행 (둘 다 완료된 경우만 스킵)
+        if tracker.is_done("news", safe_slug, "ko") and tracker.is_done("news", safe_slug, "en"): 
+            continue
 
         try:
             start_time = time.time()
             logger.info(f"[PROCESS_START] [{cat}] Starting: {item['title'][:50]}")
             
-            # Phase 1: AI Review & Generation
-            t0 = time.time()
-            article_data_list = editor.review_batch([item], model=model_name if use_local else None)
-            t1 = time.time()
-            logger.info(f"[TIME] [{cat}] AI Content Generation took {t1-t0:.2f}s")
+            # Step 1: Article Data 취득 (캐시 우선 확인)
+            article_data = tracker.load_cache(safe_slug)
             
-            if article_data_list:
-                article_data = article_data_list[0]
-                article_data['sync_slug'] = safe_slug
-                article_data['category'] = cat  # Force original harvested category
+            if not article_data:
+                logger.info(f"[CACHE_MISS] No cache for {safe_slug}. Calling AI...")
+                t0 = time.time()
+                article_data_list = editor.review_batch([item], hint_category=cat, model=model_name if use_local else None)
+                t1 = time.time()
+                logger.info(f"[TIME] [{cat}] AI Content Generation took {t1-t0:.2f}s")
                 
-                # Phase 2: English Post
+                if article_data_list:
+                    article_data = article_data_list[0]
+                    article_data['sync_slug'] = safe_slug
+                    if 'category' not in article_data:
+                        article_data['category'] = cat
+                    # 캐시에 저장
+                    tracker.save_cache(safe_slug, article_data)
+                else:
+                    logger.warning(f"[FAIL] AI Revision failed for {item['title']}")
+                    continue
+            else:
+                logger.info(f"[CACHE_HIT] Resuming with cached data for {safe_slug}")
+
+            # Step 2: English Post (미완료 시)
+            if not tracker.is_done("news", safe_slug, "en"):
                 t2 = time.time()
                 create_hugo_post(article_data, lang='en')
                 tracker.mark_done("news", safe_slug, "en")
                 t3 = time.time()
-                logger.info(f"[TIME] [{cat}] English Post Creation (incl. image) took {t3-t2:.2f}s")
-                
-                # Phase 3: Korean Post
+                logger.info(f"[TIME] [{cat}] English Post Creation took {t3-t2:.2f}s")
+            
+            # Step 3: Korean Post (미완료 시)
+            if not tracker.is_done("news", safe_slug, "ko"):
                 t4 = time.time()
                 create_hugo_post(article_data, lang='ko')
                 tracker.mark_done("news", safe_slug, "ko")
                 t5 = time.time()
                 logger.info(f"[TIME] [{cat}] Korean Post Creation took {t5-t4:.2f}s")
                 
-                total_time = time.time() - start_time
-                logger.info(f"[SUCCESS] [{cat}] Total Process Time: {total_time:.2f}s")
-                processed_count += 1
+            total_time = time.time() - start_time
+            logger.info(f"[SUCCESS] [{cat}] Total Process Time: {total_time:.2f}s")
+            processed_count += 1
+            
         except Exception as e:
             logger.error(f"Failed to process {item['title']} in {cat}: {e}")
     return processed_count
@@ -291,9 +342,19 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=8)
     parser.add_argument("--local", action="store_true", default=False) 
+    parser.add_argument("--mode", type=str, default="legacy", choices=["legacy", "premium"],
+                        help="Choose 'premium' to run the NotebookLM Mega-Trend Macro Synthesis.")
     args = parser.parse_args()
     
-    report = manage_news_pipeline(limit_per_cat=args.limit, use_local=args.local)
+    if args.mode == "premium":
+        logger.info("[MODE: PREMIUM] Redirecting to NotebookLM Synthesis Pipeline...")
+        from notebooklm_prep import process_macro_synthesis
+        process_macro_synthesis(limit_per_cat=args.limit)
+        report = "Premium Pipeline Phase 1 (NotebookLM Sync) Completed Successfully."
+    else:
+        logger.info("[MODE: LEGACY] Starting standard daily pipeline...")
+        report = manage_news_pipeline(limit_per_cat=args.limit, use_local=args.local)
+        
     try:
         send_telegram_report(report)
     except Exception as e:

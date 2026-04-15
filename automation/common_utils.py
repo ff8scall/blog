@@ -52,7 +52,7 @@ def send_telegram_report(message: str) -> bool:
     chat_id = os.getenv("TELEGRAM_CHAT_ID")
     
     if not token or not chat_id:
-        print(f"⚠️ [Telegram] Missing credentials (Chat ID: {'Set' if chat_id else 'Not Set'}, Token: {'Set' if token else 'Not Set'}). Skipping notification.")
+        print(f"[Telegram] Missing credentials (Chat ID: {'Set' if chat_id else 'Not Set'}, Token: {'Set' if token else 'Not Set'}). Skipping notification.")
         return False
         
     try:
@@ -65,28 +65,33 @@ def send_telegram_report(message: str) -> bool:
         response = requests.post(url, json=payload, timeout=10)
         
         if response.status_code == 200:
-            print("🚀 [Telegram] Report dispatched successfully.")
+            print("[Telegram] Report dispatched successfully.")
             return True
         else:
-            print(f"❌ [Telegram] Failed to send report. Status: {response.status_code}, Response: {response.text}")
+            print(f"[Telegram] Failed to send report. Status: {response.status_code}, Response: {response.text}")
             return False
     except Exception as e:
-        print(f"❌ [Telegram] Connection Error: {e}")
+        print(f"[Telegram] Connection Error: {e}")
         return False
 
 def sanitize_slug(text: str) -> str:
     """
-    [V1.0] SEO-Friendly URL Generator: 
-    Converts article titles to clean, lowercase slugs for filenames.
+    [V2.0] Hybrid SEO-Friendly URL Generator: 
+    Converts titles to clean slugs. Fallbacks to hash for non-ASCII titles.
     """
     if not text: return "unnamed-post"
     
-    # 1. Lowercase and remove accents if possible
+    # 1. Try to normalize to ASCII (works for EN titles)
     import unicodedata
-    text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('ascii').lower()
+    import hashlib
     
-    # 2. Replace non-alphanumeric with hyphens
-    text = re.sub(r'[^a-z0-9]+', '-', text)
+    norm_text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('ascii').lower()
+    slug = re.sub(r'[^a-z0-9]+', '-', norm_text).strip('-')
     
-    # 3. Clean up leading/trailing hyphens
-    return text.strip('-')
+    # 2. If title was mostly non-ASCII (like Korean), slug will be empty or too short
+    if len(slug) < 3:
+        # Fallback: create a slug using the date/category or just a hash
+        h = hashlib.md5(text.encode()).hexdigest()[:8]
+        return f"feature-{h}"
+    
+    return slug

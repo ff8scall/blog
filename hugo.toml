@@ -17,6 +17,11 @@ hasCJKLanguage = true
     weight = 1
     [languages.ko.menu]
       [[languages.ko.menu.main]]
+        name = "메가트렌드"
+        identifier = "megatrend"
+        url = "/clusters/megatrend/"
+        weight = 0
+      [[languages.ko.menu.main]]
         name = "AI"
         identifier = "ai"
         url = "/clusters/ai-models-tools/"
@@ -43,6 +48,11 @@ hasCJKLanguage = true
     weight = 2
     [languages.en.menu]
       [[languages.en.menu.main]]
+        name = "Megatrends"
+        identifier = "megatrend"
+        url = "/en/clusters/megatrend/"
+        weight = 0
+      [[languages.en.menu.main]]
         name = "AI"
         url = "/en/clusters/ai-models-tools/"
         weight = 1
@@ -62,5 +72,5 @@ hasCJKLanguage = true
 [params]
   ui_version = "V0"
   [params.ui]
-    badge_colors = { "AI" = "#3B82F6", "하드웨어" = "#10B981", "게임 테크" = "#8B5CF6", "가이드" = "#F59E0B" }
+    badge_colors = { "메가트렌드" = "#D97706", "AI" = "#3B82F6", "하드웨어" = "#10B981", "게임 테크" = "#8B5CF6", "가이드" = "#F59E0B" }
     tag_prefix = true
