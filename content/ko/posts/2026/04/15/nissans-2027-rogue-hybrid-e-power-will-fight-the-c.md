@@ -1,10 +1,10 @@
 ﻿---
-title: "e-파워 플랫폼 분석: 하이브리드 구동계의 미래 시장 변곡점"
+title: "닛산 2027 로그 하이브리드 e-파워: 직렬 하이브리드 기술의 진화"
 date: "2026-04-15T09:42:28+09:00"
-description: "본 논문은 e-POWER 직렬 하이브리드 기술을 심층 분석하며, 이를 통해 경쟁이 치열한 크로스오버 SUV 시장에서 어떻게 사용자 경험을 혁신하는지 설명합니다."
+description: "닛산의 최신 e-파워 직렬 하이브리드 시스템이 탑재된 2027 로그 모델의 성능과 시장 경쟁력을 분석합니다."
 image: "/images/fallbacks/future-sw.jpg"
-clusters: ["guides"]
-categories: ["tutorials"]
+clusters: ["gpu-hardware"]
+categories: ["pc-robotics"]
 tags: ["e-파워", "하이브리드 구동계", "직렬 하이브리드", "자동차 시장 분석"]
 featured: false
 ---

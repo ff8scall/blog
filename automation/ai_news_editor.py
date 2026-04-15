@@ -178,17 +178,30 @@ class NewsEditor:
                 history_context = f"\n[CONTEXT: RECENTLY PUBLISHED TITLES]\n- {chr(10)+'- '.join(titles)}\n"
 
             localize_prompt = f"""
-            [PERSONA]: Senior Technical Journalist & Strategic Analyst.
-            [TASK]: Localize the English report into a professional Korean tech paper. 
+            [PERSONA]: Tech News Editor & Technical Analyst.
+            [TASK]: Localize the English report into a professional Korean tech article/paper. 
+            [CORE PRINCIPLE]: TOPIC PRESERVATION. Do not metaphorize or generalize. If the source is about a 'Car', write about the 'Car'. If it's about 'Hospitals', write about 'Hospitals'. NEVER force a non-AI topic into an AI strategic report.
             {history_context}
             [STRICT RULES]: 
-            1. LANGUAGE SEPARATION & TOTAL TRANSLATION:
-               - ALL 'eng_' fields MUST BE IN ENGLISH.
-               - ALL 'kor_' fields MUST BE IN KOREAN.
-               - STRICT RULE: ALL tables, column names, labels, and technical headers in 'kor_' fields MUST be translated 100% into Korean. No English residues.
-            2. CATEGORY SELECTION: Choose EXACTLY ONE from: [ai-models, ai-tools, gpu-chips, pc-robotics, game-optimization, ai-gameplay, tutorials, compare]. 
-               - [ai-models]: For broad AI trends, industrial strategy, market analysis, and LLM updates.
-               - [ai-tools]: ONLY for specific software, apps, or 'how-to' use a single tech tool.
+             1. TOPIC FAITHFULNESS & LANGUAGE SEPARATION:
+                - ALL 'eng_' fields MUST BE IN ENGLISH.
+                - ALL 'kor_' fields MUST BE IN KOREAN.
+                - CRITICAL: Use the ORIGINAL SUBJECT in titles and descriptions. (e.g., Do not change 'Porsche' to 'AI Model'.)
+                - STRICT RULE: ALL tables, column names, labels, and technical headers in 'kor_' fields MUST be translated 100% into Korean. No English residues.
+            2. CATEGORY & CLUSTER SELECTION (STRICT):
+               - [CLUSTERS]: Choose from [ai-models-tools, gpu-hardware, ai-gaming, guides].
+               - [CATEGORIES]: Choose EXACTLY ONE from: [ai-models, ai-tools, gpu-chips, pc-robotics, game-optimization, ai-gameplay, tutorials, compare].
+               
+               [MAPPING RULES]:
+               - IF it's broad AI/LLM news -> cluster: "ai-models-tools", category: "ai-models"
+               - IF it's a specific App/Software news -> cluster: "ai-models-tools", category: "ai-tools"
+               - IF it's Chips/Semiconductors/HBM -> cluster: "gpu-hardware", category: "gpu-chips"
+               - IF it's Gadgets/Robotics/EV/Hardware -> cluster: "gpu-hardware", category: "pc-robotics"
+               - IF it's Gaming Industry/Tech/AI in Games -> cluster: "ai-gaming", category: "ai-gameplay"
+               - IF it's Game Benchmarks/Optimization/Drivers -> cluster: "ai-gaming", category: "game-optimization"
+               - IF it's a STEP-BY-STEP 'How-To' GUIDE -> cluster: "guides", category: "tutorials"
+               
+               [CRITICAL]: NEVER use 'tutorials' or 'guides' for general news or product analysis. News about cars, sensors, or devices should go to 'gpu-hardware' + 'pc-robotics'.
             3. FORMATTING (STRICT [V8.0]): 
                - NEVER USE H1 ('# ') headers in any content. 
                - DO NOT USE '###' for subheadings. 
