@@ -2,7 +2,7 @@
 title: "AI in Telehealth: Balancing Clinical Efficiency with Patient Trust"
 date: "2026-04-15T08:40:41Z"
 description: "This report analyzes the rapid adoption of Large Language Models (LLMs) in telehealth and diagnostic settings, focusing on the critical tension between scalable efficiency and user trust."
-image: "/images/fallback/ai-models-tools.png"
+image: "/images/fallbacks/ai-models.jpg"
 clusters: ["ai-models-tools"]
 categories: ["ai-models"]
 tags: ["LLMs", "Telehealth", "AI Diagnostics", "Healthcare AI", "Clinical Adoption"]

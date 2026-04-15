@@ -2,7 +2,7 @@
 title: "AI 낙관론과 사회경제적 현실 간의 괴리 분석"
 date: "2026-04-15T09:26:58+09:00"
 description: "본 보고서는 AI 전문가들의 낙관적 예측과 대중이 우려하는 일자리 대체 및 불평등 심화 사이의 괴리를 분석합니다."
-image: "/images/fallback/ai-models-tools.png"
+image: "/images/fallbacks/ai-models.jpg"
 clusters: ["ai-models-tools"]
 categories: ["ai-models"]
 tags: ["AI 윤리", "노동 시장 변화", "기술 낙관론", "정책 설계"]

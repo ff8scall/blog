@@ -2,7 +2,7 @@
 title: "사이버 보안 AI 모델: 성능과 운영 비용 사이의 전략적 균형"
 date: "2026-04-15T08:58:36+09:00"
 description: "이 보고서는 엔터프라이즈 사이버 보안 운영에서 비용 효율적인 모듈형 AI 아키텍처 구축과 최고 성능의 첨단 LLM 사용 간의 전략적 상충 관계를 분석합니다."
-image: "/images/fallback/ai-models-tools.png"
+image: "/images/fallbacks/ai-models.jpg"
 clusters: ["ai-models-tools"]
 categories: ["ai-models"]
 tags: ["생성형 AI", "사이버 보안", "LLM 아키텍처", "운영 지출", "총소유비용"]

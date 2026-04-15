@@ -97,16 +97,22 @@ CAT_MAP = {
 
 # [V0] Fallback mapping to Major Clusters
 FALLBACK_MAP = {
-    "ai-models": "ai-models-tools", "ai-tools": "ai-models-tools",
-    "gpu-chips": "gpu-hardware", "pc-robotics": "gpu-hardware",
-    "game-optimization": "ai-gaming", "ai-gameplay": "ai-gaming",
-    "tutorials": "guides", "compare": "guides"
+    "ai-models": "ai-models",
+    "ai-tools": "ai-tools",
+    "gpu-chips": "hardware",
+    "pc-robotics": "robotics",
+    "game-optimization": "game-tech",
+    "ai-gameplay": "gaming",
+    "tutorials": "future-sw",
+    "compare": "market-trend"
 }
 
 def download_image(url, category_slug, slug):
-    """[V2.9.6] 카테고리별 매핑된 고화질 폴백 이미지 보장"""
-    fallback_key = FALLBACK_MAP.get(category_slug, "ai-models-tools")
-    if not url: return f"/images/fallback/{fallback_key}.png"
+    """[V3.0] Article Image -> Category Default Image (Fallback Priority)"""
+    fallback_key = FALLBACK_MAP.get(category_slug, "ai-tech")
+    default_fallback = f"/images/fallbacks/{fallback_key}.jpg"
+    
+    if not url: return default_fallback
     if url.startswith('//'): url = 'https:' + url
     
     date_dir = datetime.now().strftime('%Y/%m/%d')
@@ -121,8 +127,10 @@ def download_image(url, category_slug, slug):
         if resp.status_code == 200:
             with open(img_path, 'wb') as f: f.write(resp.content)
             return web_url
-    except: pass
-    return f"/images/fallbacks/{fallback_key}.jpg"
+    except Exception as e:
+        logger.warning(f"[IMAGE] Download fail ({url}): {e}")
+    
+    return default_fallback
 
 def generate_and_save_thumbnail(image_prompt_core, slug_name):
     """[V8.0] 일자별 이미지 폴더 구조 (YYYY/MM/DD)"""
@@ -139,9 +147,9 @@ def generate_and_save_thumbnail(image_prompt_core, slug_name):
             date_dir = datetime.now().strftime("%Y/%m/%d")
             save_dir = f"static/images/posts/{date_dir}"
             os.makedirs(save_dir, exist_ok=True)
-            save_path = f"{save_dir}/{slug_name}.jpg"
+            save_path = f"{save_dir}/{slug_name}_gen.jpg"
             with open(save_path, 'wb') as f: f.write(response.content)
-            return f"/images/posts/{date_dir}/{slug_name}.jpg"
+            return f"/images/posts/{date_dir}/{slug_name}_gen.jpg"
     except Exception as e:
         logger.error(f"[IMAGE] Failed: {e}")
     return "/images/default-tech-bg.jpg"
@@ -175,7 +183,10 @@ def create_hugo_post(article, lang='ko'):
         summary_section = f"## Executive Summary\n{summary_val}\n\n" if summary_val else ""
         content_body = f"{summary_section}## Strategic Deep-Dive\n{article.get('eng_content', 'Content not localized yet.')}"
 
-    img_path = generate_and_save_thumbnail(article.get('image_prompt_core'), slug)
+    # [V3.1] Image Priority: 1. Article Image, 2. Category Default
+    # Thumbnail generation is kept as an offline asset but not used as primary frontmatter image to ensure diversity
+    img_path_gen = generate_and_save_thumbnail(article.get('image_prompt_core'), slug)
+    
     safe_title = title.replace('"', "'")
     safe_desc = desc_val.replace('"', "'")
     is_featured = "true" if article.get('featured') else "false"
@@ -184,7 +195,7 @@ def create_hugo_post(article, lang='ko'):
 title: "{safe_title}"
 date: "{date_str}"
 description: "{safe_desc}"
-image: "{img_path}"
+image: "{img_url}"
 clusters: ["{article.get('cluster', 'ai-models-tools')}"]
 categories: ["{cat_safe}"]
 tags: {tags_val}

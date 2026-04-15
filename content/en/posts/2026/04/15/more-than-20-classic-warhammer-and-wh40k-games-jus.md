@@ -2,7 +2,7 @@
 title: "Analyzing IP Aggregation: Steam’s Strategic Expansion of the Warhammer Universe"
 date: "2026-04-15T09:29:30Z"
 description: "This analysis examines how the extensive integration of the Warhammer IP library onto Steam demonstrates a powerful model for digital distribution and deep catalog value."
-image: "/images/fallback/ai-models-tools.png"
+image: "/images/fallbacks/game-tech.jpg"
 clusters: ["ai-gaming"]
 categories: ["game-optimization"]
 tags: ["IP Aggregation", "Steam Distribution", "Game Economy", "Digital Publishing Strategy"]

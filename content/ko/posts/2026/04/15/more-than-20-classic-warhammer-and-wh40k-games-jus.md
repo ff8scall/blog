@@ -2,7 +2,7 @@
 title: "IP 집적 전략 분석: 스팀 플랫폼의 워해머 유니버스 확장 가치"
 date: "2026-04-15T09:29:30+09:00"
 description: "본 보고서는 스팀 플랫폼에 워해머 IP 라이브러리가 대규모로 통합된 과정을 분석하며, 깊이 있는 콘텐츠 카탈로그가 디지털 유통 전략에 미치는 영향과 시장 가치를 탐구합니다."
-image: "/images/fallback/ai-models-tools.png"
+image: "/images/fallbacks/game-tech.jpg"
 clusters: ["ai-gaming"]
 categories: ["game-optimization"]
 tags: ["IP 집적", "디지털 유통 전략", "스팀 플랫폼 분석", "게임 경제학"]

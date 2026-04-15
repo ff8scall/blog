@@ -2,7 +2,7 @@
 title: "Standardizing AI Interaction: Analyzing Chrome's Prompt 'Skills' Feature"
 date: "2026-04-15T08:51:07Z"
 description: "Google's new 'Skills' feature within Chrome radically changes prompt interaction by providing a centralized library of optimized, one-click AI templates. This development minimizes cognitive friction and significantly boosts productivity across diverse professional workflows."
-image: "/images/fallback/ai-models-tools.png"
+image: "/images/fallbacks/ai-tools.jpg"
 clusters: ["ai-models-tools"]
 categories: ["ai-tools"]
 tags: ["AI Prompt Engineering", "Workflow Automation", "LLM Integration", "Chrome Browser", "Productivity Tools"]

@@ -2,7 +2,7 @@
 title: "Strategic IP Portfolio Analysis: Mapping Studio Content Pipelines"
 date: "2026-04-15T09:31:56Z"
 description: "This analysis examines major studio strategic diversification models by assessing the breadth of Intellectual Property (IP) pipelines, offering insights into future content monetization."
-image: "/images/fallback/ai-models-tools.png"
+image: "/images/fallbacks/gaming.jpg"
 clusters: ["ai-gaming"]
 categories: ["ai-gameplay"]
 tags: ["IP Strategy", "Content Pipeline", "Market Diversification", "Studio Economics"]

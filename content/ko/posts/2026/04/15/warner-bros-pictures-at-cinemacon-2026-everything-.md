@@ -2,7 +2,7 @@
 title: "전략적 지식재산(IP) 포트폴리오 분석: 스튜디오 콘텐츠 파이프라인 분석"
 date: "2026-04-15T09:31:57+09:00"
 description: "본 분석은 다변화된 IP 슬레이트 배치를 통해 주요 스튜디오의 시장 전략 모델을 평가하여, 콘텐츠의 지속적인 수익화 방안을 제시합니다."
-image: "/images/fallback/ai-models-tools.png"
+image: "/images/fallbacks/gaming.jpg"
 clusters: ["ai-gaming"]
 categories: ["ai-gameplay"]
 tags: ["IP 전략", "콘텐츠 파이프라인", "시장 다각화", "스튜디오 경제학"]

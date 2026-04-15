@@ -2,7 +2,7 @@
 title: "The Discrepancy Between AI Optimism and Socio-Economic Reality"
 date: "2026-04-15T09:26:58Z"
 description: "This analysis examines the growing divergence between technological experts' AI predictions and the public's genuine concerns regarding job displacement and wealth inequality."
-image: "/images/fallback/ai-models-tools.png"
+image: "/images/fallbacks/ai-models.jpg"
 clusters: ["ai-models-tools"]
 categories: ["ai-models"]
 tags: ["AI Ethics", "Workforce Displacement", "Techno-Optimism", "Policy Planning"]

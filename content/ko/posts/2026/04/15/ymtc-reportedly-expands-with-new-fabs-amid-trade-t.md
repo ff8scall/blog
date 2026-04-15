@@ -2,7 +2,7 @@
 title: "YMTC의 대규모 확장 분석: 글로벌 낸드 플래시 공급망 재편과 지정학적 함의"
 date: "2026-04-15T09:12:01+09:00"
 description: "장쯔 메모리 테크놀로지스(YMTC)의 대규모 생산 시설 증설이 글로벌 낸드 플래시 시장 구조, 공급망의 지역적 재편, 그리고 산업 경쟁 구도에 미치는 광범위한 영향을 심도 있게 분석합니다."
-image: "/images/fallback/ai-models-tools.png"
+image: "/images/fallbacks/hardware.jpg"
 clusters: ["gpu-hardware"]
 categories: ["gpu-chips"]
 tags: ["낸드 플래시", "반도체 공급망", "지정학적 리스크", "시장 경쟁", "자급자족 전략"]

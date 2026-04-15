@@ -2,7 +2,7 @@
 title: "Gemini의 전략적 변화: LLM(대규모 언어 모델)을 네이티브 데스크톱 OS 워크플로우에 통합하다"
 date: "2026-04-15T09:19:44+09:00"
 description: "Gemini 대규모 언어 모델이 웹 기반 챗봇에서 네이티브 윈도우 데스크톱 애플리케이션으로 전환되면서, 전문적인 워크플로우에서의 AI 활용 방식이 어떻게 변화하는지 분석합니다."
-image: "/images/fallback/ai-models-tools.png"
+image: "/images/fallbacks/ai-tools.jpg"
 clusters: ["ai-models-tools"]
 categories: ["ai-tools"]
 tags: ["제미나이 AI", "LLM 통합", "윈도우 데스크톱", "AI 워크플로우", "생성형 AI"]

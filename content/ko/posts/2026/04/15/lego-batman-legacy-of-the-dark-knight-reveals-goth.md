@@ -2,7 +2,7 @@
 title: "모듈형 디자인 분석: 다양한 설정을 게임 엔진에 통합하는 기술적 접근"
 date: "2026-04-15T09:37:05+09:00"
 description: "여러 시대와 원작 설정을 하나의 게임 엔진에 통합하기 위한 핵심 기술 아키텍처 요구사항을 분석한 전문 보고서입니다."
-image: "/images/fallback/ai-models-tools.png"
+image: "/images/fallbacks/gaming.jpg"
 clusters: ["ai-gaming"]
 categories: ["ai-gameplay"]
 tags: ["게임 엔진 아키텍처", "모듈식 디자인", "원작 자료 통합", "기술 분석 보고서"]

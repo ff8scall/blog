@@ -2,7 +2,7 @@
 title: "텔레헬스 분야 AI 활용: 임상 효율성과 환자 신뢰의 균형점 분석"
 date: "2026-04-15T08:40:41+09:00"
 description: "본 보고서는 텔레헬스 및 진단 영역에 도입되는 거대 언어 모델(LLM)의 확산 현황을 분석하며, 확장 가능한 효율성과 사용자 신뢰 사이의 핵심적인 긴장 관계에 대해 논합니다."
-image: "/images/fallback/ai-models-tools.png"
+image: "/images/fallbacks/ai-models.jpg"
 clusters: ["ai-models-tools"]
 categories: ["ai-models"]
 tags: ["LLM", "원격진료", "AI 진단", "헬스케어 AI", "임상 도입"]

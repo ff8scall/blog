@@ -2,7 +2,7 @@
 title: "구글 메시지의 데이터 복구 시스템 아키텍처 분석: 신뢰성 확보 전략"
 date: "2026-04-15T08:56:16+09:00"
 description: "본 논문은 구글 메시지에 도입된 '휴지통' 기능을 심층 분석하며, 데이터 수명 주기 관리, 상태 전환, 그리고 미래 AI 맥락 검색 기능을 위한 아키텍처적 시사점을 제시합니다."
-image: "/images/fallback/ai-models-tools.png"
+image: "/images/fallbacks/ai-tools.jpg"
 clusters: ["ai-models-tools"]
 categories: ["ai-tools"]
 tags: ["데이터 영속성", "UX 아키텍처", "메시징 플랫폼", "AI 문맥 검색"]

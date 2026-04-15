@@ -2,7 +2,7 @@
 title: "소니 브라비아 스마트 TV의 안테나/셋톱박스 기능 축소 분석: 산업적 패러다임 변화와 사용자 대응 전략"
 date: "2026-04-15T08:38:22+09:00"
 description: "전문가들은 소니가 브라비아 스마트 TV에서 전통적인 방송 기능을 단계적으로 축소하는 전략적 결정을 분석하며, 전용 안테나나 셋톱박스에 의존하는 사용자들에게 예상되는 호환성 문제를 경고합니다."
-image: "/images/fallback/ai-models-tools.png"
+image: "/images/fallbacks/robotics.jpg"
 clusters: ["gpu-hardware"]
 categories: ["pc-robotics"]
 tags: ["소니 브라비아", "기능 축소", "방송 수신", "스마트 TV OS", "IP 스트리밍"]

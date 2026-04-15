@@ -2,7 +2,7 @@
 title: "Strategic Analysis of Google I/O 2026: The AI Developer Platform Shift"
 date: "2026-04-15T09:24:30Z"
 description: "This paper analyzes the strategic roadmap for Google I/O 2026, focusing on the integration of foundational AI models into developer toolchains and cloud services."
-image: "/images/fallback/ai-models-tools.png"
+image: "/images/fallbacks/ai-models.jpg"
 clusters: ["ai-models-tools"]
 categories: ["ai-models"]
 tags: ["Google I/O", "AI Developer Platform", "Generative AI", "Cloud Computing", "Vertex AI"]

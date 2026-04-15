@@ -2,7 +2,7 @@
 title: "구글 I/O 2026 전략 분석: AI 중심 개발 플랫폼으로의 전환"
 date: "2026-04-15T09:24:30+09:00"
 description: "본 보고서는 구글 I/O 2026의 개발자 로드맵을 분석하며, 핵심 서비스에 근본적인 AI 모델 통합이 어떻게 이루어지고 있는지 심층적으로 다룹니다."
-image: "/images/fallback/ai-models-tools.png"
+image: "/images/fallbacks/ai-models.jpg"
 clusters: ["ai-models-tools"]
 categories: ["ai-models"]
 tags: ["구글 I/O", "AI 개발자 플랫폼", "생성형 AI", "클라우드 컴퓨팅", "베르텍스 AI"]

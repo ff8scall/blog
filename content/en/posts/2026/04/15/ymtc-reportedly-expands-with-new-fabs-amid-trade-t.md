@@ -2,7 +2,7 @@
 title: "YMTC's Aggressive Expansion: Reshaping the Global NAND Flash Supply Chain"
 date: "2026-04-15T09:12:00Z"
 description: "An analysis of Yangtze Memory Technologies' massive capacity expansion and its profound implications for global NAND flash market structure, geopolitical supply chain resilience, and pricing dynamics."
-image: "/images/fallback/ai-models-tools.png"
+image: "/images/fallbacks/hardware.jpg"
 clusters: ["gpu-hardware"]
 categories: ["gpu-chips"]
 tags: ["NAND Flash", "Semiconductor Supply Chain", "YMTC", "Geopolitics", "Vertical Integration"]
