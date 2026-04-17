@@ -28,6 +28,7 @@ sys.path.append(current_dir)
 
 from notebooklm_prep import process_macro_synthesis
 from notebooklm_publisher import NotebookLMPublisher
+from common_utils import send_telegram_report
 
 logging.basicConfig(
     level=logging.INFO,
@@ -89,6 +90,9 @@ def run_full_pipeline(mode="A", limit=15, source="rss", poll_interval=60, max_wa
     logger.info(f"║  Started: {datetime.now().strftime('%H:%M:%S')}                                    ║")
     logger.info("╚" + "═" * 58 + "╝")
     
+    # [START NOTIFICATION]
+    send_telegram_report(f"🚀 <b>[Premium Pipeline]</b> Start\nMode: {mode} | Source: {source} | Limit: {limit}")
+    
     # Phase 1
     success = run_phase1(mode=mode, limit=limit, source=source)
     if not success:
@@ -124,6 +128,9 @@ def run_full_pipeline(mode="A", limit=15, source="rss", poll_interval=60, max_wa
         logger.info("Run 'py nlm_orchestrator.py --phase 2' later to publish remaining jobs.")
     
     logger.info("\n[PIPELINE COMPLETE]")
+    
+    # [FINISH NOTIFICATION]
+    send_telegram_report(f"✅ <b>[Premium Pipeline]</b> Finished!\nStatus: Processed {limit} articles per category.")
 
 
 def main():

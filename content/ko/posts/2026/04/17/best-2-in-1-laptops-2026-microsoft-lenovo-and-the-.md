@@ -1,8 +1,8 @@
 ﻿---
 title: "2026년 최고의 2-in-1 노트북 분석... 마이크로소프트, 레노버, 아이패드의 폼팩터 대결"
-date: "2026-04-17T23:11:18+09:00"
+date: "2026-04-17T23:23:06+09:00"
 description: "2026년 2-in-1 노트북 시장은 마이크로소프트 서피스 프로, 레노버 요가, 아이패드 프로가 각기 다른 기술적 철학으로 경쟁하고 있습니다."
-image: "/images/fallbacks/ai-tech.jpg"
+image: "/images/posts/2026/04/17/best-2-in-1-laptops-2026-microsoft-lenovo-and-the-_gen.jpg"
 clusters: ["guides"]
 categories: ["compare"]
 tags: ["2-in-1 노트북", "서피스 프로", "레노버 요가", "아이패드 프로", "하이브리드 컴퓨팅"]
