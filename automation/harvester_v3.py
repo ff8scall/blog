@@ -123,7 +123,7 @@ class HarvesterV3:
         """
         all_items = []
         if not os.path.exists(self.config_path):
-            logger.error(f" [!] RSS Config Missing: {self.config_path}")
+            logger.warning(f" [!] RSS Config Missing: {self.config_path}. Falling back to API-only harvesting.")
             return []
 
         try:

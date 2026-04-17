@@ -1,8 +1,8 @@
 ﻿---
 title: "픽셀메이터 프로(Pixelmator Pro)의 '리퀴드 글래스' 효과... 애플 크리에이터 스튜디오 독점 공급의 의미"
-date: "2026-04-17T23:11:19+09:00"
+date: "2026-04-17T23:24:37+09:00"
 description: "픽셀메이터 프로의 혁신적인 이미지 효과 기술인 '리퀴드 글래스(Liquid Glass)'가 당분간 애플의 '크리에이터 스튜디오' 환경에서만 독점 제공됩니다."
-image: "/images/fallbacks/ai-tools.jpg"
+image: "/images/posts/2026/04/17/at-least-for-now-liquid-glass-in-pixelmator-pro-re_gen.jpg"
 clusters: ["ai-models-tools"]
 categories: ["ai-tools"]
 tags: ["픽셀메이터 프로", "리퀴드 글래스", "애플 크리에이터 스튜디오", "뉴럴 엔진", "독점 소프트웨어"]
