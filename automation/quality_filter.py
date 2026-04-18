@@ -21,14 +21,14 @@ class QualityFilter:
         
         # 카테고리별 핵심 키워드 (Pass 1)
         self.category_keywords = {
-            "ai-models": ["AI", "LLM", "GPT", "Gemini", "Claude", "Llama", "transformer", "fine-tune", "MoE", "parameter", "DeepMind", "OpenAI"],
-            "ai-tools": ["AI", "copilot", "chatgpt", "midjourney", "stable diffusion", "productivity", "agent", "workflow", "assistant"],
-            "gpu-chips": ["GPU", "NVIDIA", "AMD", "TSMC", "HBM", "NVLink", "3nm", "chiplet", "Blackwell", "Instinct"],
-            "pc-robotics": ["NPU", "Snapdragon", "Core Ultra", "Ryzen AI", "Robot", "Humanoid", "AI PC"],
-            "game-optimization": ["DLSS", "FSR", "XeSS", "Ray Tracing", "Path Tracing", "Unreal Engine", "Unity", "Frame Gen"],
-            "ai-gameplay": ["NPC AI", "Procedural", "Generative AI in games", "behavior tree", "reinforcement learning"],
-            "tutorials": ["How to", "Guide", "Tutorial", "Step by step", "Setup", "Install"],
-            "compare": ["Benchmark", "vs", "Comparison", "Review", "Speed test", "Efficiency"]
+            "ai-models": ["AI", "LLM", "GPT", "Gemini", "Claude", "Llama", "transformer", "fine-tune", "MoE", "parameter", "DeepMind", "OpenAI", "Anthropic", "Mistral"],
+            "ai-tools": ["AI", "copilot", "chatgpt", "midjourney", "stable diffusion", "productivity", "agent", "workflow", "assistant", "automation", "integration"],
+            "gpu-chips": ["GPU", "NVIDIA", "AMD", "TSMC", "HBM", "NVLink", "3nm", "chiplet", "Blackwell", "Instinct", "GeForce", "Radeon", "Intel", "Gaudi"],
+            "pc-robotics": ["NPU", "Snapdragon", "Core Ultra", "Ryzen AI", "Robot", "Humanoid", "AI PC", "Laptop", "Windows 11", "Copilot+", "ASUS", "MSI", "Dell"],
+            "game-optimization": ["DLSS", "FSR", "XeSS", "Ray Tracing", "Path Tracing", "Unreal Engine", "Unity", "Frame Gen", "Performance", "Optimization", "Patch", "Benchmark", "NVIDIA", "AMD"],
+            "ai-gameplay": ["NPC AI", "Procedural", "Generative AI in games", "behavior tree", "reinforcement learning", "LLM in games", "AI NPCs"],
+            "tutorials": ["How to", "Guide", "Tutorial", "Step by step", "Setup", "Install", "Tips", "Tricks", "Best", "Fix"],
+            "compare": ["Benchmark", "vs", "Comparison", "Review", "Speed test", "Efficiency", "Analysis", "Head to head"]
         }
         
         # 제외 키워드 (클릭베이트, 루머 등)
@@ -122,13 +122,21 @@ Example: {{"selected_ids": [0, 2], "scores": {{"0": 9, "1": 4, "2": 8}}}}
         
         # 1단계
         survived = self.pass1_rule_filter(raw_articles)
+        
+        # [Fallback] 만약 키워드 필터링으로 다 날아갔는데 원본은 있다면, 
+        # 상위 소스 가중치 순으로 최소 3개는 살려서 2단계로 보냄 (품질 제어는 LLM이 할 것)
+        if not survived and raw_articles:
+            logger.warning(f" [FALLBACK] Pass 1 empty for {category}. Picking top source-weighted items.")
+            sorted_raw = sorted(raw_articles, key=lambda x: x.source_weight, reverse=True)
+            survived = sorted_raw[:max(3, limit // 2)]
+            
         result_meta.pass1_survived = len(survived)
         
         # 2단계
         final = self.pass2_llm_score(survived, category, top_n=limit)
         result_meta.pass2_selected = len(final)
         
-        # 메타 정보 업데이트 (AIWriter의 최근 상태 반영 - 추후 더 정확히 구현 가능)
+        # 메타 정보 업데이트
         result_meta.model_used = "gemini-2.5-flash-lite"
         result_meta.api_calls_used = 1 if survived else 0
         

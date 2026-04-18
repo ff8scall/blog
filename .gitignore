@@ -30,3 +30,4 @@ docs_private/
 __pycache__/
 automation/__pycache__/
 scratch/
+automation/cache/
