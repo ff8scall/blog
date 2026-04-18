@@ -9,6 +9,8 @@ import random
 import logging
 from datetime import datetime
 from common_utils import normalize_url, clean_text, extract_domain
+from schemas import HarvestedArticle
+from quality_filter import QualityFilter
 
 logger = logging.getLogger("LegoSia.HarvesterV3")
 
@@ -105,17 +107,17 @@ class HarvesterV3:
             
         self.seen_urls.add(norm_url)
         
-        return {
-            "title": clean_text(article.get("title", "")),
-            "description": clean_text(article.get("description", "") or article.get("snippet", ""))[:300],
-            "url": raw_url,
-            "normalized_url": norm_url,
-            "image": self._extract_image(article),
-            "publishedAt": article.get("publishedAt") or article.get("pubDate") or datetime.now().isoformat(),
-            "source_name": source_name,
-            "eng_category_slug": cat_slug,
-            "source_weight": self._get_source_weight(source_name)
-        }
+        return HarvestedArticle(
+            title=clean_text(article.get("title", "")),
+            description=clean_text(article.get("description", "") or article.get("snippet", ""))[:400],
+            url=raw_url,
+            normalized_url=norm_url,
+            image=self._extract_image(article),
+            publishedAt=article.get("publishedAt") or article.get("pubDate") or datetime.now().isoformat(),
+            source_name=source_name,
+            eng_category_slug=cat_slug,
+            source_weight=self._get_source_weight(source_name)
+        )
 
     def fetch_rss(self):
         """
@@ -165,7 +167,7 @@ class HarvesterV3:
         
         # Process RSS items first
         for item in rss_items:
-            cat = item['eng_category_slug']
+            cat = item.eng_category_slug
             if stats[cat] < limit_per_cat * 2: # Allow more from high-quality RSS
                 results.append(item)
                 stats[cat] += 1
@@ -173,8 +175,26 @@ class HarvesterV3:
         # Save cache after RSS phase
         self._save_cache()
         
-        logger.info(f" [+++] RSS Harvest Complete: {len(results)} items found")
-        return results, stats
+        logger.info(f" [+++] RSS Harvest Initial: {len(results)} items found")
+
+        # [V5.0] 2-Pass Quality Filtering
+        qf = QualityFilter()
+        filtered_results = []
+        final_stats = {cat: 0 for cat in self.categories_config}
+        
+        # 카테고리별로 필터링 실행
+        for cat in self.categories_config:
+            cat_articles = [a for a in results if a.eng_category_slug == cat]
+            if not cat_articles:
+                continue
+                
+            logger.info(f" [FILTER] Processing {cat} ({len(cat_articles)} items)...")
+            selected = qf.execute_pipeline(cat_articles, cat, limit=limit_per_cat)
+            filtered_results.extend(selected)
+            final_stats[cat] = len(selected)
+
+        logger.info(f" [>>>] Filtered Harvest Complete: {len(filtered_results)} high-quality items selected")
+        return filtered_results, final_stats
 
     def dump_to_category_files(self, limit_per_cat=15):
         """
@@ -205,14 +225,18 @@ class HarvesterV3:
                     f.write(f"**Total Articles:** {len(items)}\n\n")
                     
                     for idx, a in enumerate(items, 1):
-                        f.write("--------------------------------------------------\n")
-                        f.write(f"## [Source {idx}] {a.get('title', 'Untitled')}\n")
-                        f.write(f"- **Publisher:** {a.get('source_name', 'Unknown')}\n")
-                        f.write(f"- **Category:** {a.get('eng_category_slug', 'N/A')}\n")
-                        f.write(f"- **URL:** {a.get('url', '')}\n\n")
+                        tags_str = ", ".join(a.quality_tags) if a.quality_tags else a.eng_category_slug
+                        f.write(f"## 📰 [{a.title}]\n")
+                        f.write(f"**Meta Info**\n")
+                        f.write(f"- **Source:** {a.source_name}\n")
+                        f.write(f"- **Date:** {a.publishedAt[:10]}\n")
+                        f.write(f"- **URL:** {a.url}\n")
+                        f.write(f"- **Quality Score:** {a.quality_score if a.quality_score else 'N/A'}/10\n")
+                        f.write(f"- **Tags:** {tags_str}\n\n")
                         
-                        desc = a.get('description', '').replace('\n', ' ').strip()
-                        f.write(f"**Content Summary:**\n{desc}\n\n")
+                        desc = a.description.replace('\n', ' ').strip()
+                        f.write(f"**본문(Content)**\n{desc}\n\n")
+                        f.write("---\n\n")
                 
                 output_files[cat] = filepath
                 logger.info(f" [DUMP] Saved {len(items)} articles to {filepath}")

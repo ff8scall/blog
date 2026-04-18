@@ -50,6 +50,14 @@ class AIWriter:
             "@cf/meta/llama-3.1-8b-instruct"    # Cloudflare
         ]
 
+        # [V5.0] 필터링 전용 경량 모델 (RPD: 1000, RPM: 15)
+        self.filter_models = [
+            "gemini-2.5-flash-lite",               # 최신 고효율 라이트 모델
+            "gemini-2.0-flash-lite",               # 안정적인 폴백
+            "gemini-3.1-flash-lite-preview",       # 미래형 경량 모델
+            "gemini-1.5-flash-8b"                  # 최경량 폴백
+        ]
+
         logger.info("AIWriter V4.5 (Pure Free Master) Activated.")
 
     def _wait_for_quota(self, seconds=15):
@@ -163,6 +171,16 @@ class AIWriter:
                 if res: return res
             
         return self._call_openrouter_api(prompt, "minimax/minimax-m2.5:free")
+
+    def score_articles(self, prompt):
+        """[V5.0] 필터링 전용: 15초 쓰로틀링 유지하며 빠른 경량 모델 호출"""
+        for model in self.filter_models:
+            # 필터링도 동일하게 15초 대기 룰 적용 (사용자 요청)
+            self._wait_for_quota(15)
+            result = self._call_gemini_api(prompt, model)
+            if result:
+                return result
+        return None
 
     def save_post(self, content, filename, lang='ko'):
         date_dir = datetime.now().strftime('%Y/%m/%d')
