@@ -16,9 +16,8 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
 from dataclasses import asdict
 
-# [V3.21] 전역 카운터 (기사별 고유 시간 부여용)
-# 미래 날짜 문제를 방지하기 위해 1시간 전(-3600초)부터 시작
-POST_TIME_OFFSET = -3600
+# 미래 날짜 문제를 방지하기 위해 약간의 마진(10초)만 두고 현재 시간으로 설정
+POST_TIME_OFFSET = -10
 
 class StateTracker:
     """[V9.5] Thread-Safe Job State & Article Cache Management: Ensures resumable & atomic operations"""
