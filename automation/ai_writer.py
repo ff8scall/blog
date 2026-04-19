@@ -33,13 +33,13 @@ class AIWriter:
         self.cf_account_id = os.getenv("CLOUDFLARE_ACCOUNT_ID")
         self.cf_token = os.getenv("CLOUDFLARE_API_TOKEN")
 
-        # [V11.0] 초고성능(Ultra) 모델 풀 (Gemini 3.1 & Gemma 3 주력)
+        # [V11.2] 초고성능(Ultra) 모델 풀 (3.1 실패 시 즉시 타 엔진 전환)
         self.ultra_online_models = [
             "gemini-3.1-flash-lite-preview",    # Google (주력)
-            "gemini-1.5-flash",                 # Google (안정적인 폴백)
+            "google/gemma-3-27b-it:free",       # OpenRouter (Gemma 3)
             "llama-3.3-70b-versatile",          # Groq
             "gpt-4o",                           # GitHub
-            "google/gemma-3-27b-it:free"        # OpenRouter
+            "minimax/minimax-m2.5:free"         # OpenRouter (대안)
         ]
         
         # [V4.6] 효율성(Fast) 모델 풀 (신속 처리)
