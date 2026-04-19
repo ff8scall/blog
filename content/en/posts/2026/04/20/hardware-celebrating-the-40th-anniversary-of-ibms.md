@@ -1,15 +1,15 @@
 ﻿---
 title: "Celebrating the 40th Anniversary of IBM's 1-Megabit DRAM Breakthrough"
-date: "2026-04-19T15:21:06Z"
-description: "Celebrating the 40th Anniversary of IBM's 1-Megabit DRAM Breakthrough"
-image: "/images/defaults/ai/ibm.jpg"
-clusters: ["ai"]
-categories: ["models"]
+date: "2026-04-19T15:39:10Z"
+description: "Today marks the 40th anniversary of one of the most significant milestones in semiconductor history: IBM’s announcement of the world’s first 1-megabit DRAM memory chip. This achievement occurred at a ..."
+image: "/images/posts/2026/04/20/hardware-celebrating-the-40th-anniversary-of-ibms_gen.jpg"
+clusters: ["hardware"]
+categories: ["chips"]
 tags: ["IBM", "1-megabit DRAM", "computing history", "semiconductor breakthrough", "memory evolution"]
 featured: false
 ---
 ## Executive Summary
-- Celebrating the 40th Anniversary of IBM's 1-Megabit DRAM Breakthrough
+- Today marks the 40th anniversary of one of the most significant milestones in semiconductor history: IBM’s announcement of the world’s first 1-megabit DRAM memory chip. This achievement occurred at a ...
 
 ## Strategic Deep-Dive
 Today marks the 40th anniversary of one of the most significant milestones in semiconductor history: IBM’s announcement of the world’s first 1-megabit DRAM memory chip. This achievement occurred at a time when 64-kilobit chips were the industry standard, making the leap to a full megabit a staggering sixteen-fold increase in storage density. This breakthrough was more than just an incremental update; it required a fundamental shift in lithography and transistor manufacturing.

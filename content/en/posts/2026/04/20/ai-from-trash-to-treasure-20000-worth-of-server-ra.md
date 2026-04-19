@@ -1,7 +1,7 @@
 ﻿---
 title: "From Trash to Treasure: $20,000 Worth of Server RAM Salvaged from E-Waste"
-date: "2026-04-19T15:25:41Z"
-description: "From Trash to Treasure: $20,000 Worth of Server RAM Salvaged from E-Waste"
+date: "2026-04-19T15:41:11Z"
+description: "In an extraordinary incident highlighting the massive waste within corporate IT departments, a Redditor’s father recently salvaged 72 high-performance server RAM sticks from a company dumpster, valued..."
 image: "/images/fallbacks/ai-tech.jpg"
 clusters: ["ai"]
 categories: ["models"]
@@ -9,7 +9,7 @@ tags: ["Server RAM", "e-waste", "hardware salvage", "ECC memory", "IT sustainabi
 featured: false
 ---
 ## Executive Summary
-- From Trash to Treasure: $20,000 Worth of Server RAM Salvaged from E-Waste
+- In an extraordinary incident highlighting the massive waste within corporate IT departments, a Redditor’s father recently salvaged 72 high-performance server RAM sticks from a company dumpster, valued...
 
 ## Strategic Deep-Dive
 In an extraordinary incident highlighting the massive waste within corporate IT departments, a Redditor’s father recently salvaged 72 high-performance server RAM sticks from a company dumpster, valued at approximately $20,000. The hardware consists of 32GB HPE DDR4-2666 ECC RDIMMs, totaling a massive 2.3 terabytes of memory capacity. These components were discarded by a corporation following an infrastructure upgrade to brand-new servers.

@@ -227,6 +227,25 @@ def _post_process(article):
     article["kor_summary"] = clean_summary(article.get("kor_summary", []))
     article["eng_summary"] = clean_summary(article.get("eng_summary", []))
     
+    # [V4.2] 요약 누락 시 본문에서 추출 (Smart Fallback)
+    if not article.get("kor_summary") and article.get("kor_content"):
+        content = article["kor_content"]
+        # 첫 번째 유효 문단 추출
+        paragraphs = [p.strip() for p in content.split("\n") if p.strip() and not p.startswith("#")]
+        if paragraphs:
+            summary = paragraphs[0]
+            if len(summary) > 200: summary = summary[:200] + "..."
+            article["kor_summary"] = [summary]
+            logger.info(f" [FALLBACK] Generated kor_summary from content for {article.get('kor_title')}")
+
+    if not article.get("eng_summary") and article.get("eng_content"):
+        content = article["eng_content"]
+        paragraphs = [p.strip() for p in content.split("\n") if p.strip() and not p.startswith("#")]
+        if paragraphs:
+            summary = paragraphs[0]
+            if len(summary) > 200: summary = summary[:200] + "..."
+            article["eng_summary"] = [summary]
+
     # [V3.18] description은 문자열이어야 함
     article["kor_description"] = article.get("kor_summary", [""])[0] if article.get("kor_summary") else ""
     article["eng_description"] = article.get("eng_summary", [""])[0] if article.get("eng_summary") else ""

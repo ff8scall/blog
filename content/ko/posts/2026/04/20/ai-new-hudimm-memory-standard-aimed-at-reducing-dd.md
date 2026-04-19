@@ -1,15 +1,15 @@
 ﻿---
 title: "DDR5 가격 장벽 허무는 새로운 'HUDIMM' 메모리 규격의 등장과 기술적 분석"
-date: "2026-04-20T00:24:08+09:00"
-description: "DDR5 가격 장벽 허무는 새로운 'HUDIMM' 메모리 규격의 등장과 기술적 분석"
-image: "/images/posts/2026/04/20/ai-new-hudimm-memory-standard-aimed-at-reducing-dd_gen.jpg"
+date: "2026-04-20T00:39:36+09:00"
+description: "DDR5 메모리가 보급된 지 상당한 시간이 흘렀음에도 불구하고, 여전히 높은 제조 원가와 부품 수급난으로 인해 저가형 PC 시장의 진입 장벽은 높기만 합니다. 이러한 상황을 타개하기 위해 애즈락(ASRock)과 팀그룹(TeamGroup)이 협력하여 새로운 메모리 규격인 'HUDIMM(Half-bandwidth Unbuffered DIMM)'을 시장에 선보였..."
+image: "/images/defaults/ai/hudimm.jpg"
 clusters: ["ai"]
 categories: ["models"]
 tags: ["HUDIMM", "DDR5 메모리", "애즈락", "팀그룹", "하드웨어 비용"]
 featured: false
 ---
 ## 핵심 요약
-
+- DDR5 메모리가 보급된 지 상당한 시간이 흘렀음에도 불구하고, 여전히 높은 제조 원가와 부품 수급난으로 인해 저가형 PC 시장의 진입 장벽은 높기만 합니다. 이러한 상황을 타개하기 위해 애즈락(ASRock)과 팀그룹(TeamGroup)이 협력하여 새로운 메모리 규격인 'HUDIMM(Half-bandwidth Unbuffered DIMM)'을 시장에 선보였...
 
 ## 상세 분석
 DDR5 메모리가 보급된 지 상당한 시간이 흘렀음에도 불구하고, 여전히 높은 제조 원가와 부품 수급난으로 인해 저가형 PC 시장의 진입 장벽은 높기만 합니다. 이러한 상황을 타개하기 위해 애즈락(ASRock)과 팀그룹(TeamGroup)이 협력하여 새로운 메모리 규격인 'HUDIMM(Half-bandwidth Unbuffered DIMM)'을 시장에 선보였습니다. HUDIMM은 표준 DDR5의 구조적 복잡성을 과감하게 단순화하여 가격 경쟁력을 확보한 것이 특징입니다.

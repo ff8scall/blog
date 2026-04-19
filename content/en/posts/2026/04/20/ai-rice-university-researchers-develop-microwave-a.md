@@ -1,15 +1,15 @@
 ﻿---
 title: "Rice University Researchers Develop Microwave-Assisted 3D Printing for Integrated Circuits"
-date: "2026-04-19T15:22:58Z"
-description: "Rice University Researchers Develop Microwave-Assisted 3D Printing for Integrated Circuits"
-image: "/images/fallbacks/ai-tech.jpg"
+date: "2026-04-19T15:39:31Z"
+description: "A research team at Rice University has made a significant breakthrough in additive manufacturing by utilizing microwave energy to heat 3D printer filaments with surgical precision. This technology all..."
+image: "/images/posts/2026/04/20/ai-rice-university-researchers-develop-microwave-a_gen.jpg"
 clusters: ["ai"]
-categories: ["models"]
+categories: ["apps"]
 tags: ["Microwave 3D printing", "Rice University", "integrated circuits", "additive manufacturing", "hardware innovation"]
 featured: false
 ---
 ## Executive Summary
-- Rice University Researchers Develop Microwave-Assisted 3D Printing for Integrated Circuits
+- A research team at Rice University has made a significant breakthrough in additive manufacturing by utilizing microwave energy to heat 3D printer filaments with surgical precision. This technology all...
 
 ## Strategic Deep-Dive
 A research team at Rice University has made a significant breakthrough in additive manufacturing by utilizing microwave energy to heat 3D printer filaments with surgical precision. This technology allows for the selective heating of specialized conductive inks or filaments down to the width of a single human hair. The primary challenge in integrated 3D printing has always been the damage caused to the structural thermoplastic by the heat required to fuse metallic or conductive elements.
