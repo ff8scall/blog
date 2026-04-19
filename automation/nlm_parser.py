@@ -191,7 +191,11 @@ def _store_field(article, field_name, value):
         r"(?i)^###?\s*Section\s*\d+.*",
         r"(?i)^###?\s*Step\s*\d+.*",
         r"(?i)^###?\s*Conclusion.*",
-        r"(?i)^###?\s*Analysis.*"
+        r"(?i)^###?\s*Analysis.*",
+        r"(?i)^###?\s*상세\s*분석.*",
+        r"(?i)^###?\s*심층\s*분석.*",
+        r"(?i)^###?\s*시사점.*",
+        r"(?i)^###?\s*인사이트\s*비평.*"
     ]
     for pattern in noise_patterns:
         value = re.sub(pattern, "", value, flags=re.MULTILINE).strip()
@@ -359,8 +363,8 @@ def parse_editorial_markdown(raw_text, category="ai-models"):
         "kor_summary": [description[:100]],
         "kor_keywords": [category, "메가트렌드", "심층분석"],
         "kor_content": body,
-        "kor_analysis_title": "심층 분석",
-        "kor_insight_title": "에디터 인사이트",
+        "kor_analysis_title": "상세 분석",
+        "kor_insight_title": "시사점",
         "kor_insight": "",  # 사설 자체가 인사이트이므로 비워둠
         "category": category,
         "cluster": CLUSTER_MAP.get(category, "ai"),

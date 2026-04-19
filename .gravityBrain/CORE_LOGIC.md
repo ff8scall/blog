@@ -64,10 +64,29 @@ sequenceDiagram
 
 ## 5. 예외 처리 및 보안 전략
 - **Windows Encoding**: `cp949` 환경에서의 `UnicodeEncodeError` 방지를 위해 특수문자가 포함될 수 있는 디버그 출력 시 인코딩 예외 처리를 수행합니다.
-- **Throttling**: AI 이미지 생성 및 API 호출 시 5~10초의 간격을 두어 Throttling 리스크를 최소화합니다.
-- **Data Integrity**: NLM 리포트 원문을 `scratch/premium_reports/`에 보존하여 파싱 실패 시 수동 복구가 가능하도록 설계되었습니다.
+- **Throttling**: 모든 AI API 호출 시 **20초 강제 대기**를 적용하여 무료 티어 안전성을 극대화합니다.
+- **Data Integrity**: 모든 기사 데이터는 `automation/cache/`에 영구 보존되어 필요 시 AI 호출 없이 재발행이 가능합니다.
 
-## 5. 의존성 관계
+## 6. 하이브리드 고품질 미러링 파이프라인 (Ironclad Protocol v1.1)
+### [설계 의도]
+Premium(NLM) 파이프라인의 분석 깊이를 Legacy(API) 파이프라인에서도 구현하기 위해 2단계 AI 추론 방식을 도입합니다. 한/영 기사의 정보를 1:1로 일치시켜 전 세계 독자에게 동일한 품질의 인사이트를 제공하는 것이 핵심입니다.
+
+### [실행 알고리즘: `ai_news_editor.py`]
+1. **Pass 1: 고수준 영문 분석 (Analytical Synthesis)**
+   - RSS 수집된 원문 데이터를 바탕으로 Bloomberg/Reuters 스타일의 심층 영문 리포트(`EN_JSON_SCHEMA`)를 생성합니다.
+   - 이때 기술적 사양, 비즈니스 리스크, 시장 임팩트를 우선적으로 도출합니다.
+2. **Pass 2: 국문 미러링 현지화 (Mirroring Localization)**
+   - 생성된 영문 리포트를 입력값으로 받아, 의미와 구조가 완벽히 대칭되는 국문 기사(`KO_JSON_SCHEMA`)를 생성합니다.
+   - 용어 사전(GLOSSARY)을 적용하여 전문 용어의 번역 일관성을 확보합니다.
+3. **통합 포맷팅 (Standard Rendering)**
+   - 한/영 공통으로 소제목(`###`)을 인용구 스타일(`> `)로 변환하여 모던한 웹 가독성을 확보합니다.
+
+## 7. 시스템 안정성 및 Throttling 정책
+- **API 보호 로직**: 무료 티어 API(Gemini, Groq 등)의 할당량 보호 및 안정성 확보를 위해 **모든 요청 간 20초 강제 대기(Throttling)**를 적용합니다. (`AIWriter._wait_for_quota`)
+- **멀티 모델 폴백**: 주력 모델인 `gemini-3.1-flash-lite-preview` 부하 발생 시, `gemma-3`, `llama-3.3` 등 타 엔진으로 즉시 자동 전환되어 파이프라인 중단을 방지합니다.
+
+## 8. 의존성 관계
 - `notebooklm_publisher.py` -> `nlm_parser.py` (파싱 로직 의존)
-- `notebooklm_publisher.py` -> `news_main.py` (Hugo 생성 및 이미지 로직 의존)
-- `news_main.py` -> `ai_writer.py` (이미지 생성 API 의존)
+- `news_main.py` -> `ai_news_editor.py` (Legacy 분석 로직 의존)
+- `ai_news_editor.py` -> `ai_writer.py` (다중 모델 추론 의존)
+- `news_main.py` -> `image_manager.py` (Tiered Image Strategy 의존)

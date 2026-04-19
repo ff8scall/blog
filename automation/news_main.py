@@ -14,6 +14,7 @@ from common_utils import send_telegram_report
 import threading
 from concurrent.futures import ThreadPoolExecutor
 from datetime import timedelta
+from dataclasses import asdict
 
 # [V3.21] 전역 카운터 (기사별 고유 시간 부여용)
 # 미래 날짜 문제를 방지하기 위해 1시간 전(-3600초)부터 시작
@@ -123,9 +124,9 @@ def hash_slug(url):
     return hashlib.md5(url.encode()).hexdigest()[:6]
 
 CAT_MAP = {
-    "models": "AI 모델", "apps": "AI 활용",
-    "high-end": "하이엔드 PC", "chips": "반도체",
-    "analysis": "비교·분석", "guide": "개발·팁"
+    "ai": "인공지능·소프트웨어",
+    "hardware": "컴퓨팅·하드웨어",
+    "insights": "기술 분석·인사이트"
 }
 
 # [V1.1] Alignment with actual fallback filenames in static/images/fallbacks/
@@ -133,13 +134,7 @@ CAT_MAP = {
 FALLBACK_MAP = {
     "ai": "ai-tech",
     "hardware": "hardware",
-    "insights": "guides",
-    "models": "ai-models",
-    "apps": "ai-tools",
-    "high-end": "hardware",
-    "chips": "semi-hbm",
-    "analysis": "ai-tech",
-    "guide": "ai-tech"
+    "insights": "insights"
 }
 
 def download_image(url, category_slug, slug):
@@ -277,77 +272,77 @@ def is_already_published(slug):
 def create_hugo_post(article, lang='ko'):
     global POST_TIME_OFFSET
     pub_date = datetime.now() + timedelta(seconds=POST_TIME_OFFSET)
-    POST_TIME_OFFSET += 5  # [V4.3] 5초 간격으로 중복 방지 및 미래 시간 방지
+    POST_TIME_OFFSET += 5 
+    
     date_path = pub_date.strftime("%Y/%m/%d")
     target_dir = f"content/{lang}/posts/{date_path}"
     os.makedirs(target_dir, exist_ok=True)
+    
     slug = article['sync_slug']
     cat_safe = sanitize_slug(article.get('category', 'ai-models'))
     
-    # [V10.0] Tiered Image Strategy 통합
-    from image_manager import get_tiered_image
+    # [V11.1] Unified Mirroring Template Logic
+    prefix = 'kor' if lang == 'ko' else 'eng'
     
+    title = article.get(f'{prefix}_title', 'Untitled')
+    summary_list = article.get(f'{prefix}_summary', [])
+    if isinstance(summary_list, str): summary_list = [summary_list]
+    
+    content = article.get(f'{prefix}_content', '')
+    insight = article.get(f'{prefix}_insight', '')
+    description = article.get(f'{prefix}_description', '')
+    keywords = article.get(f'{prefix}_keywords', [])
+    
+    # Titles & Labels
+    summary_label = "핵심 요약" if lang == 'ko' else "Executive Summary"
+    analysis_label = "상세 분석" if lang == 'ko' else "Strategic Deep-Dive"
+    insight_label = "시사점" if lang == 'ko' else "Strategic Insights"
+    
+    # Date Formatting
+    if lang == 'ko':
+        date_str = pub_date.strftime('%Y-%m-%dT%H:%M:%S+09:00')
+    else:
+        from datetime import timezone
+        date_str = pub_date.astimezone(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+    # Formatting Content
+    summary_text = "\n".join([f"- {s}" for s in summary_list])
+    formatted_content = _format_readable_content(content)
+    formatted_insight = _format_readable_content(insight)
+    
+    # Image Tiered Strategy
+    from image_manager import get_tiered_image
     thumbnail_url = article.get('thumbnail_image')
     if not thumbnail_url:
         thumbnail_url = get_tiered_image(article, slug)
-        article['thumbnail_image'] = thumbnail_url # 캐싱
-    
-    ai_img_url = article.get('_shared_image') or thumbnail_url
-    
-    filepath = os.path.join(target_dir, f"{slug}.md")
-    
-    # 본문에 AI 이미지 삽입 (썸네일과 다를 경우에만 혹은 항상)
-    ai_img_md = ""
-    if ai_img_url and ai_img_url != thumbnail_url:
-        ai_img_md = f"\n\n![AI Insight Visualization]({ai_img_url})\n*<center>AI-generated visualization based on the depth analysis of this article.</center>*\n\n"
+        article['thumbnail_image'] = thumbnail_url 
 
-    if lang == 'ko':
-        title = article.get('kor_title', '제목 없음')
-        kor_sum = article.get('kor_summary', [])
-        desc_val = article.get('kor_description', kor_sum[0] if kor_sum else title)
-        tags_val = json.dumps(article.get('kor_keywords', []), ensure_ascii=False)
-        date_str = pub_date.strftime('%Y-%m-%dT%H:%M:%S+09:00')
-        analysis_title = article.get('kor_analysis_title', '상세 분석')
-        insight_title = article.get('kor_insight_title', '인사이트 비평')
-        summary_text = "\n".join([f"- {s}" for s in article.get('kor_summary', [])])
-        formatted_content = _format_readable_content(article.get('kor_content', ''))
-        formatted_insight = _format_readable_content(article.get('kor_insight', ''))
-        
-        content_body = f"## 핵심 요약\n{summary_text}\n\n"
-        if formatted_content:
-            content_body += f"## {analysis_title}\n{formatted_content}{ai_img_md}\n\n"
-        if formatted_insight:
-            content_body += f"## {insight_title}\n{formatted_insight}"
-        content_body = content_body.strip()
-    else:
-        title = article.get('eng_title', 'Untitled')
-        eng_desc = article.get('eng_description')
-        desc_val = eng_desc if eng_desc else (article.get('eng_summary') if article.get('eng_summary') else title)
-        tags_val = json.dumps(article.get('eng_keywords', []), ensure_ascii=False)
-        from datetime import timezone
-        date_str = pub_date.astimezone(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
-        summary_val = article.get('eng_summary', '')
-        summary_section = f"## Executive Summary\n{summary_val}\n\n" if summary_val else ""
-        formatted_eng_content = _format_readable_content(article.get('eng_content', 'Content not localized yet.'))
-        content_body = f"{summary_section}## Strategic Deep-Dive\n{formatted_eng_content}{ai_img_md}"
+    # Build Body
+    content_body = f"## {summary_label}\n{summary_text}\n\n"
+    if formatted_content:
+        content_body += f"## {analysis_label}\n{formatted_content}\n\n"
+    if formatted_insight:
+        content_body += f"## {insight_label}\n{formatted_insight}"
 
-    # [V3.1] Frontmatter Generation
+    # Build Frontmatter
     safe_title = title.replace('"', "'")
-    safe_desc = desc_val.replace('"', "'")
+    safe_desc = (description if description else (summary_list[0] if summary_list else title)).replace('"', "'")
     is_featured = "true" if article.get('featured') else "false"
+    tags_json = json.dumps(keywords, ensure_ascii=False)
 
     post_md = f"""---
 title: "{safe_title}"
 date: "{date_str}"
 description: "{safe_desc}"
 image: "{thumbnail_url}"
-clusters: ["{article.get('cluster', 'ai-models-tools')}"]
-categories: ["{cat_safe}"]
-tags: {tags_val}
+clusters: ["{article.get('cluster', 'ai')}"]
+categories: ["{article.get('category', 'ai')}"]
+tags: {tags_json}
 featured: {is_featured}
 ---
 {content_body}
 """
+    filepath = os.path.join(target_dir, f"{slug}.md")
     with open(filepath, "w", encoding="utf-8-sig") as f: f.write(post_md)
     return True
 
@@ -361,14 +356,22 @@ def process_category(cat, items, editor, tracker, use_local=False, limit=1):
     for item in items:
         if processed_count >= limit: break
         
-        safe_slug = sanitize_slug(item['title'])
+        # [V11.0] Premium Slug Strategy Integration
+        cluster = item.get('cluster') or cat
+        raw_slug = sanitize_slug(item['title'])
+        if raw_slug and not raw_slug.isdigit():
+            safe_slug = f"{cluster}-{raw_slug}"[:50].strip('-')
+        else:
+            article_id = hash_slug(item.get('url', ''))
+            safe_slug = f"{cluster}-{cat}-{article_id}"
+        
         # 이미 한 쪽이라도 되었거나 캐시가 있으면 진행 (둘 다 완료된 경우만 스킵)
         if tracker.is_done("news", safe_slug, "ko") and tracker.is_done("news", safe_slug, "en"): 
             continue
 
         try:
             start_time = time.time()
-            logger.info(f"[PROCESS_START] [{cat}] Starting: {item['title'][:50]}")
+            logger.info(f"[PROCESS_START] [{cat}] Starting: {item['title'][:50]} (Slug: {safe_slug})")
             
             # Step 1: Article Data 취득 (캐시 우선 확인)
             article_data = tracker.load_cache(safe_slug)
@@ -427,8 +430,11 @@ def manage_news_pipeline(limit_per_cat=1, use_local=False):
     editor = NewsEditor(writer=writer)
     
     # 더 많은 후보를 수확하여 선택 폭을 넓힘
-    news_items, stats = harvester.fetch_all(limit_per_cat=limit_per_cat + 2)
+    news_items_raw, stats = harvester.fetch_all(limit_per_cat=limit_per_cat + 2)
     logger.info(f"Harvested: {stats}")
+    
+    # [V11.1] Convert Dataclass to Dictionary for legacy compatibility
+    news_items = [asdict(item) for item in news_items_raw]
     
     items_by_cat = {}
     for item in news_items:
@@ -436,7 +442,7 @@ def manage_news_pipeline(limit_per_cat=1, use_local=False):
         if cat not in items_by_cat: items_by_cat[cat] = []
         items_by_cat[cat].append(item)
     
-    categories = ["models", "apps", "chips", "high-end", "analysis", "guide"]
+    categories = ["ai", "hardware", "insights"]
     total_published = 0
     
     # 정기 배치는 안정성을 위해 순차 처리 (Throttling 준수)

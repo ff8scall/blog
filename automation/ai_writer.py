@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 # [V4.6] Resilient Multi-Engine Orchestrator: Pure Free-Tier (DeepSeek Excluded)
 # [FIX] Removed DeepSeek-Chat to avoid potential paid-tier requirements.
-# [FEATURE] Unified 15s Request Throttling remains active.
+# [FEATURE] Unified 10s Request Throttling remains active.
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("LegoSia.AIWriter")
 
@@ -33,12 +33,12 @@ class AIWriter:
         self.cf_account_id = os.getenv("CLOUDFLARE_ACCOUNT_ID")
         self.cf_token = os.getenv("CLOUDFLARE_API_TOKEN")
 
-        # [V4.6] 초고성능(Ultra) 모델 풀 (Gemma 4급 - 순수 무료)
+        # [V11.0] 초고성능(Ultra) 모델 풀 (Gemini 3.1 & Gemma 3 주력)
         self.ultra_online_models = [
-            "gemini-pro-latest",                # Google (V2 SDK 'latest' 선호)
-            "llama-3.3-70b-versatile",          # Groq (초고속/초고성능)
-            "minimax/minimax-m2.5:free",        # OpenRouter (정교한 한국어)
-            "google/gemma-4-31b-it:free",       # OpenRouter (Gemma 4 대안)
+            "gemini-3.1-flash-lite-preview",    # Google (사용자 지정 주력 모델)
+            "google/gemma-3-27b-it:free",       # OpenRouter (Gemma 3 대안)
+            "gemini-2.0-flash-lite-preview-02-05", # Fallback 1
+            "llama-3.3-70b-versatile",          # Groq
             "gpt-4o"                            # GitHub
         ]
         
@@ -52,16 +52,16 @@ class AIWriter:
 
         # [V5.0] 필터링 전용 경량 모델 (RPD: 1000, RPM: 15)
         self.filter_models = [
-            "gemini-2.5-flash-lite",               # 최신 고효율 라이트 모델
+            "gemini-3.1-flash-lite-preview",       # 최신 고효율 라이트 모델 (사용자 지정)
             "gemini-2.0-flash-lite",               # 안정적인 폴백
-            "gemini-1.5-flash",                    # 검증된 범용 모델 (latest 대신 정식 명칭 사용)
+            "gemini-1.5-flash",                    # 검증된 범용 모델
             "gemini-1.5-pro"                       # 최후의 수단
         ]
 
         logger.info("AIWriter V4.5 (Pure Free Master) Activated.")
 
-    def _wait_for_quota(self, seconds=15):
-        """[V4.5] 모든 요청 시 15초 휴식 룰 적용"""
+    def _wait_for_quota(self, seconds=10):
+        """[V11.0] 모든 요청 시 10초 휴식 룰 적용 (안전성 강화)"""
         logger.info(f"Throttling: Waiting {seconds}s for safe API quota usage...")
         time.sleep(seconds)
 
@@ -140,7 +140,7 @@ class AIWriter:
         # 15초 휴식 룰 (V4.5) - 로컬 요청 시에는 휴식 제외할 수도 있으나 일관성을 위해 유지하거나 로컬일때만 스킵 가능
         # 여기서는 클라우드 API 호출 시에만 휴식하도록 조정
         if not (model and (model.startswith("qwen") or "local" in model.lower())):
-            self._wait_for_quota(15)
+            self._wait_for_quota(10)
 
         # 2. 특정 모델 지정 시
         if model:
@@ -151,7 +151,7 @@ class AIWriter:
             if "gpt-4o" in model.lower(): return self._call_github_api(prompt, model)
 
         # 3. 역할별 전략적 풀 가동 (Ultra)
-        if role in ['writing', 'analysis']:
+        if role in ['writing', 'analysis', 'processing']:
             for m in self.ultra_online_models:
                 res = None
                 if "gemini" in m: res = self._call_gemini_api(prompt, m)
@@ -175,8 +175,8 @@ class AIWriter:
     def score_articles(self, prompt):
         """[V5.0] 필터링 전용: 15초 쓰로틀링 유지하며 빠른 경량 모델 호출"""
         for model in self.filter_models:
-            # 필터링도 동일하게 15초 대기 룰 적용 (사용자 요청)
-            self._wait_for_quota(15)
+            # 필터링도 동일하게 10초 대기 룰 적용 (사용자 요청)
+            self._wait_for_quota(10)
             result = self._call_gemini_api(prompt, model)
             if result:
                 return result

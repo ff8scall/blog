@@ -45,12 +45,9 @@ class HarvesterV3:
         }
 
         self.categories_config = {
-            "models": {"kor_name": "AI 모델"},
-            "apps": {"kor_name": "AI 활용"},
-            "chips": {"kor_name": "반도체"},
-            "high-end": {"kor_name": "하이엔드 PC"},
-            "analysis": {"kor_name": "비교·분석"},
-            "guide": {"kor_name": "개발·팁"}
+            "ai": {"kor_name": "인공지능·소프트웨어"},
+            "hardware": {"kor_name": "컴퓨팅·하드웨어"},
+            "insights": {"kor_name": "기술 분석·인사이트"}
         }
 
     def _load_cache(self):

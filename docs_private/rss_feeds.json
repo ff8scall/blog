@@ -1,35 +1,29 @@
 {
-  "models": [
+  "ai": [
     {"name": "Ars Technica AI", "url": "https://feeds.arstechnica.com/arstechnica/index"},
     {"name": "TechCrunch AI", "url": "https://techcrunch.com/category/artificial-intelligence/feed/"},
     {"name": "VentureBeat AI", "url": "https://venturebeat.com/category/ai/feed/"},
     {"name": "Wired AI", "url": "https://www.wired.com/category/science/artificial-intelligence/feed/"},
     {"name": "AI News", "url": "https://www.artificialintelligence-news.com/feed/"},
-    {"name": "The Rundown AI", "url": "https://www.therundown.ai/feed"}
-  ],
-  "apps": [
+    {"name": "The Rundown AI", "url": "https://www.therundown.ai/feed"},
     {"name": "The Verge Tech", "url": "https://www.theverge.com/rss/front-page/index.xml"},
     {"name": "ZDNet AI", "url": "https://www.zdnet.com/topic/artificial-intelligence/rss.xml"},
     {"name": "SiliconAngle AI", "url": "https://siliconangle.com/category/ai/feed/"}
   ],
-  "chips": [
+  "hardware": [
     {"name": "Tom's Hardware", "url": "https://www.tomshardware.com/feeds/all"},
     {"name": "TechPowerUp", "url": "https://www.techpowerup.com/rss/news"},
     {"name": "AnandTech", "url": "https://www.anandtech.com/rss/"},
     {"name": "ExtremeTech", "url": "https://www.extremetech.com/feed"},
-    {"name": "SemiAnalysis", "url": "https://www.semianalysis.com/feed"}
-  ],
-  "high-end": [
+    {"name": "SemiAnalysis", "url": "https://www.semianalysis.com/feed"},
     {"name": "Overclock3D", "url": "https://www.overclock3d.net/news/rss"},
     {"name": "Hexus", "url": "https://www.hexus.net/rss/"},
     {"name": "Hardware Canucks", "url": "https://hardwarecanucks.com/feed/"}
   ],
-  "analysis": [
+  "insights": [
     {"name": "Hardware Times", "url": "https://www.hardwaretimes.com/feed/"},
     {"name": "UserBenchmark News", "url": "https://www.userbenchmark.com/resources/rss.xml"},
-    {"name": "Chips and Cheese", "url": "https://chipsandcheese.com/feed/"}
-  ],
-  "guide": [
+    {"name": "Chips and Cheese", "url": "https://chipsandcheese.com/feed/"},
     {"name": "How-To Geek", "url": "https://www.howtogeek.com/feed/"},
     {"name": "MakeUseOf AI", "url": "https://www.makeuseof.com/category/artificial-intelligence/feed/"},
     {"name": "Analytics Vidhya", "url": "https://www.analyticsvidhya.com/blog/category/ai/feed/"}
