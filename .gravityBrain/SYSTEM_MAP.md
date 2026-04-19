@@ -33,6 +33,10 @@ graph TD
 - **`automation/image_manager.py`**: Tiered Image Strategy (원본 -> 라이브러리 -> 생성) 담당
 - **`automation/nlm_parser.py`**: NLM 마크다운 분석 및 표준 스키마 변환
 
+## 🚀 특이사항
+- **Throttling**: 모든 API 요청 후 **10초 강제 대기**를 통해 안정적인 무료 티어 할당량 유지 및 실행 속도 최적화.
+- **Mirroring**: 2-Pass 아키텍처를 통한 한/영 품질 동기화 및 표준 헤더(상세 분석, 시사점) 적용.
+
 ## 🏷️ 대분류 및 태그 체계 (Standard v2.0)
 - **Clusters (대분류)**: `ai`, `hardware`, `insights`
 - **Categories (중분류)**: `models`, `apps`, `chips`, `high-end`, `analysis`, `guide`

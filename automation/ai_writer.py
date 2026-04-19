@@ -35,11 +35,11 @@ class AIWriter:
 
         # [V11.0] 초고성능(Ultra) 모델 풀 (Gemini 3.1 & Gemma 3 주력)
         self.ultra_online_models = [
-            "gemini-3.1-flash-lite-preview",    # Google (사용자 지정 주력 모델)
-            "google/gemma-3-27b-it:free",       # OpenRouter (Gemma 3 대안)
-            "gemini-2.0-flash-lite-preview-02-05", # Fallback 1
+            "gemini-3.1-flash-lite-preview",    # Google (주력)
+            "gemini-1.5-flash",                 # Google (안정적인 폴백)
             "llama-3.3-70b-versatile",          # Groq
-            "gpt-4o"                            # GitHub
+            "gpt-4o",                           # GitHub
+            "google/gemma-3-27b-it:free"        # OpenRouter
         ]
         
         # [V4.6] 효율성(Fast) 모델 풀 (신속 처리)
