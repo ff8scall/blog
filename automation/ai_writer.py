@@ -33,11 +33,11 @@ class AIWriter:
         self.cf_account_id = os.getenv("CLOUDFLARE_ACCOUNT_ID")
         self.cf_token = os.getenv("CLOUDFLARE_API_TOKEN")
 
-        # [V11.3] 계층적 지능 엔진 (3.1 -> Free 타사 -> Paid 타사 순)
+        # [V11.4] 계층적 지능 엔진 (Google Free -> OR Paid -> OR Free -> Groq)
         self.ultra_online_models = [
             "gemini-3.1-flash-lite-preview",    # 1. Google (Free - 주력)
-            "google/gemma-3-27b-it:free",       # 2. OpenRouter (Free - Gemma 3)
-            "google/gemini-2.0-flash-001",      # 3. OpenRouter (Paid - 최종 보루)
+            "google/gemini-3-flash:preview",    # 2. OpenRouter (Paid - 최고품질 백업)
+            "google/gemma-3-27b-it:free",       # 3. OpenRouter (Free - 대안)
             "llama-3.3-70b-versatile",          # 4. Groq (Free - 고성능)
             "gpt-4o"                            # 5. GitHub (Free - GPT)
         ]
