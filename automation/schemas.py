@@ -21,6 +21,8 @@ class HarvestedArticle:
     eng_category_slug: str = "ai-models"
     publishedAt: str = ""
     image: Optional[str] = None
+    top_image: Optional[str] = None # Newspaper4k가 찾은 대표 이미지
+    full_content: str = ""           # Trafilatura가 추출한 전문 (Markdown)
     source_weight: float = 0.6
     # v5.0: 품질 필터링에서 채워지는 필드
     quality_score: Optional[int] = None

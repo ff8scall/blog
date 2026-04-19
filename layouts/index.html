@@ -9,7 +9,7 @@
       </h2>
 
       <div class="card-grid">
-        {{ range first 12 (where .Site.RegularPages "Section" "posts") }}
+        {{ range .Paginator.Pages }}
         {{ partial "card.html" . }}
         {{ end }}
       </div>

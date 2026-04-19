@@ -18,9 +18,11 @@
         {{ end }}
         
         {{ if gt (len $uniqueCats) 0 }}
+          {{ $cat_map := dict "models" "AI 모델" "apps" "AI 활용" "high-end" "하이엔드 PC" "chips" "반도체" "analysis" "비교·분석" "guide" "개발·팁" }}
           {{ range $uniqueCats }}
+            {{ $t := .Data.Term }}
             <a href="{{ .RelPermalink }}" class="category-chip" style="background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.1); color: var(--p-text-muted); padding: 6px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 500; text-decoration: none; transition: all 0.3s ease;">
-              # {{ .LinkTitle }}
+              # {{ index $cat_map $t | default .LinkTitle }}
             </a>
           {{ end }}
         {{ end }}

@@ -5,9 +5,9 @@
 {{ $c_slug := "" }}{{ if $cluster }}{{ $c_slug = $cluster.Data.Term }}{{ end }}
 {{ $cat_slug := "" }}{{ if $category }}{{ $cat_slug = $category.Data.Term }}{{ end }}
 
-{{ $c_map := dict "ai-models-tools" "AI" "gpu-hardware" "하드웨어" "ai-gaming" "게임 테크" "guides" "가이드" }}
-{{ $clr_map := dict "ai-models-tools" "#3B82F6" "gpu-hardware" "#10B981" "ai-gaming" "#8B5CF6" "guides" "#F59E0B" }}
-{{ $cat_map := dict "ai-models" "AI 모델" "ai-tools" "AI 도구" "gpu-chips" "반도체" "pc-robotics" "AI PC" "game-optimization" "최적화" "ai-gameplay" "게임 테크" "tutorials" "튜토리얼" "compare" "비교" }}
+{{ $c_map := dict "ai" "AI" "hardware" "하드웨어" "insights" "인사이트" }}
+{{ $clr_map := dict "ai" "#3B82F6" "hardware" "#10B981" "insights" "#F59E0B" }}
+{{ $cat_map := dict "models" "AI 모델" "apps" "AI 활용" "high-end" "하이엔드 PC" "chips" "반도체" "analysis" "비교·분석" "guide" "개발·팁" }}
 
 {{ $c_name := "기타" }}{{ if $c_slug }}{{ $c_name = index $c_map $c_slug | default $cluster.LinkTitle }}{{ end }}
 {{ $clr := "#3B82F6" }}{{ if $c_slug }}{{ $clr = index $clr_map $c_slug | default "#3B82F6" }}{{ end }}
@@ -48,12 +48,9 @@
       <time class="card-date" style="font-size: 0.8rem; color: var(--p-text-muted); margin-bottom: 12px; display: block;">
         {{ .Date.Format "2006.01.02" }}
       </time>
-      <h3 class="card-title" style="font-size: 1.25rem; line-height: 1.4; margin-bottom: 12px; color: var(--p-text-main); font-weight: 700; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; transition: color 0.3s;">
+      <h3 class="card-title" style="font-size: 1.35rem; line-height: 1.45; margin-bottom: 0; color: var(--p-text-main); font-weight: 700; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; transition: color 0.3s;">
         {{ .Title }}
       </h3>
-      <p class="card-desc" style="font-size: 0.95rem; color: var(--p-text-muted); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 0;">
-        {{ .Description | default .Summary }}
-      </p>
     </div>
   </a>
 </article>

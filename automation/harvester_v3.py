@@ -142,7 +142,7 @@ class HarvesterV3:
                         if not feed.entries:
                             continue
                             
-                        for entry in feed.entries[:10]:
+                        for entry in feed.entries[:50]:
                             item = self._normalize_item(entry, source["name"], cat_slug)
                             if item:
                                 all_items.append(item)
@@ -206,7 +206,7 @@ class HarvesterV3:
         # Group by category
         grouped = {cat: [] for cat in self.categories_config}
         for item in results:
-            cat = item.get("eng_category_slug", "unknown")
+            cat = item.eng_category_slug
             if cat in grouped:
                 grouped[cat].append(item)
                 

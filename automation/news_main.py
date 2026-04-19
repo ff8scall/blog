@@ -13,6 +13,11 @@ from common_utils import send_telegram_report
 
 import threading
 from concurrent.futures import ThreadPoolExecutor
+from datetime import timedelta
+
+# [V3.21] 전역 카운터 (기사별 고유 시간 부여용)
+# 미래 날짜 문제를 방지하기 위해 1시간 전(-3600초)부터 시작
+POST_TIME_OFFSET = -3600
 
 class StateTracker:
     """[V9.5] Thread-Safe Job State & Article Cache Management: Ensures resumable & atomic operations"""
@@ -118,27 +123,37 @@ def hash_slug(url):
     return hashlib.md5(url.encode()).hexdigest()[:6]
 
 CAT_MAP = {
-    "ai-models": "AI 모델·트렌드", "ai-tools": "AI 도구·사용법",
-    "gpu-chips": "GPU·반도체", "pc-robotics": "AI PC & 로봇",
-    "game-optimization": "게임 최적화·엔진", "ai-gameplay": "AI 게임 기술",
-    "tutorials": "실전 튜토리얼", "compare": "성능 비교"
+    "models": "AI 모델", "apps": "AI 활용",
+    "high-end": "하이엔드 PC", "chips": "반도체",
+    "analysis": "비교·분석", "guide": "개발·팁"
 }
 
 # [V1.1] Alignment with actual fallback filenames in static/images/fallbacks/
+# [V4.0] 초정예 폴백 이미지 매핑
 FALLBACK_MAP = {
-    "ai-models": "ai-models",
-    "ai-tools": "ai-tools",
-    "gpu-chips": "semi-hbm",
-    "pc-robotics": "robotics",
-    "game-optimization": "game-tech",
-    "ai-gameplay": "gaming",
-    "tutorials": "ai-tech",
-    "compare": "ai-tech"
+    "ai": "ai-tech",
+    "hardware": "hardware",
+    "insights": "guides",
+    "models": "ai-models",
+    "apps": "ai-tools",
+    "high-end": "hardware",
+    "chips": "semi-hbm",
+    "analysis": "ai-tech",
+    "guide": "ai-tech"
 }
 
 def download_image(url, category_slug, slug):
     """[V3.5] Article Image -> Return None if fail (to trigger AI generation)"""
-    if not url: return None
+    if not url or str(url).lower() == 'none' or not str(url).startswith('http'):
+        return None
+    
+    # [V3.19] 가짜 이미지 링크(HTML 페이지 등) 필터링
+    lower_url = url.lower().split('?')[0] # 쿼리 파라미터 제외하고 확장자 확인
+    valid_exts = ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg']
+    if not any(ext in lower_url for ext in valid_exts) or 'html' in lower_url:
+        logger.warning(f" [IMAGE] Skipping non-image URL: {url}")
+        return None
+
     if url.startswith('//'): url = 'https:' + url
     
     date_dir = datetime.now().strftime('%Y/%m/%d')
@@ -149,12 +164,18 @@ def download_image(url, category_slug, slug):
     web_url = f"/images/posts/{date_dir}/{slug}.jpg"
     
     try:
-        resp = requests.get(url, timeout=(3, 10), headers={'User-Agent': 'Mozilla/5.0'})
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/123.0.0.0',
+            'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8'
+        }
+        resp = requests.get(url, timeout=(5, 15), headers=headers)
         if resp.status_code == 200:
             with open(img_path, 'wb') as f: f.write(resp.content)
             return web_url
+        else:
+            logger.warning(f" [IMAGE] Download failed with status {resp.status_code}: {url}")
     except Exception as e:
-        logger.warning(f"[IMAGE] Download fail ({url}): {e}")
+        logger.warning(f" [IMAGE] Download error ({url}): {e}")
     
     return None
 
@@ -162,7 +183,6 @@ def generate_and_save_thumbnail(image_prompt_core, slug_name, retries=2):
     """[V8.1] Pollinations.ai 이미지 생성 (재시도 포함)"""
     aesthetic_base = ", high-tech minimalism, cinematic 3D render, dark metallic texture, neon accents, isometric perspective, Unreal Engine 5 aesthetic, 8k resolution --no text, no faces, no humans"
     final_prompt = (image_prompt_core if image_prompt_core else "Abstract futuristic technology concept") + aesthetic_base
-    logger.info(f"[IMAGE] Creating thumbnail for {slug_name}")
     
     encoded_prompt = urllib.parse.quote(final_prompt)
     image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=1200&height=630&nologo=true"
@@ -177,10 +197,8 @@ def generate_and_save_thumbnail(image_prompt_core, slug_name, retries=2):
                 save_path = f"{save_dir}/{slug_name}_gen.jpg"
                 with open(save_path, 'wb') as f: f.write(response.content)
                 return f"/images/posts/{date_dir}/{slug_name}_gen.jpg"
-            else:
-                logger.warning(f"[IMAGE] Bad response (attempt {attempt+1}/{retries+1}): status={response.status_code}, size={len(response.content)}")
-        except Exception as e:
-            logger.warning(f"[IMAGE] Attempt {attempt+1}/{retries+1} failed: {e}")
+        except Exception:
+            pass
         if attempt < retries:
             time.sleep(2)
     return None
@@ -242,60 +260,83 @@ def _format_readable_content(text):
         if line == '' and result and result[-1] == '':
             continue
         result.append(line)
-    
     return '\n'.join(result).strip()
 
 def create_hugo_post(article, lang='ko'):
-    date_path = datetime.now().strftime("%Y/%m/%d")
+    global POST_TIME_OFFSET
+    pub_date = datetime.now() + timedelta(seconds=POST_TIME_OFFSET)
+    POST_TIME_OFFSET += 5  # [V4.3] 5초 간격으로 중복 방지 및 미래 시간 방지
+    date_path = pub_date.strftime("%Y/%m/%d")
     target_dir = f"content/{lang}/posts/{date_path}"
     os.makedirs(target_dir, exist_ok=True)
     slug = article['sync_slug']
     cat_safe = sanitize_slug(article.get('category', 'ai-models'))
     
-    # [V8.1] 이미지: _shared_image가 있으면 재생성 없이 바로 사용 (한/영 공유)
-    img_url = article.get('_shared_image')
+    # [V8.1] 이미지 전략: thumbnail_image(원본 우선)와 _shared_image(AI 생성) 분리
+    # _shared_image: AI가 생성한 고품질 시각화 이미지 (본문 내부용)
+    # thumbnail_image: 원문에서 가져온 실제 이미지 (목록/썸네일용)
+    ai_img_url = article.get('_shared_image')
+    thumbnail_url = article.get('thumbnail_image', ai_img_url)
     
-    if not img_url:
-        # 기존 Triple-Layer Fallback: 1. Article Image, 2. AI Generated, 3. Category Default
-        img_url = download_image(article.get('original_image_url'), cat_safe, slug)
+    if not ai_img_url and not thumbnail_url:
+        # [V3.6] 필드명 호환성 확보 (original_image_url 또는 original_image)
+        orig_img_path = article.get('original_image_url') or article.get('original_image')
+        thumbnail_url = download_image(orig_img_path, cat_safe, slug)
         
-        if not img_url:
-            img_url = generate_and_save_thumbnail(article.get('image_prompt_core'), slug)
-            if img_url:
-                logger.info(f"[IMAGE] Using AI Generated image for {slug}")
+        if not thumbnail_url:
+            if os.environ.get("SKIP_AI_IMAGE") == "1":
+                thumbnail_url = None
             else:
-                fallback_key = FALLBACK_MAP.get(cat_safe, "ai-tech")
-                img_url = f"/images/fallbacks/{fallback_key}.jpg"
-                logger.info(f"[IMAGE] Using Category Level-3 fallback for {slug}")
+                logger.info(f"[IMAGE] No original image for {slug}. Falling back to AI Generation...")
+                thumbnail_url = generate_and_save_thumbnail(article.get('image_prompt_core'), slug)
+            
+            if thumbnail_url:
+                logger.info(f"[IMAGE] Using image for {slug}")
+            else:
+                # [V3.30] 카테고리 실패 시 클러스터 기반 폴백 시도
+                fallback_key = FALLBACK_MAP.get(cat_safe) or FALLBACK_MAP.get(article.get('cluster'), "ai-tech")
+                thumbnail_url = f"/images/fallbacks/{fallback_key}.jpg"
+                logger.info(f"[IMAGE] Using Fallback ({fallback_key}) for {slug}")
+        ai_img_url = thumbnail_url 
     
     filepath = os.path.join(target_dir, f"{slug}.md")
+    
+    # 본문에 AI 이미지 삽입 (썸네일과 다를 경우에만 혹은 항상)
+    ai_img_md = ""
+    if ai_img_url and ai_img_url != thumbnail_url:
+        ai_img_md = f"\n\n![AI Insight Visualization]({ai_img_url})\n*<center>AI-generated visualization based on the depth analysis of this article.</center>*\n\n"
+
     if lang == 'ko':
         title = article.get('kor_title', '제목 없음')
-        desc_val = article.get('kor_description', article.get('kor_summary', [title])[0])
+        kor_sum = article.get('kor_summary', [])
+        desc_val = article.get('kor_description', kor_sum[0] if kor_sum else title)
         tags_val = json.dumps(article.get('kor_keywords', []), ensure_ascii=False)
-        date_str = datetime.now().strftime('%Y-%m-%dT%H:%M:%S+09:00')
+        date_str = pub_date.strftime('%Y-%m-%dT%H:%M:%S+09:00')
         analysis_title = article.get('kor_analysis_title', '상세 분석')
         insight_title = article.get('kor_insight_title', '인사이트 비평')
         summary_text = "\n".join([f"- {s}" for s in article.get('kor_summary', [])])
         formatted_content = _format_readable_content(article.get('kor_content', ''))
         formatted_insight = _format_readable_content(article.get('kor_insight', ''))
-        content_body = f"## 핵심 요약\n{summary_text}\n\n## {analysis_title}\n{formatted_content}\n\n## {insight_title}\n{formatted_insight}"
+        
+        content_body = f"## 핵심 요약\n{summary_text}\n\n"
+        if formatted_content:
+            content_body += f"## {analysis_title}\n{formatted_content}{ai_img_md}\n\n"
+        if formatted_insight:
+            content_body += f"## {insight_title}\n{formatted_insight}"
+        content_body = content_body.strip()
     else:
         title = article.get('eng_title', 'Untitled')
         eng_desc = article.get('eng_description')
         desc_val = eng_desc if eng_desc else (article.get('eng_summary') if article.get('eng_summary') else title)
         tags_val = json.dumps(article.get('eng_keywords', []), ensure_ascii=False)
-        # Fix: Use local time with offset or UTC time correctly. 
-        # Here we use +00:00 or Z with utcnow
         from datetime import timezone
-        date_str = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+        date_str = pub_date.astimezone(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
         summary_val = article.get('eng_summary', '')
         summary_section = f"## Executive Summary\n{summary_val}\n\n" if summary_val else ""
         formatted_eng_content = _format_readable_content(article.get('eng_content', 'Content not localized yet.'))
-        content_body = f"{summary_section}## Strategic Deep-Dive\n{formatted_eng_content}"
+        content_body = f"{summary_section}## Strategic Deep-Dive\n{formatted_eng_content}{ai_img_md}"
 
     # [V3.1] Frontmatter Generation
-    
     safe_title = title.replace('"', "'")
     safe_desc = desc_val.replace('"', "'")
     is_featured = "true" if article.get('featured') else "false"
@@ -304,7 +345,7 @@ def create_hugo_post(article, lang='ko'):
 title: "{safe_title}"
 date: "{date_str}"
 description: "{safe_desc}"
-image: "{img_url}"
+image: "{thumbnail_url}"
 clusters: ["{article.get('cluster', 'ai-models-tools')}"]
 categories: ["{cat_safe}"]
 tags: {tags_val}
@@ -400,7 +441,7 @@ def manage_news_pipeline(limit_per_cat=1, use_local=False):
         if cat not in items_by_cat: items_by_cat[cat] = []
         items_by_cat[cat].append(item)
     
-    categories = ["ai-models", "ai-tools", "gpu-chips", "pc-robotics", "game-optimization", "ai-gameplay", "tutorials", "compare"]
+    categories = ["models", "apps", "chips", "high-end", "analysis", "guide"]
     total_published = 0
     
     # 정기 배치는 안정성을 위해 순차 처리 (Throttling 준수)

@@ -3,7 +3,7 @@ title = '레고-시아 AI 테크 인텔리전스'
 defaultContentLanguage = 'ko'
 hasCJKLanguage = true
 [pagination]
-  pagerSize = 12
+  pagerSize = 18
 
 [taxonomies]
   category = 'categories'
@@ -17,30 +17,20 @@ hasCJKLanguage = true
     weight = 1
     [languages.ko.menu]
       [[languages.ko.menu.main]]
-        name = "메가트렌드"
-        identifier = "megatrend"
-        url = "/clusters/megatrend/"
-        weight = 0
-      [[languages.ko.menu.main]]
         name = "AI"
         identifier = "ai"
-        url = "/clusters/ai-models-tools/"
+        url = "/clusters/ai/"
         weight = 1
       [[languages.ko.menu.main]]
         name = "하드웨어"
         identifier = "hardware"
-        url = "/clusters/gpu-hardware/"
+        url = "/clusters/hardware/"
         weight = 2
       [[languages.ko.menu.main]]
-        name = "게임 테크"
-        identifier = "gaming"
-        url = "/clusters/ai-gaming/"
+        name = "인사이트"
+        identifier = "insights"
+        url = "/clusters/insights/"
         weight = 3
-      [[languages.ko.menu.main]]
-        name = "가이드"
-        identifier = "guides"
-        url = "/clusters/guides/"
-        weight = 4
 
   [languages.en]
     languageName = "English"
@@ -48,29 +38,23 @@ hasCJKLanguage = true
     weight = 2
     [languages.en.menu]
       [[languages.en.menu.main]]
-        name = "Megatrends"
-        identifier = "megatrend"
-        url = "/en/clusters/megatrend/"
-        weight = 0
-      [[languages.en.menu.main]]
         name = "AI"
-        url = "/en/clusters/ai-models-tools/"
+        identifier = "ai"
+        url = "/en/clusters/ai/"
         weight = 1
       [[languages.en.menu.main]]
         name = "Hardware"
-        url = "/en/clusters/gpu-hardware/"
+        identifier = "hardware"
+        url = "/en/clusters/hardware/"
         weight = 2
       [[languages.en.menu.main]]
-        name = "Gaming"
-        url = "/en/clusters/ai-gaming/"
+        name = "Insights"
+        identifier = "insights"
+        url = "/en/clusters/insights/"
         weight = 3
-      [[languages.en.menu.main]]
-        name = "Guides"
-        url = "/en/clusters/guides/"
-        weight = 4
 
 [params]
   ui_version = "V0"
   [params.ui]
-    badge_colors = { "메가트렌드" = "#D97706", "AI" = "#3B82F6", "하드웨어" = "#10B981", "게임 테크" = "#8B5CF6", "가이드" = "#F59E0B" }
+    badge_colors = { "AI" = "#3B82F6", "하드웨어" = "#10B981", "인사이트" = "#F59E0B" }
     tag_prefix = true

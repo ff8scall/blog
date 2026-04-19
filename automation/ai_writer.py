@@ -55,7 +55,7 @@ class AIWriter:
             "gemini-2.5-flash-lite",               # 최신 고효율 라이트 모델
             "gemini-2.0-flash-lite",               # 안정적인 폴백
             "gemini-3.1-flash-lite-preview",       # 미래형 경량 모델
-            "gemini-1.5-flash-8b"                  # 최경량 폴백
+            "gemini-1.5-flash-latest"              # 검증된 범용 모델
         ]
 
         logger.info("AIWriter V4.5 (Pure Free Master) Activated.")

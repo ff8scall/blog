@@ -1,0 +1,5 @@
+trafilatura
+newspaper4k
+lxml
+chardet
+htmldate

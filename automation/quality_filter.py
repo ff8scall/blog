@@ -60,18 +60,20 @@ class QualityFilter:
         return survived
 
     def pass2_llm_score(self, articles: List[HarvestedArticle], category: str, top_n: int = 10) -> List[HarvestedArticle]:
-        """Pass 2: Gemini Flash-Lite 배치 스코어링"""
+        """Pass 2: Gemini Flash-Lite 배치 스코어링 (배치당 20개씩 분할 처리)"""
         if not articles:
             return []
             
-        # 1. 프롬프트 구성 (최대 20개씩 배치 처리)
-        # 여기서는 간단하게 전체를 하나의 배치로 처리 (보통 카테고리당 20개 미만이므로)
-        batch = articles[:20] 
-        items_str = ""
-        for i, a in enumerate(batch):
-            items_str += f"ID {i}: {a.title} | Source: {a.source_name} | Desc: {a.description[:150]}\n"
-            
-        prompt = f"""
+        all_final_selection = []
+        
+        # 20개씩 배치로 나누어 처리
+        for batch_idx in range(0, len(articles), 20):
+            batch = articles[batch_idx : batch_idx + 20]
+            items_str = ""
+            for i, a in enumerate(batch):
+                items_str += f"ID {i}: {a.title} | Source: {a.source_name} | Desc: {a.description[:150]}\n"
+                
+            prompt = f"""
 [TASK]: Score these news items for the '{category}' category based on Technical Depth, Insight, and Trend Relevance.
 [CRITERIA]: 
  - 8-10: Groundbreaking news, deep technical analysis, or major industry shift.
@@ -80,41 +82,40 @@ class QualityFilter:
 [ITEMS]:
 {items_str}
 
-[OUTPUT]: Strictly JSON format with 'selected_ids' (top {top_n} IDs) and 'scores' (dictionary of ID: score).
+[OUTPUT]: Strictly JSON format with 'selected_ids' (top IDs) and 'scores' (dictionary of ID: score).
 Example: {{"selected_ids": [0, 2], "scores": {{"0": 9, "1": 4, "2": 8}}}}
 """
-        
-        res_raw = self.writer.score_articles(prompt)
-        if not res_raw:
-            logger.warning(f"Pass 2 failed for {category}. Falling back to Pass 1 results.")
-            return articles[:top_n]
             
-        logger.debug(f" [LLM RAW] {category}: {res_raw}")
-        
-        try:
-            # JSON 추출
-            match = re.search(r'\{.*\}', res_raw, re.DOTALL)
-            if not match:
-                raise ValueError("No JSON found in response")
+            res_raw = self.writer.score_articles(prompt)
+            if not res_raw:
+                logger.warning(f"Pass 2 batch {batch_idx//20} failed for {category}. Skipping batch.")
+                continue
                 
-            res_json = json.loads(match.group())
-            selected_ids = res_json.get("selected_ids", [])
-            scores_map = res_json.get("scores", {})
-            
-            final_selection = []
-            for idx in selected_ids:
-                if idx < len(batch):
-                    article = batch[idx]
-                    # 스코어 저장
-                    article.quality_score = int(scores_map.get(str(idx), 7))
-                    final_selection.append(article)
-            
-            logger.info(f"Pass 2 [OK] {category}: Selected {len(final_selection)} articles.")
-            return final_selection
-            
-        except Exception as e:
-            logger.error(f"Pass 2 Parse Error: {e}. Raw: {res_raw[:200]}")
-            return articles[:top_n]
+            try:
+                # JSON 추출
+                match = re.search(r'\{.*\}', res_raw, re.DOTALL)
+                if not match:
+                    continue
+                    
+                res_json = json.loads(match.group())
+                selected_ids = res_json.get("selected_ids", [])
+                scores_map = res_json.get("scores", {})
+                
+                for s_id in selected_ids:
+                    try:
+                        idx = int(s_id)
+                        if idx < len(batch):
+                            article = batch[idx]
+                            article.quality_score = int(scores_map.get(str(idx), 7))
+                            all_final_selection.append(article)
+                    except (ValueError, TypeError):
+                        continue
+            except Exception as e:
+                logger.error(f"Pass 2 batch {batch_idx//20} Parse Error: {e}")
+                
+        # 스코어 순으로 정렬 후 상위 top_n개 반환
+        all_final_selection.sort(key=lambda x: x.quality_score, reverse=True)
+        return all_final_selection[:top_n]
 
     def execute_pipeline(self, raw_articles: List[HarvestedArticle], category: str, limit: int = 10) -> List[HarvestedArticle]:
         """전체 2-Pass 필터링 파이프라인 실행"""

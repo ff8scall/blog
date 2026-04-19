@@ -19,39 +19,46 @@ logger = logging.getLogger("LegoSia.NLMParser")
 FIELD_MAP = {
     "ID": "id",
     "ENG_TITLE": "eng_title",
+    "ENGLISH_TITLE": "eng_title",
     "KOR_TITLE": "kor_title",
+    "KOREAN_TITLE": "kor_title",
     "TITLE": "eng_title",
     "CLUSTER": "cluster",
     "CATEGORY": "category",
     "ENG_SUMMARY": "eng_summary",
+    "ENGLISH_SUMMARY": "eng_summary",
     "KOR_SUMMARY": "kor_summary",
+    "KOREAN_SUMMARY": "kor_summary",
     "SUMMARY": "eng_summary",
     "ENG_CONTENT": "eng_content",
+    "ENGLISH_CONTENT": "eng_content",
+    "ENGLISH_CONTENT_SYNTHESIS": "eng_content",
     "KOR_CONTENT": "kor_content",
+    "KOREAN_CONTENT": "kor_content",
     "CONTENT": "eng_content",
     "KOR_INSIGHT": "kor_insight",
+    "KOREAN_INSIGHT": "kor_insight",
     "KEYWORDS_EN": "eng_keywords",
+    "ENGLISH_KEYWORDS": "eng_keywords",
     "KEYWORDS_KR": "kor_keywords",
+    "KOREAN_KEYWORDS": "kor_keywords",
     "KEYWORDS": "eng_keywords",
     "IMAGE_PROMPT": "image_prompt_core",
+    "ORIGINAL_IMAGE": "original_image",
+    "ORIGINAL_IMAGE_URL": "original_image",
 }
 
-# 유효한 클러스터 목록
-VALID_CLUSTERS = [
-    "ai-models-tools", "gpu-hardware", "ai-gaming", "guides", "megatrend"
-]
+# [V4.0] 초정예 AI 중심 대분류
+VALID_CLUSTERS = ["ai", "hardware", "insights"]
 
-# 유효한 카테고리 목록
-VALID_CATEGORIES = [
-    "ai-models", "ai-tools", "gpu-chips", "pc-robotics",
-    "game-optimization", "ai-gameplay", "tutorials", "compare"
-]
+# [V4.0] 초정예 중분류
+VALID_CATEGORIES = ["models", "apps", "high-end", "chips", "analysis", "guide"]
 
+# 카테고리 -> 클러스터 매핑
 CLUSTER_MAP = {
-    "ai-models": "ai-models-tools", "ai-tools": "ai-models-tools",
-    "gpu-chips": "gpu-hardware", "pc-robotics": "gpu-hardware",
-    "game-optimization": "ai-gaming", "ai-gameplay": "ai-gaming",
-    "tutorials": "guides", "compare": "guides"
+    "models": "ai", "apps": "ai",
+    "high-end": "hardware", "chips": "hardware",
+    "analysis": "insights", "guide": "insights"
 }
 
 
@@ -66,21 +73,47 @@ def parse_structured_articles(raw_text):
         logger.error("Empty text received for parsing.")
         return []
 
-    # 구분자로 기사 블록 추출
-    pattern = r'---ARTICLE_START---(.*?)---ARTICLE_END---'
+    # [V3.2] 구분자 인식 극강화: 대시, 볼드, 불렛 포인트 등 모든 변종 대응
+    # 예: ---ARTICLE_START---, * **ARTICLE_START**, ARTICLE_START: 등
+    pattern = r'(?i)(?:---|\*?\s*\*\*?)?ARTICLE_START(?:---|\*\*?)?[:：]?\s*(.*?)(?:---|\*?\s*\*\*?)?ARTICLE_END(?:---|\*\*?)?[:：]?'
     blocks = re.findall(pattern, raw_text, re.DOTALL)
 
     if not blocks:
-        logger.warning("No ARTICLE_START/END blocks found. Attempting fallback parsing...")
-        return _fallback_parse(raw_text)
+        # [V2.4] 더 강력한 폴백: ID와 숫자 사이에 어떤 문자가 오더라도 인식 (예: ID [순번]: 1)
+        logger.warning("No ARTICLE_START/END found. Trying ID-based splitting...")
+        id_pattern = r'(?i)(?:[*#]|\d+\.)?\s*(?:\*\*)?ID[^0-9\n]*\d+'
+        blocks = re.split(id_pattern, raw_text)
+        
+        if len(blocks) > 1:
+            id_matches = re.findall(id_pattern, raw_text)
+            blocks = [id_matches[i] + blocks[i+1] for i in range(len(id_matches))]
+        else:
+            # [V3.3] 최후의 보루: 구분자도 ID도 없지만 텍스트가 길다면 전체를 하나의 기사로 취급
+            logger.warning("No structure found. Treating entire file as one article block.")
+            blocks = [raw_text]
 
     articles = []
-    for block in blocks:
-        article = _parse_single_block(block.strip())
-        if article:
-            articles.append(article)
+    for i, block in enumerate(blocks):
+        article = _parse_single_block(block.strip()) or {}
+        
+        # [V3.3] 필드 추출 실패 시 긴 텍스트를 통째로 콘텐츠로 할당
+        if len(block.strip()) > 500 and not article.get('eng_content') and not article.get('kor_content'):
+            # 한글 포함 여부로 필드 결정
+            if any('\uac00' <= char <= '\ud7a3' for char in block):
+                article['kor_content'] = block.strip()
+                if not article.get('kor_title'): article['kor_title'] = f"심층 분석 리포트 #{i}"
+            else:
+                article['eng_content'] = block.strip()
+                if not article.get('eng_title'): article['eng_title'] = f"Intelligence Report #{i}"
 
-    logger.info(f"Successfully parsed {len(articles)} articles from structured output.")
+        # [V3.9] 제목이 끝까지 없는 경우: ID가 있다면 사용, 없으면 순번 사용
+        if not article.get('eng_title') and not article.get('kor_title'):
+            article_id = article.get('id', str(i))
+            article['eng_title'] = f"Article {article_id}"
+            
+        articles.append(article)
+
+    logger.info(f"Successfully parsed {len(articles)} articles.")
     return articles
 
 
@@ -93,19 +126,38 @@ def _parse_single_block(block_text):
     current_value_lines = []
 
     for line in lines:
-        # KEY: VALUE 패턴 감지
-        match = re.match(r'^([A-Z_]+):\s*(.*)', line)
+        # [V3.16] 숫자형 불렛(1. 2. ) 및 마크다운 기호 혼합 대응
+        # 예: 7. **KOR_SUMMARY**: -> KOR_SUMMARY 매핑용
+        match = re.search(r'(?:[*#\s\d.-]*)(?:\*\*|__)?([A-Za-z\s_]{2,})(?:\*\*|__)?[:：]?\s*(.*)', line)
+        
+        found_key = None
         if match:
-            # 이전 필드 저장
+            potential_field = match.group(1).upper().replace(" ", "").replace("_", "")
+            sorted_keys = sorted(FIELD_MAP.keys(), key=len, reverse=True)
+            for k in sorted_keys:
+                normalized_k = k.upper().replace(" ", "").replace("_", "")
+                if normalized_k == potential_field:
+                    found_key = k
+                    break
+        
+        if found_key:
             if current_field:
                 _store_field(article, current_field, "\n".join(current_value_lines).strip())
             
-            current_field = match.group(1)
-            current_value_lines = [match.group(2)]
-        else:
-            # 멀티라인 값 (CONTENT 등)
-            if current_field:
-                current_value_lines.append(line)
+            current_field = found_key
+            val = match.group(2).strip()
+            current_value_lines = [val] if val else []
+            continue
+
+        # [V3.20] 잡음 제거 로직 완화: 요약 리스트(1. 2.)가 무시되지 않도록 수정
+        # 기존: if re.match(r'^\s*(?:#+\s*)?\d+\.\s+[A-Za-z가-힣]', line): 
+        # 이제 필드명 후보가 아님이 확실하고, 단순 번호만 있는 경우 등 아주 제한적으로만 스킵
+        if re.match(r'^\s*(?:#+\s*)?\d+\.\s*$', line):
+            continue
+
+        # 멀티라인 값 (CONTENT, SUMMARY 등)
+        if current_field:
+            current_value_lines.append(line)
 
     # 마지막 필드 저장
     if current_field:
@@ -127,9 +179,25 @@ def _store_field(article, field_name, value):
     if not mapped_key:
         return
 
+    # [V3.7] 마크다운 볼드(**) 제거 및 공백 정리
+    value = value.replace("**", "").strip()
+    
+    # [V3.7] 불필요한 공정용 마커(Headings) 제거 로직
+    # NLM이 소제목으로 남기는 쓰레기 텍스트들
+    noise_patterns = [
+        r"(?i)^###?\s*Deep-Dive.*",
+        r"(?i)^###?\s*Professional Insight.*",
+        r"(?i)^###?\s*Section\s*\d+.*",
+        r"(?i)^###?\s*Step\s*\d+.*",
+        r"(?i)^###?\s*Conclusion.*",
+        r"(?i)^###?\s*Analysis.*"
+    ]
+    for pattern in noise_patterns:
+        value = re.sub(pattern, "", value, flags=re.MULTILINE).strip()
+
     # 키워드 필드는 리스트로 변환
     if "keywords" in mapped_key:
-        value = [k.strip() for k in value.split(",") if k.strip()]
+        value = [k.replace("**", "").strip().strip("*").strip().rstrip(".") for k in value.split(",") if k.strip()]
     
     # 요약 필드가 여러 줄이면 리스트로
     if mapped_key == "kor_summary" and "\n" in value:
@@ -141,25 +209,66 @@ def _store_field(article, field_name, value):
 def _post_process(article):
     """기사 데이터 후처리: 카테고리/클러스터 검증 및 기본값 보충"""
     
-    # 1. 카테고리 정규화
-    cat = article.get("category", "ai-models").lower().replace(" ", "-")
-    if cat not in VALID_CATEGORIES:
-        # 유사어 매칭 또는 기본값
-        if "chip" in cat or "gpu" in cat or "cpu" in cat: cat = "gpu-chips"
-        elif "model" in cat or "llm" in cat: cat = "ai-models"
-        elif "tool" in cat: cat = "ai-tools"
-        elif "game" in cat: cat = "game-optimization"
-        elif "guide" in cat: cat = "tutorials"
-        else: cat = "ai-models"
+    # [V3.17] 요약 항목 불렛 중복 방지 (기호 제거)
+    def clean_summary(summary_list):
+        if not summary_list: return []
+        if isinstance(summary_list, str): summary_list = [summary_list]
+        cleaned = []
+        for s in summary_list:
+            s = re.sub(r'^\s*[*•\d.-]+\s*', '', s).strip()
+            if s: cleaned.append(s)
+        return cleaned
+
+    article["kor_summary"] = clean_summary(article.get("kor_summary", []))
+    article["eng_summary"] = clean_summary(article.get("eng_summary", []))
+    
+    # [V3.18] description은 문자열이어야 함
+    article["kor_description"] = article.get("kor_summary", [""])[0] if article.get("kor_summary") else ""
+    article["eng_description"] = article.get("eng_summary", [""])[0] if article.get("eng_summary") else ""
+
+    # 1. 카테고리 정규화 (중분류) - V4.1 초정예 매핑 (제목/본문 분석 추가)
+    cat_raw = article.get("category", "models").lower().replace(" ", "-")
+    content_text = (article.get("title", "") + " " + article.get("kor_description", "")).lower()
+    
+    cat = "models" # 기본값
+    
+    # [V4.1] 강력한 키워드 기반 강제 분류
+    # A. 인사이트 (비교/분석, 가이드)
+    if any(k in content_text for k in ["bench", "compare", "vs", "analysis", "effic", "비교", "분석", "성능"]): cat = "analysis"
+    elif any(k in content_text for k in ["guide", "tutorial", "how", "tip", "dev", "가이드", "팁", "방법"]): cat = "guide"
+    
+    # B. 하드웨어 (하이엔드 PC, 반도체)
+    elif any(k in content_text for k in ["9800", "5080", "build", "case", "cooler", "desktop", "데스크탑", "조립"]): cat = "high-end"
+    elif any(k in content_text for k in ["chip", "gpu", "tsmc", "intel", "nvidia", "accel", "semicon", "fab", "반도체", "칩"]): cat = "chips"
+    
+    # C. AI (활용/도구, 모델)
+    elif any(k in content_text for k in ["app", "workflow", "harvester", "tool", "auto", "productivity", "툴", "활용", "자동화"]): cat = "apps"
+    elif any(k in content_text for k in ["model", "llm", "gpt", "gemini", "claude", "ai", "openai", "deepmind", "모델"]): cat = "models"
+    
+    # 카테고리가 명시적으로 지정되었으나 위에서 안 걸린 경우 (ID 보정)
+    if cat == "models" and any(k in cat_raw for k in ["bench", "compare"]): cat = "analysis"
+    elif cat == "models" and any(k in cat_raw for k in ["guide", "tutorial"]): cat = "guide"
+    elif cat == "models" and any(k in cat_raw for k in ["chip", "gpu", "tsmc", "intel", "nvidia", "accel", "semicon"]): cat = "chips"
+    elif cat == "models" and any(k in cat_raw for k in ["build", "pc"]): cat = "high-end"
+    elif cat == "models" and any(k in cat_raw for k in ["app", "tool", "work"]): cat = "apps"
+
     article["category"] = cat
     
-    # 2. 클러스터 정규화 및 매핑
+    # 2. 클러스터 정규화 및 매핑 (대분류)
     cluster = article.get("cluster", "").lower().replace(" ", "-")
     if cluster not in VALID_CLUSTERS:
-        # 카테고리 기반 자동 매핑 (강력한 신뢰도)
-        cluster = CLUSTER_MAP.get(cat, "ai-models-tools")
+        cluster = CLUSTER_MAP.get(cat, "ai")
     article["cluster"] = cluster
     
+    # [V3.13] 제목 누락 시 본문 첫 줄 추출
+    if not article.get("eng_title") and article.get("eng_content"):
+        first_line = article["eng_content"].split("\n")[0].strip().strip("#").strip()
+        if len(first_line) > 10: article["eng_title"] = first_line[:100]
+        
+    if not article.get("kor_title") and article.get("kor_content"):
+        first_line = article["kor_content"].split("\n")[0].strip().strip("#").strip()
+        if len(first_line) > 10: article["kor_title"] = first_line[:100]
+
     # kor_summary가 문자열이면 리스트로 변환
     if isinstance(article.get("kor_summary"), str):
         article["kor_summary"] = [article["kor_summary"]]
@@ -213,23 +322,24 @@ def parse_editorial_markdown(raw_text, category="ai-models"):
         logger.error("Editorial text too short or empty.")
         return None
 
-    lines = raw_text.strip().split("\n")
+    # [V3.15] 구조적 마커 및 불필요한 필드명 제거
+    raw_content = re.sub(r'---ARTICLE_(?:START|END)---', '', raw_text)
+    raw_content = re.sub(r'(?i)\*\*ID:\*\*\s*\d+', '', raw_content)
+    raw_content = re.sub(r'(?i)\*\*(?:KOR_CONTENT|KOREAN_CONTENT|ENG_CONTENT|ENGLISH_CONTENT|KOR_INSIGHT|IMAGE_PROMPT)\*\*[:：]?', '', raw_content)
+    
+    lines = raw_content.strip().split("\n")
     
     # 제목 추출: 첫 번째 # 라인
     title = "Megatrend Analysis"
-    for line in lines:
+    body_start = 0
+    for i, line in enumerate(lines):
         if line.startswith("#"):
             title = re.sub(r'^#+\s*', '', line).strip()
             # [심층 사설] 같은 접두사 제거
             title = re.sub(r'^\[.*?\]\s*', '', title).strip()
-            break
-    
-    # 본문: 제목 라인 이후 전체
-    body_start = 0
-    for i, line in enumerate(lines):
-        if line.startswith("#"):
             body_start = i + 1
             break
+    
     body = "\n".join(lines[body_start:]).strip()
     
     # 첫 문단을 설명으로 사용

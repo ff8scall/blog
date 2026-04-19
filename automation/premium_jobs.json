@@ -1,10 +1,42 @@
 {
-    "history": {
-        "notebook_id": "2c95b42a-4faf-475d-b2d4-3715cba01aa5",
-        "title": "2026-04-17 history Mode-B",
+    "ai-models": {
+        "notebook_id": "ab39ea49-2e06-4c31-8083-31f4a352e203",
+        "title": "[V2] 2026-04-18 ai-models Mode-B",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-04-17T22:15:30.113748",
-        "published_at": "2026-04-17T23:24:37.521457"
+        "triggered_at": "2026-04-18T18:11:12.109310",
+        "published_at": "2026-04-19T12:51:59.240869"
+    },
+    "ai-tools": {
+        "notebook_id": "c4c0b16a-436b-484c-a754-de4eca5b4c5d",
+        "title": "[V2] 2026-04-18 ai-tools Mode-B",
+        "mode": "B",
+        "status": "published",
+        "triggered_at": "2026-04-18T18:11:21.266046",
+        "published_at": "2026-04-19T12:52:05.759407"
+    },
+    "gpu-chips": {
+        "notebook_id": "f469fdd5-b948-4e9c-8d19-52def61f5da1",
+        "title": "[V2] 2026-04-18 gpu-chips Mode-B",
+        "mode": "B",
+        "status": "published",
+        "triggered_at": "2026-04-18T18:11:30.117849",
+        "published_at": "2026-04-19T12:52:11.954328"
+    },
+    "pc-robotics": {
+        "notebook_id": "10dfc5d4-fddd-49d3-9239-c40707e4b3f0",
+        "title": "2026-04-18 pc-robotics Mode-B",
+        "mode": "B",
+        "status": "published",
+        "triggered_at": "2026-04-18T17:52:40.104142",
+        "published_at": "2026-04-19T12:52:16.198441"
+    },
+    "compare": {
+        "notebook_id": "6b5c6055-9571-4166-b1b7-f564eddb9445",
+        "title": "[V2] 2026-04-18 compare Mode-B",
+        "mode": "B",
+        "status": "published",
+        "triggered_at": "2026-04-18T18:11:47.962111",
+        "published_at": "2026-04-19T12:52:19.237761"
     }
 }

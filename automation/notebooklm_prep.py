@@ -28,55 +28,46 @@ PROMPT_MODE_A = (
 
 # 모드 B: 개별 기사 고품질 생산 (구조화된 데이터 출력)
 PROMPT_MODE_B = (
-    "각 기사를 독립적으로 분석하여 아래의 구조화된 데이터 형식으로 출력하십시오. "
-    "모든 KOR_* 필드는 반드시 한국어로 작성해야 합니다.\n\n"
-    "[분류 규칙 - 반드시 준수]\n"
-    "1. CLUSTER: 아래 4가지 중 기사 내용과 가장 잘 맞는 하나를 선택\n"
-    "   - ai-models-tools: AI 모델, 도구, LLM, 챗봇, AI 트렌드 및 일반 소프트웨어 기사\n"
-    "   - gpu-hardware: GPU, 반도체(HBM, NVLink 등), CPU, 서버 인프라, PC 하드웨어 기사\n"
-    "   - ai-gaming: 게임 엔진(DLSS, FSR 등), 최적화 기술, AI 게임 플레이, 그래픽 기술 기사\n"
-    "   - guides: 튜토리얼, 성능 비교(Benchmark), 팁, 사용 가이드성 기사\n"
-    "2. CATEGORY: CLUSTER에 속하는 세부 카테고리 중 하나 선택\n"
-    "   - ai-models-tools 소속: ai-models, ai-tools\n"
-    "   - gpu-hardware 소속: gpu-chips, pc-robotics\n"
-    "   - ai-gaming 소속: game-optimization, ai-gameplay\n"
-    "   - guides 소속: tutorials, compare\n\n"
+    "당신은 테크 저널리즘 전문가입니다. 업로드된 소스 데이터 내의 **각 기사를 독립적으로 분석**하여 아래의 [출력 형식]을 **토씨 하나 틀리지 말고 엄격하게** 지켜서 출력하십시오.\n\n"
+    "[출력 형식 지침 - 필독]\n"
+    "1. 구분자 지침: ---ARTICLE_START--- 와 ---ARTICLE_END--- 는 반드시 별도의 줄에 단독으로 존재해야 합니다. 절대로 불렛(*), 볼드(**), 하이픈(-) 등을 붙이지 마십시오.\n"
+    "2. 필드명 지침: 모든 필드명은 대문자로 작성하며 콜론(:) 뒤에 내용을 작성하십시오. 필드명 자체에 볼드 처리를 하지 마십시오.\n"
+    "3. 언어 지침: 모든 KOR_ 시작 필드(KOR_TITLE, KOR_SUMMARY, KOR_CONTENT, KOR_INSIGHT)는 **100% 한국어로만** 작성하십시오. 영문 혼용을 최소화하십시오.\n"
+    "4. 본문 지침: KOR_CONTENT 작성 시 'Deep-Dive'나 'Section 1' 같은 **내부 소제목 마커를 절대 사용하지 마십시오.** 자연스러운 마크다운 단락으로만 구성하십시오.\n\n"
     "---ARTICLE_START---\n"
     "ID: [순번]\n"
     "ENG_TITLE: [English Title]\n"
     "KOR_TITLE: [한국어 제목]\n"
-    "CLUSTER: [선택한 CLUSTER 이름]\n"
-    "CATEGORY: [선택한 CATEGORY 이름]\n"
+    "CLUSTER: [ai-models-tools | gpu-hardware | ai-gaming | guides]\n"
+    "CATEGORY: [해당 클러스터의 소속 카테고리 하나만 선택]\n"
     "ENG_SUMMARY: [English Summary]\n"
     "KOR_SUMMARY:\n- [한국어 요약 1]\n- [한국어 요약 2]\n- [한국어 요약 3]\n"
     "ENG_CONTENT: [Detailed English Body]\n"
-    "KOR_CONTENT: [한국어 심층 분석 본문, 1,500자 이상, 전문적 저널리즘 문체. 반드시 3~4문장마다 문단 구분 빈 줄을 삽입하여 가독성을 높일 것]\n"
+    "KOR_CONTENT: [한국어 심층 분석 본문, 1,500자 이상, 전문적 저널리즘 문체, 소제목 마커 금지]\n"
     "KOR_INSIGHT: [한국어 전문가 비평]\n"
     "KEYWORDS_EN: [English Keywords]\n"
     "KEYWORDS_KR: [한국어 키워드]\n"
     "IMAGE_PROMPT: [High-tech minimalist image prompt in English]\n"
+    "ORIGINAL_IMAGE: [Extract the 'Original Top Image' URL from source if available, else 'None']\n"
     "---ARTICLE_END---"
 )
 
 # 모드 C: 하이브리드 (영문 분석만 요청)
 PROMPT_MODE_C = (
-    "You are a Bloomberg/Reuters senior tech analyst. "
-    "Analyze each source article independently and output ONLY structured data. "
-    "Strictly follow the Cluster/Category rules provided below.\n\n"
-    "[Classification Rules]\n"
-    "- ai-models-tools (Category: ai-models, ai-tools): AI trends, software, LLMs.\n"
-    "- gpu-hardware (Category: gpu-chips, pc-robotics): Semiconductors, hardware infra.\n"
-    "- ai-gaming (Category: game-optimization, ai-gameplay): Gaming tech, optimization.\n"
-    "- guides (Category: tutorials, compare): How-to, comparisons.\n\n"
+    "Analyze each source article independently and output ONLY structured data. **STRICT FORMATTING REQUIRED.**\n\n"
+    "[FORMAT RULES]\n"
+    "1. NO BULLETS or BOLD on delimiters like ---ARTICLE_START---.\n"
+    "2. Fields must follow EXACTLY the template below.\n\n"
     "---ARTICLE_START---\n"
     "ID: [number]\n"
     "TITLE: [SEO-optimized analytical title]\n"
     "CLUSTER: [selected cluster name]\n"
     "CATEGORY: [selected category name]\n"
     "SUMMARY: [1-sentence executive summary]\n"
-    "CONTENT: [Full analytical report, 500+ words, markdown ## sections, cold analytical tone. Insert empty lines between paragraphs for readability.]\n"
-    "KEYWORDS: [3 keywords, comma-separated]\n"
+    "CONTENT: [Full analytical report, 500+ words, markdown ## sections]\n"
+    "KEYWORDS: [3 keywords]\n"
     "IMAGE_PROMPT: [High-tech minimalist thumbnail generation prompt]\n"
+    "ORIGINAL_IMAGE: [Extract the 'Original Top Image' URL from source if available, else 'None']\n"
     "---ARTICLE_END---"
 )
 
@@ -99,6 +90,23 @@ class NotebookLMApp:
             return fallback
             
         return "nlm" # Final fallback
+    
+    def login(self):
+        """[V2.1] nlm login 명령어를 실행하여 브라우저 인증을 유도합니다."""
+        logger.info("=" * 60)
+        logger.info(" [AUTH] Initiating NotebookLM Login...")
+        logger.info(" [AUTH] A browser window should open. Please approve the connection.")
+        logger.info("=" * 60)
+        try:
+            # 윈도우 환경에서 브라우저가 잘 뜨도록 직접 실행
+            res = subprocess.run(self.cmd_base + ["login"], capture_output=False, text=True)
+            if res.returncode == 0:
+                logger.info(" [AUTH] Login command executed. Waiting for session to be active...")
+                time.sleep(2) # 짧은 유예 시간
+                return True
+        except Exception as e:
+            logger.error(f" [AUTH] Login failed: {e}")
+        return False
     
     def run_cmd(self, args, use_json=False):
         cmd = self.cmd_base + args
@@ -152,6 +160,44 @@ class NotebookLMApp:
     def check_status(self, notebook_id):
         # status artifacts는 --json 지원 가능성 높음
         return self.run_cmd(["status", "artifacts", notebook_id], use_json=True)
+
+    def get_latest_report(self, notebook_id):
+        """[V2.5] 스튜디오 아티팩트 목록에서 가장 최신 리포트 정보를 가져옵니다."""
+        try:
+            # studio status 명령어로 아티팩트 목록 조회
+            res = self.run_cmd(["studio", "status", notebook_id], use_json=True)
+            if res and isinstance(res, list):
+                # 리포트 타입만 필터링
+                reports = [a for a in res if a.get("type", "").lower() == "report"]
+                if reports:
+                    # ID가 있으면 성공
+                    return reports[0] # 첫 번째가 최신이라고 가정 (혹은 정렬 필요)
+        except Exception as e:
+            logger.error(f"Error getting latest report: {e}")
+        return None
+
+    def download_report(self, notebook_id, artifact_id=None):
+        """[V2.5] 리포트 아티팩트를 다운로드하여 텍스트로 반환합니다."""
+        import tempfile
+        import uuid
+        
+        tmp_name = f"nlm_report_{uuid.uuid4().hex}.md"
+        tmp_path = os.path.join(tempfile.gettempdir(), tmp_name)
+        
+        args = ["download", "report", notebook_id, "-o", tmp_path]
+        if artifact_id:
+            args.extend(["--id", artifact_id])
+            
+        res = self.run_cmd(args, use_json=False)
+        if os.path.exists(tmp_path):
+            try:
+                with open(tmp_path, "r", encoding="utf-8") as f:
+                    content = f.read()
+                os.remove(tmp_path)
+                return content
+            except Exception as e:
+                logger.error(f"Error reading downloaded report: {e}")
+        return None
 
 
 def get_prompt_for_mode(mode):
@@ -281,3 +327,75 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     process_macro_synthesis(limit_per_cat=args.limit, mode=args.mode, source=args.source)
+
+
+def process_macro_synthesis_v2(limit_per_cat=15, mode="B", source="rss"):
+    """
+    [V2.1] NotebookLM Macro-Synthesis with INTEGRATED source (V2 logic)
+    - 모든 기사를 하나로 통합하여 NLM에 업로드
+    - NLM이 스스로 카테고리를 분류하게 함
+    """
+    from v2.harvester_v4 import HarvesterV4
+    
+    logger.info("=" * 60)
+    logger.info(f"  [START V2.1] Integrated Premium Pipeline (Mode {mode.upper()})")
+    logger.info("=" * 60)
+    
+    # 1. 뉴스 데이터 확보 (통합 파일 생성)
+    logger.info(f" [1] Harvesting & Enriching all articles into a SINGLE source...")
+    harvester = HarvesterV4()
+    macro_filepath = harvester.dump_to_single_file(limit_per_cat=limit_per_cat)
+    
+    if not macro_filepath:
+        logger.error(" [!] Failed to generate integrated macro source.")
+        return False
+        
+    jobs_file = "automation/premium_jobs.json"
+    active_jobs = {}
+    
+    # 2. 프롬프트 선택
+    prompt = get_prompt_for_mode(mode)
+    
+    # 3. NotebookLM 자동화 (단일 노트북 생성)
+    app = NotebookLMApp()
+    title = f"[V2.1] {datetime.now().strftime('%Y-%m-%d')} Daily Macro-Intelligence"
+    notebook = app.create_notebook(title)
+    
+    if not notebook or 'notebook' not in notebook:
+        logger.error(" Failed to create macro notebook")
+        return False
+        
+    nb_id = notebook['notebook']['id']
+    logger.info(f" [V2.1 OK] Macro Notebook created: {nb_id}")
+    
+    # 소스 추가
+    app.add_source(nb_id, macro_filepath)
+    logger.info(f" [V2.1 OK] Integrated source added. Triggering report...")
+    
+    # 리포트 생성 트리거
+    report_res = app.create_report(nb_id, prompt)
+    if report_res:
+        logger.info(f" [V2.1 OK] Macro Report triggered (Mode {mode.upper()})")
+        # 'macro'라는 가상 카테고리로 저장하되, 나중에 publisher가 실제 기사별 카테고리로 분산함
+        active_jobs["daily_macro"] = {
+            "notebook_id": nb_id,
+            "title": title,
+            "mode": mode.upper(),
+            "status": "pending",
+            "triggered_at": datetime.now().isoformat()
+        }
+    
+    # Job 상태 저장
+    try:
+        if os.path.exists(jobs_file):
+            with open(jobs_file, "r", encoding="utf-8") as f:
+                existing_jobs = json.load(f)
+                existing_jobs.update(active_jobs)
+                active_jobs = existing_jobs
+    except: pass
+
+    with open(jobs_file, "w", encoding="utf-8") as f:
+        json.dump(active_jobs, f, indent=4, ensure_ascii=False)
+        
+    logger.info(f"\n[V2.1 PHASE 1 COMPLETE] Integrated macro report generating.")
+    return True
