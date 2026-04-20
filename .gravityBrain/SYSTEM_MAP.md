@@ -43,6 +43,7 @@ graph TD
 - **`automation/indexnow_service.py`**: 검색 엔진 실시간 인덱싱 요청 (Naver 멀티 키 지원)
 - **`automation/nlm_keep_alive.sh`**: 1시간 주기 NLM 세션 유지(Stay-alive) 스크립트 [v2.0]
 - **`automation/crontab_config.txt`**: Ubuntu 클라우드 전체 스케줄링 가이드 [v2.0]
+- **`automation/reprocess_reports.py`**: 파싱 오류 또는 필드 누락 시 기존 리포트를 지능형 로직으로 재발행하는 긴급 복구 모듈 [v4.9]
 
 ## 🚀 특이사항
 - **Full Automation**: Premium 모드는 수확부터 리포트 대기, 발행, Git Push(배포), IndexNow까지 단일 명령으로 처리.
