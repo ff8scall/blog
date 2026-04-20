@@ -8,6 +8,7 @@
     - **버그 수정**: `notebooklm_publisher.py`에서 중복 기사 스킵 시 발생하는 `TypeError` 수정 완료.
     - **Throttling 강화**: 무료 티어 안전성을 위해 API 호출 간 20초 강제 대기 상시 적용.
     - **모델 최적화**: `gemini-3.1-flash-lite-preview`를 주력 엔진으로 확정.
+    - **IndexNow 점검**: Bing 키(`bbd0d9a6843c450eb3e9d811a0fd504a`) 실시간 테스트 완료 (200 OK).
 
 ## 🎯 단기 목표
 - [x] 이미지 최적화 Tiered Strategy 구현 및 통합
@@ -17,6 +18,7 @@
 - [x] IndexNow Naver 통합 완료 (News 전용 키 생성 및 자동화 로직 고도화) [v1.8]
 - [x] NLM Premium 파이프라인 전체 공정 자동화 (수확->생성->배포->인덱싱) [v1.7]
 - [x] 인증 만료 시 텔레그램 긴급 알림 및 상세 결과 보고서 연동
+- [x] Ubuntu 클라우드 이전 및 NLM 인증 자동화 타당성 검토 완료 (Stay-alive 전략 수립) [v1.9]
 - [ ] 메가트렌드 분석 및 성능 비교 콘텐츠 보완 (Next)
 - [ ] RSS 소스 추가 및 필터링 정교화 (Next)
-- [ ] 실운영 자동화 스케줄링 검증 (Next)
+- [ ] 실운영 자동화 스케줄링 검증 (Ubuntu Migration) (Next)

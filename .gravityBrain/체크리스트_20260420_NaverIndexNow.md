@@ -9,7 +9,7 @@
 ## 1단계: News 프로젝트 키 생성 및 파일 배치
 - [x] **News**: Naver 전용 고유 키 생성 (32자리 HEX)
 - [x] `News/static/c3a4f8e21d6b4927a7c5b1e0d3f4a6b2.txt` 저장 및 내용 확인 (완료)
-- [ ] 배포 후 해당 텍스트 파일이 브라우저에서 접근 가능한지 확인 (배포 대기)
+- [x] 배포 후 해당 텍스트 파일이 브라우저에서 접근 가능한지 확인 (완료: Status 200)
 
 ## 2단계: 공통 인덱싱 로직 고도화
 - [x] `News/automation/indexnow_service.py` 수정 (완료)
@@ -18,8 +18,8 @@
 - [x] `nlm_orchestrator.py` 등 기존 파이프라인에서 자동 호출 확인 (완료)
 
 ## 3단계: 검증 및 모니터링
-- [ ] 테스트 URL 수동 전송 후 Naver Search Advisor 응답 코드(200/202) 확인
-- [ ] 텔레그램 알림에 Naver 전송 결과 포함 여부 확인
+- [x] 테스트 URL 수동 전송 후 Naver Search Advisor 응답 코드(200/202) 확인 (완료: Status 200)
+- [ ] 텔레그램 알림에 Naver 전송 결과 포함 여부 확인 (향후 관찰)
 
 ---
 
