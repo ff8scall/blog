@@ -29,6 +29,15 @@ CLUSTER_MAP = {
     "ai-gaming": "game-tech",
 }
 
+# [V6.0] AI 이미지 스타일 셔플링을 위한 리스트
+AESTHETIC_STYLES = [
+    ", high-tech minimalism, cinematic 3D render, dark metallic texture, neon accents, isometric perspective, Unreal Engine 5 aesthetic, 8k resolution",
+    ", blueprint technical drawing style, professional engineering scheme, clean white background, blueprint blue lines, highly detailed, architectural",
+    ", futuristic organic architecture, biomimetic design, soft ambient lighting, high-end product photography, elegant curves, glass and silver textures",
+    ", cyberpunk street aesthetic, intense moody lighting, terminal interface overlays, glitch art subtle accents, vaporware color palette",
+    ", corporate flat design illustration, modern tech startup style, vibrant vector graphics, clean professional iconography"
+]
+
 def sanitize_name(name):
     """파일명으로 안전한 이름 생성"""
     if not name: return "default"
@@ -73,8 +82,8 @@ def download_image(url, slug):
     return None
 
 def find_matching_default(cluster, keywords):
-    """[Tier 2] 키워드 라이브러리에서 매칭되는 이미지 검색"""
-    # CLUSTER_MAP에서 디렉토리명 추출 (기본값 tech)
+    """[Tier 2] 키워드 라이브러리에서 매칭되는 이미지 검색 (랜덤 버전 지원)"""
+    import random
     target_cluster = CLUSTER_MAP.get(cluster.lower(), "ai-tech").split('-')[0]
     cluster_dir = os.path.join(DEFAULT_LIB_ROOT, target_cluster)
     
@@ -87,40 +96,51 @@ def find_matching_default(cluster, keywords):
         safe_kw = sanitize_name(kw)
         if not safe_kw or len(safe_kw) < 2: continue
         
-        # .jpg, .png, .webp 순서로 검색
+        # [V6.0] 다중 버전 탐색 (예: ai.jpg, ai_1.jpg, ai_2.jpg ...)
+        candidates = []
         for ext in ['.jpg', '.png', '.webp']:
-            potential_path = os.path.join(cluster_dir, f"{safe_kw}{ext}")
-            if os.path.exists(potential_path):
-                web_path = f"/images/defaults/{target_cluster}/{safe_kw}{ext}"
-                logger.info(f" [Tier 2] Library Match: {web_path} (Keyword: {kw})")
-                return web_path
+            # 기본 파일
+            base_path = os.path.join(cluster_dir, f"{safe_kw}{ext}")
+            if os.path.exists(base_path):
+                candidates.append(f"/images/defaults/{target_cluster}/{safe_kw}{ext}")
+            
+            # 숫자 접미사가 붙은 버전들 (1~5)
+            for i in range(1, 6):
+                version_path = os.path.join(cluster_dir, f"{safe_kw}_{i}{ext}")
+                if os.path.exists(version_path):
+                    candidates.append(f"/images/defaults/{target_cluster}/{safe_kw}_{i}{ext}")
+        
+        if candidates:
+            selected = random.choice(candidates)
+            logger.info(f" [Tier 2] Library Match: {selected} (Keyword: {kw}, Pool Size: {len(candidates)})")
+            return selected
     
     return None
 
 def generate_and_cache(prompt, cluster, keywords, slug):
-    """[Tier 3] API 생성 및 라이브러리 자동 저장"""
-    # 1. 이미지 생성
-    aesthetic_base = ", high-tech minimalism, cinematic 3D render, dark metallic texture, neon accents, isometric perspective, Unreal Engine 5 aesthetic, 8k resolution --no text, no faces, no humans"
-    final_prompt = (prompt if prompt else "Abstract futuristic technology") + aesthetic_base
+    """[Tier 3] API 생성 및 라이브러리 자동 저장 (멀티 슬롯 지원)"""
+    import random
+    # [V6.0] 스타일 셔플링
+    style = random.choice(AESTHETIC_STYLES)
+    final_prompt = (prompt if prompt else "Abstract futuristic technology") + style + " --no text, no faces, no humans"
     
     encoded_prompt = urllib.parse.quote(final_prompt)
     api_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=1200&height=630&nologo=true"
     
     try:
-        logger.info(f" [Tier 3] [START] Requesting AI Generation for: {slug}")
+        logger.info(f" [Tier 3] [START] Requesting AI Generation for: {slug} (Style: {style[:20]}...)")
         resp = requests.get(api_url, timeout=45)
         if resp.status_code == 200:
             content = resp.content
-            # 최소 10KB 이상이어야 유효한 AI 생성 이미지로 간주 (너무 작으면 엑박일 확률 높음)
             if len(content) > 10240: 
-                # (A) 포스트용 저장
+                # (A) 포스트용 저장 (항상 고유함)
                 date_dir = datetime.now().strftime("%Y/%m/%d")
                 post_dir = os.path.join(POST_IMAGE_ROOT, date_dir)
                 os.makedirs(post_dir, exist_ok=True)
                 post_save_path = os.path.join(post_dir, f"{slug}_gen.jpg")
                 with open(post_save_path, 'wb') as f: f.write(content)
                 
-                # (B) 라이브러리용 저장 (첫 번째 유효 키워드 기준)
+                # (B) 라이브러리용 저장 (다중 슬롯 관리)
                 target_cluster = CLUSTER_MAP.get(cluster.lower(), "ai-tech").split('-')[0]
                 if keywords:
                     for kw in keywords:
@@ -129,12 +149,14 @@ def generate_and_cache(prompt, cluster, keywords, slug):
                         
                         lib_dir = os.path.join(DEFAULT_LIB_ROOT, target_cluster)
                         os.makedirs(lib_dir, exist_ok=True)
-                        lib_save_path = os.path.join(lib_dir, f"{safe_kw}.jpg")
                         
-                        if not os.path.exists(lib_save_path):
-                            with open(lib_save_path, 'wb') as f: f.write(content)
-                            logger.info(f" [Tier 3] [CACHE] New Keyword Image Saved: {target_cluster}/{safe_kw}.jpg")
-                            break 
+                        # [V6.0] 1~5번 슬롯 중 하나를 랜덤하게 선택하여 저장 (순환 업데이트 효과)
+                        slot = random.randint(1, 5)
+                        lib_save_path = os.path.join(lib_dir, f"{safe_kw}_{slot}.jpg")
+                        
+                        with open(lib_save_path, 'wb') as f: f.write(content)
+                        logger.info(f" [Tier 3] [CACHE] Multi-version Saved: {target_cluster}/{safe_kw}_{slot}.jpg")
+                        break 
                 
                 logger.info(f" [Tier 3] [OK] AI Generation Successful: {slug}_gen.jpg")
                 return f"/images/posts/{date_dir}/{slug}_gen.jpg"
@@ -148,29 +170,34 @@ def generate_and_cache(prompt, cluster, keywords, slug):
     return None
 
 def get_tiered_image(article, slug):
-    """메인 진입점: 계층적 이미지 선택 로직"""
-    # 0. 건너뛰기 설정 확인 (원본 및 생성만 스킵)
+    """메인 진입점: 계층적 이미지 선택 로직 (확률적 갱신 포함)"""
+    import random
+    # 0. 건너뛰기 설정 확인
     skip_ai = (os.environ.get("SKIP_AI_IMAGE") == "1")
 
-    # 1. Tier 1: 원본 이미지
+    # 1. Tier 1: 원본 이미지 (최우선)
     orig_url = article.get('original_image_url') or article.get('original_image')
     if orig_url:
         res = download_image(orig_url, slug)
         if res: return res
 
-    # 2. Tier 2: 라이브러리 매칭
+    # 2. Tier 2: 라이브러리 매칭 (30% 확률로 건너뛰어 신규 생성 유도)
     cluster = article.get('cluster', 'tech')
-    # 키워드 목록 합치기
     keywords = article.get('eng_keywords', []) + article.get('kor_keywords', [])
     
     lib_res = find_matching_default(cluster, keywords)
-    if lib_res: return lib_res
+    # [V6.0] 라이브러리에 이미지가 있어도 30% 확률로 무시하고 새로 생성하여 다양성 확보
+    if lib_res and random.random() > 0.3: 
+        return lib_res
 
     # 3. Tier 3: API 생성
     if not skip_ai:
         prompt = article.get('image_prompt_core') or article.get('eng_title')
         gen_res = generate_and_cache(prompt, cluster, keywords, slug)
         if gen_res: return gen_res
+    
+    # 만약 생성이 실패했고(429 등) 아까 무시했던 lib_res가 있다면 그것을 재사용
+    if lib_res: return lib_res
 
     # 4. Fallback (전혀 없을 경우) - 명시적으로 존재하는 파일명으로 보장
     fallback_file = CLUSTER_MAP.get(cluster.lower(), "ai-tech")

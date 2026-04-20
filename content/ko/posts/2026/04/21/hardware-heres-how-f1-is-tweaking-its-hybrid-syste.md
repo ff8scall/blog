@@ -1,8 +1,8 @@
 ﻿---
 title: "F1 하이브리드 규정 개편: 에너지 관리 최적화를 통한 레이싱의 박진감 회복"
-date: "2026-04-21T04:00:00+09:00"
+date: "2026-04-21T07:31:54+09:00"
 description: "F1이 마이애미 그랑프리를 기점으로 하이브리드 시스템의 에너지 배분 및 관리 규정을 대대적으로 수정합니다."
-image: "/images/posts/2026/04/21/hardware-heres-how-f1-is-tweaking-its-hybrid-syste_gen.jpg"
+image: "/images/defaults/hardware/formula_1.jpg"
 clusters: ["hardware"]
 categories: ["models"]
 tags: ["포뮬러 원", "하이브리드 시스템", "에너지 관리", "재생 에너지", "모터스포츠"]

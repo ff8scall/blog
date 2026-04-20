@@ -1,6 +1,6 @@
 ﻿---
 title: "The new Roku City screensaver game has me hooked - and it's free to play"
-date: "2026-04-20T19:00:00Z"
+date: "2026-04-20T22:33:55Z"
 description: "Roku has transformed its beloved 'Roku City' screensaver into an interactive gaming experience called Roku City Dash. This clever use of gamification turns a passive interface element into a platform for engagement and brand loyalty."
 image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]

@@ -1,6 +1,6 @@
 ﻿---
 title: "Anthropic's Mythos AI model sparks fears of turbocharged hacking"
-date: "2026-04-20T19:00:00Z"
+date: "2026-04-20T22:32:52Z"
 description: "Anthropic's restricted Mythos model is causing concern among cybersecurity experts for its ability to automate advanced hacking techniques. The speed at which it can identify zero-day vulnerabilities may outpace the global ability to patch them."
 image: "/images/fallbacks/ai-tech.jpg"
 clusters: ["ai"]

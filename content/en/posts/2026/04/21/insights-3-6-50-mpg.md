@@ -1,6 +1,6 @@
 ﻿---
 title: "3만 달러 이하 최고의 가성비 하이브리드 6종: 50 MPG를 달성한 기술적 비결"
-date: "2026-04-20T19:00:00Z"
+date: "2026-04-20T22:30:36Z"
 description: "3만 달러 이하 최고의 가성비 하이브리드 6종: 50 MPG를 달성한 기술적 비결"
 image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]

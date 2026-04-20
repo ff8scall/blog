@@ -1,8 +1,8 @@
 ﻿---
 title: "Here's how F1 is tweaking its hybrid systems to try to save the show"
-date: "2026-04-20T19:00:00Z"
+date: "2026-04-20T22:31:59Z"
 description: "Formula 1 is implementing new hybrid power unit regulations starting at the Miami Grand Prix to address energy management issues. These changes aim to eliminate 'clipping' and reduce speed differentials, ensuring more competitive wheel-to-wheel racing."
-image: "/images/posts/2026/04/21/hardware-heres-how-f1-is-tweaking-its-hybrid-syste_gen.jpg"
+image: "/images/defaults/hardware/formula_1.jpg"
 clusters: ["hardware"]
 categories: ["models"]
 tags: ["Formula 1", "Hybrid Power Unit", "Energy Management", "ERS", "Clipping"]

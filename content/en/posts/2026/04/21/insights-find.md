@@ -1,6 +1,6 @@
 ﻿---
 title: "엑셀 FIND 함수 심층 가이드: 대소문자 구분과 데이터 무결성 확보 기술"
-date: "2026-04-20T19:00:00Z"
+date: "2026-04-20T22:31:18Z"
 description: "엑셀 FIND 함수 심층 가이드: 대소문자 구분과 데이터 무결성 확보 기술"
 image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]
