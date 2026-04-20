@@ -21,8 +21,8 @@ from datetime import datetime
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("Reprocessor")
 
-REPORTS_DIR = "scratch/premium_reports"
-OUTPUT_KO = "content/ko/posts"
+REPORTS_DIR = "/home/ubuntu/AI/News/scratch/premium_reports"
+OUTPUT_KO = "/home/ubuntu/AI/News/content/ko/posts"
 
 def reprocess_article(article):
     """단일 기사를 강제로 재발행 (덮어쓰기 보장)"""

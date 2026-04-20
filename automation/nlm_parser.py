@@ -135,9 +135,9 @@ def _parse_single_block(block_text):
     current_value_lines = []
 
     for line in lines:
-        # [V4.5] 극강의 필드 추출 정규식: 대소문자 무시, 앞뒤 볼드/불렛, 멀티라인 보장
-        # 예: 2. **KOR_TITLE**: 제목 -> KOR_TITLE 매핑
-        match = re.search(r'(?i)^\s*(?:\d+[\.)]\s*)?(?:\*\*|__)?([A-Z\s_]{2,})(?:\*\*|__)?[:：]\s*(.*)', line)
+        # [V5.0] 극강의 필드 추출 정규식: 대괄호([...]) 패턴 추가 지원
+        # 예: [KOR_TITLE]: 제목, 2. **KOR_TITLE**: 제목 등 모두 대응
+        match = re.search(r'(?i)^\s*(?:\d+[\.)]\s*)?(?:\*\*|__|\[)?([A-Z\s_]{2,})(?:\*\*|__|])?[:：]\s*(.*)', line)
         
         found_key = None
         if match:
@@ -192,6 +192,23 @@ def _store_field(article, field_name, value):
     # [V3.7] 마크다운 볼드(**) 제거 및 공백 정리
     value = value.replace("**", "").strip()
     
+    # [V5.0] 헤더 및 노이즈 제거 로직 강화
+    if mapped_key == "kor_content":
+        # 1. 본문 내의 ## 헤더를 ###로 다운그레이드 (시스템 헤더 ## 상세 분석과의 충돌 방지)
+        value = re.sub(r'^##\s+', '### ', value, flags=re.MULTILINE)
+        
+        # 2. 섹션 시작부에 NLM이 관성적으로 넣는 '상세 분석', '심층 분석' 등의 제목 줄 삭제
+        # 반드시 첫 줄 또는 상단부만 타겟팅하여 본문 중간의 유효한 분석 단어 소실 방지
+        val_lines = value.split("\n")
+        new_lines = []
+        for i, line in enumerate(val_lines):
+            stripped_line = line.strip().replace("#", "").strip()
+            # 첫 3줄 이내에서 '상세분석' 관련 단독 헤더/줄이 발견되면 제거
+            if i < 3 and re.match(r'^(상세|심층|전략적|기술적)\s*(분석|리포트|Deep-Dive)$', stripped_line):
+                continue
+            new_lines.append(line)
+        value = "\n".join(new_lines).strip()
+
     # [V3.7] 불필요한 공정용 마커(Headings) 제거 로직
     # NLM이 소제목으로 남기는 쓰레기 텍스트들
     noise_patterns = [

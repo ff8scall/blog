@@ -273,8 +273,10 @@ def create_hugo_post(article, lang='ko'):
     pub_date = datetime.now() + timedelta(seconds=POST_TIME_OFFSET)
     POST_TIME_OFFSET += 5 
     
+    # [V11.4] 프로젝트 루트 기준 절대 경로 산출 (어디서 실행해도 정해진 폴더에 저장)
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     date_path = pub_date.strftime("%Y/%m/%d")
-    target_dir = f"content/{lang}/posts/{date_path}"
+    target_dir = os.path.join(project_root, 'content', lang, 'posts', date_path)
     os.makedirs(target_dir, exist_ok=True)
     
     slug = article['sync_slug']
@@ -346,13 +348,14 @@ def create_hugo_post(article, lang='ko'):
     # Build Body
     content_body = f"## {summary_label}\n{summary_text}\n\n"
     if formatted_content:
-        content_body += f"## {analysis_label}\n{formatted_content}\n\n"
+        content_body += f"## {analysis_label}\n\n{formatted_content}\n\n"
     if formatted_insight:
-        content_body += f"## {insight_label}\n{formatted_insight}"
+        content_body += f"## {insight_label}\n\n{formatted_insight}"
 
     # Build Frontmatter
-    safe_title = title.replace('"', "'")
-    safe_desc = (description if description else (summary_list[0] if summary_list else title)).replace('"', "'")
+    # [V11.3] 줄바꿈 제거 및 따옴표 이스케이프 강화 (YAML 안정성)
+    safe_title = title.replace('"', "'").replace("\n", " ").strip()
+    safe_desc = (description if description else (summary_list[0] if summary_list else title)).replace('"', "'").replace("\n", " ").strip()
     is_featured = "true" if article.get('featured') else "false"
     tags_json = json.dumps(keywords, ensure_ascii=False)
 
