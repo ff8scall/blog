@@ -23,9 +23,15 @@ graph TD
     H -->|Standard Template| I[Hugo Engine]
     H -->|Tiered Image Strategy| J[image_manager.py]
     
+    subgraph "Infrastructure & Scheduling (Ubuntu Cloud)"
+        S[Crontab] -->|Trigger 5,11,17,21h| T[nlm_orchestrator.py]
+        S -->|Trigger 30m| U[nlm_keep_alive.sh]
+        T --> M
+        U -->|Stay-alive| D
+    end
+    
     subgraph "Automation & Delivery"
-        I -->|MD Files| M[Git Sync / Deploy]
-        M -->|Live URL| N[IndexNow Service]
+        M[Git Sync / Deploy] -->|Live URL| N[IndexNow Service]
         N -->|Ping| O[Search Engines]
     end
 ```
@@ -34,10 +40,9 @@ graph TD
 - **`automation/news_main.py`**: 표준 템플릿 엔진 및 전체 파이프라인 총괄 (언어 통합 처리)
 - **`automation/nlm_orchestrator.py`**: Premium(NLM) 전체 공정(수확->생성->배포) 오케스트레이터 [v1.7]
 - **`automation/notebooklm_publisher.py`**: NLM 리포트 파싱 및 기사 발행 유틸리티
-- **`automation/indexnow_service.py`**: 검색 엔진 실시간 인덱싱 요청 (Naver 멀티 키 지원 및 Payload 최적화) [v1.3]
-- **`automation/image_manager.py`**: Tiered Image Strategy 담당 (원본 -> 라이브러리 -> 생성)
-- **`automation/nlm_parser.py`**: NLM 마크다운 분석 및 표준 스키마 변환
-- **`automation/ai_news_editor.py`**: Legacy 모드 전용 2-Pass 고품질 분석 에디터
+- **`automation/indexnow_service.py`**: 검색 엔진 실시간 인덱싱 요청 (Naver 멀티 키 지원)
+- **`automation/nlm_keep_alive.sh`**: 1시간 주기 NLM 세션 유지(Stay-alive) 스크립트 [v2.0]
+- **`automation/crontab_config.txt`**: Ubuntu 클라우드 전체 스케줄링 가이드 [v2.0]
 
 ## 🚀 특이사항
 - **Full Automation**: Premium 모드는 수확부터 리포트 대기, 발행, Git Push(배포), IndexNow까지 단일 명령으로 처리.

@@ -65,7 +65,8 @@ def send_telegram_report(message: str) -> bool:
         response = requests.post(url, json=payload, timeout=10)
         
         if response.status_code == 200:
-            print("[Telegram] Report dispatched successfully.")
+            msg_snippet = message.split('\n')[0][:30] # 첫 줄 30자만 로그에 표시
+            print(f"[Telegram] Report dispatched successfully. ({msg_snippet}...)")
             return True
         else:
             print(f"[Telegram] Failed to send report. Status: {response.status_code}, Response: {response.text}")

@@ -100,6 +100,11 @@ def run_full_pipeline(mode="A", limit=15, source="rss", poll_interval=60, max_wa
         active_jobs = run_phase1(mode=mode, limit=limit, source=source)
         if not active_jobs:
             logger.error("Pipeline aborted: Phase 1 failed.")
+            send_telegram_report(
+                f"🛑 <b>[Premium Pipeline] Stopped</b>\n\n"
+                f"• 사유: 수집된 새 기사가 없습니다 (0건).\n"
+                f"• 모드: {mode} | 소스: {source}"
+            )
             return
 
         # [STEP 1&2 NOTIFICATION]

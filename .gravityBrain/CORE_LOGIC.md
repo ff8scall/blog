@@ -124,3 +124,21 @@ Bing 및 Naver 등 다양한 검색 엔진의 인증 방식을 통합하고, 특
 1. **세션 승계**: 로컬 PC의 `.notebooklm-mcp-cli` 인증 데이터를 서버로 복사하여 초기 브라우저 인증 과정을 생략합니다.
 2. **세션 연장 (Stay-alive)**: `cron`을 활용하여 매 1시간마다 `nlm studio status` 명령을 실행, 구글 세션 활동을 유지하여 만료를 방지합니다.
 3. **환경 최적화**: 서버의 Headless 환경에 맞춰 `Hugo` 빌드 및 `Git` 푸시 과정을 비대화형(Non-interactive)으로 구성합니다.
+
+## 13. 단계별 보고 및 상태 알림 시스템 (Telegram Reporting)
+### [설계 의도]
+24/7 자동화 환경에서 파이프라인의 진행 상황과 중단 여부를 사용자가 즉시 인지할 수 있도록 실시간 피드백 루프를 구축합니다.
+
+### [핵심 로직]
+1. **이벤트 기반 알림 (Event-Driven Notifications)**:
+   - **Start**: 파이프라인 시작 시 모드, 소스, 제한값 보고.
+   - **Step 1&2 Done**: 뉴스 수집 및 NLM 리포트 트리거 완료 시 보고.
+   - **Stopped (Empty Items)**: [v2.2 추가] 새로운 기사가 없어 Phase 1에서 중단될 경우 명시적 보고.
+   - **Finished**: 게시 및 인덱싱 완료 후 최종 기사 수 및 소요 시간 보고.
+   - **Crashed**: 예외 발생 시 트레이스백 요약을 포함한 긴급 보고.
+2. **로그 가시성 (Log Transparency)**:
+   - 텔레그램 발송 성공 시 로그에 메시지 첫 줄(Snippet)을 함께 출력하여, 로그 파일만으로도 어떤 단계의 알림이 전송되었는지 즉시 파악 가능하게 합니다.
+
+### [의존 모듈]
+- `common_utils.py` -> `send_telegram_report` (Telegram Bot API 연동)
+- `nlm_orchestrator.py` -> 전체 공정 관리 및 알림 트리거링
