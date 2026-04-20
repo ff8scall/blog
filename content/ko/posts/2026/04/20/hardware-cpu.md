@@ -1,6 +1,6 @@
 ﻿---
 title: "윈도우 작업 관리자의 설계 비밀: 왜 CPU 사용량은 실제와 다를까?"
-date: "2026-04-20T21:06:10+09:00"
+date: "2026-04-20T22:28:09+09:00"
 description: "작업 관리자 창시자 데이브 플러머가 윈도우의 CPU 점유율 측정 방식과 그 뒤에 숨겨진 '관측자 효과'를 공개했습니다."
 image: "/images/fallbacks/hardware.jpg"
 clusters: ["hardware"]

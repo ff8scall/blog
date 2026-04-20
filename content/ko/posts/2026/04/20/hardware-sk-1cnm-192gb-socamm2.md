@@ -1,6 +1,6 @@
 ﻿---
 title: "SK하이닉스, 1cnm 공정 기반 192GB 대용량 SOCAMM2 양산 개시"
-date: "2026-04-20T21:06:41+09:00"
+date: "2026-04-20T22:28:41+09:00"
 description: "SK하이닉스가 업계 최선단 1cnm(6세대 10나노급) 공정을 적용한 192GB SOCAMM2 메모리 모듈 양산에 돌입했습니다."
 image: "/images/defaults/hardware/ai.jpg"
 clusters: ["hardware"]

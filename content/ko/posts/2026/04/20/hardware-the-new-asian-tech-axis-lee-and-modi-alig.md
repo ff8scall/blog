@@ -1,6 +1,6 @@
 ﻿---
 title: "한-인도 반도체·AI 혈맹: 중국 의존 탈피와 '메이크 인 인디아'의 결합"
-date: "2026-04-20T21:07:57+09:00"
+date: "2026-04-20T22:24:36+09:00"
 description: "한국의 하이테크 제조 공정 노하우와 인도의 풍부한 소프트웨어 인재 풀의 전략적 결합"
 image: "/images/defaults/hardware/ai.jpg"
 clusters: ["hardware"]

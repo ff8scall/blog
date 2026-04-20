@@ -1,6 +1,6 @@
 ﻿---
 title: "MSI, '펜타 탠덤' 기술 기반 4K QD-OLED 게이밍 모니터 MPG·MAG 시리즈 출시"
-date: "2026-04-20T21:07:13+09:00"
+date: "2026-04-20T22:29:13+09:00"
 description: "MSI가 31.5인치 4K 해상도의 차세대 QD-OLED 게이밍 모니터 2종을 공식 출시하며 하이엔드 디스플레이 시장 공략에 나섰습니다."
 image: "/images/fallbacks/hardware.jpg"
 clusters: ["hardware"]

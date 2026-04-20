@@ -1,6 +1,6 @@
 ﻿---
 title: "The New Asian Tech Axis: Lee and Modi Align on AI and Semiconductor Sovereignty"
-date: "2026-04-20T12:08:02Z"
+date: "2026-04-20T13:24:41Z"
 description: "South Korea and India have established a strategic alliance to co-develop AI technologies and build resilient semiconductor supply chains, leveraging Korean capital and tech with Indian talent."
 image: "/images/defaults/hardware/ai.jpg"
 clusters: ["hardware"]

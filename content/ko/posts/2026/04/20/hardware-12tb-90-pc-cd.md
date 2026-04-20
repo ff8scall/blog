@@ -1,6 +1,6 @@
 ﻿---
 title: "인터넷 아카이브, 1.2TB 규모의 90년대 PC 매거진 부록 CD 컬렉션 복원"
-date: "2026-04-20T21:05:48+09:00"
+date: "2026-04-20T22:27:48+09:00"
 description: "인터넷 아카이브(archive.org)가 1993년부터 발행된 758개의 PC 잡지 번들 CD 및 플로피 디스크 자료를 전격 공개했습니다."
 image: "/images/fallbacks/hardware.jpg"
 clusters: ["hardware"]

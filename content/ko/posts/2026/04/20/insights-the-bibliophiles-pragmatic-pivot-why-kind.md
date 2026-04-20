@@ -1,8 +1,8 @@
 ﻿---
 title: "전자책 혐오자의 항복: 킨들이 아날로그 독서의 문법을 재정의하는 방식"
-date: "2026-04-20T21:07:26+09:00"
+date: "2026-04-20T22:23:20+09:00"
 description: "아날로그의 질감을 넘어서는 최신 e-잉크 기술과 페이퍼화이트·오아시스 라인업의 완숙도 분석"
-image: "/images/fallbacks/market-trend.jpg"
+image: "/images/defaults/market/kindle.jpg"
 clusters: ["insights"]
 categories: ["analysis"]
 tags: ["킨들", "전자책", "e-잉크 기술", "페이퍼화이트", "디지털 몰입"]

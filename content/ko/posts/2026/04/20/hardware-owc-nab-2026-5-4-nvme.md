@@ -1,6 +1,6 @@
 ﻿---
 title: "OWC, NAB 2026에서 세계 최초 썬더볼트 5 인증 4슬롯 NVMe 인클로저 공개"
-date: "2026-04-20T21:06:52+09:00"
+date: "2026-04-20T22:28:51+09:00"
 description: "OWC가 NAB 2026 전시회에서 업계 최초의 썬더볼트 5 인증 4슬롯 NVMe M.2 SSD 인클로저 'Express 4M2 Ultra'를 출시했습니다."
 image: "/images/fallbacks/hardware.jpg"
 clusters: ["hardware"]

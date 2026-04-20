@@ -1,6 +1,6 @@
 ﻿---
 title: "Supply Chain Fragility: Iranian Conflict Forces Japanese Airlines to Accelerate Fuel Surcharges"
-date: "2026-04-20T12:08:34Z"
+date: "2026-04-20T13:25:57Z"
 description: "Japan's major airlines have moved forward scheduled fuel surcharge increases due to the Iran war, threatening the cost-efficiency of the Just-in-Time supply chain model for high-tech exports."
 image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]

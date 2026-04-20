@@ -1,6 +1,6 @@
 ﻿---
 title: "미 정부, 중국 산안광전의 루미레즈 인수 2차 차단: 지정학적 기술 패권 분쟁"
-date: "2026-04-20T21:05:27+09:00"
+date: "2026-04-20T22:27:27+09:00"
 description: "미국 외국인투자심의위원회(CFIUS)가 중국 산안광전의 네덜란드 루미레즈 인수를 국가 안보를 이유로 최종 불허했습니다."
 image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]

@@ -1,6 +1,6 @@
 ﻿---
 title: "일본 동북부 강진 발생: AI 기반 조기 경보 시스템(EEW)의 실전 검증"
-date: "2026-04-20T21:08:08+09:00"
+date: "2026-04-20T22:24:46+09:00"
 description: "일본 동북부 지역을 강타한 강력한 지진과 정부의 긴급 재난 대응 체계 가동"
 image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]

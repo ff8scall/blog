@@ -1,6 +1,6 @@
 ﻿---
 title: "도쿄 법원 랜드마크 판결: 상세 '스포일러 기사'는 명백한 저작권 침해"
-date: "2026-04-20T21:05:59+09:00"
+date: "2026-04-20T22:27:59+09:00"
 description: "도쿄 지방법원이 영화 및 애니메이션의 줄거리를 과도하게 상세히 서술하고 광고 수익을 얻은 제작자에게 유죄 판결을 내렸습니다."
 image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]

@@ -1,8 +1,8 @@
 ﻿---
 title: "데이터 주권의 회복: 상업화된 Plex를 떠나 오픈소스 Jellyfin으로 향하는 이유"
-date: "2026-04-20T21:07:36+09:00"
+date: "2026-04-20T22:23:31+09:00"
 description: "Plex의 과도한 상업화와 복잡해진 써드파티 콘텐츠 통합에 대한 사용자 반발"
-image: "/images/fallbacks/market-trend.jpg"
+image: "/images/posts/2026/04/20/insights-escaping-the-enshittification-trap-the-ma_gen.jpg"
 clusters: ["insights"]
 categories: ["apps"]
 tags: ["플렉스", "젤리핀", "오픈소스", "플랫폼 노후화", "미디어 주권"]

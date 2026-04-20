@@ -1,6 +1,6 @@
 ﻿---
 title: "인텔 코어 울트라 7 270K 및 Z890 기반 하이엔드 부품 번들 분석"
-date: "2026-04-20T21:05:16+09:00"
+date: "2026-04-20T22:27:16+09:00"
 description: "Newegg에서 인텔 코어 울트라 7 270K 기반의 프리미엄 하드웨어 번들을 $1,499.99에 공식 출시했습니다."
 image: "/images/fallbacks/hardware.jpg"
 clusters: ["hardware"]

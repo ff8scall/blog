@@ -1,8 +1,8 @@
 ﻿---
 title: "Escaping the Enshittification Trap: The Mass Migration from Plex to Jellyfin"
-date: "2026-04-20T12:07:41Z"
+date: "2026-04-20T13:23:36Z"
 description: "As Plex succumbs to 'enshittification' through aggressive monetization and cluttered interfaces, power users are fleeing to Jellyfin to reclaim control over their personal media libraries without corporate surveillance."
-image: "/images/fallbacks/market-trend.jpg"
+image: "/images/posts/2026/04/20/insights-escaping-the-enshittification-trap-the-ma_gen.jpg"
 clusters: ["insights"]
 categories: ["apps"]
 tags: ["Plex", "Jellyfin", "Open Source", "Enshittification", "Media Sovereignty"]

@@ -1,6 +1,6 @@
 ﻿---
 title: "중동 전쟁의 경제적 불길: 일본 항공사 유류 할증료 인상과 '적기 공급' 체계의 위기"
-date: "2026-04-20T21:08:29+09:00"
+date: "2026-04-20T22:25:52+09:00"
 description: "이란 분쟁에 따른 유가 변동성 확대로 인한 일본 항공업계의 선제적 비용 전가"
 image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]

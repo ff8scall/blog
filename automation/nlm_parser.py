@@ -159,6 +159,16 @@ def _parse_single_block(block_text):
             current_value_lines = [val] if val else []
             continue
 
+        # [V5.1] 지능형 필드 추론: KOR_CONTENT 필드명이 누락된 채 ## 헤더+한글이 등장하는 경우
+        if current_field in ["ENG_CONTENT", "ENGLISH_CONTENT", "SYNTHESIS"]:
+            # ## 로 시작하고 한글을 포함하는 경우
+            if re.match(r'^\s*##\s+', line) and any('\uac00' <= char <= '\ud7a3' for char in line):
+                _store_field(article, current_field, "\n".join(current_value_lines).strip())
+                current_field = "KOR_CONTENT"
+                current_value_lines = [line]
+                logger.info(f" [INTELLIGENCE] Detected KOR_CONTENT start without marker at: {line[:30]}...")
+                continue
+
         # [V3.20] 잡음 제거 로직 완화: 요약 리스트(1. 2.)가 무시되지 않도록 수정
         # 기존: if re.match(r'^\s*(?:#+\s*)?\d+\.\s+[A-Za-z가-힣]', line): 
         # 이제 필드명 후보가 아님이 확실하고, 단순 번호만 있는 경우 등 아주 제한적으로만 스킵
@@ -209,19 +219,14 @@ def _store_field(article, field_name, value):
             new_lines.append(line)
         value = "\n".join(new_lines).strip()
 
-    # [V3.7] 불필요한 공정용 마커(Headings) 제거 로직
-    # NLM이 소제목으로 남기는 쓰레기 텍스트들
+    # [V5.1] 잡음 제거 로직 안정화 (본문 유실 방지)
+    # NLM이 소제목으로 남기는 시스템성 마커들만 선택적으로 제거
     noise_patterns = [
-        r"(?i)^###?\s*Deep-Dive.*",
-        r"(?i)^###?\s*Professional Insight.*",
-        r"(?i)^###?\s*Section\s*\d+.*",
-        r"(?i)^###?\s*Step\s*\d+.*",
-        r"(?i)^###?\s*Conclusion.*",
-        r"(?i)^###?\s*Analysis.*",
-        r"(?i)^###?\s*상세\s*분석.*",
-        r"(?i)^###?\s*심층\s*분석.*",
-        r"(?i)^###?\s*시사점.*",
-        r"(?i)^###?\s*인사이트\s*비평.*"
+        r"(?i)^###?\s*Deep-Dive\s*$",
+        r"(?i)^###?\s*Professional Insight\s*$",
+        r"(?i)^###?\s*Section\s*\d+\s*$",
+        r"(?i)^###?\s*Step\s*\d+\s*$",
+        r"(?i)^###?\s*Conclusion\s*$"
     ]
     for pattern in noise_patterns:
         value = re.sub(pattern, "", value, flags=re.MULTILINE).strip()

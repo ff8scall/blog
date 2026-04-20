@@ -1,6 +1,6 @@
 ﻿---
 title: "보이저 1호의 전력 위기: 성간 항해 연장을 위한 비상 기기 가동 중단"
-date: "2026-04-20T21:06:20+09:00"
+date: "2026-04-20T22:28:20+09:00"
 description: "NASA JPL은 보이저 1호의 전력 급감을 해결하기 위해 탑재된 핵심 과학 기기 중 하나를 원격으로 정지시켰습니다."
 image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]

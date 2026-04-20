@@ -1,6 +1,6 @@
 ﻿---
 title: "에이펙스 게이밍 PC, 안전 라벨 누락으로 1.8만 대 규모 행정 리콜 실시"
-date: "2026-04-20T21:05:38+09:00"
+date: "2026-04-20T22:27:37+09:00"
 description: "4월 16일, 미국 소비자제품안전위원회(CPSC)는 Apex 및 Manik 브랜드 파워서플라이 약 17,730대에 대해 리콜을 발표했습니다."
 image: "/images/fallbacks/hardware.jpg"
 clusters: ["hardware"]

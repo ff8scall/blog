@@ -1,6 +1,6 @@
 ﻿---
 title: "2026 Seismic Test: AI-Enhanced Early Warning Systems Guard Northeast Japan After Strong Quake"
-date: "2026-04-20T12:08:13Z"
+date: "2026-04-20T13:24:51Z"
 description: "Following a powerful earthquake in Northeast Japan, the nation’s advanced AI-integrated Early Warning systems successfully triggered, providing residents critical seconds to prepare survival kits."
 image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]

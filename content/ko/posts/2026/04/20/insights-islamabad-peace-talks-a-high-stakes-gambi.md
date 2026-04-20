@@ -1,6 +1,6 @@
 ﻿---
 title: "이슬라마바드 평화 회담: 이란-미국 간 '제한적 대화'와 파키스탄의 중재"
-date: "2026-04-20T21:08:18+09:00"
+date: "2026-04-20T22:25:42+09:00"
 description: "이란 대표단의 파키스탄 방문과 미국과의 비공개 평화 회담 추진 배경"
 image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]

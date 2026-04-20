@@ -1,6 +1,6 @@
 ﻿---
 title: "Islamabad Peace Talks: A High-Stakes Gambit to Avert Iran-US Conflict"
-date: "2026-04-20T12:08:23Z"
+date: "2026-04-20T13:25:47Z"
 description: "Iranian officials have arrived in Islamabad for potential peace talks with the US, a move treated with extreme skepticism by analysts who view the meeting as a last-ditch effort to manage escalation."
 image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]

@@ -1,6 +1,6 @@
 ﻿---
 title: "'내 코드가 이토록 엉망이었다니': ShellCheck가 가르쳐주는 셸 스크립트의 정석"
-date: "2026-04-20T21:07:47+09:00"
+date: "2026-04-20T22:24:26+09:00"
 description: "셸 스크립트의 보이지 않는 결함과 보안 취약점을 발췌하는 정적 분석 도구 ShellCheck"
 image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]
