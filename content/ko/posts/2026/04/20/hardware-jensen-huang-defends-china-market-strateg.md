@@ -1,6 +1,6 @@
 ﻿---
 title: "Jensen Huang Defends China Market Strategy Amid Geopolitical Pressure"
-date: "2026-04-20T13:19:45+09:00"
+date: "2026-04-20T13:58:49+09:00"
 description: "엔비디아(Nvidia)를 이끄는 젠슨 황(Jensen Huang) 최고경영자가 미국 정부의 지속적인 대중국 반도체 수출 규제에 대해 매우 이례적이고도 격정적인 어조로 반대 의사를 분명히 했습니다. 최근 업계 관계자들과의 담화에서 젠슨 황은 세계에서 두 번째로 큰 AI 칩 수요처인 중국 시장을 미국 기업들의 사업 영역에서 강제로 배제하는 행위가 경제적 관점에..."
 image: "/images/fallbacks/hardware.jpg"
 clusters: ["hardware"]

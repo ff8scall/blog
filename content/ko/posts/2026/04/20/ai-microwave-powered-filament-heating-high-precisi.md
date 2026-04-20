@@ -1,8 +1,8 @@
 ﻿---
 title: "Microwave-Powered Filament Heating: High-Precision Circuit Integration in 3D Printing"
-date: "2026-04-20T13:19:13+09:00"
+date: "2026-04-20T13:58:18+09:00"
 description: "라이스 대학교(Rice University) 연구진이 3D 프린팅 기술의 물리적 한계를 뛰어넘는 혁신적인 마이크로파 가열 제어 기술을 발표하며 학계와 산업계의 이목을 집중시키고 있습니다. 이 기술의 핵심은 마이크로파 에너지를 특정 지점에 집중시켜 3D 프린터의 잉크나 필라멘트를 사람 머리카락 굵기 수준인 마이크로미터 단위의 정밀도로 가열하는 것입니다. 기존..."
-image: "/images/fallbacks/ai-tech.jpg"
+image: "/images/defaults/ai/rice_university.jpg"
 clusters: ["ai"]
 categories: ["models"]
 tags: []

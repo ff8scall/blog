@@ -1,8 +1,8 @@
 ﻿---
 title: "SC25: AMD의 차세대 MI430X FP64 성능 및 디스커버리(Discovery) 슈퍼컴퓨터 분석"
-date: "2026-04-20T13:23:45+09:00"
+date: "2026-04-20T13:57:36+09:00"
 description: "SC25에서 주목받은 AMD MI430X 가속기의 초고정밀 FP64 연산 성능 추정 및 아키텍처 특징"
-image: "/images/fallbacks/insights.jpg"
+image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]
 categories: ["analysis"]
 tags: ["AMD MI430X", "FP64 성능", "디스커버리 슈퍼컴퓨터", "SC25", "HBM4", "3D V-Cache", "인피니티 패브릭 4.0"]

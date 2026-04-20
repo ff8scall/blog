@@ -1,8 +1,8 @@
 ﻿---
 title: "CES 2026: AMD 베니스(Venice) 서버 CPU 및 MI400 가속기 공개 분석"
-date: "2026-04-20T13:22:52+09:00"
+date: "2026-04-20T13:56:43+09:00"
 description: "CES 2026에서 공개된 AMD의 차세대 서버 CPU '베니스(Venice)' 및 MI400 데이터센터 가속기 특징 분석"
-image: "/images/fallbacks/insights.jpg"
+image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]
 categories: ["analysis"]
 tags: ["AMD 베니스", "MI400", "서버 CPU", "데이터센터 가속기", "CDNA 아키텍처", "CXL 3.1", "3D 패키징", "고성능 컴퓨팅"]

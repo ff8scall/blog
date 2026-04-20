@@ -1,6 +1,6 @@
 ﻿---
 title: "Bambu Lab Overtakes Creality: The New Era of Budget 3D Printing Leadership"
-date: "2026-04-20T13:18:18+09:00"
+date: "2026-04-20T13:58:08+09:00"
 description: "2025년 전 세계 보급형 3D 프린터 시장에서 역사적인 지각변동이 관측되었습니다. 오랜 기간 시장의 절대 강자로 군림해 온 크리에리티(Creality)를 제치고 밤부랩(Bambu Lab)이 출하량 기준 세계 1위 자리에 올라선 것입니다. 이는 단순한 브랜드 순위의 변동을 넘어, 3D 프린팅 산업의 핵심 가치가 'DIY(Do-It-Yourself)' 중심의..."
 image: "/images/defaults/ai/bambu_lab.jpg"
 clusters: ["ai"]

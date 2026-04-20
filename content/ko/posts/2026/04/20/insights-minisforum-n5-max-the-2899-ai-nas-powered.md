@@ -1,8 +1,8 @@
 ﻿---
 title: "Minisforum N5 Max: The $2,899 AI NAS Powered by AMD Strix Halo"
-date: "2026-04-20T13:19:34+09:00"
+date: "2026-04-20T13:58:38+09:00"
 description: "미니스포럼(Minisforum)이 단순한 데이터 저장소의 개념을 넘어선 차세대 고성능 컴퓨팅 플랫폼 'N5 Max' AI NAS를 공개하며 시장에 파장을 일으키고 있습니다. 2026년 4월 23일 정식 출시를 앞둔 이 제품은 2,899달러라는 파격적인 가격표를 달고 나왔으며, 그 사양 또한 NAS라는 범주를 뛰어넘는 워크스테이션 급을 지향하고 있습니다. N..."
-image: "/images/fallbacks/insights.jpg"
+image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]
 categories: ["analysis"]
 tags: []

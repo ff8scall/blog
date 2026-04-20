@@ -1,6 +1,6 @@
 ﻿---
 title: "Legislative Nuances: US Lawmakers Amend MATCH Act Restrictions"
-date: "2026-04-20T13:19:55+09:00"
+date: "2026-04-20T13:58:59+09:00"
 description: "미국 입법자들이 대중국 반도체 장비 규제 법안인 MATCH 법안(MATCH Act)의 일부 독소 조항을 수정하며 미묘한 정책 변화의 신호를 보냈습니다. 이번 수정안에서 가장 눈에 띄는 대목은 특정 첨단 공정 장비, 특히 '극저온 식각 장비(Cryogenic Etching Tools)'에 대한 포괄적인 국가 단위 수출 금지 조치를 해제했다는 점입니다. 극저온..."
 image: "/images/fallbacks/hardware.jpg"
 clusters: ["hardware"]

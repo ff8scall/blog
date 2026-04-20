@@ -1,8 +1,8 @@
 ﻿---
 title: "하드웨어 및 테크 퍼블리셔들이 비디오 디지털 자산 관리(DAM) 시스템에 투자하는 이유"
-date: "2026-04-20T13:21:59+09:00"
+date: "2026-04-20T13:54:35+09:00"
 description: "하드웨어 벤치마크 및 제품 시연 영상에 대한 독자들의 요구가 증가하면서 영상 콘텐츠의 비중이 확대됨"
-image: "/images/fallbacks/ai-tech.jpg"
+image: "/images/defaults/ai/video_dam.jpg"
 clusters: ["ai"]
 categories: ["models"]
 tags: ["비디오 DAM", "디지털 자산 관리", "하드웨어 저널리즘", "기술 미디어", "멀티미디어 워크플로우", "8K 벤치마크"]

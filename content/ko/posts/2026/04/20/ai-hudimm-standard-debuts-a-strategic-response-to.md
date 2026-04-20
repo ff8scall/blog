@@ -1,6 +1,6 @@
 ﻿---
 title: "HUDIMM Standard Debuts: A Strategic Response to Global RAM Shortages"
-date: "2026-04-20T13:19:23+09:00"
+date: "2026-04-20T13:58:28+09:00"
 description: "글로벌 공급망 불안정으로 인한 RAM 가격 상승과 DDR5 보급 지연 문제를 해결하기 위해 에즈락(ASRock)과 팀그룹(TeamGroup)이 협력하여 새로운 메모리 규격인 'HUDIMM'을 공식 발표했습니다. 표준적인 DDR5 메모리 모듈은 64비트 데이터 버스 대역폭을 충족하기 위해 스틱 하나당 두 개의 32비트 독립 서브 채널을 탑재하는 구조를 가집니..."
 image: "/images/defaults/ai/hudimm.jpg"
 clusters: ["ai"]

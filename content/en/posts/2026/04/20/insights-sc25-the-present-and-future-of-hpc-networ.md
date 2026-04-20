@@ -1,8 +1,8 @@
 ﻿---
 title: "SC25: The Present and Future of HPC Networking with Cornelis Networks CEO Lisa Spelman"
-date: "2026-04-20T04:23:29Z"
+date: "2026-04-20T04:57:20Z"
 description: "During the SC25 conference, Cornelis Networks CEO Lisa Spelman discussed the critical role of high-performance interconnects in the evolution of supercomputing. As AI and HPC workloads scale to unprecedented levels, the demand for low-latency, high-bandwidth fabric technologies is driving innovation in networking architecture. Cornelis Networks is positioning itself at the forefront of this shift, focusing on open, scalable solutions that challenge established proprietary interconnects."
-image: "/images/fallbacks/insights.jpg"
+image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]
 categories: ["analysis"]
 tags: ["Cornelis Networks", "Lisa Spelman", "SC25", "HPC Networking", "Interconnects", "Tail Latency", "Open Fabric", "Supercomputing"]

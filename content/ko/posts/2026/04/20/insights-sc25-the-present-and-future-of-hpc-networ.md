@@ -1,8 +1,8 @@
 ﻿---
 title: "SC25: 코넬리스 네트웍스(Cornelis Networks) CEO 리사 스펠만과 논의한 HPC 네트워킹의 미래"
-date: "2026-04-20T13:23:24+09:00"
+date: "2026-04-20T13:57:15+09:00"
 description: "SC25 컨퍼런스에서 코넬리스 네트웍스 CEO 리사 스펠만이 제시한 차세대 HPC 네트워킹 비전 분석"
-image: "/images/fallbacks/insights.jpg"
+image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]
 categories: ["analysis"]
 tags: ["코넬리스 네트웍스", "리사 스펠만", "SC25", "HPC 네트워킹", "인터커넥트", "꼬리 지연 시간", "개방형 패브릭", "슈퍼컴퓨팅"]
