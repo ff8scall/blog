@@ -1,8 +1,8 @@
 ﻿---
 title: "엔비디아 GB10 통합 GPU(iGPU) 성능 분석"
-date: "2026-04-20T13:56:22+09:00"
+date: "2026-04-20T14:27:51+09:00"
 description: "엔비디아가 블랙웰(Blackwell) 아키텍처를 기반으로 개발한 고성능 iGPU 'GB10'의 아키텍처 분석"
-image: "/images/fallbacks/market-trend.jpg"
+image: "/images/posts/2026/04/20/insights-analyzing-nvidia-gb10s-integrated-gpu-per_gen.jpg"
 clusters: ["insights"]
 categories: ["analysis"]
 tags: ["엔비디아 GB10", "통합 GPU", "블랙웰 아키텍처", "CUDA 코어", "통합 메모리", "모바일 그래픽", "텐서 코어"]

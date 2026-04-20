@@ -1,8 +1,8 @@
 ﻿---
 title: "CPU 관점에서 본 엔비디아 GB10의 메모리 서브시스템 분석"
-date: "2026-04-20T13:57:04+09:00"
+date: "2026-04-20T14:29:17+09:00"
 description: "엔비디아와 미디어텍의 협력으로 탄생한 GB10 메모리 서브시스템의 설계 구조 분석"
-image: "/images/fallbacks/market-trend.jpg"
+image: "/images/defaults/market/nvidia_gb10.jpg"
 clusters: ["insights"]
 categories: ["analysis"]
 tags: ["엔비디아 GB10", "미디어텍", "메모리 서브시스템", "통합 메모리", "블랙웰", "LPDDR6", "통합 그래픽"]

@@ -133,7 +133,7 @@ CAT_MAP = {
 FALLBACK_MAP = {
     "ai": "ai-tech",
     "hardware": "hardware",
-    "insights": "insights"
+    "insights": "market-trend"
 }
 
 def download_image(url, category_slug, slug):
@@ -283,15 +283,42 @@ def create_hugo_post(article, lang='ko'):
     # [V11.1] Unified Mirroring Template Logic
     prefix = 'kor' if lang == 'ko' else 'eng'
     
-    title = article.get(f'{prefix}_title', 'Untitled')
-    summary_list = article.get(f'{prefix}_summary', [])
-    if isinstance(summary_list, str): summary_list = [summary_list]
-    
-    content = article.get(f'{prefix}_content', '')
+    title = article.get(f'{prefix}_title') or article.get('title')
+    summary_list = article.get(f'{prefix}_summary') or article.get('summary', [])
+    content = article.get(f'{prefix}_content') or article.get('content', '')
     insight = article.get(f'{prefix}_insight', '')
     description = article.get(f'{prefix}_description', '')
     keywords = article.get(f'{prefix}_keywords', [])
     
+    # [V11.2] Smart Fallback: 필드 누락 시 상호 보완
+    if not title:
+        # 본문 첫 줄에서 제목 추출 시도
+        if content:
+            first_line = content.split('\n')[0].strip().strip('#').strip()
+            title = first_line[:100] if len(first_line) > 5 else "Untitled Analysis"
+        else:
+            title = article.get('sync_slug', 'Untitled Article')
+
+    if not summary_list or (isinstance(summary_list, list) and not summary_list):
+        if description: 
+            summary_list = [description]
+        elif content:
+            # 본문의 첫 번째 유효 문단을 요약으로 사용
+            paragraphs = [p.strip() for p in content.split('\n') if p.strip() and not p.startswith('#')]
+            summary_list = [paragraphs[0][:200] + "..."] if paragraphs else [title]
+        else:
+            summary_list = [title]
+
+    if isinstance(summary_list, str): 
+        summary_list = [summary_list]
+
+    if not insight and content:
+        # 본문 하단에 '시사점' 혹은 'Insight' 섹션이 있는지 확인하여 추출
+        matches = re.findall(r'(?i)##\s*(?:시사점|인사이트|Insight|Conclusion)\s*\n(.*?)(?:\n##|$)', content, re.DOTALL)
+        if matches:
+            insight = matches[-1].strip()
+            # 본문에서 해당 내용을 제거하여 중복 방지 (선택 사항, 여기선 일단 정보 보존 우선)
+
     # Titles & Labels
     summary_label = "핵심 요약" if lang == 'ko' else "Executive Summary"
     analysis_label = "상세 분석" if lang == 'ko' else "Strategic Deep-Dive"

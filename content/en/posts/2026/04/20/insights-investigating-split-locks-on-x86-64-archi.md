@@ -1,8 +1,8 @@
 ﻿---
 title: "Investigating Split Locks on x86-64 Architecture"
-date: "2026-04-20T04:56:16Z"
+date: "2026-04-20T05:27:35Z"
 description: "This investigation explores the performance penalties associated with split locks in the x86-64 instruction set and evaluates the effectiveness of current mitigation strategies. Split locks occur when an atomic operation spans across two cache lines, forcing the processor to use expensive bus locking mechanisms. Understanding the trade-offs between performance degradation and the 'medicine' provided by hardware and software fixes is crucial for optimizing modern multi-core systems."
-image: "/images/fallbacks/market-trend.jpg"
+image: "/images/defaults/market/split_lock.jpg"
 clusters: ["insights"]
 categories: ["analysis"]
 tags: ["Split Lock", "x86-64", "Cache Line", "Atomic Operations", "Bus Lock", "EFLAGS AC Bit", "Latency"]

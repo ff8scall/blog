@@ -1,6 +1,6 @@
 ﻿---
 title: "CES 2026: Taking the Lids off AMD's Venice and MI400 SoCs"
-date: "2026-04-20T04:56:48Z"
+date: "2026-04-20T05:29:01Z"
 description: "AMD unveiled its next-generation server CPU family, codenamed 'Venice,' and the MI400 series of datacenter accelerators at CES 2026. These products represent AMD's strategic answer to the soaring demand for AI-driven enterprise compute and high-density server architectures. The Venice series focuses on core count expansion and architectural efficiency, while the MI400 accelerators target the high-growth AI training and inference markets."
 image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]

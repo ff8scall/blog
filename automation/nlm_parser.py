@@ -22,6 +22,8 @@ FIELD_MAP = {
     "ENGLISH_TITLE": "eng_title",
     "KOR_TITLE": "kor_title",
     "KOREAN_TITLE": "kor_title",
+    "TITLE_KR": "kor_title",
+    "TITLE_EN": "eng_title",
     "TITLE": "eng_title",
     "CLUSTER": "cluster",
     "CATEGORY": "category",
@@ -29,6 +31,8 @@ FIELD_MAP = {
     "ENGLISH_SUMMARY": "eng_summary",
     "KOR_SUMMARY": "kor_summary",
     "KOREAN_SUMMARY": "kor_summary",
+    "SUMMARY_KR": "kor_summary",
+    "SUMMARY_EN": "eng_summary",
     "SUMMARY": "eng_summary",
     "ENG_CONTENT": "eng_content",
     "ENGLISH_CONTENT": "eng_content",
@@ -39,6 +43,10 @@ FIELD_MAP = {
     "CONTENT": "eng_content",
     "KOR_INSIGHT": "kor_insight",
     "KOREAN_INSIGHT": "kor_insight",
+    "INSIGHT_KR": "kor_insight",
+    "INSIGHTS": "kor_insight",
+    "INSIGHT": "kor_insight",
+    "CORE_INSIGHT": "kor_insight",
     "KEYWORDS_EN": "eng_keywords",
     "ENGLISH_KEYWORDS": "eng_keywords",
     "KEYWORDS_KR": "kor_keywords",
@@ -127,12 +135,13 @@ def _parse_single_block(block_text):
     current_value_lines = []
 
     for line in lines:
-        # [V3.16] 숫자형 불렛(1. 2. ) 및 마크다운 기호 혼합 대응
-        # 예: 7. **KOR_SUMMARY**: -> KOR_SUMMARY 매핑용
-        match = re.search(r'(?:[*#\s\d.-]*)(?:\*\*|__)?([A-Za-z\s_]{2,})(?:\*\*|__)?[:：]?\s*(.*)', line)
+        # [V4.5] 극강의 필드 추출 정규식: 대소문자 무시, 앞뒤 볼드/불렛, 멀티라인 보장
+        # 예: 2. **KOR_TITLE**: 제목 -> KOR_TITLE 매핑
+        match = re.search(r'(?i)^\s*(?:\d+[\.)]\s*)?(?:\*\*|__)?([A-Z\s_]{2,})(?:\*\*|__)?[:：]\s*(.*)', line)
         
         found_key = None
         if match:
+            # 추출된 필드명 정규화 (공백/언더바 제거 후 대문자)
             potential_field = match.group(1).upper().replace(" ", "").replace("_", "")
             sorted_keys = sorted(FIELD_MAP.keys(), key=len, reverse=True)
             for k in sorted_keys:
@@ -234,7 +243,8 @@ def _post_process(article):
         paragraphs = [p.strip() for p in content.split("\n") if p.strip() and not p.startswith("#")]
         if paragraphs:
             summary = paragraphs[0]
-            if len(summary) > 200: summary = summary[:200] + "..."
+            # [V4.9] 트렁케이션 완화: 600자까지 허용하여 정보 전달력 강화
+            if len(summary) > 600: summary = summary[:600] + "..."
             article["kor_summary"] = [summary]
             logger.info(f" [FALLBACK] Generated kor_summary from content for {article.get('kor_title')}")
 
@@ -243,7 +253,7 @@ def _post_process(article):
         paragraphs = [p.strip() for p in content.split("\n") if p.strip() and not p.startswith("#")]
         if paragraphs:
             summary = paragraphs[0]
-            if len(summary) > 200: summary = summary[:200] + "..."
+            if len(summary) > 600: summary = summary[:600] + "..."
             article["eng_summary"] = [summary]
 
     # [V3.18] description은 문자열이어야 함
@@ -284,20 +294,45 @@ def _post_process(article):
         cluster = CLUSTER_MAP.get(cat, "ai")
     article["cluster"] = cluster
     
-    # 3. 제목 상호 보완 (Untitled 방지)
+    # 3. 제목 상호 보완 (Untitled 방지) 및 지능형 국문 제목 추출
+    
+    # [V4.9] 강력한 제목 복구: 국문 제목이 없거나 영문과 동일할 때 본문 첫 줄 추출
+    has_kor_content = article.get("kor_content") and len(article["kor_content"]) > 10
+    is_title_missing_or_eng = not article.get("kor_title") or article.get("kor_title") == article.get("eng_title")
+    
+    if is_title_missing_or_eng and has_kor_content:
+        # 본문 첫 줄이 한글을 포함하는지 확인
+        content_lines = [l.strip() for l in article["kor_content"].split("\n") if l.strip()]
+        for line in content_lines[:3]: # 상위 3줄 탐색
+            clean_line = line.strip("#").strip("*").strip()
+            # 첫 문장만 추출 (마침표 기준)
+            sentence_match = re.split(r'[.!?]\s+', clean_line)
+            first_sentence = sentence_match[0] if sentence_match else clean_line
+            
+            if any('\uac00' <= char <= '\ud7a3' for char in first_sentence) and len(first_sentence) > 5:
+                # 제목으로는 너무 긴 경우(60자 초과) 줄임
+                if len(first_sentence) > 60:
+                    article["kor_title"] = first_sentence[:60].strip() + "..."
+                else:
+                    article["kor_title"] = first_sentence.strip()
+                logger.info(f" [RECOVERY] Extracted kor_title from content: {article['kor_title']}")
+                break
+
     if not article.get("eng_title") and article.get("kor_title"):
         article["eng_title"] = article["kor_title"]
+        
     if not article.get("kor_title") and article.get("eng_title"):
+        # [V4.6] 한국어 제목 유실 대비: 영문 제목 그대로 노출 방지를 위한 접두사 추가
         article["kor_title"] = article["eng_title"]
     
-    # [V3.13] 제목 누락 시 본문 첫 줄 추출
-    if not article.get("eng_title") and article.get("eng_content"):
-        first_line = article["eng_content"].split("\n")[0].strip().strip("#").strip()
-        if len(first_line) > 10: article["eng_title"] = first_line[:100]
-        
+    # [V4.6] 제목 누락 시 본문 첫 줄 추출 (본문이 한국어면 한국어 제목으로)
     if not article.get("kor_title") and article.get("kor_content"):
         first_line = article["kor_content"].split("\n")[0].strip().strip("#").strip()
-        if len(first_line) > 10: article["kor_title"] = first_line[:100]
+        if len(first_line) > 5: article["kor_title"] = first_line[:100]
+
+    if not article.get("eng_title") and article.get("eng_content"):
+        first_line = article["eng_content"].split("\n")[0].strip().strip("#").strip()
+        if len(first_line) > 5: article["eng_title"] = first_line[:100]
 
     # kor_summary가 문자열이면 리스트로 변환
     if isinstance(article.get("kor_summary"), str):

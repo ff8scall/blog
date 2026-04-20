@@ -1,6 +1,6 @@
 ﻿---
 title: "Evaluating Uniform Memory Access Mode on AMD's Turin ft. Verda"
-date: "2026-04-20T04:57:52Z"
+date: "2026-04-20T05:30:05Z"
 description: "This evaluation analyzes the impact of Uniform Memory Access (UMA) mode on AMD's Turin server CPUs, utilizing testing environments provided by Verda. As modern interconnects become increasingly non-uniform due to multi-die architectures, the study examines whether forcing a UMA mode can simplify software optimization without sacrificing significant throughput. The results provide critical insights for datacenter operators managing complex x86-64 server fleets."
 image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]

@@ -1,6 +1,6 @@
 ﻿---
 title: "Minisforum N5 Max: The $2,899 AI NAS Powered by AMD Strix Halo"
-date: "2026-04-20T04:58:43Z"
+date: "2026-04-20T05:30:57Z"
 description: "Minisforum is set to launch the N5 Max on April 23, 2026—a powerhouse 'AI NAS' featuring AMD's Strix Halo architecture, 200TB capacity, and pre-installed OpenClaw software for localized AI workloads."
 image: "/images/fallbacks/market-trend.jpg"
 clusters: ["insights"]

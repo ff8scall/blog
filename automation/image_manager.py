@@ -13,13 +13,18 @@ DEFAULT_LIB_ROOT = "static/images/defaults"
 POST_IMAGE_ROOT = "static/images/posts"
 FALLBACK_WEB_PATH = "/images/fallbacks"
 
-# 클러스터 정규화 매핑
+# 클러스터 정규화 및 폴백 매핑
+# static/images/fallbacks 디렉토리의 실제 파일명과 일치해야 함
 CLUSTER_MAP = {
-    "ai": "ai",
+    "ai": "ai-tech",
     "hardware": "hardware",
-    "insights": "insights",
-    "news": "news",
-    "tech": "tech"
+    "insights": "market-trend",
+    "news": "tech-biz",
+    "tech": "ai-tech",
+    "guides": "ai-tools",
+    "ai-models-tools": "ai-models",
+    "gpu-hardware": "semi-hbm",
+    "ai-gaming": "game-tech",
 }
 
 def sanitize_name(name):
@@ -61,7 +66,8 @@ def download_image(url, slug):
 
 def find_matching_default(cluster, keywords):
     """[Tier 2] 키워드 라이브러리에서 매칭되는 이미지 검색"""
-    target_cluster = CLUSTER_MAP.get(cluster.lower(), "tech")
+    # CLUSTER_MAP에서 디렉토리명 추출 (기본값 tech)
+    target_cluster = CLUSTER_MAP.get(cluster.lower(), "ai-tech").split('-')[0]
     cluster_dir = os.path.join(DEFAULT_LIB_ROOT, target_cluster)
     
     if not os.path.exists(cluster_dir):
@@ -106,7 +112,7 @@ def generate_and_cache(prompt, cluster, keywords, slug):
             with open(post_save_path, 'wb') as f: f.write(content)
             
             # (B) 라이브러리용 저장 (첫 번째 유효 키워드 기준)
-            target_cluster = CLUSTER_MAP.get(cluster.lower(), "tech")
+            target_cluster = CLUSTER_MAP.get(cluster.lower(), "ai-tech").split('-')[0]
             if keywords:
                 for kw in keywords:
                     safe_kw = sanitize_name(kw)
@@ -129,9 +135,8 @@ def generate_and_cache(prompt, cluster, keywords, slug):
 
 def get_tiered_image(article, slug):
     """메인 진입점: 계층적 이미지 선택 로직"""
-    # 0. 건너뛰기 설정 확인
-    if os.environ.get("SKIP_AI_IMAGE") == "1":
-        return None
+    # 0. 건너뛰기 설정 확인 (원본 및 생성만 스킵)
+    skip_ai = (os.environ.get("SKIP_AI_IMAGE") == "1")
 
     # 1. Tier 1: 원본 이미지
     orig_url = article.get('original_image_url') or article.get('original_image')
@@ -141,21 +146,21 @@ def get_tiered_image(article, slug):
 
     # 2. Tier 2: 라이브러리 매칭
     cluster = article.get('cluster', 'tech')
-    # 키워드 목록 합치기 (영문 우선 혹은 국문 우선 선택 가능)
+    # 키워드 목록 합치기
     keywords = article.get('eng_keywords', []) + article.get('kor_keywords', [])
     
     lib_res = find_matching_default(cluster, keywords)
     if lib_res: return lib_res
 
     # 3. Tier 3: API 생성
-    prompt = article.get('image_prompt_core') or article.get('eng_title')
-    gen_res = generate_and_cache(prompt, cluster, keywords, slug)
-    if gen_res: return gen_res
+    if not skip_ai:
+        prompt = article.get('image_prompt_core') or article.get('eng_title')
+        gen_res = generate_and_cache(prompt, cluster, keywords, slug)
+        if gen_res: return gen_res
 
-    # 4. Fallback (전혀 없을 경우)
-    fallback_key = CLUSTER_MAP.get(cluster.lower(), "tech")
-    # 기존 fallback 폴더의 파일명과 맞춤 (ai-tech.jpg 등)
-    if fallback_key == "ai": fallback_key = "ai-tech"
-    elif fallback_key == "tech": fallback_key = "ai-tech"
+    # 4. Fallback (전혀 없을 경우) - 명시적으로 존재하는 파일명으로 보장
+    fallback_file = CLUSTER_MAP.get(cluster.lower(), "ai-tech")
     
-    return f"{FALLBACK_WEB_PATH}/{fallback_key}.jpg"
+    # 파일이 존재하는지 최종 확인 후 없으면 가장 기본인 ai-tech로
+    final_path = f"{FALLBACK_WEB_PATH}/{fallback_file}.jpg"
+    return final_path

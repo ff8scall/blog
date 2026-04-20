@@ -1,6 +1,6 @@
 ﻿---
 title: "Jensen Huang Defends China Market Strategy Amid Geopolitical Pressure"
-date: "2026-04-20T04:58:54Z"
+date: "2026-04-20T05:31:07Z"
 description: "NVIDIA CEO Jensen Huang expressed strong opposition to US export restrictions on China, labeling the potential loss of the world's second-largest AI chip market a 'losing proposition' for American industry."
 image: "/images/fallbacks/hardware.jpg"
 clusters: ["hardware"]

@@ -1,8 +1,8 @@
 ﻿---
 title: "암(Arm)의 코어텍스 A725와 엔비디아 GB10을 탑재한 델(Dell) 프로 맥스 분석"
-date: "2026-04-20T13:56:33+09:00"
+date: "2026-04-20T14:28:01+09:00"
 description: "암(Arm)의 7시리즈 성능형 코어인 코어텍스 A725의 아키텍처적 우수성과 모바일 컴퓨팅 기여도 분석"
-image: "/images/fallbacks/market-trend.jpg"
+image: "/images/defaults/market/nvidia_gb10.jpg"
 clusters: ["insights"]
 categories: ["analysis"]
 tags: ["암 코어텍스 A725", "델 프로 맥스", "엔비디아 GB10", "Arm 기반 윈도우", "모바일 성능", "블랙웰 아키텍처", "효율성"]

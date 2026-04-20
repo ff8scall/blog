@@ -1,8 +1,8 @@
 ﻿---
 title: "첨단 제조 기술이 공급망 전략을 재정의하는 방식"
-date: "2026-04-20T13:55:16+09:00"
+date: "2026-04-20T14:27:20+09:00"
 description: "단순 물류 효율화를 넘어 기술 기반의 설계 및 최적화로 공급망 관리 패러다임이 전환됨"
-image: "/images/posts/2026/04/20/ai-how-advanced-manufacturing-technology-is-redefi_gen.jpg"
+image: "/images/defaults/ai/supply_chain.jpg"
 clusters: ["ai"]
 categories: ["models"]
 tags: ["공급망", "첨단 제조", "디지털 트윈", "물류 전략", "스마트 팩토리", "회복 탄력성 공급망"]
