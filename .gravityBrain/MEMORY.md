@@ -2,8 +2,9 @@
 
 ## 📍 현재 상태
 - **날짜**: 2026-04-21
-- **단계**: Google Indexing API 연동 완료 및 서비스 최적화 중
+- **단계**: Bing SEO 인증 보완 및 최종 배포 중
 - **최근 결정**: 
+    - **Bing SEO (보완)**: 메타 태그의 인용구 생략 문제 해결을 위해 `safeHTML`을 적용하고, 교차 검증을 위한 `static/BingSiteAuth.xml` 파일을 추가 완료. [v5.2]
     - **Bing SEO**: 사이트 소유권 인증을 위한 메타 태그(`msvalidate.01`)를 `hugo.toml` 및 `layouts/partials/seo.html`에 반영 완료. [v5.1]
     - **Google Indexing**: 실시간 색인을 위해 Google Indexing API를 `automation/google_indexing_service.py`로 구현 및 `indexnow_service.py`에 통합.
     - **Security**: 서비스 계정 JSON 키를 `automation/keys/` 폴더로 이동하고 `.gitignore`에 추가하여 보안 강화.
