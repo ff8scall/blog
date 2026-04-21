@@ -151,3 +151,23 @@ Bing 및 Naver 등 다양한 검색 엔진의 인증 방식을 통합하고, 특
 ### [의존 모듈]
 - `common_utils.py`, `telegram_bridge.py` -> 텔레그램 연동 로직
 - `nlm_orchestrator.py`, `notify.py` -> 전체 공정 관리 및 알림 트리거링
+- `indexnow_service.py` -> `google_indexing_service.py` (인덱싱 통합 의존)
+
+## 14. Google Indexing API 연동 및 보안 (v1.4)
+### [설계 의도]
+Bing/Naver의 IndexNow 방식과 달리, OAuth2 기반의 서비스 계정 인증을 요구하는 Google Indexing API를 통합하여 구글 검색 결과에 최신 뉴스가 즉시 반영되도록 합니다.
+
+### [핵심 로직]
+1. **서비스 계정 기반 인증 (Service Account Auth)**:
+   - Google Cloud Console에서 생성된 서비스 계정의 JSON 키를 사용하여 `google.oauth2.service_account`를 통한 인증을 수행합니다.
+   - `indexing.v3` 서비스를 빌드하여 `urlNotifications().publish()` 메서드를 호출합니다.
+2. **통합 호출 인터페이스**:
+   - `indexnow_service.py`를 모든 검색 엔진 인덱싱의 통합 허브로 설정하였습니다.
+   - `notify_indexnow(urls)` 함수가 호출될 때 내부적으로 `google_indexing_service.py`를 연동 호출하여 원스톱 인덱싱을 보장합니다.
+3. **보안 및 키 관리 (Key Protection)**:
+   - 민감한 JSON 키 파일은 `automation/keys/` 폴더에 별도로 보관하며, 해당 폴더는 `.gitignore`에 등록하여 GitHub 저장소에 노출되지 않도록 철저히 격리합니다.
+   - 클라우드 배포 시에는 수동으로 해당 경로에 키를 배치하는 **'Manual Key Handover'** 프로토콜을 따릅니다.
+
+### [의존성]
+- `google-auth`, `google-api-python-client` (pip 설치 필요)
+- `indexnow_service.py` -> `google_indexing_service.py` (동기적 호출 의존)

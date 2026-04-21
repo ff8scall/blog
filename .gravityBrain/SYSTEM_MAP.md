@@ -32,7 +32,8 @@ graph TD
     
     subgraph "Automation & Delivery"
         M[Git Sync / Deploy] -->|Live URL| N[IndexNow Service]
-        N -->|Ping| O[Search Engines]
+        N -->|Ping| O[Search Engines: Bing, Naver]
+        N -->|API Call| G[Google Indexing API]
     end
 ```
 
@@ -40,7 +41,8 @@ graph TD
 - **`automation/news_main.py`**: 표준 템플릿 엔진 및 전체 파이프라인 총괄 (언어 통합 처리)
 - **`automation/nlm_orchestrator.py`**: Premium(NLM) 전체 공정(수확->생성->배포) 오케스트레이터 [v1.7]
 - **`automation/notebooklm_publisher.py`**: NLM 리포트 파싱 및 기사 발행 유틸리티
-- **`automation/indexnow_service.py`**: 검색 엔진 실시간 인덱싱 요청 (Naver 멀티 키 지원)
+- **`automation/indexnow_service.py`**: 검색 엔진 실시간 인덱싱 통합 허브 (Bing, Naver IndexNow + Google Indexing API 호출 연동)
+- **`automation/google_indexing_service.py`**: Google Indexing API(Service Account) 전용 통신 모듈 [v1.4]
 - **`automation/nlm_keep_alive.sh`**: 1시간 주기 NLM 세션 유지(Stay-alive) 스크립트 [v2.0]
 - **`automation/crontab_config.txt`**: Ubuntu 클라우드 전체 스케줄링 가이드 [v2.0]
 - **`automation/reprocess_reports.py`**: 파싱 오류 또는 필드 누락 시 기존 리포트를 지능형 로직으로 재발행하는 긴급 복구 모듈 [v4.9]

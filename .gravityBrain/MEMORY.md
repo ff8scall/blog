@@ -4,6 +4,7 @@
 - **날짜**: 2026-04-21
 - **단계**: Google Indexing API 연동 완료 및 서비스 최적화 중
 - **최근 결정**: 
+    - **Bing SEO**: 사이트 소유권 인증을 위한 메타 태그(`msvalidate.01`)를 `hugo.toml` 및 `layouts/partials/seo.html`에 반영 완료. [v5.1]
     - **Google Indexing**: 실시간 색인을 위해 Google Indexing API를 `automation/google_indexing_service.py`로 구현 및 `indexnow_service.py`에 통합.
     - **Security**: 서비스 계정 JSON 키를 `automation/keys/` 폴더로 이동하고 `.gitignore`에 추가하여 보안 강화.
     - **Git Update**: 원격 저장소의 최신 변경 사항(이미지 다각화 v6.1, 프리미엄 뉴스 업데이트 등 14개 커밋)을 로컬로 Pull 완료.
@@ -28,9 +29,9 @@
 - [x] 실운영 자동화 스케줄링 검증 (05, 11, 17, 21시 맞춤 설정 완료) [v2.0]
 - [x] NLM 클라우드 배치 최적화 (단계별 알림 및 에러 리포트) 완료 [v2.1]
 - [x] 파이프라인 중단 시(0건) 텔레그램 알림 보완 완료 [v2.2]
-- [ ] 메가트렌드 분석 및 성능 비교 콘텐츠 보완 (Next)
 - [x] RSS 소스 추가 및 글로벌 시차 보완 (영국, 일본, 대만 매체 통합) 완료 [v2.3]
 - [x] Gemini 1.5 Flash 기반 '라이트 스코어러' 필터링 도입 및 로직 정상화 [v2.4]
 - [x] NLM 파서 고도화 및 이미지 폴백 경로(엑박) 긴급 수정 완료 [v4.7]
 - [x] 국문 제목 누락 복구 로직 및 요약 트렁케이션 완화 자동화 완료 [v4.9]
+- [x] Bing 사이트 소유권 인증 메타 태그 추가 완료 [v5.1]
 - [ ] 메가트렌드 분석 및 성능 비교 콘텐츠 보완 (Next)
