@@ -2,8 +2,10 @@
 
 ## 📍 현재 상태
 - **날짜**: 2026-04-21
-- **단계**: Bing SEO 인증 보완 및 최종 배포 중
+- **단계**: NLM 배치 최적화 및 이월 로직 적용 완료
 - **최근 결정**: 
+    - **NLM Batch Optimization**: NLM 분석 품질 보장을 위해 세션당 카테고리별 기사 수를 10개로 제한.
+    - **Deferral Logic (이월 로직)**: HarvesterV3를 수정하여, 품질은 높으나 이번 배치에서 제외된 기사를 `seen_urls`에 기록하지 않음으로써 다음 스케줄(6시간 후)에 자동으로 재수집되도록 구현. [v5.3]
     - **Bing SEO (보완)**: 메타 태그의 인용구 생략 문제 해결을 위해 `safeHTML`을 적용하고, 교차 검증을 위한 `static/BingSiteAuth.xml` 파일을 추가 완료. [v5.2]
     - **Bing SEO**: 사이트 소유권 인증을 위한 메타 태그(`msvalidate.01`)를 `hugo.toml` 및 `layouts/partials/seo.html`에 반영 완료. [v5.1]
     - **Google Indexing**: 실시간 색인을 위해 Google Indexing API를 `automation/google_indexing_service.py`로 구현 및 `indexnow_service.py`에 통합.

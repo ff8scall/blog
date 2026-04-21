@@ -11,6 +11,7 @@ from datetime import datetime
 from common_utils import normalize_url, clean_text, extract_domain
 from schemas import HarvestedArticle
 from quality_filter import QualityFilter
+from history_manager import HistoryManager
 
 logger = logging.getLogger("LegoSia.HarvesterV3")
 
@@ -37,6 +38,7 @@ class HarvesterV3:
         self.test_mode = test_mode
         self.exhausted = set()
         self.seen_urls = self._load_cache()
+        self.history = HistoryManager() # [V4.1] DB 연동
         
         self.source_tiers = {
             "tier1": ["Ars Technica", "AnandTech", "Tom's Hardware", "Reuters", "Bloomberg", "TechPowerUp", "ExtremeTech", "IEEE Spectrum"],
@@ -100,7 +102,13 @@ class HarvesterV3:
         if norm_url in self.seen_urls:
             return None
             
-        self.seen_urls.add(norm_url)
+        # [V4.1] DB(history.db) 전수 조사 - 이미 발행된 것은 스킵 및 캐시 업데이트
+        if self.history.is_already_processed(norm_url):
+            self.seen_urls.add(norm_url)
+            return None
+            
+        # [주의] 여기서 바로 seen_urls에 추가하지 않습니다. 
+        # 최종적으로 채택(Published)되거나 명확히 거절(Rejected)된 경우에만 추가합니다.
         
         return HarvestedArticle(
             title=clean_text(article.get("title", "")),
@@ -184,11 +192,34 @@ class HarvesterV3:
                 continue
                 
             logger.info(f" [FILTER] Processing {cat} ({len(cat_articles)} items)...")
-            selected = qf.execute_pipeline(cat_articles, cat, limit=limit_per_cat)
-            filtered_results.extend(selected)
-            final_stats[cat] = len(selected)
+            
+            # [V4.1] 이월 로직 적용을 위한 필터링 확장
+            # 1. 고품질 후보군(survived) 선별
+            selected_ids = qf._llm_select_batch(cat_articles, cat)
+            survived = [cat_articles[idx] for idx in selected_ids]
+            
+            # 2. 이번 배치에 포함될 기사(final)와 밀려난 기사(deferred) 분리
+            final = survived[:limit_per_cat]
+            deferred = survived[limit_per_cat:]
+            
+            # 3. 명확히 탈락한 기사(rejected) 식별
+            selected_set = set(id(a) for a in survived)
+            rejected = [a for a in cat_articles if id(a) not in selected_set]
+            
+            # 4. 캐시 업데이트 전략:
+            # - 채택된 것(final)과 탈락한 것(rejected)은 seen_urls에 추가 (다시 안 봄)
+            # - 이월된 것(deferred)은 추가하지 않음 (다음 스케줄에서 다시 수집됨)
+            for a in final: self.seen_urls.add(a.normalized_url)
+            for a in rejected: self.seen_urls.add(a.normalized_url)
+            
+            filtered_results.extend(final)
+            final_stats[cat] = len(final)
+            if deferred:
+                logger.info(f" [DEFERRED] {len(deferred)} items in {cat} will be processed next time.")
 
-        logger.info(f" [>>>] Filtered Harvest Complete: {len(filtered_results)} high-quality items selected")
+        # 최종 캐시 저장
+        self._save_cache()
+        logger.info(f" [>>>] Filtered Harvest Complete: {len(filtered_results)} items selected")
         return filtered_results, final_stats
 
     def dump_to_category_files(self, limit_per_cat=15):
