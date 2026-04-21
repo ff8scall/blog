@@ -2,6 +2,7 @@ import os
 import requests
 import logging
 from dotenv import load_dotenv
+from google_indexing_service import notify_google_indexing
 
 load_dotenv()
 
@@ -56,6 +57,13 @@ def notify_indexnow(urls):
         except Exception as e:
             print(f" [ERROR] Could not notify {name}: {e}")
             logger.error(f"{name} error: {e}")
+    
+    # [V1.4] Google Indexing API 통합
+    try:
+        notify_google_indexing(urls)
+    except Exception as e:
+        print(f" [ERROR] Google Indexing notification failed: {e}")
+        logger.error(f"Google Indexing error: {e}")
 
 if __name__ == "__main__":
     # Test call

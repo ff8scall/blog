@@ -15,6 +15,7 @@ Thumbs.db
 # Environment variables
 .env
 automation/.env
+automation/keys/
 
 # Local News Backups
 automation/archive/

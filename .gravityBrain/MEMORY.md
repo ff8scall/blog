@@ -2,9 +2,10 @@
 
 ## 📍 현재 상태
 - **날짜**: 2026-04-21
-- **단계**: 원격 저장소 동기화 및 SEO 최적화(Bing 인증) 진행 중
+- **단계**: Google Indexing API 연동 완료 및 서비스 최적화 중
 - **최근 결정**: 
-    - **Bing Verification**: Bing 검색 엔진 최적화를 위해 사이트 소유권 인증 메타 태그(`048AB450B6B91E03CAF13FDE8415F954`)를 `hugo.toml`에 추가.
+    - **Google Indexing**: 실시간 색인을 위해 Google Indexing API를 `automation/google_indexing_service.py`로 구현 및 `indexnow_service.py`에 통합.
+    - **Security**: 서비스 계정 JSON 키를 `automation/keys/` 폴더로 이동하고 `.gitignore`에 추가하여 보안 강화.
     - **Git Update**: 원격 저장소의 최신 변경 사항(이미지 다각화 v6.1, 프리미엄 뉴스 업데이트 등 14개 커밋)을 로컬로 Pull 완료.
     - **Ubuntu Migration**: Ubuntu 24.04 (Noble) 환경으로 전체 파이프라인 이식 완료.
     - **Path Fix**: venv 환경에서 `nlm` 바이너리 인식 로직 개선 (sys.executable 기반).
