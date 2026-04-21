@@ -259,6 +259,11 @@ def _post_process(article):
     article["eng_summary"] = clean_summary(article.get("eng_summary", []))
     
     # [V4.2] 요약 누락 시 본문에서 추출 (Smart Fallback)
+    # [V5.2] 영문 본문 누락 시 국문 복사 전면 금지 (영문 사이트 한글 본문 노출 방지)
+    if not article.get("eng_content") and article.get("kor_content"):
+        logger.warning(f" [CRITICAL] ENG_CONTENT missing for ID {article.get('id')}. English site will only show summary.")
+        article["eng_content"] = "" 
+    
     if not article.get("kor_summary") and article.get("kor_content"):
         content = article["kor_content"]
         # 첫 번째 유효 문단 추출
@@ -340,8 +345,14 @@ def _post_process(article):
                 logger.info(f" [RECOVERY] Extracted kor_title from content: {article['kor_title']}")
                 break
 
-    if not article.get("eng_title") and article.get("kor_title"):
-        article["eng_title"] = article["kor_title"]
+    # [V5.2] 영문 제목 누락 시 국문 복사 지양 (로깅 및 복구 마커 추가)
+    if not article.get("eng_title"):
+        if article.get("kor_title"):
+            # 한국어 제목이 있으면 복구 마커와 함께 사용 (영문 사이트에서 한글 제목 노출 방지 도움)
+            article["eng_title"] = f"Recovery: {article['kor_title']}"
+            logger.warning(f" [CRITICAL] ENG_TITLE missing. Falling back to KOR_TITLE with marker: {article['kor_title']}")
+        else:
+            article["eng_title"] = f"Article {article.get('id', 'Unknown')}"
         
     if not article.get("kor_title") and article.get("eng_title"):
         # [V4.6] 한국어 제목 유실 대비: 영문 제목 그대로 노출 방지를 위한 접두사 추가
