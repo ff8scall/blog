@@ -1,8 +1,8 @@
 ﻿---
 title: "디저(Deezer)의 경고: 신규 음원 44%가 AI 생성물, 스트리밍 생태계의 교란"
-date: "2026-04-21T07:32:15+09:00"
+date: "2026-04-21T09:14:41+09:00"
 description: "음악 플랫폼 디저(Deezer) 조사에 따르면 신규 업로드 음원의 44%가 AI로 생성된 곡으로 나타났습니다."
-image: "/images/fallbacks/ai-tech.jpg"
+image: "/images/posts/2026/04/21/ai-deezer-says-44-of-new-music-uploads-are-ai-gene_gen.jpg"
 clusters: ["ai"]
 categories: ["apps"]
 tags: ["AI 음악", "디저", "스트리밍 사기", "로열티 정산", "콘텐츠 관리"]

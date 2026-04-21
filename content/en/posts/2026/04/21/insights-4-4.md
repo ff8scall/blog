@@ -1,8 +1,8 @@
 ﻿---
 title: "4월 4주차 넷플릭스 신작 가이드: 기술적 몰입감과 향수의 결합"
-date: "2026-04-20T22:30:04Z"
+date: "2026-04-20T23:54:37Z"
 description: "4월 4주차 넷플릭스 신작 가이드: 기술적 몰입감과 향수의 결합"
-image: "/images/fallbacks/market-trend.jpg"
+image: "/images/posts/2026/04/21/insights-4-4_gen.jpg"
 clusters: ["insights"]
 categories: ["analysis"]
 tags: ["Netflix (넷플릭스)", "Rendering Pipeline (렌더링 파이프라인)", "4K HDR (4K 고다이나믹 레인지)", "Content Strategy (콘텐츠 전략)", "Animation Technology (애니메이션 기술)"]

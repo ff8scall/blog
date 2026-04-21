@@ -1,8 +1,8 @@
 ﻿---
 title: "미 국가안보국(NSA), 국방부의 우려를 뒤로하고 앤스로픽 '미토스' 전격 도입"
-date: "2026-04-21T07:33:08+09:00"
+date: "2026-04-21T09:23:01+09:00"
 description: "미 국가안보국(NSA)이 앤스로픽의 제한된 고성능 AI 모델인 '미토스'를 정보 수집 및 분석 업무에 도입했다는 소식이 전해졌습니다."
-image: "/images/fallbacks/ai-tech.jpg"
+image: "/images/posts/2026/04/21/ai-nsa-spies-are-reportedly-using-anthropics-mytho_gen.jpg"
 clusters: ["ai"]
 categories: ["analysis"]
 tags: ["국가안보국", "앤스로픽 미토스", "국방부 갈등", "AI 정보전", "암호 분석"]

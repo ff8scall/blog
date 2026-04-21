@@ -1,8 +1,8 @@
 ﻿---
 title: "게임서(GameSir) T7 프로 '슈가 월': 게이밍 기어에 입힌 파스텔 감성"
-date: "2026-04-20T22:35:51Z"
+date: "2026-04-21T00:46:36Z"
 description: "GameSir announced the T7 Pro 'Sugar Whirl' wireless Xbox controller, featuring a translucent pastel design and high-precision controls as part of its Pastel Collection."
-image: "/images/fallbacks/hardware.jpg"
+image: "/images/posts/2026/04/21/hardware-gamesir-t7_gen.jpg"
 clusters: ["hardware"]
 categories: ["models"]
 tags: ["GameSir T7 Pro", "Sugar Whirl", "Pastel Collection", "Hall Effect Sensor", "Lifestyle Gaming"]

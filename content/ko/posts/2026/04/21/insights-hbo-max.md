@@ -1,8 +1,8 @@
 ﻿---
 title: "니치 스포츠의 주류화: 넷플릭스와 HBO Max가 선택한 마니아 서사"
-date: "2026-04-21T07:31:23+09:00"
+date: "2026-04-21T09:07:51+09:00"
 description: "암벽 등반, 탁구 등 비주류 스포츠를 소재로 한 콘텐츠의 부상과 이를 뒷받침하는 고해상도 촬영 기술 분석."
-image: "/images/fallbacks/market-trend.jpg"
+image: "/images/posts/2026/04/21/insights-hbo-max_gen.jpg"
 clusters: ["insights"]
 categories: ["analysis"]
 tags: []

@@ -1,8 +1,8 @@
 ﻿---
 title: "버셀(Vercel) 보안 붕괴 사고: 'AI 권한 오남용'이 불러온 200만 달러의 위협"
-date: "2026-04-20T22:34:48Z"
+date: "2026-04-21T00:36:36Z"
 description: "AI cloud company Vercel suffered a data breach after an employee granted an AI tool unrestricted access to Google Workspace, exposing non-sensitive environment variables."
-image: "/images/defaults/hardware/ai.jpg"
+image: "/images/posts/2026/04/21/hardware-vercel-ai-200_gen.jpg"
 clusters: ["hardware"]
 categories: ["models"]
 tags: ["Vercel Breach", "AI Security Risk", "Google Workspace Permissions", "ShinyHunters", "Shadow AI"]

@@ -1,8 +1,8 @@
 ﻿---
 title: "인디 게임 '윈드로즈(Windrose)'의 역주행 흥행: 해적 생존 장르의 새로운 지평"
-date: "2026-04-21T07:35:15+09:00"
+date: "2026-04-21T09:41:31+09:00"
 description: "협동 기반 PvE 해적 생존 게임 '윈드로즈', 스팀 출시 첫 주 기록적 흥행"
-image: "/images/fallbacks/market-trend.jpg"
+image: "/images/posts/2026/04/21/insights-windrose_gen.jpg"
 clusters: ["insights"]
 categories: ["guide"]
 tags: ["윈드로즈", "인디 생존 게임", "스팀 지표", "해적 협동 게임", "바이럴 흥행"]

@@ -1,8 +1,8 @@
 ﻿---
 title: "일본의 60억 달러 자원 안보 베팅: '도시 광산'과 순환경제의 기술적 전략"
-date: "2026-04-20T22:31:39Z"
+date: "2026-04-21T00:09:36Z"
 description: "일본의 60억 달러 자원 안보 베팅: '도시 광산'과 순환경제의 기술적 전략"
-image: "/images/fallbacks/market-trend.jpg"
+image: "/images/posts/2026/04/21/insights-analysis-11_gen.jpg"
 clusters: ["insights"]
 categories: ["analysis"]
 tags: ["Urban Mining (도시 광산)", "Circular Economy (순환경제)", "Critical Minerals (핵심 광물)", "Supply Chain Sovereignty (공급망 주권)", "Chemical Recycling (화학적 재활용)"]

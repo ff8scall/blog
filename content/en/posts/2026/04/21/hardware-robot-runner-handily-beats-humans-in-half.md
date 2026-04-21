@@ -1,8 +1,8 @@
 ﻿---
 title: "Robot runner handily beats humans in half-marathon, setting new record"
-date: "2026-04-20T22:32:10Z"
+date: "2026-04-21T00:13:06Z"
 description: "A Chinese-developed humanoid robot has set a new record by outrunning human participants in a sanctioned half-marathon. This achievement demonstrates extraordinary progress in robotic bipedal balance and long-range energy efficiency."
-image: "/images/fallbacks/hardware.jpg"
+image: "/images/posts/2026/04/21/hardware-robot-runner-handily-beats-humans-in-half_gen.jpg"
 clusters: ["hardware"]
 categories: ["models"]
 tags: ["Humanoid Robot", "Robotics Record", "Bipedal Locomotion", "China Tech", "Endurance"]

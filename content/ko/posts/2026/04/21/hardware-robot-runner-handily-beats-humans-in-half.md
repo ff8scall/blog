@@ -1,8 +1,8 @@
 ﻿---
 title: "휴머노이드 로봇의 대역전극: 하프 마라톤에서 인간을 압도하며 신기록 경신"
-date: "2026-04-21T07:32:05+09:00"
+date: "2026-04-21T09:13:01+09:00"
 description: "중국에서 개발된 최첨단 휴머노이드 로봇이 하프 마라톤 대회에 참가해 인간 선수들을 제치고 신기록을 세웠습니다."
-image: "/images/fallbacks/hardware.jpg"
+image: "/images/posts/2026/04/21/hardware-robot-runner-handily-beats-humans-in-half_gen.jpg"
 clusters: ["hardware"]
 categories: ["models"]
 tags: ["휴머노이드 로봇", "로보틱스 신기록", "이족 보행", "중국 테크", "내구력"]

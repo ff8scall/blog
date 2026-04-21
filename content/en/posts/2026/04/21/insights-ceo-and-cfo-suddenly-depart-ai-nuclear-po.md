@@ -1,8 +1,8 @@
 ﻿---
 title: "CEO and CFO suddenly depart AI nuclear power upstart Fermi"
-date: "2026-04-20T22:33:24Z"
+date: "2026-04-21T00:24:46Z"
 description: "The CEO and CFO of Fermi, a Texas-based startup aimed at powering AI data centers with nuclear energy, have abruptly resigned. This leadership vacuum creates uncertainty for the company's ambitious 'AI campus' projects."
-image: "/images/fallbacks/market-trend.jpg"
+image: "/images/posts/2026/04/21/insights-ceo-and-cfo-suddenly-depart-ai-nuclear-po_gen.jpg"
 clusters: ["insights"]
 categories: ["models"]
 tags: ["Fermi AI", "Nuclear Power", "SMR", "Energy Crisis", "Rick Perry"]

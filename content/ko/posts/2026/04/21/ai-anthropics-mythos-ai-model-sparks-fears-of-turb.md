@@ -1,8 +1,8 @@
 ﻿---
 title: "앤스로픽 '미토스' 모델의 명암: 보안 체계를 무너뜨리는 AI 해킹의 위협"
-date: "2026-04-21T07:32:47+09:00"
+date: "2026-04-21T09:19:41+09:00"
 description: "앤스로픽의 신규 AI 모델 '미토스(Mythos)'가 고도화된 해킹 도구로 악용될 수 있다는 우려가 확산되고 있습니다."
-image: "/images/fallbacks/ai-tech.jpg"
+image: "/images/posts/2026/04/21/ai-anthropics-mythos-ai-model-sparks-fears-of-turb_gen.jpg"
 clusters: ["ai"]
 categories: ["models"]
 tags: ["앤스로픽", "미토스 AI", "사이버 보안", "제로데이 공격", "AI 해킹"]

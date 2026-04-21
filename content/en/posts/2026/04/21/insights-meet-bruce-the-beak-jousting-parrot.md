@@ -1,8 +1,8 @@
 ﻿---
 title: "Meet Bruce, the 'beak-jousting' parrot"
-date: "2026-04-20T22:32:42Z"
+date: "2026-04-21T00:18:06Z"
 description: "Bruce, a Kea parrot with a broken upper beak, has been observed using pebbles as tools to preen his feathers. This discovery challenges existing theories on animal intelligence and how species adapt behaviorally to physical limitations."
-image: "/images/fallbacks/market-trend.jpg"
+image: "/images/posts/2026/04/21/insights-meet-bruce-the-beak-jousting-parrot_gen.jpg"
 clusters: ["insights"]
 categories: ["models"]
 tags: ["Kea Parrot", "Tool Use", "Animal Intelligence", "Behavioral Plasticity", "Evolution"]

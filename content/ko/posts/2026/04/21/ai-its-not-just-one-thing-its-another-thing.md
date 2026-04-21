@@ -1,8 +1,8 @@
 ﻿---
 title: "'이것만이 아닙니다': AI 작문의 전형적인 클리셰와 인간미의 상실"
-date: "2026-04-21T07:32:58+09:00"
+date: "2026-04-21T09:21:21+09:00"
 description: "'단순히 A가 아니라 B입니다'라는 식의 특정 문장 구조가 생성형 AI가 쓴 글임을 알리는 결정적인 단서가 되고 있습니다."
-image: "/images/fallbacks/ai-tech.jpg"
+image: "/images/posts/2026/04/21/ai-its-not-just-one-thing-its-another-thing_gen.jpg"
 clusters: ["ai"]
 categories: ["models"]
 tags: ["AI 작문", "LLM 패턴", "언어적 클리셰", "합성 콘텐츠", "문체 분석"]

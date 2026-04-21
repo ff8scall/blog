@@ -1,8 +1,8 @@
 ﻿---
 title: "Rogue Trooper brings the Genetic Infantry to the silver screen"
-date: "2026-04-20T22:32:31Z"
+date: "2026-04-21T00:16:26Z"
 description: "Director Duncan Jones is adapting the legendary 2000 AD comic 'Rogue Trooper' into a film, exploring the lives of genetically engineered soldiers. The project delves into the ethics of biotechnology and the dehumanization of future warfare."
-image: "/images/fallbacks/market-trend.jpg"
+image: "/images/posts/2026/04/21/insights-rogue-trooper-brings-the-genetic-infantry_gen.jpg"
 clusters: ["insights"]
 categories: ["models"]
 tags: ["Rogue Trooper", "Duncan Jones", "Genetic Engineering", "Sci-fi Cinema", "Biotechnology"]

@@ -1,8 +1,8 @@
 ﻿---
 title: "텍사스 AI 원자력 기업 '페르미(Fermi)', 핵심 경영진 사퇴로 사업 불투명성 고조"
-date: "2026-04-21T07:33:19+09:00"
+date: "2026-04-21T09:24:41+09:00"
 description: "AI 데이터 센터 전용 원자력 발전을 추진하던 스타트업 '페르미(Fermi)'의 CEO와 CFO가 돌연 동반 사퇴했습니다."
-image: "/images/fallbacks/market-trend.jpg"
+image: "/images/posts/2026/04/21/insights-ceo-and-cfo-suddenly-depart-ai-nuclear-po_gen.jpg"
 clusters: ["insights"]
 categories: ["models"]
 tags: ["페르미 AI", "원자력 발전", "소형 모듈형 원자로", "에너지 위기", "릭 페리"]

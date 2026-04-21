@@ -1,8 +1,8 @@
 ﻿---
 title: "고가 메쉬 Wi-Fi의 마케팅 함정과 라우터 재배치의 물리적 근거"
-date: "2026-04-21T07:31:02+09:00"
+date: "2026-04-21T09:04:31+09:00"
 description: "비싼 메쉬 시스템 구매보다 단일 라우터의 위치 선정이 더 중요한 이유를 전파 물리학적 관점에서 설명하고 소비자 마케팅 비판."
-image: "/images/fallbacks/hardware.jpg"
+image: "/images/posts/2026/04/21/hardware-wi-fi_gen.jpg"
 clusters: ["hardware"]
 categories: ["models"]
 tags: []

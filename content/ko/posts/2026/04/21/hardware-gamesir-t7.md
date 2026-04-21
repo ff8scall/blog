@@ -1,8 +1,8 @@
 ﻿---
 title: "게임서(GameSir) T7 프로 '슈가 월': 게이밍 기어에 입힌 파스텔 감성"
-date: "2026-04-21T07:35:46+09:00"
+date: "2026-04-21T09:46:31+09:00"
 description: "'파스텔 컬렉션'의 첫 번째 라인업, 솜사탕 테마의 '슈가 월' 에디션 공개"
-image: "/images/fallbacks/hardware.jpg"
+image: "/images/posts/2026/04/21/hardware-gamesir-t7_gen.jpg"
 clusters: ["hardware"]
 categories: ["models"]
 tags: ["게임서 T7 프로", "슈가 월", "파스텔 컬렉션", "홀 이펙트 센서", "라이프스타일 게이밍"]

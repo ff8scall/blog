@@ -1,8 +1,8 @@
 ﻿---
 title: "엑셀 FIND 함수 심층 가이드: 대소문자 구분과 데이터 무결성 확보 기술"
-date: "2026-04-21T07:31:13+09:00"
+date: "2026-04-21T09:06:11+09:00"
 description: "대소문자를 엄격히 구분하는 FIND 함수의 특성을 활용해 데이터베이스 오류를 방지하고 정확한 정보를 추출하는 가이드."
-image: "/images/fallbacks/market-trend.jpg"
+image: "/images/posts/2026/04/21/insights-find_gen.jpg"
 clusters: ["insights"]
 categories: ["guide"]
 tags: []

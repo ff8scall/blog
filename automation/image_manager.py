@@ -118,60 +118,70 @@ def find_matching_default(cluster, keywords):
     return None
 
 def generate_and_cache(prompt, cluster, keywords, slug):
-    """[Tier 3] API 생성 및 라이브러리 자동 저장 (멀티 슬롯 지원)"""
+    """[Tier 3] API 생성 및 라이브러리 자동 저장 (5초 지연 및 백오프 적용)"""
     import random
-    # [V6.0] 스타일 셔플링
+    import time
+    
+    # [V6.1] 사용자 가이드: 호출 간격 기본 5초 보장
+    time.sleep(5)
+    
+    # 스타일 셔플링
     style = random.choice(AESTHETIC_STYLES)
     final_prompt = (prompt if prompt else "Abstract futuristic technology") + style + " --no text, no faces, no humans"
     
     encoded_prompt = urllib.parse.quote(final_prompt)
     api_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=1200&height=630&nologo=true"
     
-    try:
-        logger.info(f" [Tier 3] [START] Requesting AI Generation for: {slug} (Style: {style[:20]}...)")
-        resp = requests.get(api_url, timeout=45)
-        if resp.status_code == 200:
-            content = resp.content
-            if len(content) > 10240: 
-                # (A) 포스트용 저장 (항상 고유함)
-                date_dir = datetime.now().strftime("%Y/%m/%d")
-                post_dir = os.path.join(POST_IMAGE_ROOT, date_dir)
-                os.makedirs(post_dir, exist_ok=True)
-                post_save_path = os.path.join(post_dir, f"{slug}_gen.jpg")
-                with open(post_save_path, 'wb') as f: f.write(content)
-                
-                # (B) 라이브러리용 저장 (다중 슬롯 관리)
-                target_cluster = CLUSTER_MAP.get(cluster.lower(), "ai-tech").split('-')[0]
-                if keywords:
-                    for kw in keywords:
-                        safe_kw = sanitize_name(kw)
-                        if not safe_kw or len(safe_kw) < 2: continue
-                        
-                        lib_dir = os.path.join(DEFAULT_LIB_ROOT, target_cluster)
-                        os.makedirs(lib_dir, exist_ok=True)
-                        
-                        # [V6.0] 1~5번 슬롯 중 하나를 랜덤하게 선택하여 저장 (순환 업데이트 효과)
-                        slot = random.randint(1, 5)
-                        lib_save_path = os.path.join(lib_dir, f"{safe_kw}_{slot}.jpg")
-                        
-                        with open(lib_save_path, 'wb') as f: f.write(content)
-                        logger.info(f" [Tier 3] [CACHE] Multi-version Saved: {target_cluster}/{safe_kw}_{slot}.jpg")
-                        break 
-                
-                logger.info(f" [Tier 3] [OK] AI Generation Successful: {slug}_gen.jpg")
-                return f"/images/posts/{date_dir}/{slug}_gen.jpg"
+    # [V6.1] 지수 백오프 적용 (최대 3회 시도)
+    wait_time = 5
+    for attempt in range(3):
+        try:
+            logger.info(f" [Tier 3] [START] Requesting AI (Attempt {attempt+1}): {slug}")
+            resp = requests.get(api_url, timeout=45)
+            
+            if resp.status_code == 200:
+                content = resp.content
+                if len(content) > 10240: 
+                    # 포스트용 저장
+                    date_dir = datetime.now().strftime("%Y/%m/%d")
+                    post_dir = os.path.join(POST_IMAGE_ROOT, date_dir)
+                    os.makedirs(post_dir, exist_ok=True)
+                    post_save_path = os.path.join(post_dir, f"{slug}_gen.jpg")
+                    with open(post_save_path, 'wb') as f: f.write(content)
+                    
+                    # 라이브러리용 저장
+                    target_cluster = CLUSTER_MAP.get(cluster.lower(), "ai-tech").split('-')[0]
+                    if keywords:
+                        for kw in keywords:
+                            safe_kw = sanitize_name(kw)
+                            if not safe_kw or len(safe_kw) < 2: continue
+                            lib_dir = os.path.join(DEFAULT_LIB_ROOT, target_cluster)
+                            os.makedirs(lib_dir, exist_ok=True)
+                            slot = random.randint(1, 5)
+                            lib_save_path = os.path.join(lib_dir, f"{safe_kw}_{slot}.jpg")
+                            with open(lib_save_path, 'wb') as f: f.write(content)
+                            break 
+                    
+                    return f"/images/posts/{date_dir}/{slug}_gen.jpg"
+            
+            elif resp.status_code == 429:
+                wait_time *= 2 # 10초, 20초로 대기 늘림
+                logger.warning(f" [Tier 3] [429 ERROR] Rate limited. Waiting {wait_time}s and retrying...")
+                time.sleep(wait_time)
             else:
-                logger.warning(f" [Tier 3] [FAIL] API returned invalid/tiny image: {len(content)} bytes")
-        else:
-            logger.warning(f" [Tier 3] [FAIL] API HTTP Status: {resp.status_code}")
-    except Exception as e:
-        logger.error(f" [Tier 3] [ERROR] AI Generation Failed: {e}")
-    
+                break # 429 외의 에러는 즉시 중단
+                
+        except Exception as e:
+            logger.error(f" [Tier 3] [ERROR] Attempt {attempt+1} failed: {e}")
+            time.sleep(5)
+            
     return None
 
 def get_tiered_image(article, slug):
-    """메인 진입점: 계층적 이미지 선택 로직 (확률적 갱신 포함)"""
+    """메인 진입점: 계층적 이미지 선택 로직 (v6.1 랜덤 폴백 강화)"""
     import random
+    import hashlib
+    
     # 0. 건너뛰기 설정 확인
     skip_ai = (os.environ.get("SKIP_AI_IMAGE") == "1")
 
@@ -186,22 +196,34 @@ def get_tiered_image(article, slug):
     keywords = article.get('eng_keywords', []) + article.get('kor_keywords', [])
     
     lib_res = find_matching_default(cluster, keywords)
-    # [V6.0] 라이브러리에 이미지가 있어도 30% 확률로 무시하고 새로 생성하여 다양성 확보
     if lib_res and random.random() > 0.3: 
         return lib_res
 
-    # 3. Tier 3: API 생성
+    # 3. Tier 3: AI 신규 생성 (5초 지연 적용됨)
     if not skip_ai:
         prompt = article.get('image_prompt_core') or article.get('eng_title')
         gen_res = generate_and_cache(prompt, cluster, keywords, slug)
         if gen_res: return gen_res
     
-    # 만약 생성이 실패했고(429 등) 아까 무시했던 lib_res가 있다면 그것을 재사용
+    # 4. 재사용 폴백 (생성 실패 시 라이브러리 이미지라도 사용)
     if lib_res: return lib_res
 
-    # 4. Fallback (전혀 없을 경우) - 명시적으로 존재하는 파일명으로 보장
+    # 5. [V6.1] 최종 랜덤 폴백 (폴더 내 19종 중 랜덤 선택)
+    # 슬러그를 시드로 사용하여 동일 기사는 동일 이미지를 유지하도록(Consistency) 구현
+    try:
+        # static/images/fallbacks/ 폴더 내 파일 목록 가져오기
+        fb_dir = os.path.join(STATIC_ROOT, "images/fallbacks")
+        if os.path.exists(fb_dir):
+            files = [f for f in os.listdir(fb_dir) if f.endswith('.jpg')]
+            if files:
+                # 슬러그의 해시값을 인덱스로 사용하여 결정적 랜덤(Deterministic Random) 구현
+                idx = int(hashlib.md5(slug.encode()).hexdigest(), 16) % len(files)
+                selected = files[idx]
+                logger.info(f" [Tier 5] Random Fallback Selected: {selected} (Slug: {slug})")
+                return f"/images/fallbacks/{selected}"
+    except Exception as e:
+        logger.error(f" [Tier 5] Error choosing random fallback: {e}")
+
+    # 최후의 수단 (매핑된 기본 파일)
     fallback_file = CLUSTER_MAP.get(cluster.lower(), "ai-tech")
-    
-    # 파일이 존재하는지 최종 확인 후 없으면 가장 기본인 ai-tech로
-    final_path = f"{FALLBACK_WEB_PATH}/{fallback_file}.jpg"
-    return final_path
+    return f"/images/fallbacks/{fallback_file}.jpg"

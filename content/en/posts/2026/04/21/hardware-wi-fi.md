@@ -1,8 +1,8 @@
 ﻿---
 title: "고가 메쉬 Wi-Fi의 마케팅 함정과 라우터 재배치의 물리적 근거"
-date: "2026-04-20T22:31:07Z"
+date: "2026-04-21T00:04:36Z"
 description: "고가 메쉬 Wi-Fi의 마케팅 함정과 라우터 재배치의 물리적 근거"
-image: "/images/fallbacks/hardware.jpg"
+image: "/images/posts/2026/04/21/hardware-wi-fi_gen.jpg"
 clusters: ["hardware"]
 categories: ["models"]
 tags: ["Signal Attenuation (신호 감쇄)", "2.4GHz vs 5GHz (주파수 대역)", "Electromagnetic Physics (전자기 물리학)", "Radio Propagation (전파 전파)", "Router Optimization (라우터 최적화)"]

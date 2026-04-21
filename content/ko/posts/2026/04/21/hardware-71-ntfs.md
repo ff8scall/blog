@@ -1,8 +1,8 @@
 ﻿---
 title: "리눅스 7.1 커널 업데이트: 내장형 NTFS 드라이버로 스토리지 장벽 허문다"
-date: "2026-04-21T07:35:04+09:00"
+date: "2026-04-21T09:39:51+09:00"
 description: "리눅스 7.1, 커널 수준에서 공식 지원되는 고성능 NTFS 드라이버 탑재"
-image: "/images/fallbacks/hardware.jpg"
+image: "/images/posts/2026/04/21/hardware-71-ntfs_gen.jpg"
 clusters: ["hardware"]
 categories: ["analysis"]
 tags: ["리눅스 7.1", "커널 NTFS 드라이버", "스토리지 성능", "상호 운용성", "파일 시스템 지원"]

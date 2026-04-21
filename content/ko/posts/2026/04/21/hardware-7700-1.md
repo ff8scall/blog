@@ -1,8 +1,8 @@
 ﻿---
 title: "7,700만 달러 보조금의 대가가 '정규직 1명'? 뉴저지 데이터센터의 경제적 효율성 논란"
-date: "2026-04-21T07:34:11+09:00"
+date: "2026-04-21T09:31:32+09:00"
 description: "뉴저지주, 데이터센터 확장 프로젝트에 7,700만 달러(약 1,060억 원) 세제 혜택 승인"
-image: "/images/fallbacks/hardware.jpg"
+image: "/images/posts/2026/04/21/hardware-7700-1_gen.jpg"
 clusters: ["hardware"]
 categories: ["models"]
 tags: ["데이터센터 보조금", "세제 효율성", "뉴저지", "고용 ROI", "JP모건"]

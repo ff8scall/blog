@@ -1,8 +1,8 @@
 ﻿---
 title: "앵무새 '브루스'의 도구 사용: 신체적 장애를 극복한 지능적 혁신의 사례"
-date: "2026-04-21T07:32:37+09:00"
+date: "2026-04-21T09:18:01+09:00"
 description: "윗부리가 소실된 뉴질랜드 케아 앵무새 '브루스'가 조약돌을 도구 삼아 깃털을 관리하는 놀라운 모습이 포착되었습니다."
-image: "/images/fallbacks/market-trend.jpg"
+image: "/images/posts/2026/04/21/insights-meet-bruce-the-beak-jousting-parrot_gen.jpg"
 clusters: ["insights"]
 categories: ["models"]
 tags: ["케아 앵무새", "도구 사용", "동물 지능", "행동 가소성", "진화"]

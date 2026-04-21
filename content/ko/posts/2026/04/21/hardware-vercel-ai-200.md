@@ -1,8 +1,8 @@
 ﻿---
 title: "버셀(Vercel) 보안 붕괴 사고: 'AI 권한 오남용'이 불러온 200만 달러의 위협"
-date: "2026-04-21T07:34:43+09:00"
+date: "2026-04-21T09:36:31+09:00"
 description: "직원이 AI 도구에 구글 워크스페이스 전권한을 부여하며 내부망 침투 경로 허용"
-image: "/images/defaults/hardware/ai.jpg"
+image: "/images/posts/2026/04/21/hardware-vercel-ai-200_gen.jpg"
 clusters: ["hardware"]
 categories: ["models"]
 tags: ["버셀 보안 유출", "AI 보안 리스크", "구글 워크스페이스 권한", "샤이니헌터스", "쉐도우 AI"]

@@ -1,8 +1,8 @@
 ﻿---
 title: "DDR5의 기형적 변종 'HUDIMM': 원가 절감이 초래한 성능 병목 분석"
-date: "2026-04-21T07:34:01+09:00"
+date: "2026-04-21T09:29:51+09:00"
 description: "DDR5 표준인 듀얼 32비트 서브채널을 싱글 채널로 축소하여 제조 단가 절감"
-image: "/images/fallbacks/hardware.jpg"
+image: "/images/posts/2026/04/21/hardware-ddr5-hudimm_gen.jpg"
 clusters: ["hardware"]
 categories: ["chips"]
 tags: ["HUDIMM", "DDR5 아키텍처", "메모리 대역폭", "서브채널", "원가 절감"]

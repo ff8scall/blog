@@ -1,8 +1,8 @@
 ﻿---
 title: "2027 메르세데스-벤츠 전기 C-클래스: 800V 아키텍처와 역대 최강의 퍼포먼스"
-date: "2026-04-21T07:30:20+09:00"
+date: "2026-04-21T08:57:52+09:00"
 description: "년 출시 예정인 C-클래스 전기차 모델의 800V 충전 시스템, 공력 설계 및 차세대 MBUX 시스템 분석."
-image: "/images/fallbacks/market-trend.jpg"
+image: "/images/posts/2026/04/21/insights-2027---c--800v_gen.jpg"
 clusters: ["insights"]
 categories: ["analysis"]
 tags: []

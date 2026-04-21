@@ -1,8 +1,8 @@
 ﻿---
 title: "How to easily encrypt files on an Android phone - and the free app I use to do it"
-date: "2026-04-20T22:33:34Z"
+date: "2026-04-21T00:26:26Z"
 description: "This tutorial outlines the process of using OpenKeychain to encrypt sensitive files on Android devices using PGP standards. It emphasizes the importance of local encryption for secure data sharing in an age of frequent leaks."
-image: "/images/fallbacks/hardware.jpg"
+image: "/images/posts/2026/04/21/hardware-how-to-easily-encrypt-files-on-an-android_gen.jpg"
 clusters: ["hardware"]
 categories: ["guide"]
 tags: ["Android Encryption", "OpenKeychain", "PGP Security", "Data Privacy", "Mobile Tutorial"]

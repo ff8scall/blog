@@ -1,8 +1,8 @@
 ﻿---
 title: "It’s not just one thing — it’s another thing"
-date: "2026-04-20T22:33:03Z"
+date: "2026-04-21T00:21:26Z"
 description: "The rhetorical structure 'It’s not just X — it’s Y' has become a ubiquitous hallmark of AI-generated text. Its overuse highlights the predictable nature of LLM outputs and the need for more diverse linguistic training."
-image: "/images/fallbacks/ai-tech.jpg"
+image: "/images/posts/2026/04/21/ai-its-not-just-one-thing-its-another-thing_gen.jpg"
 clusters: ["ai"]
 categories: ["models"]
 tags: ["AI Writing", "LLM Patterns", "Linguistic Cliche", "Synthetic Content", "Style Analysis"]
