@@ -191,7 +191,40 @@ NLM의 출력 토큰 한계(Response Token Limit)를 준수하기 위해 발행 
 - **Atomic Save**: 백로그 데이터는 매 회차 필터링 완료 직후 즉시 파일로 기록됩니다.
 - **Queue Limit**: 백로그 파일의 무한 비대를 방지하기 위해 최대 저장 기사 수를 50건으로 제한합니다.
 
-## 16. 의존성 관계 업데이트
-- `nlm_orchestrator.py` -> `HarvesterV3` (기사 수집 및 백로그 관리 의존)
-- `HarvesterV3` -> `backlog.json` (데이터 지속성 의존)
-- `HarvesterV3` -> `QualityFilter` (품질 검증 의존)
+## 17. 실시간 영문 복구 및 AI 번역 안정화 (v6.1)
+### [설계 의도]
+NLM의 영문 본문 출력 누락(Token Limit 또는 분석 실패) 시 '제목만 있는 영문 기사'가 나가는 것을 방지하기 위해, 발행 단계에서 AI를 이용한 실시간 번역 보충 시스템을 운영합니다.
+
+### [핵심 로직: `notebooklm_publisher.py`]
+1. **임계값 검사**: 영문 본문(`eng_content`)이 100자 미만일 경우 '누락'으로 판정합니다.
+2. **AI 오케스트레이터 (`AIWriter`) 연동**: 
+   - `gemini-2.0-flash` 모델을 최우선으로 사용하여 국문을 영문으로 정밀 번역합니다.
+   - **다중 모델 폴백**: Google Native 429 에러 발생 시 OpenRouter API(`google/gemini-2.0-flash-001`)로 자동 전환되어 파이프라인 중단을 방지합니다.
+3. **최후의 방어선 (Fallback)**: 모든 AI 호출이 실패할 경우, 빈 페이지 대신 국문 본문을 영문 페이지에 노출시켜 서비스 가독성을 유지합니다.
+
+## 18. 스마트 분할 발행 시스템 (Smart Job Splitting) (v6.2)
+### [설계 의도]
+단일 NLM 리포트에 너무 많은 기사(8개 초과)가 포함될 경우 발생하는 '출력 잘림' 및 '품질 저하' 문제를 해결하기 위해, NLM 전달 전 데이터를 물리적으로 분할(Split)하여 각각 별도의 독립적인 Job으로 처리합니다.
+
+### [핵심 알고리즘: `notebooklm_prep.py`]
+1. **임계값 기반 분할**: 카테고리당 수집된 기사가 8개를 초과하면 `_split_articles_into_batches` 함수가 가동됩니다.
+2. **Job 분리**: 
+   - 기사를 `Part 1`, `Part 2` 등으로 나누어 별도의 마크다운 소스 파일을 생성합니다.
+   - 각 소스마다 독립된 NLM 노트북과 리포트를 생성하여 NLM이 처리해야 할 출력 텍스트 양을 최적화합니다.
+3. **독립 제목 및 수렴**: 각 분할된 Job은 게시 시점에서 독립된 포스트로 처리되어 전체 기사가 누락 없이 발행됩니다.
+
+## 19. 고품질 원본 이미지 보전 전략 (Bypass Bot Detection) (v6.2)
+### [설계 의도]
+언론사 서버의 봇 차단 로직을 우회하여 AI 생성 이미지보다 고화질의 원본 썸네일을 최대한 확보하도록 다운로드 로직을 고도화합니다.
+
+### [핵심 로직: `image_manager.py`]
+1. **브라우저 가상 헤더 (Header Injection)**: 
+   - `Referer`, `Accept-Language`, `Sec-Fetch-Dest` 등 실제 크롬 브라우저와 동일한 헤더 셋을 주입하여 언론사 방화벽을 통과합니다.
+2. **MIME 및 무결성 검증**: 
+   - `Content-Type`을 검사하여 실제 이미지 파일인지 확인합니다.
+   - 파일 크기가 2KB 미만인 경우 깨진 파일(또는 1x1 픽셀)로 간주하여 AI 생성(Tier 3)으로 즉시 폴백을 트리거합니다.
+
+## 20. 의존성 관계 업데이트
+- `notebooklm_prep.py` -> `_split_articles_into_batches` (출력 안정성 의존)
+- `notebooklm_publisher.py` -> `AIWriter.translate_to_english` (데이터 무결성 의존)
+- `image_manager.py` -> `requests.headers` (이미지 원본 보전 의존)

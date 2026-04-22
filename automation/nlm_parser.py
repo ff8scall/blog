@@ -159,14 +159,25 @@ def _parse_single_block(block_text):
             current_value_lines = [val] if val else []
             continue
 
-        # [V5.1] 지능형 필드 추론: KOR_CONTENT 필드명이 누락된 채 ## 헤더+한글이 등장하는 경우
-        if current_field in ["ENG_CONTENT", "ENGLISH_CONTENT", "SYNTHESIS"]:
+        # [V5.1/6.2] 지능형 필드 추론: 콘텐츠 마커가 누락된 채 ## 헤더+한글이 등장하는 경우
+        # 현재 필드가 메타데이터 필드(ID, CLUSTER, CATEGORY 등)이거나 content 계열인 경우 모두 대응
+        # FIELD_MAP의 키값(대문자) 기반으로 비교해야 함
+        METADATA_FIELDS = ["TITLE", "ENG_TITLE", "CLUSTER", "CATEGORY", "ID", "KOR_SUMMARY"]
+        if not current_field or current_field in METADATA_FIELDS or "CONTENT" in (current_field or "").upper() or current_field == "SYNTHESIS":
             # ## 로 시작하고 한글을 포함하는 경우
             if re.match(r'^\s*##\s+', line) and any('\uac00' <= char <= '\ud7a3' for char in line):
-                _store_field(article, current_field, "\n".join(current_value_lines).strip())
+                if current_field:
+                    _store_field(article, current_field, "\n".join(current_value_lines).strip())
+                
+                # [V6.2] 만약 아직 KOR_TITLE이 없다면 이 헤더를 제목으로 전격 채택
+                if not article.get("kor_title"):
+                    header_text = line.strip("#").strip()
+                    article["kor_title"] = header_text
+                    logger.info(f" [INTELLIGENCE] Derived kor_title from header: {header_text}")
+
                 current_field = "KOR_CONTENT"
                 current_value_lines = [line]
-                logger.info(f" [INTELLIGENCE] Detected KOR_CONTENT start without marker at: {line[:30]}...")
+                logger.info(f" [INTELLIGENCE] Header detected. Switching to KOR_CONTENT from {current_field}")
                 continue
 
         # [V3.20] 잡음 제거 로직 완화: 요약 리스트(1. 2.)가 무시되지 않도록 수정
@@ -201,6 +212,11 @@ def _store_field(article, field_name, value):
 
     # [V3.7] 마크다운 볼드(**) 제거 및 공백 정리
     value = value.replace("**", "").strip()
+
+    # [V6.2] 제목 필드 노이즈 제거: CLUSTER/CATEGORY: ... 등 뒷부분에 붙는 시스템 텍스트 삭제
+    if mapped_key in ["kor_title", "eng_title"]:
+        # "Title [CLUSTER/CATEGORY: ...]" 또는 "Title CLUSTER: ..." 형태 제거
+        value = re.sub(r'(?i)\s*[\[(]?\s*(?:CLUSTER|CATEGORY|CLUSTER/CATEGORY)[:：].*?[\])]?\s*$', '', value).strip()
     
     # [V5.0] 헤더 및 노이즈 제거 로직 강화
     if mapped_key == "kor_content":

@@ -185,10 +185,36 @@ class NotebookLMPublisher:
 
     def _publish_single_article(self, article):
         """[Helper] 단일 기사 처리 (병렬용)"""
+        # [V6.0] 실시간 영문 복구 및 제목 노이즈 제거 보강
+        kor_title = article.get("kor_title")
+        eng_title = article.get("eng_title")
+        kor_content = article.get("kor_content", "")
+        eng_content = article.get("eng_content", "")
+
+        # 1. 영문 제목 누락 시 번역 복구
+        if not eng_title and kor_title:
+            eng_title = self.writer.translate_to_english(kor_title, field_type="title")
+            article["eng_title"] = eng_title
+
+        # 2. 영문 본문 누락 시 번역 복구 (v6.0 핵심)
+        if not eng_content or len(eng_content) < 100:
+            if kor_content:
+                # [V6.1] AIWriter의 수정된 translate_to_english 호출
+                recovered = self.writer.translate_to_english(kor_content, field_type="content")
+                if recovered:
+                    eng_content = recovered
+                    logger.info(f" [RECOVERY] Automatically generated English content for ID {article.get('id')}")
+                else:
+                    # 번역 실패 시 최후의 수단: 국문 본문이라도 노출 (빈 페이지 방지)
+                    eng_content = kor_content
+                    logger.warning(f" [FALLBACK] Translation failed. Using KOR_CONTENT for ENG article (ID {article.get('id')})")
+                
+                article["eng_content"] = eng_content
+
         # [V4.8] 슬러그 정규화: {cluster}-{slug} 형식 강제 및 50자 제한
-        raw_title = article.get("eng_title") or article.get("kor_title") or f"Article {article.get('id', 'Unknown')}"
+        raw_slug_title = eng_title or nm.sanitize_slug(kor_title) or f"Article {article.get('id', 'Unknown')}"
         cluster = article.get("cluster", "tech")
-        raw_slug = nm.sanitize_slug(raw_title)
+        raw_slug = nm.sanitize_slug(raw_slug_title)
         
         if raw_slug and not raw_slug.isdigit():
             # 대분류 접두사 추가 및 전체 50자 제한

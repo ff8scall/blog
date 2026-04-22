@@ -45,7 +45,7 @@ def sanitize_name(name):
     return clean.strip('_')
 
 def download_image(url, slug):
-    """[Tier 1] 원본 이미지 다운로드"""
+    """[Tier 1] 원본 이미지 다운로드 - [V6.2] 헤더 보강 및 유효성 검사 강화"""
     if not url or not str(url).startswith('http'):
         return None
     
@@ -64,16 +64,33 @@ def download_image(url, slug):
     web_path = f"/images/posts/{date_dir}/{filename}"
     
     try:
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
-        resp = requests.get(url, timeout=(5, 15), headers=headers)
+        # [V6.2] 정교한 헤더 설정 (Referer, Accept 등 추가)
+        domain = urllib.parse.urlparse(url).netloc
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+            'Accept-Language': 'ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7',
+            'Referer': f"https://{domain}/",
+            'Sec-Fetch-Dest': 'image',
+            'Sec-Fetch-Mode': 'no-cors',
+            'Sec-Fetch-Site': 'cross-site',
+        }
+        resp = requests.get(url, timeout=(10, 30), headers=headers, stream=True)
+        
         if resp.status_code == 200:
+            # Content-Type 확인 (이미지인지)
+            ct = resp.headers.get('Content-Type', '').lower()
+            if 'image' not in ct and not any(ext in ct for ext in ['jpg', 'jpeg', 'png', 'webp']):
+                logger.warning(f" [Tier 1] [SKIP] Not an image (Content-Type: {ct}): {url}")
+                return None
+                
             content = resp.content
-            if len(content) > 1000: # 최소 1KB 이상이어야 정상 이미지로 간주
+            if len(content) > 2048: # 최소 2KB 이상 (너무 작은 파일은 깨진 것으로 간주)
                 with open(save_path, 'wb') as f: f.write(content)
-                logger.info(f" [Tier 1] [OK] Original Image Downloaded: {web_path}")
+                logger.info(f" [Tier 1] [OK] Original Image Saved: {web_path}")
                 return web_path
             else:
-                logger.warning(f" [Tier 1] [FAIL] Image content too small from: {url}")
+                logger.warning(f" [Tier 1] [FAIL] Image too small ({len(content)} bytes) from: {url}")
         else:
             logger.warning(f" [Tier 1] [FAIL] HTTP {resp.status_code} for: {url}")
     except Exception as e:
@@ -127,7 +144,14 @@ def generate_and_cache(prompt, cluster, keywords, slug):
     
     # 스타일 셔플링
     style = random.choice(AESTHETIC_STYLES)
-    final_prompt = (prompt if prompt else "Abstract futuristic technology") + style + " --no text, no faces, no humans"
+    
+    # [V6.2] 프롬프트 보강: 제목이나 프롬프트에서 핵심 키워드 추출 시도
+    clean_prompt = prompt if prompt else "Abstract futuristic technology"
+    # 너무 짧은 경우 키워드들 결합
+    if len(clean_prompt.split()) < 5 and keywords:
+        clean_prompt += f", {', '.join(keywords[:2])}"
+    
+    final_prompt = clean_prompt + style + " --no text, no faces, no humans"
     
     encoded_prompt = urllib.parse.quote(final_prompt)
     api_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=1200&height=630&nologo=true"

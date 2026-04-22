@@ -16,16 +16,27 @@ logger = logging.getLogger("LegoSia.AIWriter")
 class AIWriter:
     """[V4.5] 순수 무료 지능 엔진: Gemini, Groq (Llama 3.3), OpenRouter, GitHub, Cloudflare 전용"""
     def __init__(self):
-        load_dotenv()
+        # [V11.6] Robust .env Loading (Look for .env in project root or current dir)
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        env_path = os.path.join(project_root, '.env')
+        if os.path.exists(env_path):
+            load_dotenv(env_path, override=True)
+            logger.info(f"Loaded .env from {env_path}")
+        else:
+            load_dotenv() # Fallback to default behavior
         
         # 1. API 클라이언트 및 토큰 설정
         self.gemini_key = os.getenv("GEMINI_API_KEY")
         self.gemini_client = None
         if self.gemini_key:
+            logger.info(f"Gemini API Key Found (Length: {len(self.gemini_key)})")
             try:
                 self.gemini_client = genai.Client(api_key=self.gemini_key)
                 logger.info("Gemini V2 SDK Client Activated (Free Tier).")
-            except Exception as e: logger.error(f"Gemini Init Fail: {e}")
+            except Exception as e: 
+                logger.error(f"Gemini Init Fail: {e}")
+        else:
+            logger.warning("GEMINI_API_KEY not found in environment!")
 
         self.groq_key = os.getenv("GROQ_API_KEY")
         self.openrouter_key = os.getenv("OPENROUTER_API_KEY")
@@ -35,25 +46,24 @@ class AIWriter:
 
         # [V11.4] 계층적 지능 엔진 (Google Free -> OR Paid -> OR Free -> Groq)
         self.ultra_online_models = [
-            "gemini-3.1-flash-lite-preview",    # 1. Google (Free - 주력)
-            "google/gemini-3-flash:preview",    # 2. OpenRouter (Paid - 최고품질 백업)
-            "google/gemma-3-27b-it:free",       # 3. OpenRouter (Free - 대안)
+            "gemini-2.0-flash",                 # 1. Google (Free - 주력)
+            "gemini-1.5-pro",                   # 2. Google (Free - 고성능 백업)
+            "google/gemini-2.0-flash-001",      # 3. OpenRouter (Paid - 최고품질 백업)
             "llama-3.3-70b-versatile",          # 4. Groq (Free - 고성능)
             "gpt-4o"                            # 5. GitHub (Free - GPT)
         ]
         
         # [V4.6] 효율성(Fast) 모델 풀 (신속 처리)
         self.fast_online_models = [
-            "gemini-flash-latest",
+            "gemini-2.0-flash-lite-preview-02-05",
+            "gemini-1.5-flash",
             "llama-3.1-8b-instant",             # Groq
-            "gpt-4o-mini",                     # GitHub
-            "@cf/meta/llama-3.1-8b-instruct"    # Cloudflare
+            "gpt-4o-mini"                      # GitHub
         ]
 
         # [V5.0] 필터링 전용 경량 모델 (RPD: 1000, RPM: 15)
         self.filter_models = [
-            "gemini-3.1-flash-lite-preview",       # 최신 고효율 라이트 모델 (사용자 지정)
-            "gemini-2.0-flash-lite",               # 안정적인 폴백
+            "gemini-2.0-flash-lite-preview-02-05", # 최신 고효율 라이트 모델
             "gemini-1.5-flash",                    # 검증된 범용 모델
             "gemini-1.5-pro"                       # 최후의 수단
         ]
@@ -137,10 +147,13 @@ class AIWriter:
         if model and (model.startswith("qwen") or "local" in model.lower()):
              return self._call_ollama_api(prompt, model if ":" in model else "qwen2.5-coder:14b")
 
-        # 15초 휴식 룰 (V4.5) - 로컬 요청 시에는 휴식 제외할 수도 있으나 일관성을 위해 유지하거나 로컬일때만 스킵 가능
-        # 여기서는 클라우드 API 호출 시에만 휴식하도록 조정
-        if not (model and (model.startswith("qwen") or "local" in model.lower())):
-            self._wait_for_quota(10)
+        # [V11.5] Throttling Optimization
+        # 로컬 모델이나 명시적인 'fast' 모드 요청 시 쓰로틀링 조절 가능
+        is_local = model and (model.startswith("qwen") or "local" in model.lower())
+        if not is_local:
+            # Publisher에서 이미 대기하는 경우를 고려하여, 
+            # 개별 API 레벨에서는 최소한의 쿼터 확보만 수행 (10초 -> 5초로 완화 시도)
+            self._wait_for_quota(5)
 
         # 2. 특정 모델 지정 시
         if model:
@@ -154,6 +167,7 @@ class AIWriter:
         if role in ['writing', 'analysis', 'processing']:
             for m in self.ultra_online_models:
                 res = None
+                logger.info(f" [DEBUG] Attempting {m} for role {role}...")
                 # 슬래시('/')가 포함된 모델은 OpenRouter 모델로 간주 (예: google/gemini-3-flash:preview)
                 if "/" in m:
                     res = self._call_openrouter_api(prompt, m)
@@ -162,7 +176,12 @@ class AIWriter:
                 elif "llama" in m: res = self._call_groq_api(prompt, m)
                 elif "gpt-4o" in m: res = self._call_github_api(prompt, m)
                 else: res = self._call_openrouter_api(prompt, m)
-                if res: return res
+                
+                if res: 
+                    logger.info(f" [DEBUG] Success with {m}")
+                    return res
+                else:
+                    logger.warning(f" [DEBUG] Failed with {m}")
         
         # 4. 역할별 전략적 풀 가동 (Fast)
         else:
@@ -185,6 +204,21 @@ class AIWriter:
             if result:
                 return result
         return None
+
+    def translate_to_english(self, text, field_type="content"):
+        """[V6.0] 한국어 내용을 영어로 번역 (영문 사이트 복구용)"""
+        if not text: return ""
+        
+        prompt = ""
+        if field_type == "title":
+            prompt = f"Translate the following Korean news title into SEO-optimized English:\n\n{text}"
+        elif field_type == "summary":
+            prompt = f"Translate the following Korean news summary into concise English:\n\n{text}"
+        else:
+            prompt = f"Translate the following Korean news content into professional English. Keep the markdown formatting (headers, etc.):\n\n{text}"
+            
+        logger.info(f" [RECOVERY] Translating {field_type} to English via AI...")
+        return self.generate_content(prompt, role='writing')
 
     def save_post(self, content, filename, lang='ko'):
         date_dir = datetime.now().strftime('%Y/%m/%d')

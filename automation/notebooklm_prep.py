@@ -28,46 +28,29 @@ PROMPT_MODE_A = (
 
 # 모드 B: 개별 기사 고품질 생산 (구조화된 데이터 출력)
 PROMPT_MODE_B = (
-    "당신은 테크 저널리즘 전문가입니다. 업로드된 소스 데이터를 바탕으로 **각 기사를 독립적으로 분석**하여 아래의 [출력 형식]을 **점 하나 틀리지 말고 엄격하게** 지켜서 출력하십시오.\n\n"
+    "당신은 테크 저널리즘 전문가입니다. 업로드된 소스 데이터를 바탕으로 **각 기사를 독립적으로 분석**하여 아래의 [출력 형식]을 **한 글자도 틀리지 말고 엄격하게** 지켜서 출력하십시오.\n\n"
     "[필독: 철저 준수 사항]\n"
-    "1. **언어 규정**: 모든 분석 내용(TITLE, SUMMARY, CONTENT, INSIGHT)은 반드시 **한국어(KOREAN)**로 작성하십시오. 영어 소스라도 본문과 요약은 한국어로 번역 및 정리되어야 합니다.\n"
-    "2. **필드 누락 절대 금지**: KOR_TITLE, KOR_SUMMARY, KOR_CONTENT, KOR_INSIGHT 필드는 어떤 경우에도 누락되어서는 안 됩니다. 소스가 부족하면 추론해서라도 한국어로 채우십시오.\n"
-    "3. **구분자 형식 고수**: 각 기사의 시작과 끝에 ---ARTICLE_START--- 와 ---ARTICLE_END---를 명확히 표시하십시오. 구분자 라인에는 다른 텍스트를 섞지 마십시오.\n"
-    "4. **필드 표기**: '필드명: 내용' 형식을 엄격히 지키고, 필드명은 대문자로 작성하십시오.\n"
-    "5. **예시 준수**: 아래 [출력 예시]의 구조를 완벽하게 모방하십시오.\n\n"
-    "[출력 예시]\n"
-    "---ARTICLE_START---\n"
-    "ID: 1\n"
-    "ENG_TITLE: NVIDIA Blackwell GPU Performance Analysis\n"
-    "KOR_TITLE: 엔비디아 블랙웰 GPU 성능 심층 분석\n"
-    "CLUSTER: hardware\n"
-    "CATEGORY: chips\n"
-    "ENG_SUMMARY: NVIDIA's new Blackwell architecture sets a new bar for AI training.\n"
-    "KOR_SUMMARY:\n- 엔비디아의 새로운 블랙웰 아키텍처가 AI 학습의 새로운 기준을 제시함\n- 기존 H100 대비 최대 4배의 학습 성능 향상 달성\n- 전력 효율성 측면에서도 25배 이상의 개선 확인\n"
-    "ENG_CONTENT: Full analysis here...\n"
-    "KOR_CONTENT: ## 성능의 도약\n블랙웰 아키텍처는 단순한 업그레이드를 넘어...\n"
-    "KOR_INSIGHT: 이번 발표는 하드웨어 경쟁을 넘어 AI 생태계 주도권을...\n"
-    "KEYWORDS_EN: NVIDIA, Blackwell, AI Chip\n"
-    "KEYWORDS_KR: 엔비디아, 블랙웰, AI 반도체\n"
-    "IMAGE_PROMPT: A high-tech glowing AI chip with neon circuits...\n"
-    "ORIGINAL_IMAGE: https://example.com/img.jpg\n"
-    "---ARTICLE_END---\n\n"
+    "1. **언어 규정**: 한국어 필드(KOR_...)는 반드시 **한국어**로, 영어 필드(ENG_...)는 반드시 **영어**로 작성하십시오.\n"
+    "2. **필드 누락 절대 금지**: KOR_TITLE, KOR_SUMMARY, KOR_CONTENT, ENG_TITLE, ENG_CONTENT 등 모든 필드는 어떤 경우에도 누락되어서는 안 됩니다. 소스가 부족하면 분석을 통해 내용을 채우십시오.\n"
+    "3. **구분자 형식 고수**: 각 기사의 시작과 끝에 ---ARTICLE_START--- 와 ---ARTICLE_END---를 명확히 표시하십시오. 구분자 라인에는 다른 텍스트(예: **, #)를 섞지 마십시오.\n"
+    "4. **필드 표기**: '**필드명:** 내용' 형식을 엄격히 지키십시오. 필드명은 대문자로 쓰고 반드시 볼드(**) 처리하십시오.\n"
+    "5. **이미지 추출**: 소스 데이터에 `Image URL` 또는 `ORIGINAL_IMAGE`가 명시되어 있다면 반드시 `ORIGINAL_IMAGE:` 필드에 정확히 기재하십시오.\n\n"
     "[출력 형식]\n"
     "---ARTICLE_START---\n"
-    "ID: [순번]\n"
-    "ENG_TITLE: [Original or Translated English Title]\n"
-    "KOR_TITLE: [반드시 존재해야 함: 한국어 핵심 제목]\n"
-    "CLUSTER: [ai | hardware | insights]\n"
-    "CATEGORY: [chips | models | apps | high-end | analysis | guide]\n"
-    "ENG_SUMMARY: [English Summary]\n"
-    "KOR_SUMMARY:\n- [한국어 요약 1]\n- [한국어 요약 2]\n- [한국어 요약 3]\n"
-    "ENG_CONTENT: [Detailed English Analysis]\n"
-    "KOR_CONTENT: [한국어 심층 분석 본문, 1,200자 내외, 마크다운 ## 소제목 활용]\n"
-    "KOR_INSIGHT: [한국어 전문가 시사점 및 미래 비평]\n"
-    "KEYWORDS_EN: [English Keywords, comma separated]\n"
-    "KEYWORDS_KR: [한국어 키워드, 콤마 구분]\n"
-    "IMAGE_PROMPT: [High-tech minimalist image prompt in English for DALL-E style generation]\n"
-    "ORIGINAL_IMAGE: [Source Top Image URL if exists, else 'None']\n"
+    "**ID:** [순번]\n"
+    "**ENG_TITLE:** [SEO-optimized English Title]\n"
+    "**KOR_TITLE:** [한국어 핵심 제목]\n"
+    "**CLUSTER:** [ai | hardware | insights]\n"
+    "**CATEGORY:** [chips | models | apps | high-end | analysis | guide]\n"
+    "**ENG_SUMMARY:** [Professional English Summary]\n"
+    "**KOR_SUMMARY:**\n- [한국어 요약 1]\n- [한국어 요약 2]\n- [한국어 요약 3]\n"
+    "**ENG_CONTENT:** [Detailed English Synthesis & Analysis, 500+ words]\n"
+    "**KOR_CONTENT:** [한국어 심층 분석 본문, 1,200자 내외, 마크다운 ## 소제목 활용]\n"
+    "**KOR_INSIGHT:** [한국어 전문가 시사점 및 미래 비평]\n"
+    "**KEYWORDS_EN:** [English Keywords, comma separated]\n"
+    "**KEYWORDS_KR:** [한국어 키워드, 콤마 구분]\n"
+    "**IMAGE_PROMPT:** [Detailed High-tech image prompt in English]\n"
+    "**ORIGINAL_IMAGE:** [Source Image URL if exists, else 'None']\n"
     "---ARTICLE_END---"
 )
 
@@ -299,14 +282,45 @@ def dump_db_to_category_files(limit_per_cat=15):
     return {"history": filepath}
 
 
+def _split_articles_into_batches(category_files, threshold=8):
+    """[V6.2] 기사 목록이 너무 길면 잘게 쪼개어 NLM의 출력 안정성을 보장합니다."""
+    split_files = {}
+    for cat, filepath in category_files.items():
+        try:
+            with open(filepath, "r", encoding="utf-8") as f:
+                lines = f.readlines()
+            
+            # 기사 구분선(---)을 기준으로 기사 분리 시도
+            articles_text = "".join(lines).split("--------------------------------------------------")
+            # 헤더 제외 실질 기사 추출
+            content_articles = [a.strip() for a in articles_text if "## " in a]
+            
+            if len(content_articles) > threshold:
+                logger.info(f" [SPLIT] {cat} has {len(content_articles)} articles. Splitting into batches...")
+                # 절반씩 나눔 (더 많으면 3개로 나눌수도 있지만 일단 2분할)
+                mid = (len(content_articles) + 1) // 2
+                batches = [content_articles[:mid], content_articles[mid:]]
+                
+                for i, batch in enumerate(batches, 1):
+                    split_cat = f"{cat}_part{i}"
+                    split_path = filepath.replace(".md", f"_p{i}.md")
+                    with open(split_path, "w", encoding="utf-8") as f:
+                        f.write(f"# {cat.upper()} Intelligence - Part {i}\n\n")
+                        f.write("--------------------------------------------------\n".join(batch))
+                    split_files[split_cat] = split_path
+            else:
+                split_files[cat] = filepath
+        except Exception as e:
+            logger.error(f"Failed to split articles for {cat}: {e}")
+            split_files[cat] = filepath
+            
+    return split_files
+
+
 def process_macro_synthesis(limit_per_cat=15, mode="A", source="rss"):
     """
     NotebookLM 매크로 합성 파이프라인 Phase 1: 데이터 준비 → NLM 업로드 → 리포트 생성 트리거
-    
-    Args:
-        limit_per_cat: 카테고리당 수집할 기사 수
-        mode: 운영 모드 ("A", "B", "C")
-        source: 데이터 소스 ("rss" 또는 "db")
+    [V6.2] Smart Job Split 적용 (기사 과다 시 자동 분할)
     """
     logger.info("=" * 50)
     logger.info(f"  [START] Premium Pipeline (Mode {mode.upper()}, Source {source.upper()})")
@@ -319,26 +333,36 @@ def process_macro_synthesis(limit_per_cat=15, mode="A", source="rss"):
     else:
         logger.info(" [1] Harvesting raw articles from RSS...")
         harvester = HarvesterV3()
+        # [V6.2] 수집은 넉넉히(12개) 하되, 나중에 8개 단위로 쪼갬
         category_files = harvester.dump_to_category_files(limit_per_cat=limit_per_cat)
-    
-    jobs_file = "automation/premium_jobs.json"
-    active_jobs = {}
     
     if not category_files:
         logger.error(" [!] No category files generated.")
         return False
+
+    # [V6.2] 기사 수에 따른 자동 분할 로직 (Job Splitting)
+    final_category_files = _split_articles_into_batches(category_files, threshold=8)
+    
+    jobs_file = "automation/premium_jobs.json"
+    active_jobs = {}
     
     # 2. 프롬프트 선택
     prompt = get_prompt_for_mode(mode)
     logger.info(f" [2] Selected Mode {mode.upper()} prompt ({len(prompt)} chars)")
     
     # 3. NotebookLM 자동화
-    logger.info(f" [3] Bootstrapping NLM Automation... ({len(category_files)} categories)")
+    logger.info(f" [3] Bootstrapping NLM Automation... ({len(final_category_files)} jobs)")
     app = NotebookLMApp()
     
-    for cat, filepath in category_files.items():
+    for cat, filepath in final_category_files.items():
         # 노트북 생성
-        title = f"{datetime.now().strftime('%Y-%m-%d')} {cat} Mode-{mode.upper()}"
+        # [V6.2] 독립된 제목 유지 (Part 표시 제거 요청 반영 - 파일명엔 있지만 제목에선 최소화)
+        clean_cat = cat.replace("_part1", "").replace("_part2", "")
+        title = f"{datetime.now().strftime('%Y-%m-%d')} {clean_cat} Analysis"
+        # 중복 제목 방지를 위해 고유 ID 추가
+        if "_part" in cat:
+            title += f" ({cat.split('_')[-1]})"
+            
         notebook = app.create_notebook(title)
         
         if not notebook or 'notebook' not in notebook:
@@ -346,7 +370,7 @@ def process_macro_synthesis(limit_per_cat=15, mode="A", source="rss"):
             continue
             
         nb_id = notebook['notebook']['id']
-        logger.info(f" [OK] Notebook created: {nb_id}")
+        logger.info(f" [OK] Notebook created: {nb_id} ({title})")
         
         # 소스 추가
         source_res = app.add_source(nb_id, filepath)
@@ -365,12 +389,12 @@ def process_macro_synthesis(limit_per_cat=15, mode="A", source="rss"):
             }
     
     # Job 상태 저장
+    # 기존 Job이 있으면 유지하거나 새로 덮어쓰기 (orchestrator가 제어)
     with open(jobs_file, "w", encoding="utf-8") as f:
         json.dump(active_jobs, f, indent=4, ensure_ascii=False)
         
     logger.info(f"\n[PHASE 1 COMPLETE] {len(active_jobs)} reports generating (Mode {mode.upper()}).")
-    logger.info("Next: Run notebooklm_publisher.py to download and publish results.")
-    return active_jobs # [V2.0] 생성된 Job 정보를 반환하여 오케스트레이터가 알림에 사용하도록 함
+    return active_jobs
 
 
 if __name__ == "__main__":

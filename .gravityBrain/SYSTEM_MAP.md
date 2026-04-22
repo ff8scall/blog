@@ -41,23 +41,15 @@ graph TD
 - **`automation/harvester_v3.py`**: RSS 수집, 고품질 필터링 및 **스마트 이월(Backlog)** 핵심 모듈 [v5.4]
 - **`automation/news_main.py`**: 표준 템플릿 엔진 및 전체 파이프라인 총괄 (언어 통합 처리)
 - **`automation/nlm_orchestrator.py`**: Premium(NLM) 전체 공정 오케스트레이터. [v2.2] 크론탭 환경 대응을 위한 `.env` 자동 로드 기능 포함.
-- **`automation/notebooklm_publisher.py`**: NLM 리포트 파싱 및 기사 발행 유틸리티
-- **`automation/indexnow_service.py`**: 검색 엔진 실시간 인덱싱 통합 허브 (Bing, Naver IndexNow + Google Indexing API 호출 연동)
-- **`automation/google_indexing_service.py`**: Google Indexing API(Service Account) 전용 통신 모듈 [v1.4]
-- **`automation/nlm_keep_alive.sh`**: 1시간 주기 NLM 세션 유지(Stay-alive) 스크립트 [v2.0]
-- **`automation/crontab_config.txt`**: Ubuntu 클라우드 전체 스케줄링 가이드 [v2.0]
-- **`automation/reprocess_reports.py`**: 파싱 오류 또는 필드 누락 시 기존 리포트를 지능형 로직으로 재발행하는 긴급 복구 모듈 [v4.9]
-- **`automation/telegram_bridge.py`**: 텔레그램 알림 송신 및 사용자 지침 수신을 처리하는 양방향 브릿지 [v5.0]
-- **`automation/notify.py`**: 다양한 작업 완료 시 상태를 요약하여 보고하는 통합 알림 CLI [v5.0]
-- **`automation/image_manager.py`**: 프로젝트 루트 `static` 폴더를 기준으로 이미지를 통합 관리하는 Tiered Strategy 허브 [v3.0]
-  - [v4.9] 국문 제목이 없거나 영문과 동일할 경우, 국문 본문의 첫 문장을 분석하여 60자 이내의 지능형 제목을 자동 추출합니다.
-  - [v5.0] **국문 상세 분석 헤더 충돌 방지**: 본문 내 `##` 헤더를 `###`로 자동 다운그레이드하여 시스템 헤더와의 계층 충돌을 방지하고, 시작부의 관성적 공정 제목을 자동 제거합니다.
-  - [v5.4] **스마트 이월 시스템**: 한도 초과 기사를 `backlog.json`에 저장하여 유실 없이 다음 배치에 처리함.
-  - [v4.7 패치] 실제 서버에 존재하는 `/images/fallbacks/` 내의 유효 파일명(`market-trend.jpg`, `hardware.jpg` 등)으로 매핑을 현행화하여 이미지 누락(Broken 이미지)을 원천 차단함.
-  - [v3.0] 모든 이미지 생성 및 검색 기준을 `automation/static`이 아닌 **프로젝트 루트 `/static`**으로 일원화하여, 배포(Git Push) 시 이미지가 누락되는 문제를 해결하였습니다.
+- **`automation/notebooklm_prep.py`**: NLM 전처리 및 **스마트 분할 발행(Smart Job Split)** 핵심 모듈. 기사가 8개를 초과할 경우 자동으로 Job을 분주하여 출력 안정성을 확보합니다. [v6.2]
+- **`automation/image_manager.py`**: 프로젝트 루트 `static` 폴더를 기준으로 이미지를 통합 관리하는 Tiered Strategy 허브. [v6.2] 브라우저 가상 헤더 세트를 통한 언론사 차단 우회 및 원본 이미지 우선 보전 로직이 강화되었습니다.
+- **`automation/notebooklm_publisher.py`**: NLM 리포트 파싱 및 기사 발행 유틸리티. [v6.1] 본문 누락 시 Gemini 2.0 Flash를 통한 **실시간 영문 복구(Recovery)** 로직이 포함되었습니다.
+- **`automation/ai_writer.py`**: AI 텍스트 생성 및 번역 핵심 엔진. [v6.1] 다중 모델 폴백 및 초정밀 쓰로틀링(Throttling) 정책이 적용되었습니다.
 
 ## 🚀 특이사항
-- **Full Automation**: Premium 모드는 수확부터 리포트 대기, 발행, Git Push(배포), IndexNow까지 단일 명령으로 처리.
+- **Smart Job Split**: 기사 홍수 시에도 NLM의 출력 한계에 구애받지 않고 고품질 전수 발행 가능.
+- **Real-time Recovery**: 영문 서비스의 '빈 페이지' 발생을 원천 차단하는 지능형 번역 폴백 시스템 운영.
+- **Full Automation**: 수확부터 리포트 대기, 발행, Git Push(배포), IndexNow까지 단일 명령으로 처리.
 - **IndexNow v1.3**: Naver Search Advisor 통합 및 도메인별 개별 키(News 전용) 매핑 로직 추가.
 - **Git Sync**: 로컬에서 생성된 기사를 자동으로 GitHub에 반영하여 라이브 사이트 실시간 업데이트.
 
