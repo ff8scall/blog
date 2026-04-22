@@ -8,6 +8,7 @@ import feedparser
 import random
 import logging
 from datetime import datetime
+from typing import List
 from common_utils import normalize_url, clean_text, extract_domain
 from schemas import HarvestedArticle
 from quality_filter import QualityFilter
@@ -31,6 +32,7 @@ class HarvesterV3:
         current_dir = os.path.dirname(os.path.abspath(__file__))
         self.config_path = os.path.join(os.path.dirname(current_dir), "docs_private", "rss_feeds.json")
         self.cache_path = os.path.join(current_dir, "cache", "seen_urls.json")
+        self.backlog_path = os.path.join(current_dir, "cache", "backlog.json")
         
         # Ensure cache directory exists
         os.makedirs(os.path.dirname(self.cache_path), exist_ok=True)
@@ -69,6 +71,40 @@ class HarvesterV3:
                 json.dump(list_cache, f)
         except Exception as e:
             logger.error(f" [!] Cache Save Fail: {e}")
+
+    def _load_backlog(self) -> List[HarvestedArticle]:
+        """[V5.0] 이월된 기사 대기열(Backlog) 로드"""
+        if not os.path.exists(self.backlog_path):
+            return []
+        try:
+            with open(self.backlog_path, "r", encoding='utf-8') as f:
+                data = json.load(f)
+                backlog = []
+                for item in data:
+                    # 48시간 지난 기사는 제외
+                    pub_date = item.get("publishedAt", "")
+                    try:
+                        dt = datetime.fromisoformat(pub_date.replace("Z", "+00:00"))
+                        if (datetime.now().astimezone() - dt.astimezone()).total_seconds() > 172800:
+                            continue
+                    except: pass
+                    backlog.append(HarvestedArticle(**item))
+                return backlog
+        except Exception as e:
+            logger.error(f" [!] Backlog Load Fail: {e}")
+            return []
+
+    def _save_backlog(self, articles: List[HarvestedArticle]):
+        """[V5.0] 한도 초과 기사를 대기열에 저장 (최대 50건 제약)"""
+        try:
+            # dataclass -> dict 시리얼라이제이션
+            from dataclasses import asdict
+            data = [asdict(a) for a in articles[:50]]
+            with open(self.backlog_path, "w", encoding='utf-8') as f:
+                json.dump(data, f, indent=4, ensure_ascii=False)
+            logger.info(f" [BACKLOG] Saved {len(data)} items for next run.")
+        except Exception as e:
+            logger.error(f" [!] Backlog Save Fail: {e}")
 
     def _get_source_weight(self, source_name):
         if not source_name: return 0.6
@@ -156,70 +192,78 @@ class HarvesterV3:
 
         return all_items
 
-    def fetch_all(self, limit_per_cat=3, rss_only=False):
+    def fetch_all(self, limit_per_cat=8, rss_only=False):
         """
         Main harvesting entry point
-        - First gets everything from RSS
-        - Then pads with API results if needed
+        - [V5.0] Load from Persistent Backlog first
+        - Fetch fresh items from RSS
+        - High-quality survivors beyond the limit are saved back to Backlog
         """
-        logger.info(" [>>>] Starting Harvester V3.0 Cycle")
+        logger.info(f" [>>>] Starting Harvester V3.0 Cycle (Limit: {limit_per_cat})")
+        
+        # 1. 백로그 로드
+        backlog_items = self._load_backlog()
+        if backlog_items:
+            logger.info(f" [BACKLOG] Loaded {len(backlog_items)} articles from previous run.")
+        
+        # 2. RSS 수집
         rss_items = self.fetch_rss()
         
-        results = []
-        stats = {cat: 0 for cat in self.categories_config}
+        # 중복 제거하며 통합 (백로그 우선)
+        results_pool = list(backlog_items)
+        seen_now = {a.normalized_url for a in backlog_items}
         
-        # Process RSS items first
         for item in rss_items:
-            cat = item.eng_category_slug
-            if stats[cat] < limit_per_cat * 2: # Allow more from high-quality RSS
-                results.append(item)
-                stats[cat] += 1
+            if item.normalized_url not in seen_now:
+                results_pool.append(item)
+                seen_now.add(item.normalized_url)
         
-        # Save cache after RSS phase
-        self._save_cache()
-        
-        logger.info(f" [+++] RSS Harvest Initial: {len(results)} items found")
+        logger.info(f" [SUM] Total pool size for filtering: {len(results_pool)} items")
 
         # [V5.0] 2-Pass Quality Filtering
         qf = QualityFilter()
         filtered_results = []
         final_stats = {cat: 0 for cat in self.categories_config}
+        total_deferred = []
         
         # 카테고리별로 필터링 실행
         for cat in self.categories_config:
-            cat_articles = [a for a in results if a.eng_category_slug == cat]
+            cat_articles = [a for a in results_pool if a.eng_category_slug == cat]
             if not cat_articles:
                 continue
                 
-            logger.info(f" [FILTER] Processing {cat} ({len(cat_articles)} items)...")
+            logger.info(f" [FILTER] {cat.upper()}: Screening {len(cat_articles)} candidates...")
             
-            # [V4.1] 이월 로직 적용을 위한 필터링 확장
             # 1. 고품질 후보군(survived) 선별
-            selected_ids = qf._llm_select_batch(cat_articles, cat)
-            survived = [cat_articles[idx] for idx in selected_ids]
+            selected_indices = qf._llm_select_batch(cat_articles, cat)
+            survived = [cat_articles[idx] for idx in selected_indices]
             
             # 2. 이번 배치에 포함될 기사(final)와 밀려난 기사(deferred) 분리
             final = survived[:limit_per_cat]
             deferred = survived[limit_per_cat:]
             
-            # 3. 명확히 탈락한 기사(rejected) 식별
-            selected_set = set(id(a) for a in survived)
-            rejected = [a for a in cat_articles if id(a) not in selected_set]
+            # 3. 명확히 탈락한 기사(rejected) 식별 (survived에 못 든 것들)
+            selected_ids_set = set(id(a) for a in survived)
+            rejected = [a for a in cat_articles if id(a) not in selected_ids_set]
             
-            # 4. 캐시 업데이트 전략:
-            # - 채택된 것(final)과 탈락한 것(rejected)은 seen_urls에 추가 (다시 안 봄)
-            # - 이월된 것(deferred)은 추가하지 않음 (다음 스케줄에서 다시 수집됨)
+            # 4. 캐시 및 백로그 전략:
+            # - 채택(final) 및 탈락(rejected) -> seen_urls 추가 (영구 차단)
+            # - 이월(deferred) -> seen_urls 추가 안 함 (백로그에 보관)
             for a in final: self.seen_urls.add(a.normalized_url)
             for a in rejected: self.seen_urls.add(a.normalized_url)
             
             filtered_results.extend(final)
+            total_deferred.extend(deferred)
             final_stats[cat] = len(final)
+            
             if deferred:
-                logger.info(f" [DEFERRED] {len(deferred)} items in {cat} will be processed next time.")
+                logger.info(f" [DEFERRED] {len(deferred)} high-quality articles in {cat} deferred to backlog.")
 
-        # 최종 캐시 저장
+        # 5. 백로그 저장 및 캐시 저장
+        self._save_backlog(total_deferred)
         self._save_cache()
-        logger.info(f" [>>>] Filtered Harvest Complete: {len(filtered_results)} items selected")
+        
+        logger.info(f" [>>>] Filtered Harvest Complete: {len(filtered_results)} selected, {len(total_deferred)} deferred.")
         return filtered_results, final_stats
 
     def dump_to_category_files(self, limit_per_cat=15):
