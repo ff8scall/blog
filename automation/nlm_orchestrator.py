@@ -13,6 +13,10 @@ from datetime import datetime
 current_dir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(current_dir)
 
+# [V2.2] 환경 변수 로드 (.env 지원)
+from dotenv import load_dotenv
+load_dotenv()
+
 from notebooklm_prep import process_macro_synthesis, NotebookLMApp
 from notebooklm_publisher import NotebookLMPublisher
 from common_utils import send_telegram_report

@@ -39,7 +39,7 @@ graph TD
 
 ## 📂 주요 모듈 및 역할
 - **`automation/news_main.py`**: 표준 템플릿 엔진 및 전체 파이프라인 총괄 (언어 통합 처리)
-- **`automation/nlm_orchestrator.py`**: Premium(NLM) 전체 공정(수확->생성->배포) 오케스트레이터 [v1.7]
+- **`automation/nlm_orchestrator.py`**: Premium(NLM) 전체 공정 오케스트레이터. [v2.2] 크론탭 환경 대응을 위한 `.env` 자동 로드 기능 포함.
 - **`automation/notebooklm_publisher.py`**: NLM 리포트 파싱 및 기사 발행 유틸리티
 - **`automation/indexnow_service.py`**: 검색 엔진 실시간 인덱싱 통합 허브 (Bing, Naver IndexNow + Google Indexing API 호출 연동)
 - **`automation/google_indexing_service.py`**: Google Indexing API(Service Account) 전용 통신 모듈 [v1.4]
