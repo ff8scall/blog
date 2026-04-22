@@ -38,6 +38,7 @@ graph TD
 ```
 
 ## 📂 주요 모듈 및 역할
+- **`automation/harvester_v3.py`**: RSS 수집, 고품질 필터링 및 **스마트 이월(Backlog)** 핵심 모듈 [v5.4]
 - **`automation/news_main.py`**: 표준 템플릿 엔진 및 전체 파이프라인 총괄 (언어 통합 처리)
 - **`automation/nlm_orchestrator.py`**: Premium(NLM) 전체 공정 오케스트레이터. [v2.2] 크론탭 환경 대응을 위한 `.env` 자동 로드 기능 포함.
 - **`automation/notebooklm_publisher.py`**: NLM 리포트 파싱 및 기사 발행 유틸리티
@@ -51,6 +52,7 @@ graph TD
 - **`automation/image_manager.py`**: 프로젝트 루트 `static` 폴더를 기준으로 이미지를 통합 관리하는 Tiered Strategy 허브 [v3.0]
   - [v4.9] 국문 제목이 없거나 영문과 동일할 경우, 국문 본문의 첫 문장을 분석하여 60자 이내의 지능형 제목을 자동 추출합니다.
   - [v5.0] **국문 상세 분석 헤더 충돌 방지**: 본문 내 `##` 헤더를 `###`로 자동 다운그레이드하여 시스템 헤더와의 계층 충돌을 방지하고, 시작부의 관성적 공정 제목을 자동 제거합니다.
+  - [v5.4] **스마트 이월 시스템**: 한도 초과 기사를 `backlog.json`에 저장하여 유실 없이 다음 배치에 처리함.
   - [v4.7 패치] 실제 서버에 존재하는 `/images/fallbacks/` 내의 유효 파일명(`market-trend.jpg`, `hardware.jpg` 등)으로 매핑을 현행화하여 이미지 누락(Broken 이미지)을 원천 차단함.
   - [v3.0] 모든 이미지 생성 및 검색 기준을 `automation/static`이 아닌 **프로젝트 루트 `/static`**으로 일원화하여, 배포(Git Push) 시 이미지가 누락되는 문제를 해결하였습니다.
 
