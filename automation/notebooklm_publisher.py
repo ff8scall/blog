@@ -217,17 +217,18 @@ class NotebookLMPublisher:
                 
                 article["eng_content"] = eng_content
 
-        # [V4.8] 슬러그 정규화: {cluster}-{slug} 형식 강제 및 50자 제한
-        raw_slug_title = eng_title or nm.sanitize_slug(kor_title) or f"Article {article.get('id', 'Unknown')}"
+        # [V12.2] 슬러그 정규화: ID를 포함하여 유니크성 보장 ({cluster}-{slug}-{id})
+        raw_slug_title = eng_title or nm.sanitize_slug(kor_title) or "article"
         cluster = article.get("cluster", "tech")
         raw_slug = nm.sanitize_slug(raw_slug_title)
+        article_id = str(article.get("id", "0"))
         
-        if raw_slug and not raw_slug.isdigit():
-            # 대분류 접두사 추가 및 전체 50자 제한
-            slug = f"{cluster}-{raw_slug}"[:50].strip('-')
+        if raw_slug and not raw_slug.isdigit() and len(raw_slug) > 2:
+            # 대분류 접두사와 ID 접미사 추가 (50자 제한)
+            # 예: ai-recovery-openai-1
+            slug = f"{cluster}-{raw_slug}-{article_id}"[:50].strip('-')
         else:
             # 제목이 부실한 경우: {cluster}-{category}-{id}
-            article_id = str(article.get("id", "0")).zfill(2)
             category = article.get("category", "news")
             slug = f"{cluster}-{category}-{article_id}"
         

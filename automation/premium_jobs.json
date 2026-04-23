@@ -3,62 +3,48 @@
         "notebook_id": "67ea4dc9-cad2-4c13-b673-b8285bab8270",
         "title": "2026-04-23 hardware Analysis (part1)",
         "mode": "B",
-        "status": "published",
+        "status": "pending",
         "triggered_at": "2026-04-23T17:02:05.400709",
-        "published_at": "2026-04-23T21:35:39.837928",
-        "urls": [
-            "https://news.lego-sia.com/posts/2026/04/23/hardware-bolt-graphics-achieves-zeus-gpu-tape-out/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-bolt-graphics-achieves-zeus-gpu-tape-out/"
-        ]
+        "published_at": "2026-04-23T21:35:39.837928"
     },
     "hardware_part2": {
         "notebook_id": "b14cdbdc-fa23-4a97-8141-2f55f5ca2338",
         "title": "2026-04-23 hardware Analysis (part2)",
         "mode": "B",
-        "status": "published",
+        "status": "pending",
         "triggered_at": "2026-04-23T17:02:12.793020",
-        "published_at": "2026-04-23T21:35:42.096747",
-        "urls": []
+        "published_at": "2026-04-23T21:35:42.096747"
     },
     "ai_part1": {
         "notebook_id": "124cfcba-7a33-406e-a13d-f5d397750fcd",
         "title": "2026-04-23 ai Analysis (part1)",
         "mode": "B",
-        "status": "published",
+        "status": "pending",
         "triggered_at": "2026-04-23T17:01:50.143405",
-        "published_at": "2026-04-23T21:35:44.442385",
-        "urls": []
+        "published_at": "2026-04-23T21:35:44.442385"
     },
     "ai_part2": {
         "notebook_id": "6f4e6919-39c7-430c-8461-478b9976f7d7",
         "title": "2026-04-23 ai Analysis (part2)",
         "mode": "B",
-        "status": "published",
+        "status": "pending",
         "triggered_at": "2026-04-23T17:01:58.173214",
-        "published_at": "2026-04-23T21:35:46.557830",
-        "urls": []
+        "published_at": "2026-04-23T21:35:46.557830"
     },
     "insights_part1": {
         "notebook_id": "04440e54-0091-4438-87d5-bfcc9d7b8eaa",
         "title": "2026-04-23 insights Analysis (part1)",
         "mode": "B",
-        "status": "published",
+        "status": "pending",
         "triggered_at": "2026-04-23T17:02:19.875663",
-        "published_at": "2026-04-23T21:35:48.858422",
-        "urls": []
+        "published_at": "2026-04-23T21:35:48.858422"
     },
     "insights_part2": {
         "notebook_id": "cc00e135-a114-4d22-b31b-b8f0b4a0b368",
         "title": "2026-04-23 insights Analysis (part2)",
         "mode": "B",
-        "status": "published",
+        "status": "pending",
         "triggered_at": "2026-04-23T17:02:27.152973",
-        "published_at": "2026-04-23T21:35:57.915915",
-        "urls": [
-            "https://news.lego-sia.com/posts/2026/04/23/ai-recovery-openai/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/ai-recovery-openai/",
-            "https://news.lego-sia.com/posts/2026/04/23/hardware-recovery-jal/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-recovery-jal/"
-        ]
+        "published_at": "2026-04-23T21:35:57.915915"
     }
 }
