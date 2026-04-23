@@ -91,6 +91,7 @@ from ai_guide_editor import GuideEditor
 from ai_writer import AIWriter
 from history_manager import HistoryManager
 from indexnow_service import notify_indexnow
+from nlm_parser import ArticleValidator
 
 # [V3.0.15] Advanced Diagnostic & Reporting Edition
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s", handlers=[
@@ -273,6 +274,13 @@ def create_hugo_post(article, lang='ko'):
     target_dir = os.path.join(project_root, 'content', lang, 'posts', date_path)
     os.makedirs(target_dir, exist_ok=True)
     
+    # [V13.0] Ironclad Validation Layer: 오염된 데이터가 파일 시스템에 기록되는 것을 차단
+    is_valid, errors = ArticleValidator.validate(article, lang)
+    if not is_valid:
+        item_title = article.get('kor_title') or article.get('eng_title') or 'Unknown'
+        logger.warning(f" [!] Validation FAILED - {item_title}: {', '.join(errors)}. Skipping this article.")
+        return None
+
     slug = article['sync_slug']
     cat_safe = sanitize_slug(article.get('category', 'ai-models'))
     

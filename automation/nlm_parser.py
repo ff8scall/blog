@@ -60,6 +60,37 @@ FIELD_MAP = {
     "CATEGORY/CLUSTER": "cluster",
 }
 
+class ArticleValidator:
+    """[V13.0] Ironclad Guard Layer: 파일 시스템 쓰기 전 기사 데이터의 무결성을 검증합니다."""
+    @staticmethod
+    def validate(article, lang='ko'):
+        errors = []
+        prefix = 'kor' if lang == 'ko' else 'eng'
+        
+        title = article.get(f'{prefix}_title') or article.get('title')
+        content = article.get(f'{prefix}_content') or article.get('content')
+        keywords = article.get(f'{"kor" if lang=="ko" else "eng"}_keywords', [])
+        
+        # 1. 제목 검증
+        if not title or len(str(title).strip()) < 5:
+            errors.append("Title too short or missing")
+        elif len(str(title)) > 200:
+            errors.append(f"Title too long ({len(str(title))} chars)")
+            
+        # 2. 본문 분량 검증 (최소 200자)
+        if not content or len(str(content).strip()) < 200:
+            errors.append("Content too short or missing")
+            
+        # 3. 태그(Keywords) 검증 - 빌드 시스템 파괴 방지 핵심
+        if isinstance(keywords, list):
+            for kw in keywords:
+                if len(str(kw)) > 50:
+                    errors.append(f"Tag too long: {str(kw)[:30]}...")
+                    break
+        
+        return len(errors) == 0, errors
+
+
 # [V5.0] 신규 4대 대메뉴 체제 및 자동 분류 키워드 맵
 VALID_CLUSTERS = ["ai", "hardware", "insights", "markets"]
 
@@ -144,17 +175,17 @@ def _parse_single_block(block_text):
         
         found_key = None
         if match:
-            potential_field = match.group(1).upper().replace(" ", "").replace("_", "")
-            # 매칭된 텍스트가 실제로 FIELD_MAP에 존재하는 키의 변형인지 검증
-            sorted_keys = sorted(FIELD_MAP.keys(), key=len, reverse=True)
-            for k in sorted_keys:
-                normalized_k = k.upper().replace(" ", "").replace("_", "")
+            potential_field = match.group(1).upper().replace(" ", "").replace("_", "").replace("-", "")
+            # [V13.0] Strict Matching: FIELD_MAP에 정의된 토큰과 정확히 일치할 때만 필드로 인정
+            for k in FIELD_MAP.keys():
+                normalized_k = k.upper().replace(" ", "").replace("_", "").replace("-", "")
                 if normalized_k == potential_field:
                     found_key = k
                     break
             
             # [V12.0] 콜론이 없는데 FIELD_MAP에도 없는 일반 텍스트면 매칭 무효화 (오탐 방지)
-            if found_key and ":" not in line and "：" not in line and potential_field not in [k.upper().replace(" ", "").replace("_", "") for k in FIELD_MAP.keys()]:
+            # V13.0에서는 이미 위에서 검증하므로 추가 안전장치로만 작동
+            if found_key and ":" not in line and "：" not in line and found_key not in FIELD_MAP:
                 found_key = None
         
         if found_key:
@@ -236,8 +267,9 @@ def _store_field(article, field_name, value):
         raw_keywords = [k.replace("**", "").strip().strip("*").strip().rstrip(".") for k in value.split(",") if k.strip()]
         value = []
         for kw in raw_keywords:
-            if 1 < len(kw) < 100: # 100자 이상의 텍스트는 오탐으로 간주하여 제외
-                value.append(kw[:40]) # 혹시 모를 상황 대비 40자로 최종 절단
+            clean_kw = kw.strip()
+            if 1 < len(clean_kw) < 80: # 80자 이상의 텍스트는 오탐으로 간주하여 제외
+                value.append(clean_kw[:45]) # 태그 파일명 안전을 위해 45자로 최종 절단
     if mapped_key == "kor_summary" and "\n" in value:
         value = [line.strip().lstrip("- ").lstrip("· ") for line in value.split("\n") if line.strip()]
     
