@@ -123,25 +123,36 @@ def _parse_json_block(raw_text):
         else:
             return None
 
+    def extract_articles(obj):
+        """재귀적으로 딕셔너리 내에서 기사 객체 후방 탐색"""
+        found = []
+        if isinstance(obj, dict):
+            # 필수 필드(kor_title, eng_title 등)가 2개 이상 있으면 기사로 간주
+            hits = 0
+            for k in obj.keys():
+                if k.upper().replace("_", "") in ["KORTITLE", "ENGTITLE", "KORCONTENT", "ENGCONTENT"]:
+                    hits += 1
+            
+            if hits >= 2:
+                found.append(obj)
+            else:
+                for v in obj.values():
+                    found.extend(extract_articles(v))
+        elif isinstance(obj, list):
+            for item in obj:
+                found.extend(extract_articles(item))
+        return found
+
     all_articles = []
     for block in json_blocks:
         try:
-            # [BUG FIX] // 주석 제거 로직이 URL(https://)을 파괴하여 JSON 파싱 실패 유도 방지
             data = json.loads(block)
+            items = extract_articles(data)
             
-            # 단일 객체인 경우 리스트로 변환
-            if isinstance(data, dict):
-                # 'articles' 키 안에 기사 목록이 있는 구조 대응
-                if 'articles' in data and isinstance(data['articles'], list):
-                    data = data['articles']
-                else:
-                    data = [data]
-            
-            if isinstance(data, list):
-                for item in data:
-                    processed = _post_process_json_item(item)
-                    if processed:
-                        all_articles.append(processed)
+            for item in items:
+                processed = _post_process_json_item(item)
+                if processed:
+                    all_articles.append(processed)
         except Exception as e:
             logger.warning(f" [!] JSON block parsing failed: {e}")
             continue
@@ -304,42 +315,62 @@ def _store_field(article, field_name, value, is_raw_mapped=False):
         
     if not mapped_key: return
 
-    value = value.replace("**", "").strip()
+    if isinstance(value, str):
+        value = value.replace("**", "").strip()
 
-    if mapped_key in ["kor_title", "eng_title"]:
-        # 제목 정제: CLUSTER / CATEGORY 등 NLM이 덧붙이는 모든 패턴 제거 (멀티라인 대응)
-        clean_patterns = [
-            r'(?im)\s*[\[(]?\s*(?:CLUSTER|CATEGORY|CLUSTER/CATEGORY|CLUSTER\s*/\s*CATEGORY)[:：].*?[\])]?\s*$',
-            r'(?im)\s*\|\s*(?:CLUSTER|CATEGORY).*?$',
-            r'(?im)\s*CLUSTER / CATEGORY.*$'
-        ]
-        for p in clean_patterns:
-            value = re.sub(p, '', value).strip()
-    
-    if mapped_key == "kor_content":
-        value = re.sub(r'^##\s+', '### ', value, flags=re.MULTILINE)
-        val_lines = value.split("\n")
-        new_lines = []
-        for i, line in enumerate(val_lines):
-            stripped_line = line.strip().replace("#", "").strip()
-            if i < 3 and re.match(r'^(상세|심층|전략적|기술적)\s*(분석|리포트|Deep-Dive)$', stripped_line): continue
-            new_lines.append(line)
-        value = "\n".join(new_lines).strip()
+        if mapped_key in ["kor_title", "eng_title"]:
+            # 제목 정제: CLUSTER / CATEGORY 등 NLM이 덧붙이는 모든 패턴 제거 (멀티라인 대응)
+            clean_patterns = [
+                r'(?im)\s*[\[(]?\s*(?:CLUSTER|CATEGORY|CLUSTER/CATEGORY|CLUSTER\s*/\s*CATEGORY)[:：].*?[\])]?\s*$',
+                r'(?im)\s*\|\s*(?:CLUSTER|CATEGORY).*?$',
+                r'(?im)\s*CLUSTER / CATEGORY.*$'
+            ]
+            for p in clean_patterns:
+                value = re.sub(p, '', value).strip()
+        
+        if mapped_key == "kor_content":
+            value = re.sub(r'^##\s+', '### ', value, flags=re.MULTILINE)
+            val_lines = value.split("\n")
+            new_lines = []
+            for i, line in enumerate(val_lines):
+                stripped_line = line.strip().replace("#", "").strip()
+                if i < 3 and re.match(r'^(상세|심층|전략적|기술적)\s*(분석|리포트|Deep-Dive)$', stripped_line): continue
+                new_lines.append(line)
+            value = "\n".join(new_lines).strip()
 
-    noise_patterns = [r"(?i)^###?\s*Deep-Dive\s*$", r"(?i)^###?\s*Professional Insight\s*$", r"(?i)^###?\s*Section\s*\d+\s*$", r"(?i)^###?\s*Step\s*\d+\s*$", r"(?i)^###?\s*Conclusion\s*$"]
-    for pattern in noise_patterns:
-        value = re.sub(pattern, "", value, flags=re.MULTILINE).strip()
+    # [V14.1] NLM이 딕셔너리 형태로 한/영 키워드 등을 줄 경우 대응
+    if isinstance(value, dict):
+        if "kor" in mapped_key and "kor" in value:
+            value = value["kor"]
+        elif "eng" in mapped_key and "eng" in value:
+            value = value["eng"]
+        else:
+            # 기본값으로 첫 번째 리스트나 전체 문자열 사용
+            value = list(value.values())[0] if value else ""
+
+    if isinstance(value, str):
+        noise_patterns = [r"(?i)^###?\s*Deep-Dive\s*$", r"(?i)^###?\s*Professional Insight\s*$", r"(?i)^###?\s*Section\s*\d+\s*$", r"(?i)^###?\s*Step\s*\d+\s*$", r"(?i)^###?\s*Conclusion\s*$"]
+        for pattern in noise_patterns:
+            value = re.sub(pattern, "", value, flags=re.MULTILINE).strip()
 
     if "keywords" in mapped_key:
-        # [V12.3] 태그 길이 제한 (최대 40자) 및 비정상 텍스트 필터링 (빌드 정지 방지)
-        raw_keywords = [k.replace("**", "").strip().strip("*").strip().rstrip(".") for k in value.split(",") if k.strip()]
+        # [V12.3] 태그 길이 제한 (최대 40자)
+        if isinstance(value, list):
+            raw_keywords = [str(k) for k in value]
+        elif isinstance(value, str):
+            raw_keywords = [k.replace("**", "").strip().strip("*").strip().rstrip(".") for k in value.split(",") if k.strip()]
+        else:
+            raw_keywords = [str(value)]
+        
         value = []
         for kw in raw_keywords:
             clean_kw = kw.strip()
             if 1 < len(clean_kw) < 80: # 80자 이상의 텍스트는 오탐으로 간주하여 제외
                 value.append(clean_kw[:45]) # 태그 파일명 안전을 위해 45자로 최종 절단
-    if mapped_key == "kor_summary" and "\n" in value:
-        value = [line.strip().lstrip("- ").lstrip("· ") for line in value.split("\n") if line.strip()]
+    
+    if mapped_key == "kor_summary":
+        if isinstance(value, str) and "\n" in value:
+            value = [line.strip().lstrip("- ").lstrip("· ") for line in value.split("\n") if line.strip()]
     
     article[mapped_key] = value
 
@@ -347,6 +378,16 @@ def _store_field(article, field_name, value, is_raw_mapped=False):
 def _post_process(article):
     """기사 데이터 후처리: 클러스터 분류 및 기본값 보충 (V5.0 4대 체계)"""
     
+    # [V14.1] 모든 주요 필드를 문자열로 보장
+    for field in ["kor_title", "eng_title", "kor_content", "eng_content", "cluster"]:
+        val = article.get(field)
+        if isinstance(val, list):
+            article[field] = "\n".join([str(x) for x in val])
+        elif val is None:
+            article[field] = ""
+        else:
+            article[field] = str(val)
+
     def clean_summary(summary_list):
         if not summary_list: return []
         if isinstance(summary_list, str): summary_list = [summary_list]

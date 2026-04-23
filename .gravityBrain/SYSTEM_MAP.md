@@ -47,9 +47,9 @@ graph TD
 - **`automation/ai_writer.py`**: AI 텍스트 생성 및 번역 핵심 엔진. [v6.4] 다중 모델 폴백 및 초정밀 쓰로틀링(Throttling) 정책이 적용되었습니다.
 
 ## 🚀 특이사항
-- **버전**: v13.0 (Ironclad Architecture)
-- **상태**: Green (강력한 안정성 확보)
-- **최근 주요 변경**: ArticleValidator 검증 레이어 도입(v13.0), FIELD_MAP 기반 엄격한 토큰 매칭 파싱.
+- **버전**: v14.1 (JSON-Native Architecture)
+- **상태**: Green (정형 데이터 기반의 극강 안정성)
+- **최근 주요 변경**: NotebookLM JSON 출력 강제화(v14.0), JSON-Regex 하이브리드 파싱 엔진, NLM 작업 분할 임계값 하향(T=4).
 - **Real-time Recovery**: 영문 서비스의 '빈 페이지' 발생을 원천 차단하는 지능형 번역 폴백 시스템 운영.
 - **Full Automation**: 수확부터 리포트 대기, 발행, Git Push(배포), IndexNow까지 단일 명령으로 처리.
 - **IndexNow v1.3**: Naver Search Advisor 통합 및 도메인별 개별 키(News 전용) 매핑 로직 추가.

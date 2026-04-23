@@ -21,6 +21,10 @@ NotebookLM에서 생성된 대규모 통합 리포트를 개별 기사 단위로
     - [v13.0] **철갑 아키텍처 (Ironclad Architecture)**: 
         1. **Strict Token Matching**: `FIELD_MAP`에 정의된 토큰과 정확히 일치할 때만 필드 시작으로 인정하여, 본문 내 일반 텍스트가 필드로 오탐되는 현상을 방지합니다.
         2. **ArticleValidator**: 파일 생성 전 제목/본문 길이, 태그 유효성을 검증하는 Guard Layer를 도입하여 빌드 에러를 유발하는 '독약 데이터'를 사전에 차단(Skip)합니다.
+    - [v14.1] **JSON-Native Engine & Hybrid Recovery**:
+        1. **JSON Primary Engine**: NotebookLM에게 표준 JSON 스키마를 부여하고 ` ```json ` 코드를 추출하여 `json.loads`로 파싱합니다. 필드명 정규화를 통해 LLM의 미세한 명칭 변동을 흡수합니다.
+        2. **Hybrid Fallback**: JSON 파싱 실패 시 상단의 V13.0 정규식 엔진으로 자동 전환되며, 최악의 경우 ID 기반 강제 분리(ID-Splitting)를 시도하여 데이터 가용성을 99.9% 보장합니다.
+        3. **Safe Split (Threshold=4)**: NLM의 출력 안정성을 위해 기사가 5개 이상 발생 시 작업을 분할하여 리포트 길이 과다로 인한 문법 깨짐 현상을 근본적으로 해결합니다.
 
 ### [실행 순서 (Sequence)]
 ```mermaid

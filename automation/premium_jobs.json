@@ -108,16 +108,14 @@
         "status": "published",
         "triggered_at": "2026-04-24T08:07:02.440623",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/04/24/ai-article-1-kortitle-zencoder-ai-engtitle-zenflow/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/ai-article-1-kortitle-zencoder-ai-engtitle-zenflow/",
-            "https://news.lego-sia.com/posts/2026/04/24/tech-here-are-a-few-seo-optimized-english-translat/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/tech-here-are-a-few-seo-optimized-english-translat/",
-            "https://news.lego-sia.com/posts/2026/04/24/ai-article-2-kortitle-anthropic-ai-engtitle-anthro/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/ai-article-2-kortitle-anthropic-ai-engtitle-anthro/",
-            "https://news.lego-sia.com/posts/2026/04/24/ai-article-3-kortitle-nutanix-engtitle-nutanix-vis/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/ai-article-3-kortitle-nutanix-engtitle-nutanix-vis/"
+            "https://news.lego-sia.com/posts/2026/04/24/ai-zenflow-work-zencoder-unveils-ai-orchestration/",
+            "https://news.lego-sia.com/en/posts/2026/04/24/ai-zenflow-work-zencoder-unveils-ai-orchestration/",
+            "https://news.lego-sia.com/posts/2026/04/24/ai-anthropic-debuts-claude-managed-agents-to-strea/",
+            "https://news.lego-sia.com/en/posts/2026/04/24/ai-anthropic-debuts-claude-managed-agents-to-strea/",
+            "https://news.lego-sia.com/posts/2026/04/24/ai-nutanix-vision-agentic-infrastructure-as-the-ne/",
+            "https://news.lego-sia.com/en/posts/2026/04/24/ai-nutanix-vision-agentic-infrastructure-as-the-ne/"
         ],
-        "published_at": "2026-04-24T08:10:43.773241"
+        "published_at": "2026-04-24T08:30:17.865383"
     },
     "hardware": {
         "notebook_id": "3725a7a4-cb9c-45bc-a066-5a70ba87450a",
@@ -126,24 +124,14 @@
         "status": "published",
         "triggered_at": "2026-04-24T08:07:10.518820",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/04/24/ai-article-1-cluster-hardware-kortitle-sk-hbm-ai-e/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/ai-article-1-cluster-hardware-kortitle-sk-hbm-ai-e/",
-            "https://news.lego-sia.com/posts/2026/04/24/tech-intelligence-report-1-0/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/tech-intelligence-report-1-0/",
-            "https://news.lego-sia.com/posts/2026/04/24/tech-intelligence-report-2-0/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/tech-intelligence-report-2-0/",
-            "https://news.lego-sia.com/posts/2026/04/24/tech-here-are-a-few-options-depending-on-the-speci/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/tech-here-are-a-few-options-depending-on-the-speci/",
-            "https://news.lego-sia.com/posts/2026/04/24/ai-article-2-cluster-hardware-kortitle-14a-engtitl/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/ai-article-2-cluster-hardware-kortitle-14a-engtitl/",
-            "https://news.lego-sia.com/posts/2026/04/24/tech-intelligence-report-5-0/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/tech-intelligence-report-5-0/",
-            "https://news.lego-sia.com/posts/2026/04/24/tech-intelligence-report-6-0/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/tech-intelligence-report-6-0/",
-            "https://news.lego-sia.com/posts/2026/04/24/ai-article-3-cluster-hardware-kortitle-sk-ai-engti/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/ai-article-3-cluster-hardware-kortitle-sk-ai-engti/"
+            "https://news.lego-sia.com/posts/2026/04/24/hardware-sk-hynix-signals-multi-year-hbm-supply-de/",
+            "https://news.lego-sia.com/en/posts/2026/04/24/hardware-sk-hynix-signals-multi-year-hbm-supply-de/",
+            "https://news.lego-sia.com/posts/2026/04/24/hardware-intel-foundry-re-emergence-tesla-adopts-c/",
+            "https://news.lego-sia.com/en/posts/2026/04/24/hardware-intel-foundry-re-emergence-tesla-adopts-c/",
+            "https://news.lego-sia.com/posts/2026/04/24/hardware-ai-driven-memory-restructuring-samsung-an/",
+            "https://news.lego-sia.com/en/posts/2026/04/24/hardware-ai-driven-memory-restructuring-samsung-an/"
         ],
-        "published_at": "2026-04-24T08:14:47.386916"
+        "published_at": "2026-04-24T08:30:20.173314"
     },
     "insights": {
         "notebook_id": "abd6d71c-014a-42fe-8681-0ffe92d7356c",
@@ -152,13 +140,13 @@
         "status": "published",
         "triggered_at": "2026-04-24T08:07:18.511149",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/04/24/ai-article-1-kortitle-pwc-engtitle-hong-kong-impos/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/ai-article-1-kortitle-pwc-engtitle-hong-kong-impos/",
-            "https://news.lego-sia.com/posts/2026/04/24/ai-article-2-kortitle-engtitle-japans-defense-expo/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/ai-article-2-kortitle-engtitle-japans-defense-expo/",
-            "https://news.lego-sia.com/posts/2026/04/24/ai-article-3-kortitle---liquid-ai-engtitle-mercede/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/ai-article-3-kortitle---liquid-ai-engtitle-mercede/"
+            "https://news.lego-sia.com/posts/2026/04/24/markets-hong-kong-imposes-additional-multimillion/",
+            "https://news.lego-sia.com/en/posts/2026/04/24/markets-hong-kong-imposes-additional-multimillion/",
+            "https://news.lego-sia.com/posts/2026/04/24/insights-japans-defense-export-revolution-takaichi/",
+            "https://news.lego-sia.com/en/posts/2026/04/24/insights-japans-defense-export-revolution-takaichi/",
+            "https://news.lego-sia.com/posts/2026/04/24/ai-mercedes-benz-and-liquid-ai-partner-to-eliminat/",
+            "https://news.lego-sia.com/en/posts/2026/04/24/ai-mercedes-benz-and-liquid-ai-partner-to-eliminat/"
         ],
-        "published_at": "2026-04-24T08:15:47.904422"
+        "published_at": "2026-04-24T08:31:10.775465"
     }
 }

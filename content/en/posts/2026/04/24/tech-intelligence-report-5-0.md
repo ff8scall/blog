@@ -1,6 +1,6 @@
 ﻿---
 title: "Intelligence Report #5"
-date: "2026-04-23T23:05:15Z"
+date: "2026-04-23T23:23:38Z"
 description: "ided the global technology industry with the most significant endorsement of Intel’s manufacturing resurgence to date. This move signals a critical shift in the foundry landscape, where Intel is no lo..."
 image: "/images/fallbacks/startups-vc.jpg"
 clusters: ["ai"]
