@@ -286,6 +286,12 @@ def create_hugo_post(article, lang='ko'):
     description = article.get(f'{prefix}_description', '')
     keywords = article.get(f'{prefix}_keywords', [])
     
+    # [V11.5] 제목 정제: CLUSTER / CATEGORY 등 NLM이 덧붙이는 모든 패턴 제거
+    title = re.sub(r'(?im)\s*[\[(]?\s*(?:CLUSTER|CATEGORY|CLUSTER/CATEGORY|CLUSTER\s*/\s*CATEGORY)[:：].*?[\])]?\s*$', '', title).strip()
+    # [V11.5] 가끔 한글 제목에 본문 일부가 유입되어 너무 길어지는 현상 방지 (80자 확장 v11.6)
+    if any('\uac00' <= char <= '\ud7a3' for char in title) and len(title) > 80:
+        title = title[:80].strip() + "..."
+    
     # [V11.2] Smart Fallback: 필드 누락 시 상호 보완
     if not title:
         # 본문 첫 줄에서 제목 추출 시도

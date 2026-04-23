@@ -1,6 +1,6 @@
 ﻿---
 title: "Hardware-Software Co-optimization: How NousCoder-14B and Blackwell Are Redefining Training Latency"
-date: "2026-04-23T01:56:39Z"
+date: "2026-04-23T05:06:51Z"
 description: "Nous Research, backed by Paradigm, has released NousCoder-14B, a competitive programming model trained in just four days using 48 Nvidia B200 GPUs. This milestone demonstrates how high-density Blackwell compute can enable small, agile teams to match the performance of proprietary giants like Claude 3.5 Sonnet."
 image: "/images/posts/2026/04/23/ai-hardware-software-co-optimization-how-nouscoder.jpg"
 clusters: ["ai"]

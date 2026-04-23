@@ -1,6 +1,6 @@
 ﻿---
 title: "Rambus Unveils SOCAMM2: Revolutionizing AI Server Efficiency with LPDDR5X Integration"
-date: "2026-04-23T01:56:16Z"
+date: "2026-04-23T04:41:03Z"
 description: "Rambus has introduced the SOCAMM2 chipset, a dedicated interface designed to integrate LPDDR5X memory into high-performance AI server environments. * Utilizing 'Compression Attached' technology, the chipset overcomes the limitations of traditional SODIMMs, offering superior bandwidth and signal integrity. * The launch is aimed at reducing Total Cost of Ownership (TCO) for data centers by significantly lowering power-per-bit consumption in AI workloads."
 image: "/images/posts/2026/04/23/ai-rambus-unveils-socamm2-revolutionizing-ai-serve.jpg"
 clusters: ["ai"]

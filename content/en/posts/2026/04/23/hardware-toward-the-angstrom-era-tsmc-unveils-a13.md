@@ -1,6 +1,6 @@
 ﻿---
 title: "Toward the Angstrom Era: TSMC Unveils A13 and A12 Roadmap for 2029"
-date: "2026-04-23T02:02:46Z"
+date: "2026-04-23T05:05:50Z"
 description: "In a definitive move to secure its dominance through the end of the decade, TSMC has officially unveiled its technology roadmap for the 'Angstrom Era.' The announcement of the A13 (1.3nm equivalent) and A12 (1.2nm equivalent) nodes, scheduled for high-volume production in 2029, serves as a high-stakes counter-move to the aggressive timelines recently proposed by competitors like Intel and Samsung. As the industry moves beyond the nanometer scale, TSMC is signaling that its transition to angstrom-scale manufacturing will focus on a balance of extreme performance and mature, reliable yields—a co..."
 image: "/images/fallbacks/game-tech.jpg"
 clusters: ["hardware"]

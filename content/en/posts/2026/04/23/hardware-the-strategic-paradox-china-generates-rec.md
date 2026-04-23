@@ -1,6 +1,6 @@
 ﻿---
 title: "The Strategic Paradox: China Generates Record $19B for US Toolmakers Despite 34% Shipment Slump"
-date: "2026-04-23T01:55:44Z"
+date: "2026-04-23T04:40:31Z"
 description: "Top US semiconductor equipment firms—Applied Materials, Lam Research, and KLA—reported a record $19 billion in combined revenue from China in fiscal 2025. * This financial peak occurs alongside a sharp 34% decline in the physical volume of shipments originating from the United States. * The trend signals aggressive Chinese 'front-loading' of mature-node equipment and spare parts to bypass future trade restrictions."
 image: "/images/posts/2026/04/23/hardware-the-strategic-paradox-china-generates-rec.jpg"
 clusters: ["hardware"]

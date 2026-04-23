@@ -1,6 +1,6 @@
 ﻿---
 title: "CFIUS Intervention: US Blocks Sanan Optoelectronics’ $239 Million Pursuit of Lumileds"
-date: "2026-04-23T01:55:54Z"
+date: "2026-04-23T04:40:41Z"
 description: "Sanan Optoelectronics, China’s largest LED chipmaker, has abandoned its $239 million acquisition of the Dutch lighting giant Lumileds. * The transaction was halted by the Committee on Foreign Investment in the United States (CFIUS) due to national security concerns. * This veto underscores the US government’s policy of preventing Chinese entities from acquiring critical lighting and semiconductor IP, regardless of the target company's headquarters."
 image: "/images/posts/2026/04/23/markets-cfius-intervention-us-blocks-sanan-optoele.jpg"
 clusters: ["markets"]

@@ -1,6 +1,6 @@
 ﻿---
 title: "Energy Transition Under Fire: Iran War Triggers Record-Breaking Chinese Solar Exports"
-date: "2026-04-23T02:01:59Z"
+date: "2026-04-23T05:05:16Z"
 description: "The escalation of military conflict in the Middle East, specifically the outbreak of the Iran war, has sent catastrophic shockwaves through traditional global energy markets. As the threat of blockades in the Strait of Hormuz becomes a reality, the resulting oil and gas price volatility has forced a radical rethinking of national security. This geopolitical crisis has acted as a violent catalyst for the global energy transition, directly benefiting China’s solar manufacturing sector, which posted record-breaking export data in March 2026."
 image: "/images/fallbacks/ai-agents.jpg"
 clusters: ["insights"]

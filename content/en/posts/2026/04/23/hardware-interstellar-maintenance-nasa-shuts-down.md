@@ -1,6 +1,6 @@
 ﻿---
 title: "Interstellar Maintenance: NASA Shuts Down Voyager 1 Instruments to Counter RTG Decay"
-date: "2026-04-23T01:56:04Z"
+date: "2026-04-23T04:40:51Z"
 description: "NASA’s Jet Propulsion Laboratory (JPL) has deactivated one of Voyager 1’s science instruments to preserve a critically low power supply. * The 46-year-old probe’s Radioisotope Thermoelectric Generators (RTGs) are losing output as the Plutonium-238 fuel naturally decays. * Engineers are implementing a high-stakes 'swap' to low-power alternative components, aiming to provide a one-year 'breathing room' for interstellar data."
 image: "/images/posts/2026/04/23/hardware-interstellar-maintenance-nasa-shuts-down.jpg"
 clusters: ["hardware"]

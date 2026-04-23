@@ -55,6 +55,9 @@ FIELD_MAP = {
     "IMAGE_PROMPT": "image_prompt_core",
     "ORIGINAL_IMAGE": "original_image",
     "ORIGINAL_IMAGE_URL": "original_image",
+    "CLUSTERCATEGORY": "cluster",
+    "CLUSTER/CATEGORY": "cluster",
+    "CATEGORY/CLUSTER": "cluster",
 }
 
 # [V5.0] 신규 4대 대메뉴 체제 및 자동 분류 키워드 맵
@@ -134,7 +137,8 @@ def _parse_single_block(block_text):
     current_value_lines = []
 
     for line in lines:
-        match = re.search(r'(?i)^\s*(?:\d+[\.)]\s*)?(?:\*\*|__|\[)?([A-Z\s_]{2,})(?:\*\*|__|])?[:：]\s*(.*)', line)
+        # 필드 추출 정규식: 시작 부분부터 매칭하며, 필드명 앞뒤의 마크다운 기호를 유연하게 처리
+        match = re.match(r'(?i)^\s*(?:\d+[\.)]\s*)?[\*\*_\[]*([A-Z\s/_]{2,})[\*\*_\]]*[:：]\s*(.*)', line)
         
         found_key = None
         if match:
@@ -149,13 +153,22 @@ def _parse_single_block(block_text):
         if found_key:
             if current_field:
                 _store_field(article, current_field, "\n".join(current_value_lines).strip())
-            current_field = found_key
+            
             val = match.group(2).strip()
+            # [V11.5] 필드 시작 줄에 ## 헤더와 한글이 포함된 경우 제목으로 우선 채택
+            if found_key.upper() in ["KOR_CONTENT", "KOREAN_CONTENT", "CONTENT"] and not article.get("kor_title"):
+                # 헤더 앞의 ** 등 노이즈 제거 후 확인
+                clean_val = val.strip("*").strip("_").strip()
+                if re.match(r'^\s*##\s+', clean_val) and any('\uac00' <= char <= '\ud7a3' for char in clean_val):
+                    article["kor_title"] = clean_val.strip("#").strip()
+
+            current_field = found_key
             current_value_lines = [val] if val else []
             continue
-
-        METADATA_FIELDS = ["TITLE", "ENG_TITLE", "CLUSTER", "CATEGORY", "ID", "KOR_SUMMARY"]
-        if not current_field or current_field in METADATA_FIELDS or "CONTENT" in (current_field or "").upper() or current_field == "SYNTHESIS":
+        
+        # 제목 필드는 메타데이터로 간주하여 ## 등의 내용이 붙지 않게 함
+        METADATA_FIELDS = ["TITLE", "ENG_TITLE", "KOR_TITLE", "KOREAN_TITLE", "CLUSTER", "CATEGORY", "ID", "KOR_SUMMARY"]
+        if not current_field or current_field in METADATA_FIELDS or current_field == "SYNTHESIS":
             if re.match(r'^\s*##\s+', line) and any('\uac00' <= char <= '\ud7a3' for char in line):
                 if current_field:
                     _store_field(article, current_field, "\n".join(current_value_lines).strip())
@@ -164,6 +177,11 @@ def _parse_single_block(block_text):
                 current_field = "KOR_CONTENT"
                 current_value_lines = [line]
                 continue
+        elif any(k in (current_field or "").upper() for k in ["CONTENT", "INSIGHT", "SYNTHESIS"]):
+            # 이미 본문/인사이트 파싱 중인데 ## 헤더를 만난 경우 필드를 초기화하지 않고 제목이 없을 때만 추출
+            if re.match(r'^\s*##\s+', line) and any('\uac00' <= char <= '\ud7a3' for char in line):
+                if not article.get("kor_title"):
+                    article["kor_title"] = line.strip("#").strip()
 
         if re.match(r'^\s*(?:#+\s*)?\d+\.\s*$', line): continue
         if current_field:
@@ -183,7 +201,14 @@ def _store_field(article, field_name, value):
     value = value.replace("**", "").strip()
 
     if mapped_key in ["kor_title", "eng_title"]:
-        value = re.sub(r'(?i)\s*[\[(]?\s*(?:CLUSTER|CATEGORY|CLUSTER/CATEGORY)[:：].*?[\])]?\s*$', '', value).strip()
+        # 제목 정제: CLUSTER / CATEGORY 등 NLM이 덧붙이는 모든 패턴 제거 (멀티라인 대응)
+        clean_patterns = [
+            r'(?im)\s*[\[(]?\s*(?:CLUSTER|CATEGORY|CLUSTER/CATEGORY|CLUSTER\s*/\s*CATEGORY)[:：].*?[\])]?\s*$',
+            r'(?im)\s*\|\s*(?:CLUSTER|CATEGORY).*?$',
+            r'(?im)\s*CLUSTER / CATEGORY.*$'
+        ]
+        for p in clean_patterns:
+            value = re.sub(p, '', value).strip()
     
     if mapped_key == "kor_content":
         value = re.sub(r'^##\s+', '### ', value, flags=re.MULTILINE)
@@ -262,16 +287,35 @@ def _post_process(article):
     article["cluster"] = detected_cluster
     if "category" in article: del article["category"]
     
-    # 2. 제목 복구
-    has_kor_content = article.get("kor_content") and len(article["kor_content"]) > 10
-    if (not article.get("kor_title") or article.get("kor_title") == article.get("eng_title")) and has_kor_content:
-        content_lines = [l.strip() for l in article["kor_content"].split("\n") if l.strip()]
+    # 2. 제목 복구: 본문(Content) 또는 인사이트(Insight/Synthesis/Summary)에서 후보 탐색
+    has_kor_text = (article.get("kor_content") and len(article["kor_content"]) > 10) or \
+                   (article.get("kor_insight") and len(article.get("kor_insight", "")) > 10) or \
+                   (article.get("synthesis") and len(article.get("synthesis", "")) > 10) or \
+                   (article.get("kor_summary") and len(str(article.get("kor_summary", ""))) > 10)
+    
+    if (not article.get("kor_title") or article.get("kor_title") == article.get("eng_title")) and has_kor_text:
+        # 소스 우선 순위: 본문 > 인사이트 > 요약
+        source_text = article.get("kor_content") or article.get("kor_insight") or article.get("synthesis") or ""
+        if not source_text and article.get("kor_summary"):
+            source_text = "\n".join(article["kor_summary"]) if isinstance(article["kor_summary"], list) else article["kor_summary"]
+            
+        content_lines = [l.strip() for l in source_text.split("\n") if l.strip()]
         for line in content_lines[:3]:
             clean_line = line.strip("#").strip("*").strip()
             first_sentence = re.split(r'[.!?]\s+', clean_line)[0]
+            # 너무 짧은 헤더(배경, 요약 등)는 무시하고 더 유의미한 내용을 찾음
             if any('\uac00' <= char <= '\ud7a3' for char in first_sentence) and len(first_sentence) > 5:
-                article["kor_title"] = first_sentence[:60].strip() + "..." if len(first_sentence) > 60 else first_sentence.strip()
+                # 제목 길이 제한 80자로 확장 (v11.6)
+                article["kor_title"] = first_sentence[:80].strip() + "..." if len(first_sentence) > 80 else first_sentence.strip()
                 break
+
+    # 3. 콘텐츠 보존: kor_content가 비어있는데 다른 한글 필드가 있다면 복구
+    if not article.get("kor_content") or len(article["kor_content"]) < 20:
+        if article.get("kor_insight"):
+            article["kor_content"] = "## 주요 분석\n" + article["kor_insight"]
+        elif article.get("kor_summary"):
+            summary_text = "\n".join([f"* {s}" for s in article["kor_summary"]]) if isinstance(article["kor_summary"], list) else str(article["kor_summary"])
+            article["kor_content"] = "## 요약 분석\n" + summary_text
 
     if not article.get("eng_title"):
         article["eng_title"] = f"Recovery: {article['kor_title']}" if article.get("kor_title") else f"Article {article.get('id', 'Unknown')}"

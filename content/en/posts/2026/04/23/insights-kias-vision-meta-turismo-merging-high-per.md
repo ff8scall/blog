@@ -1,6 +1,6 @@
 ﻿---
 title: "Kia’s Vision Meta Turismo: Merging High-Performance EV Dynamics with Immersive AR Ecosystems"
-date: "2026-04-23T01:59:08Z"
+date: "2026-04-23T05:02:25Z"
 description: "Kia's Vision Meta Turismo concept signals a decisive shift in high-performance EV design, prioritizing a 'Software-Defined' experience. By integrating a lounge-inspired cabin with advanced holographic AR interfaces, Kia is moving beyond raw horsepower to offer a multi-sensory 'Meta' journey that redefines luxury for the 2027 model year and beyond."
 image: "/images/posts/2026/04/23/insights-kias-vision-meta-turismo-merging-high-per.jpg"
 clusters: ["insights"]

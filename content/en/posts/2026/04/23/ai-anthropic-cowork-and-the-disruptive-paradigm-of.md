@@ -1,6 +1,6 @@
 ﻿---
 title: "Anthropic Cowork and the Disruptive Paradigm of Recursive Agentic Development"
-date: "2026-04-23T01:56:28Z"
+date: "2026-04-23T05:06:41Z"
 description: "Anthropic has unveiled 'Cowork,' a desktop-native Claude agent that automates file-based workflows for non-technical users. Built in just 10 days using the company’s own Claude Code tool, it marks a significant shift toward self-evolving AI development and the democratization of agentic task execution."
 image: "/images/posts/2026/04/23/ai-anthropic-cowork-and-the-disruptive-paradigm-of.jpg"
 clusters: ["ai"]

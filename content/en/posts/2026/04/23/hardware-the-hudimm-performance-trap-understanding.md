@@ -1,6 +1,6 @@
 ﻿---
 title: "The HUDIMM Performance Trap: Understanding the Cost of Single-Subchannel DDR5"
-date: "2026-04-23T01:55:09Z"
+date: "2026-04-23T05:06:31Z"
 description: "As the PC hardware market continues to segment, a new and potentially controversial memory specification has emerged: HUDIMM (Half-Unit Dual In-line Memory Module). Designed to offer a lower-cost entry point into the DDR5 ecosystem, HUDIMMs achieve their price advantage through a significant architectural simplification—and a corresponding performance penalty. Standard DDR5 modules are defined by their use of two independent 32-bit subchannels on a single stick (totaling 64 bits), which allows for greater parallelism and efficiency in data handling. In contrast, HUDIMMs utilize only a single 3..."
 image: "/images/posts/2026/04/23/hardware-the-hudimm-performance-trap-understanding.jpg"
 clusters: ["hardware"]

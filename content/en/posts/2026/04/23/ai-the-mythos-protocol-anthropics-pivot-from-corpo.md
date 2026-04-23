@@ -1,8 +1,8 @@
 ﻿---
 title: "The Mythos Protocol: Anthropic’s Pivot from Corporate Safety to State-Level Defense"
-date: "2026-04-23T01:58:18Z"
+date: "2026-04-23T04:41:40Z"
 description: "The evolution of Anthropic’s 'Project Glasswing' into the 'Mythos' model represents a watershed moment where frontier AI development intersects with national security. What began as internal caution over a model deemed too dangerous for public release has escalated into high-level diplomatic engagement, evidenced by CEO Dario Amodei’s recent meeting with White House Chief of Staff Susie Wiles. This engagement, which also involves discussions relevant to the Treasury, suggests that Mythos is viewed as a strategic asset with implications for national economic defense and cybersecurity. The trans..."
-image: "/images/fallbacks/ai-models.jpg"
+image: "/images/posts/2026/04/23/ai-the-mythos-protocol-anthropics-pivot-from-corpo.jpg"
 clusters: ["ai"]
 tags: []
 featured: false

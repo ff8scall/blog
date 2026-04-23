@@ -1,6 +1,6 @@
 ﻿---
 title: "TSMC Unveils 2029 Roadmap: Strategic Bifurcation Amid A16 Delays"
-date: "2026-04-23T01:54:49Z"
+date: "2026-04-23T05:06:10Z"
 description: "TSMC has unveiled its comprehensive process technology roadmap extending through 2029, a document that reveals a calculated shift in the company's long-term strategy. The headline news is the formalization of a 'bifurcated' development path, a move designed to address the divergent needs of the mobile and data center markets. TSMC is now developing two distinct streams of technology: the Client-focused path (featuring A14, A13, and N2U nodes) and the Data Center/HPC-focused path (headlined by A16, A12, and the specialized N2X node). This granular approach allows TSMC to optimize PPA (Power, Pe..."
 image: "/images/posts/2026/04/23/hardware-tsmc-unveils-2029-roadmap-strategic-bifur.jpg"
 clusters: ["hardware"]

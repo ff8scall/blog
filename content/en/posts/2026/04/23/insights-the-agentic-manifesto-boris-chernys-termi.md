@@ -1,6 +1,6 @@
 ﻿---
 title: "The Agentic Manifesto: Boris Cherny’s Terminal-Centric Shift and the Erasure of IDE Bloat"
-date: "2026-04-23T01:56:50Z"
+date: "2026-04-23T05:07:01Z"
 description: "Boris Cherny, the mastermind behind Claude Code, has sparked a viral re-evaluation of software engineering by sharing his minimalist, terminal-based workflow. This 'Agentic Manifesto' advocates for the command-line interface (CLI) as the ultimate environment for AI-human collaboration, prioritizing scriptability and speed over visual complexity."
 image: "/images/posts/2026/04/23/insights-the-agentic-manifesto-boris-chernys-termi.jpg"
 clusters: ["insights"]
