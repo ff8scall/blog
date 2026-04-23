@@ -156,12 +156,12 @@ def generate_and_cache(prompt, cluster, keywords, slug):
     encoded_prompt = urllib.parse.quote(final_prompt)
     api_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=1200&height=630&nologo=true"
     
-    # [V6.1] 지수 백오프 적용 (최대 3회 시도)
-    wait_time = 5
-    for attempt in range(3):
+    # [V6.1] 지수 백오프 적용 (최대 2회 시도 - 지연 방지)
+    wait_time = 3
+    for attempt in range(2):
         try:
             logger.info(f" [Tier 3] [START] Requesting AI (Attempt {attempt+1}): {slug}")
-            resp = requests.get(api_url, timeout=45)
+            resp = requests.get(api_url, timeout=15)
             
             if resp.status_code == 200:
                 content = resp.content
@@ -189,15 +189,16 @@ def generate_and_cache(prompt, cluster, keywords, slug):
                     return f"/images/posts/{date_dir}/{slug}_gen.jpg"
             
             elif resp.status_code == 429:
-                wait_time *= 2 # 10초, 20초로 대기 늘림
-                logger.warning(f" [Tier 3] [429 ERROR] Rate limited. Waiting {wait_time}s and retrying...")
+                wait_time *= 2
+                logger.warning(f" [Tier 3] [429 ERROR] Rate limited. Waiting {wait_time}s...")
                 time.sleep(wait_time)
             else:
-                break # 429 외의 에러는 즉시 중단
+                logger.warning(f" [Tier 3] [FAIL] HTTP {resp.status_code} for AI Image")
+                break
                 
         except Exception as e:
-            logger.error(f" [Tier 3] [ERROR] Attempt {attempt+1} failed: {e}")
-            time.sleep(5)
+            logger.warning(f" [Tier 3] [TIMEOUT/ERROR] Attempt {attempt+1} failed: {e}")
+            if attempt < 1: time.sleep(2)
             
     return None
 

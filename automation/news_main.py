@@ -353,9 +353,10 @@ def create_hugo_post(article, lang='ko'):
         content_body += f"## {insight_label}\n\n{formatted_insight}"
 
     # Build Frontmatter
-    # [V11.3] 줄바꿈 제거 및 따옴표 이스케이프 강화 (YAML 안정성)
-    safe_title = title.replace('"', "'").replace("\n", " ").strip()
-    safe_desc = (description if description else (summary_list[0] if summary_list else title)).replace('"', "'").replace("\n", " ").strip()
+    # [V11.3] 줄바꿈 제거 및 따옴표/백슬래시 이스케이프 강화 (YAML 안정성)
+    # YAML 더블 쿼트 내에서 백슬래시(\)는 이스케이프 시작이므로 \\로 변환 필요
+    safe_title = title.replace('\\', '\\\\').replace('"', "'").replace("\n", " ").strip()
+    safe_desc = (description if description else (summary_list[0] if summary_list else title)).replace('\\', '\\\\').replace('"', "'").replace("\n", " ").strip()
     is_featured = "true" if article.get('featured') else "false"
     tags_json = json.dumps(keywords, ensure_ascii=False)
 

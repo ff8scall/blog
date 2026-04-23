@@ -1,7 +1,7 @@
-﻿---
+---
 title: "Validating the Chaos: How 2D Quantum Physics Breakthroughs Revolutionize Semiconductor Yield"
 date: "2026-04-22T19:54:26Z"
-description: "For four decades, the Kardar-Parisi-Zhang (KPZ) equation has been a cornerstone of theoretical physics, used to describe the stochastic growth of interfaces in classical systems. Whether it is the spread of a forest fire or the accumulation of dust, the KPZ model provides a mathematical framework for how 'roughness' evolves over time, defined by specific scaling exponents ($w \sim t^\beta$). However, confirming that these same statistical laws govern 2D quantum systems—where quantum entanglement and superposition introduce chaotic variables—has been an elusive goal. Recent experimental validat..."
+description: "For four decades, the Kardar-Parisi-Zhang (KPZ) equation has been a cornerstone of theoretical physics, used to describe the stochastic growth of interfaces in classical systems. Whether it is the spread of a forest fire or the accumulation of dust, the KPZ model provides a mathematical framework for how 'roughness' evolves over time, defined by specific scaling exponents ($w \\sim t^\\beta$). However, confirming that these same statistical laws govern 2D quantum systems—where quantum entanglement and superposition introduce chaotic variables—has been an elusive goal. Recent experimental validat..."
 image: "/images/posts/2026/04/23/hardware-validating-the-chaos-how-2d-quantum-physi.jpg"
 clusters: ["hardware"]
 categories: ["chips"]

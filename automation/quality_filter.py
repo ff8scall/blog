@@ -17,7 +17,9 @@ from schemas import HarvestedArticle, FilterResult
 from dotenv import load_dotenv
 
 # Load env for API Key
-load_dotenv()
+# [V6.1] 프로젝트 루트 기준 경로 자동 탐색 및 .env 로드
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+load_dotenv(os.path.join(PROJECT_ROOT, ".env"))
 
 logger = logging.getLogger("LegoSia.QualityFilter")
 
