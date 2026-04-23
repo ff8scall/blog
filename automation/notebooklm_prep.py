@@ -26,34 +26,36 @@ PROMPT_MODE_A = (
     "5. 소스에 있는 팩트만 사용하되, 현시점(2026년 4월)의 맥락을 반영하십시오."
 )
 
-# 모드 B: 개별 기사 고품질 생산 (구조화된 데이터 출력)
+# 모드 B: 개별 기사 고품질 생산 (JSON-Native 구조화 데이터 출력) [V14.0]
 PROMPT_MODE_B = (
-    "당신은 테크 저널리즘 전문가입니다. 업로드된 소스 데이터를 바탕으로 **각 기사를 독립적으로 분석**하여 아래의 [출력 형식]을 **한 글자도 틀리지 말고 엄격하게** 지켜서 출력하십시오.\n\n"
-    "[필독: 철저 준수 사항]\n"
-    "1. **언어 규정**: 한국어 필드(KOR_...)는 반드시 **한국어**로, 영어 필드(ENG_...)는 반드시 **영어**로 작성하십시오.\n"
-    "2. **필드 누락 절대 금지**: KOR_TITLE, KOR_SUMMARY, KOR_CONTENT, ENG_TITLE, ENG_CONTENT 등 모든 필드는 어떤 경우에도 누락되어서는 안 됩니다. 소스가 부족하면 분석을 통해 내용을 채우십시오.\n"
-    "3. **구분자 형식 고수**: 각 기사의 시작과 끝에 ---ARTICLE_START--- 와 ---ARTICLE_END---를 명확히 표시하십시오. 구분자 라인에는 다른 텍스트(예: **, #)를 섞지 마십시오.\n"
-    "4. **필드 표기**: '**필드명:** 내용' 형식을 엄격히 지키십시오. 필드명은 대문자로 쓰고 반드시 볼드(**) 처리하십시오.\n"
-    "5. **이미지 추출**: 소스 데이터에 `Image URL` 또는 `ORIGINAL_IMAGE`가 명시되어 있다면 반드시 `ORIGINAL_IMAGE:` 필드에 정확히 기재하십시오.\n\n"
-    "[출력 형식]\n"
-    "---ARTICLE_START---\n"
-    "**ID:** [순번]\n"
-    "**ENG_TITLE:** [SEO-optimized English Title]\n"
-    "**KOR_TITLE:** [한국어 핵심 제목]\n"
-    "**CLUSTER:** [ai | hardware | insights]\n"
-    "**CATEGORY:** [chips | models | apps | high-end | analysis | guide]\n"
-    "**ENG_SUMMARY:** [Professional English Summary]\n"
-    "**KOR_SUMMARY:**\n- [한국어 요약 1]\n- [한국어 요약 2]\n- [한국어 요약 3]\n"
-    "**ENG_CONTENT:** [Detailed English Synthesis & Analysis, 500+ words]\n"
-    "**KOR_CONTENT:** [한국어 심층 분석 본문, 1,200자 내외, 마크다운 ## 소제목 활용]\n"
-    "**KOR_INSIGHT:** [한국어 전문가 시사점 및 미래 비평]\n"
-    "**KEYWORDS_EN:** [English Keywords, comma separated]\n"
-    "**KEYWORDS_KR:** [한국어 키워드, 콤마 구분]\n"
-    "**IMAGE_PROMPT:** [Detailed High-tech image prompt in English]\n"
-    "**ORIGINAL_IMAGE:** [Source Image URL if exists, else 'None']\n"
-    "---ARTICLE_END---"
+    "당신은 글로벌 테크 저널리즘 및 데이터 분석 전문가입니다. 업로드된 모든 소스를 분석하여 각 기사를 독립적인 정형 데이터로 변환하십시오.\n\n"
+    "[출력 형식 규정]\n"
+    "1. **반드시** 마크다운 코드 블록 ` ```json ` 안에 모든 결과를 담으십시오.\n"
+    "2. 결과는 하나의 루트 객체 안에 `articles` 배열을 포함하는 JSON 형태여야 합니다.\n"
+    "3. JSON 문법(따옴표 이스케이프 등)을 엄격히 준수하고, 코드 블록 외의 앞뒤 설명은 절대 하지 마십시오.\n\n"
+    "[JSON 스키마]\n"
+    "{\n"
+    "  \"articles\": [\n"
+    "    {\n"
+    "      \"id\": \"번호\",\n"
+    "      \"kor_title\": \"한국어 제목 (강력하고 전문적인 문체)\",\n"
+    "      \"eng_title\": \"SEO-optimized English Title\",\n"
+    "      \"cluster\": \"ai | hardware | insights | markets 중 택 1\",\n"
+    "      \"kor_summary\": [\"핵심 요약 포인트 1\", \"포인트 2\", \"포인트 3\"],\n"
+    "      \"eng_summary\": [\"Executive summary point in English\"],\n"
+    "      \"kor_content\": \"## 소제목 포함 상세 한국어 본문 (1,200자 내외)\",\n"
+    "      \"eng_content\": \"Detailed English synthesis (500+ words)\",\n"
+    "      \"kor_insight\": \"전문가 시사점 및 미래 비평\",\n"
+    "      \"kor_keywords\": \"태그1, 태그2, 태그3\",\n"
+    "      \"eng_keywords\": \"Tag1, Tag2, Tag3\",\n"
+    "      \"original_image\": \"소스에 있는 이미지 URL (없으면 null)\"\n"
+    "    }\n"
+    "  ]\n"
+    "}\n\n"
+    "[언어 지침]\n"
+    "- kor_ 접두사 필드는 반드시 한국어, eng_ 접두사 필드는 반드시 영어를 사용하십시오.\n"
+    "- 기술 용어는 원어를 병기하되 문맥은 전문적인 한국어 저널리즘 톤을 유지하십시오."
 )
-
 
 # 모드 C: 하이브리드 (영문 분석만 요청)
 PROMPT_MODE_C = (
@@ -340,9 +342,8 @@ def process_macro_synthesis(limit_per_cat=15, mode="A", source="rss"):
         logger.error(" [!] No category files generated.")
         return False
 
-    # [V6.3] 기사 수에 따른 자동 분할 로직 (Job Splitting)
-    # NLM 안정성을 위해 임계값을 8에서 5로 하향 (기사가 6개 이상이면 분할)
-    final_category_files = _split_articles_into_batches(category_files, threshold=5)
+    # NLM 안정성을 위해 임계값을 5에서 4로 추가 하향 (기사가 5개 이상이면 분할)
+    final_category_files = _split_articles_into_batches(category_files, threshold=4)
     
     jobs_file = "automation/premium_jobs.json"
     active_jobs = {}

@@ -113,15 +113,79 @@ CLUSTER_MAP = {
     ]
 }
 
+def _parse_json_block(raw_text):
+    """[V14.0] 마크다운 내의 JSON 코드 블록을 추출하여 파싱"""
+    json_blocks = re.findall(r'```json\s*(.*?)\s*```', raw_text, re.DOTALL)
+    if not json_blocks:
+        # 백틱 없이 생으로 JSON만 있을 경우 대비
+        if raw_text.strip().startswith('{') or raw_text.strip().startswith('['):
+            json_blocks = [raw_text.strip()]
+        else:
+            return None
+
+    all_articles = []
+    for block in json_blocks:
+        try:
+            # [BUG FIX] // 주석 제거 로직이 URL(https://)을 파괴하여 JSON 파싱 실패 유도 방지
+            data = json.loads(block)
+            
+            # 단일 객체인 경우 리스트로 변환
+            if isinstance(data, dict):
+                # 'articles' 키 안에 기사 목록이 있는 구조 대응
+                if 'articles' in data and isinstance(data['articles'], list):
+                    data = data['articles']
+                else:
+                    data = [data]
+            
+            if isinstance(data, list):
+                for item in data:
+                    processed = _post_process_json_item(item)
+                    if processed:
+                        all_articles.append(processed)
+        except Exception as e:
+            logger.warning(f" [!] JSON block parsing failed: {e}")
+            continue
+    
+    return all_articles if all_articles else None
+
+
+def _post_process_json_item(item):
+    """JSON 아이템을 시스템 표준 dict 구조로 변환 및 보충"""
+    article = {}
+    for k, v in item.items():
+        # 필드명 정규화 (FIELD_MAP 활용)
+        norm_k = k.upper().replace(" ", "").replace("_", "").replace("-", "")
+        mapped_key = None
+        for ref_k, ref_v in FIELD_MAP.items():
+            if ref_k.upper().replace(" ", "").replace("_", "").replace("-", "") == norm_k:
+                mapped_key = ref_v
+                break
+        
+        if mapped_key:
+            _store_field(article, mapped_key, str(v) if not isinstance(v, (list, dict)) else v, is_raw_mapped=True)
+        else:
+            # 매핑되지 않은 필드도 일단 보관 (커스텀 필드 대응)
+            article[k.lower()] = v
+
+    return _post_process(article) if article else None
+
 
 def parse_structured_articles(raw_text):
     """
-    모드 B 전용: ---ARTICLE_START--- / ---ARTICLE_END--- 구분자 기반 파싱.
+    모드 B 전용: JSON 블록(V14.0) 또는 ---ARTICLE_START--- 구분자(V13.0) 기반 파싱.
     """
     if not raw_text:
         logger.error("Empty text received for parsing.")
         return []
 
+    # [V14.0] 1순위: JSON 블록 파싱 시도
+    articles = _parse_json_block(raw_text)
+    if articles:
+        logger.info(f"Successfully parsed {len(articles)} articles using JSON engine (V14.0).")
+        return articles
+
+    # [V13.0] 2순위: 기존 정규식 기반 구분자 파싱 (Fallback)
+    logger.info("JSON block not found or failed. Falling back to Regex parser (V13.0).")
     pattern = r'(?i)(?:---|\*?\s*\*\*?)?ARTICLE_START(?:---|\*\*?)?[:：]?\s*(.*?)(?:---|\*?\s*\*\*?)?ARTICLE_END(?:---|\*\*?)?[:：]?'
     blocks = re.findall(pattern, raw_text, re.DOTALL)
 
@@ -231,9 +295,13 @@ def _parse_single_block(block_text):
     return _post_process(article) if article else None
 
 
-def _store_field(article, field_name, value):
+def _store_field(article, field_name, value, is_raw_mapped=False):
     """필드명을 매핑하여 article dict에 저장"""
-    mapped_key = FIELD_MAP.get(field_name)
+    if is_raw_mapped:
+        mapped_key = field_name
+    else:
+        mapped_key = FIELD_MAP.get(field_name)
+        
     if not mapped_key: return
 
     value = value.replace("**", "").strip()
