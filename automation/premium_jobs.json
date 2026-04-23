@@ -5,17 +5,11 @@
         "mode": "B",
         "status": "published",
         "triggered_at": "2026-04-23T17:02:05.400709",
+        "published_at": "2026-04-23T21:35:39.837928",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/04/23/markets-sk-hynix-shatters-records-with-525-trillio/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/markets-sk-hynix-shatters-records-with-525-trillio/",
-            "https://news.lego-sia.com/posts/2026/04/23/hardware-tsmc-unveils-a13-node-as-direct-successor/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-tsmc-unveils-a13-node-as-direct-successor/",
-            "https://news.lego-sia.com/posts/2026/04/23/ai-jedec-expands-lpddr6-roadmap-with-512-gb-densit/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/ai-jedec-expands-lpddr6-roadmap-with-512-gb-densit/",
-            "https://news.lego-sia.com/posts/2026/04/23/ai-bolt-graphics-achieves-zeus-gpu-tape-out-target/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/ai-bolt-graphics-achieves-zeus-gpu-tape-out-target/"
-        ],
-        "published_at": "2026-04-23T17:04:46.203411"
+            "https://news.lego-sia.com/posts/2026/04/23/hardware-bolt-graphics-achieves-zeus-gpu-tape-out/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-bolt-graphics-achieves-zeus-gpu-tape-out/"
+        ]
     },
     "hardware_part2": {
         "notebook_id": "b14cdbdc-fa23-4a97-8141-2f55f5ca2338",
@@ -23,17 +17,8 @@
         "mode": "B",
         "status": "published",
         "triggered_at": "2026-04-23T17:02:12.793020",
-        "urls": [
-            "https://news.lego-sia.com/posts/2026/04/23/hardware-amd-architecture-pivot-ryzen-9-9950x3d2-d/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-amd-architecture-pivot-ryzen-9-9950x3d2-d/",
-            "https://news.lego-sia.com/posts/2026/04/23/ai-google-cloud-next-2026-the-bifurcated-future-of/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/ai-google-cloud-next-2026-the-bifurcated-future-of/",
-            "https://news.lego-sia.com/posts/2026/04/23/insights-the-lpcamm2-revolution-framework-laptop-1/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/insights-the-lpcamm2-revolution-framework-laptop-1/",
-            "https://news.lego-sia.com/posts/2026/04/23/hardware-the-final-cut-macos-27-drops-intel-suppor/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-the-final-cut-macos-27-drops-intel-suppor/"
-        ],
-        "published_at": "2026-04-23T17:04:52.730790"
+        "published_at": "2026-04-23T21:35:42.096747",
+        "urls": []
     },
     "ai_part1": {
         "notebook_id": "124cfcba-7a33-406e-a13d-f5d397750fcd",
@@ -41,17 +26,8 @@
         "mode": "B",
         "status": "published",
         "triggered_at": "2026-04-23T17:01:50.143405",
-        "urls": [
-            "https://news.lego-sia.com/posts/2026/04/23/hardware-cadence-nvidia-google-cloud-alliance-pion/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-cadence-nvidia-google-cloud-alliance-pion/",
-            "https://news.lego-sia.com/posts/2026/04/23/ai-commvault-unveils-ai-protect-the-essential-ctrl/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/ai-commvault-unveils-ai-protect-the-essential-ctrl/",
-            "https://news.lego-sia.com/posts/2026/04/23/insights-stanford-ai-index-2026-closing-the-us-chi/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/insights-stanford-ai-index-2026-closing-the-us-chi/",
-            "https://news.lego-sia.com/posts/2026/04/23/hardware-googles-multi-billion-dollar-bet-on-think/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-googles-multi-billion-dollar-bet-on-think/"
-        ],
-        "published_at": "2026-04-23T17:06:29.870506"
+        "published_at": "2026-04-23T21:35:44.442385",
+        "urls": []
     },
     "ai_part2": {
         "notebook_id": "6f4e6919-39c7-430c-8461-478b9976f7d7",
@@ -59,17 +35,8 @@
         "mode": "B",
         "status": "published",
         "triggered_at": "2026-04-23T17:01:58.173214",
-        "urls": [
-            "https://news.lego-sia.com/posts/2026/04/23/insights-googles-32b-strategic-gambit-forging-an-a/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/insights-googles-32b-strategic-gambit-forging-an-a/",
-            "https://news.lego-sia.com/posts/2026/04/23/ai-launching-the-gemini-enterprise-agent-platform/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/ai-launching-the-gemini-enterprise-agent-platform/",
-            "https://news.lego-sia.com/posts/2026/04/23/ai-anthropics-mythos-surpasses-human-benchmarks-27/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/ai-anthropics-mythos-surpasses-human-benchmarks-27/",
-            "https://news.lego-sia.com/posts/2026/04/23/hardware-googles-dual-tpu-strategy-custom-silicon/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-googles-dual-tpu-strategy-custom-silicon/"
-        ],
-        "published_at": "2026-04-23T17:07:47.391080"
+        "published_at": "2026-04-23T21:35:46.557830",
+        "urls": []
     },
     "insights_part1": {
         "notebook_id": "04440e54-0091-4438-87d5-bfcc9d7b8eaa",
@@ -77,17 +44,8 @@
         "mode": "B",
         "status": "published",
         "triggered_at": "2026-04-23T17:02:19.875663",
-        "urls": [
-            "https://news.lego-sia.com/posts/2026/04/23/ai-article-1/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/ai-article-1/",
-            "https://news.lego-sia.com/posts/2026/04/23/ai-article-2/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/ai-article-2/",
-            "https://news.lego-sia.com/posts/2026/04/23/ai-article-3/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/ai-article-3/",
-            "https://news.lego-sia.com/posts/2026/04/23/ai-article-4/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/ai-article-4/"
-        ],
-        "published_at": "2026-04-23T17:10:20.316891"
+        "published_at": "2026-04-23T21:35:48.858422",
+        "urls": []
     },
     "insights_part2": {
         "notebook_id": "cc00e135-a114-4d22-b31b-b8f0b4a0b368",
@@ -95,14 +53,12 @@
         "mode": "B",
         "status": "published",
         "triggered_at": "2026-04-23T17:02:27.152973",
+        "published_at": "2026-04-23T21:35:57.915915",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/04/23/insights-article-1/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/insights-article-1/",
-            "https://news.lego-sia.com/posts/2026/04/23/hardware-article-3/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-article-3/",
-            "https://news.lego-sia.com/posts/2026/04/23/insights-article-4/",
-            "https://news.lego-sia.com/en/posts/2026/04/23/insights-article-4/"
-        ],
-        "published_at": "2026-04-23T17:12:26.405134"
+            "https://news.lego-sia.com/posts/2026/04/23/ai-recovery-openai/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/ai-recovery-openai/",
+            "https://news.lego-sia.com/posts/2026/04/23/hardware-recovery-jal/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-recovery-jal/"
+        ]
     }
 }

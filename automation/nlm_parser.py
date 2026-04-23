@@ -138,17 +138,23 @@ def _parse_single_block(block_text):
 
     for line in lines:
         # 필드 추출 정규식: 시작 부분부터 매칭하며, 필드명 앞뒤의 마크다운 기호를 유연하게 처리
-        match = re.match(r'(?i)^\s*(?:\d+[\.)]\s*)?[\*\*_\[]*([A-Z\s/_]{2,})[\*\*_\]]*[:：]\s*(.*)', line)
+        # [V12.1] 콜론이 없거나 마크다운 헤더(#) 형태인 경우에도 필드명(FIELD_MAP)이면 매칭되도록 유연화
+        match = re.match(r'(?i)^\s*(?:\d+[\.)]\s*)?[#\*\*_\[]*([A-Z\s/_]{2,})[#\*\*_\]]*\s*[:：]?\s*(.*)', line)
         
         found_key = None
         if match:
             potential_field = match.group(1).upper().replace(" ", "").replace("_", "")
+            # 매칭된 텍스트가 실제로 FIELD_MAP에 존재하는 키의 변형인지 검증
             sorted_keys = sorted(FIELD_MAP.keys(), key=len, reverse=True)
             for k in sorted_keys:
                 normalized_k = k.upper().replace(" ", "").replace("_", "")
                 if normalized_k == potential_field:
                     found_key = k
                     break
+            
+            # [V12.0] 콜론이 없는데 FIELD_MAP에도 없는 일반 텍스트면 매칭 무효화 (오탐 방지)
+            if found_key and ":" not in line and "：" not in line and potential_field not in [k.upper().replace(" ", "").replace("_", "") for k in FIELD_MAP.keys()]:
+                found_key = None
         
         if found_key:
             if current_field:
@@ -293,21 +299,31 @@ def _post_process(article):
                    (article.get("synthesis") and len(article.get("synthesis", "")) > 10) or \
                    (article.get("kor_summary") and len(str(article.get("kor_summary", ""))) > 10)
     
-    if (not article.get("kor_title") or article.get("kor_title") == article.get("eng_title")) and has_kor_text:
-        # 소스 우선 순위: 본문 > 인사이트 > 요약
-        source_text = article.get("kor_content") or article.get("kor_insight") or article.get("synthesis") or ""
-        if not source_text and article.get("kor_summary"):
-            source_text = "\n".join(article["kor_summary"]) if isinstance(article["kor_summary"], list) else article["kor_summary"]
+    if (not article.get("kor_title") or article.get("kor_title").startswith("심층 분석") or article.get("kor_title") == article.get("eng_title")) and has_kor_text:
+        # 소스 우선 순위: 한글 본문 > 인사이트 > 요약 > 영문 본문(파싱 오류 대비)
+        source_candidates = [
+            article.get("kor_content"), 
+            article.get("kor_insight"), 
+            article.get("synthesis"), 
+            "\n".join(article["kor_summary"]) if isinstance(article.get("kor_summary"), list) else article.get("kor_summary"),
+            article.get("eng_content") # [V12.0] 파싱 오류로 한글이 영문 필드에 들어간 경우 대응
+        ]
+        
+        for source_text in source_candidates:
+            if not source_text or len(source_text) < 10: continue
             
-        content_lines = [l.strip() for l in source_text.split("\n") if l.strip()]
-        for line in content_lines[:3]:
-            clean_line = line.strip("#").strip("*").strip()
-            first_sentence = re.split(r'[.!?]\s+', clean_line)[0]
-            # 너무 짧은 헤더(배경, 요약 등)는 무시하고 더 유의미한 내용을 찾음
-            if any('\uac00' <= char <= '\ud7a3' for char in first_sentence) and len(first_sentence) > 5:
-                # 제목 길이 제한 80자로 확장 (v11.6)
-                article["kor_title"] = first_sentence[:80].strip() + "..." if len(first_sentence) > 80 else first_sentence.strip()
-                break
+            content_lines = [l.strip() for l in source_text.split("\n") if l.strip()]
+            found = False
+            for line in content_lines[:5]: # 상위 5줄까지 탐색 범위 확장
+                clean_line = line.strip("#").strip("*").strip()
+                # 문장 단위로 분리하여 첫 문장 추출
+                first_sentence = re.split(r'[.!?]\s+', clean_line)[0]
+                # 한글 포함 여부 및 유의미한 길이 확인
+                if any('\uac00' <= char <= '\ud7a3' for char in first_sentence) and len(first_sentence) > 5:
+                    article["kor_title"] = first_sentence[:80].strip() + "..." if len(first_sentence) > 80 else first_sentence.strip()
+                    found = True
+                    break
+            if found: break
 
     # 3. 콘텐츠 보존: kor_content가 비어있는데 다른 한글 필드가 있다면 복구
     if not article.get("kor_content") or len(article["kor_content"]) < 20:
