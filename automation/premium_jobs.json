@@ -1,50 +1,114 @@
 {
     "hardware_part1": {
-        "notebook_id": "67ea4dc9-cad2-4c13-b673-b8285bab8270",
+        "notebook_id": "658f7c76-2661-4193-b2af-3e7c8a6c20ca",
         "title": "2026-04-23 hardware Analysis (part1)",
         "mode": "B",
-        "status": "pending",
-        "triggered_at": "2026-04-23T17:02:05.400709",
-        "published_at": "2026-04-23T21:35:39.837928"
+        "status": "published",
+        "triggered_at": "2026-04-23T23:03:31.377300",
+        "urls": [
+            "https://news.lego-sia.com/posts/2026/04/23/hardware-recovery-1\n- ENG_TITLE: Intel to Disrupt /",
+            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-recovery-1\n- ENG_TITLE: Intel to Disrupt /",
+            "https://news.lego-sia.com/posts/2026/04/23/ai-article-2---engtitle-kioxia-unveils-eg7-series/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/ai-article-2---engtitle-kioxia-unveils-eg7-series/",
+            "https://news.lego-sia.com/posts/2026/04/23/insights-recovery-8-bics-flash-0/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/insights-recovery-8-bics-flash-0/",
+            "https://news.lego-sia.com/posts/2026/04/23/ai-article-3---engtitle-linux-kernel-patch-resurre/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/ai-article-3---engtitle-linux-kernel-patch-resurre/",
+            "https://news.lego-sia.com/posts/2026/04/23/hardware-recovery-0/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-recovery-0/",
+            "https://news.lego-sia.com/posts/2026/04/23/ai-article-4---engtitle-johny-srouji-appointed-app/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/ai-article-4---engtitle-johny-srouji-appointed-app/"
+        ],
+        "published_at": "2026-04-23T23:09:59.228690"
     },
     "hardware_part2": {
-        "notebook_id": "b14cdbdc-fa23-4a97-8141-2f55f5ca2338",
+        "notebook_id": "cdee2b16-538f-4c2d-a8d0-372d552714da",
         "title": "2026-04-23 hardware Analysis (part2)",
         "mode": "B",
-        "status": "pending",
-        "triggered_at": "2026-04-23T17:02:12.793020",
-        "published_at": "2026-04-23T21:35:42.096747"
+        "status": "published",
+        "triggered_at": "2026-04-23T23:03:39.942661",
+        "urls": [
+            "https://news.lego-sia.com/posts/2026/04/23/hardware-nvidia-n1-engineering-motherboard-arm-bas/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-nvidia-n1-engineering-motherboard-arm-bas/",
+            "https://news.lego-sia.com/posts/2026/04/23/hardware-xai-colossus-2-scaling-to-the-worlds-firs/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-xai-colossus-2-scaling-to-the-worlds-firs/",
+            "https://news.lego-sia.com/posts/2026/04/23/hardware-nvidia-rubin-cpx-specialized-accelerator/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-nvidia-rubin-cpx-specialized-accelerator/",
+            "https://news.lego-sia.com/posts/2026/04/23/insights-huawei-ascend-production-ramp-overcoming/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/insights-huawei-ascend-production-ramp-overcoming/"
+        ],
+        "published_at": "2026-04-23T23:10:26.567236"
     },
     "ai_part1": {
-        "notebook_id": "124cfcba-7a33-406e-a13d-f5d397750fcd",
+        "notebook_id": "3352eb9e-5c19-4d66-891b-d51f07436404",
         "title": "2026-04-23 ai Analysis (part1)",
         "mode": "B",
-        "status": "pending",
-        "triggered_at": "2026-04-23T17:01:50.143405",
-        "published_at": "2026-04-23T21:35:44.442385"
+        "status": "published",
+        "triggered_at": "2026-04-23T23:03:16.398145",
+        "urls": [
+            "https://news.lego-sia.com/posts/2026/04/23/markets-spacex-executes-preemptive-strike-on-ai-co/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/markets-spacex-executes-preemptive-strike-on-ai-co/",
+            "https://news.lego-sia.com/posts/2026/04/23/insights-openai-and-infosys-forge-strategic-allian/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/insights-openai-and-infosys-forge-strategic-allian/",
+            "https://news.lego-sia.com/posts/2026/04/23/ai-reversing-the-economic-advantage-how-ai-is-shif/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/ai-reversing-the-economic-advantage-how-ai-is-shif/",
+            "https://news.lego-sia.com/posts/2026/04/23/ai-from-demo-to-deployment-cloudflares-agent-cloud/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/ai-from-demo-to-deployment-cloudflares-agent-cloud/"
+        ],
+        "published_at": "2026-04-23T23:11:56.453309"
     },
     "ai_part2": {
-        "notebook_id": "6f4e6919-39c7-430c-8461-478b9976f7d7",
+        "notebook_id": "93a34e84-31c9-45b9-9764-533b6e33978a",
         "title": "2026-04-23 ai Analysis (part2)",
         "mode": "B",
-        "status": "pending",
-        "triggered_at": "2026-04-23T17:01:58.173214",
-        "published_at": "2026-04-23T21:35:46.557830"
+        "status": "published",
+        "triggered_at": "2026-04-23T23:03:23.858588",
+        "urls": [
+            "https://news.lego-sia.com/posts/2026/04/23/hardware-coreweave-secures-multiyear-infrastructur/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-coreweave-secures-multiyear-infrastructur/",
+            "https://news.lego-sia.com/posts/2026/04/23/insights-the-rise-of-agentic-ai-why-autonomous-sys/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/insights-the-rise-of-agentic-ai-why-autonomous-sys/",
+            "https://news.lego-sia.com/posts/2026/04/23/ai-hpe-accelerates-quantum-readiness-strategy-to-s/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/ai-hpe-accelerates-quantum-readiness-strategy-to-s/",
+            "https://news.lego-sia.com/posts/2026/04/23/ai-cisco-acquires-galileo-to-integrate-advanced-ai/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/ai-cisco-acquires-galileo-to-integrate-advanced-ai/"
+        ],
+        "published_at": "2026-04-23T23:11:58.995316"
     },
     "insights_part1": {
-        "notebook_id": "04440e54-0091-4438-87d5-bfcc9d7b8eaa",
+        "notebook_id": "54a38662-4f93-46c2-9814-0ba5a4f317d8",
         "title": "2026-04-23 insights Analysis (part1)",
         "mode": "B",
-        "status": "pending",
-        "triggered_at": "2026-04-23T17:02:19.875663",
-        "published_at": "2026-04-23T21:35:48.858422"
+        "status": "published",
+        "triggered_at": "2026-04-23T23:03:47.383539",
+        "urls": [
+            "https://news.lego-sia.com/posts/2026/04/23/hardware-the-evolution-of-arch-based-distributions/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-the-evolution-of-arch-based-distributions/",
+            "https://news.lego-sia.com/posts/2026/04/23/ai-beyond-regex-mastering-structural-code-manipula/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/ai-beyond-regex-mastering-structural-code-manipula/",
+            "https://news.lego-sia.com/posts/2026/04/23/hardware-the-failed-synthesis-analyzing-the-obsole/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-the-failed-synthesis-analyzing-the-obsole/",
+            "https://news.lego-sia.com/posts/2026/04/23/hardware-navigational-superpowers-the-efficiency-o/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-navigational-superpowers-the-efficiency-o/"
+        ],
+        "published_at": "2026-04-23T23:12:02.343976"
     },
     "insights_part2": {
-        "notebook_id": "cc00e135-a114-4d22-b31b-b8f0b4a0b368",
+        "notebook_id": "b40214dd-bd42-4ee4-8ba4-010be33f2434",
         "title": "2026-04-23 insights Analysis (part2)",
         "mode": "B",
-        "status": "pending",
-        "triggered_at": "2026-04-23T17:02:27.152973",
-        "published_at": "2026-04-23T21:35:57.915915"
+        "status": "published",
+        "triggered_at": "2026-04-23T23:03:55.080428",
+        "urls": [
+            "https://news.lego-sia.com/posts/2026/04/23/insights-recovery-2026-1/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/insights-recovery-2026-1/",
+            "https://news.lego-sia.com/posts/2026/04/23/hardware-recovery-3d-2/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/hardware-recovery-3d-2/",
+            "https://news.lego-sia.com/posts/2026/04/23/insights-recovery-pdf-3/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/insights-recovery-pdf-3/",
+            "https://news.lego-sia.com/posts/2026/04/23/insights-recovery-nssk-4/",
+            "https://news.lego-sia.com/en/posts/2026/04/23/insights-recovery-nssk-4/"
+        ],
+        "published_at": "2026-04-23T23:12:41.845886"
     }
 }
