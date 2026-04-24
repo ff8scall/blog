@@ -1,10 +1,10 @@
 ﻿---
 title: "Zenflow Work: Zencoder Unveils AI Orchestration Layer to Automate Non-Coding Software Workflows"
-date: "2026-04-24T00:04:18Z"
+date: "2026-04-24T00:42:03Z"
 description: "Zencoder, formally known as For Good AI Inc., has launched Zenflow Work, a specialized AI orchestration layer designed to handle the critical 'surrounding work'—the business and administrative tasks that traditional coding agents fail to address."
 image: "/images/posts/2026/04/24/ai-zenflow-work-zencoder-unveils-ai-orchestration.jpg"
 clusters: ["ai"]
-tags: "Zencoder, Zenflow Work, AI Orchestration, Software Development, Workflow Automation"
+tags: ["Zencoder", "Zenflow Work", "AI Orchestration", "Software Development", "Workflow Automation"]
 featured: false
 ---
 ## Executive Summary

@@ -1,10 +1,10 @@
 ﻿---
 title: "Nutanix Vision: Agentic Infrastructure as the New Organizing Logic for Enterprise Computing"
-date: "2026-04-24T00:04:39Z"
+date: "2026-04-24T00:42:23Z"
 description: "Nutanix CEO Rajiv Ramaswami has articulated a future where 'Agentic Infrastructure' serves as the fundamental organizing logic for enterprise applications, moving beyond simple workload hosting to active agent orchestration."
 image: "/images/posts/2026/04/24/ai-nutanix-vision-agentic-infrastructure-as-the-ne.jpg"
 clusters: ["ai"]
-tags: "Nutanix, Agentic Infrastructure, Enterprise Computing, Data Pipeline Governance, AI Orchestration"
+tags: ["Nutanix", "Agentic Infrastructure", "Enterprise Computing", "Data Pipeline Governance", "AI Orchestration"]
 featured: false
 ---
 ## Executive Summary

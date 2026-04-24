@@ -1,10 +1,10 @@
 ﻿---
 title: "젠코더(Zencoder), 비코딩 업무 자동화를 위한 AI 오케스트레이션 플랫폼 ‘젠플로우 워크’ 공개"
-date: "2026-04-24T09:04:13+09:00"
+date: "2026-04-24T09:41:58+09:00"
 description: "소프트웨어 개발 스타트업 젠코더(For Good AI Inc.)가 코딩 에이전트의 사각지대인 ‘비코딩 주변 업무’를 자동화하는 ‘젠플로우 워크(Zenflow Work)’를 출시했다."
 image: "/images/posts/2026/04/24/ai-zenflow-work-zencoder-unveils-ai-orchestration.jpg"
 clusters: ["ai"]
-tags: "젠코더, AI 오케스트레이션, 비코딩 자동화, 젠플로우 워크, 개발 생산성"
+tags: ["젠코더", "AI 오케스트레이션", "비코딩 자동화", "젠플로우 워크", "개발 생산성"]
 featured: false
 ---
 ## 핵심 요약

@@ -1,10 +1,10 @@
 ﻿---
 title: "앤스로픽(Anthropic), ‘클로드 매니지드 에이전트’ 공개… 인프라 구축 생략으로 AI 배포 가속화"
-date: "2026-04-24T09:04:23+09:00"
+date: "2026-04-24T09:42:08+09:00"
 description: "앤스로픽이 AI 에이전트 구축 시 필요한 복잡한 기초 인프라(Scaffolding)를 대신 관리해 주는 클라우드 서비스 ‘클로드 매니지드 에이전트’를 출시했다."
 image: "/images/posts/2026/04/24/ai-anthropic-debuts-claude-managed-agents-to-strea.jpg"
 clusters: ["ai"]
-tags: "앤스로픽, 클로드 매니지드 에이전트, AI 에이전트 인프라, 스캐폴딩 자동화, 클라우드 에이전트"
+tags: ["앤스로픽", "클로드 매니지드 에이전트", "AI 에이전트 인프라", "스캐폴딩 자동화", "클라우드 에이전트"]
 featured: false
 ---
 ## 핵심 요약

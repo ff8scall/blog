@@ -22,6 +22,9 @@ FIELD_MAP = {
     "ENGLISH_TITLE": "eng_title",
     "KOR_TITLE": "kor_title",
     "KOREAN_TITLE": "kor_title",
+    "KOR_TITLE": "kor_title",
+    "ENG_TITLE": "eng_title",
+    "ENGLISH_TITLE": "eng_title",
     "TITLE_KR": "kor_title",
     "TITLE_EN": "eng_title",
     "TITLE": "eng_title",
@@ -36,8 +39,6 @@ FIELD_MAP = {
     "SUMMARY": "eng_summary",
     "ENG_CONTENT": "eng_content",
     "ENGLISH_CONTENT": "eng_content",
-    "ENGLISH_CONTENT_SYNTHESIS": "eng_content",
-    "SYNTHESIS": "eng_content",
     "KOR_CONTENT": "kor_content",
     "KOREAN_CONTENT": "kor_content",
     "CONTENT": "eng_content",
@@ -52,6 +53,8 @@ FIELD_MAP = {
     "KEYWORDS_KR": "kor_keywords",
     "KOREAN_KEYWORDS": "kor_keywords",
     "KEYWORDS": "eng_keywords",
+    "KOR_KEYWORDS": "kor_keywords",
+    "ENG_KEYWORDS": "eng_keywords",
     "IMAGE_PROMPT": "image_prompt_core",
     "ORIGINAL_IMAGE": "original_image",
     "ORIGINAL_IMAGE_URL": "original_image",
@@ -399,6 +402,16 @@ def _post_process(article):
 
     article["kor_summary"] = clean_summary(article.get("kor_summary", []))
     article["eng_summary"] = clean_summary(article.get("eng_summary", []))
+
+    # [V14.1] 키워드 필드가 리스트임을 최종 보장 (빌드 에러 방지)
+    for k_field in ["kor_keywords", "eng_keywords"]:
+        val = article.get(k_field, [])
+        if isinstance(val, str):
+            article[k_field] = [x.strip() for x in val.split(",") if x.strip()]
+        elif val is None:
+            article[k_field] = []
+        elif not isinstance(val, list):
+            article[k_field] = [str(val)]
     
     if not article.get("kor_summary") and article.get("kor_content"):
         paragraphs = [p.strip() for p in article["kor_content"].split("\n") if p.strip() and not p.startswith("#")]
