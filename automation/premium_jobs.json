@@ -1,39 +1,33 @@
 {
     "hardware_part1": {
-        "notebook_id": "851a3aaa-e971-4ef1-98c9-0bc09d9d6258",
+        "notebook_id": "73efeb5b-5474-4518-9689-21165bbdbc17",
         "title": "2026-04-25 hardware Analysis (part1)",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-04-25T11:01:52.282489",
+        "triggered_at": "2026-04-25T17:01:18.191641",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/04/25/hardware-samsung-night-shift-production-plummets-5/",
-            "https://news.lego-sia.com/en/posts/2026/04/25/hardware-samsung-night-shift-production-plummets-5/",
-            "https://news.lego-sia.com/posts/2026/04/25/ai-japanese-government-subsidizes-softbank-and-int/",
-            "https://news.lego-sia.com/en/posts/2026/04/25/ai-japanese-government-subsidizes-softbank-and-int/",
-            "https://news.lego-sia.com/posts/2026/04/25/markets-semiconductor-packaging-costs-outpace-foun/",
-            "https://news.lego-sia.com/en/posts/2026/04/25/markets-semiconductor-packaging-costs-outpace-foun/",
-            "https://news.lego-sia.com/posts/2026/04/25/ai-google-cloud-announces-workload-specialized-tpu/",
-            "https://news.lego-sia.com/en/posts/2026/04/25/ai-google-cloud-announces-workload-specialized-tpu/"
+            "https://news.lego-sia.com/posts/2026/04/25/hardware-princeton-researchers-unveil-3d-bioelectr/",
+            "https://news.lego-sia.com/en/posts/2026/04/25/hardware-princeton-researchers-unveil-3d-bioelectr/",
+            "https://news.lego-sia.com/posts/2026/04/25/hardware-neo-semiconductor-validates-3d-x-dram-poc/",
+            "https://news.lego-sia.com/en/posts/2026/04/25/hardware-neo-semiconductor-validates-3d-x-dram-poc/",
+            "https://news.lego-sia.com/posts/2026/04/25/markets-inference-and-agentic-ai-drive-cpu-demand/",
+            "https://news.lego-sia.com/en/posts/2026/04/25/markets-inference-and-agentic-ai-drive-cpu-demand/"
         ],
-        "published_at": "2026-04-25T11:03:53.092678"
+        "published_at": "2026-04-25T17:03:00.681933"
     },
     "hardware_part2": {
-        "notebook_id": "a5800637-97c2-4240-aeeb-7732df453d0e",
+        "notebook_id": "146cf275-461e-4cd9-8c14-1bb0069784ad",
         "title": "2026-04-25 hardware Analysis (part2)",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-04-25T11:02:00.769542",
+        "triggered_at": "2026-04-25T17:01:25.641525",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/04/25/hardware-tsmc-2nm-n2p-node-and-m31-partnership-suc/",
-            "https://news.lego-sia.com/en/posts/2026/04/25/hardware-tsmc-2nm-n2p-node-and-m31-partnership-suc/",
-            "https://news.lego-sia.com/posts/2026/04/25/markets-2026-notebook-market-evolution-bom-managem/",
-            "https://news.lego-sia.com/en/posts/2026/04/25/markets-2026-notebook-market-evolution-bom-managem/",
-            "https://news.lego-sia.com/posts/2026/04/25/hardware-strait-of-hormuz-blockade-triggers-photor/",
-            "https://news.lego-sia.com/en/posts/2026/04/25/hardware-strait-of-hormuz-blockade-triggers-photor/",
-            "https://news.lego-sia.com/posts/2026/04/25/hardware-tsmc-advanced-packaging-equipment-reshuff/",
-            "https://news.lego-sia.com/en/posts/2026/04/25/hardware-tsmc-advanced-packaging-equipment-reshuff/"
+            "https://news.lego-sia.com/posts/2026/04/25/hardware-landmark-optoelectronics-scales-strategic/",
+            "https://news.lego-sia.com/en/posts/2026/04/25/hardware-landmark-optoelectronics-scales-strategic/",
+            "https://news.lego-sia.com/posts/2026/04/25/hardware-horizon-robotics-challenges-tesla-with-co/",
+            "https://news.lego-sia.com/en/posts/2026/04/25/hardware-horizon-robotics-challenges-tesla-with-co/"
         ],
-        "published_at": "2026-04-25T11:05:50.043917"
+        "published_at": "2026-04-25T17:03:03.329658"
     },
     "ai_part1": {
         "notebook_id": "12306803-b68a-4619-b729-900e44a04e5a",
@@ -132,21 +126,15 @@
         "published_at": "2026-04-24T09:52:00.578986"
     },
     "insights": {
-        "notebook_id": "c3b9d6fa-738f-4c3c-993e-a10d207a402f",
-        "title": "2026-04-24 insights Analysis",
+        "notebook_id": "e5d5464d-0828-436d-9841-a2ecd5d915e7",
+        "title": "2026-04-25 insights Analysis",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-04-24T11:01:45.538763",
+        "triggered_at": "2026-04-25T17:01:34.812325",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/04/24/ai-openai-gpt-55-advancing-agentic-ai-for-complex/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/ai-openai-gpt-55-advancing-agentic-ai-for-complex/",
-            "https://news.lego-sia.com/posts/2026/04/24/hardware-japan-strategically-expands-domestic-dron/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/hardware-japan-strategically-expands-domestic-dron/",
-            "https://news.lego-sia.com/posts/2026/04/24/markets-japan-blocks-mbk-partners-acquisition-of-m/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/markets-japan-blocks-mbk-partners-acquisition-of-m/",
-            "https://news.lego-sia.com/posts/2026/04/24/insights-softbank-group-pivots-to-ai-services-via/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/insights-softbank-group-pivots-to-ai-services-via/"
+            "https://news.lego-sia.com/posts/2026/04/25/insights-uzbekistans-digital-strategy-leveraging-t/",
+            "https://news.lego-sia.com/en/posts/2026/04/25/insights-uzbekistans-digital-strategy-leveraging-t/"
         ],
-        "published_at": "2026-04-24T11:08:17.845840"
+        "published_at": "2026-04-25T17:03:12.025930"
     }
 }
