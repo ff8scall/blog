@@ -94,47 +94,57 @@
         "published_at": "2026-04-25T11:10:44.169580"
     },
     "ai": {
-        "notebook_id": "c7f419a0-eaf1-4ad1-86b1-d2f5ae5fca04",
-        "title": "2026-04-24 ai Analysis",
+        "notebook_id": "0c7d6b0b-4d27-4eea-ad23-fa38f002c010",
+        "title": "2026-04-25 ai Analysis",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-04-24T08:07:02.440623",
+        "triggered_at": "2026-04-25T23:01:26.065159",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/04/24/ai-zenflow-work-zencoder-unveils-ai-orchestration/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/ai-zenflow-work-zencoder-unveils-ai-orchestration/",
-            "https://news.lego-sia.com/posts/2026/04/24/ai-anthropic-debuts-claude-managed-agents-to-strea/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/ai-anthropic-debuts-claude-managed-agents-to-strea/",
-            "https://news.lego-sia.com/posts/2026/04/24/ai-nutanix-vision-agentic-infrastructure-as-the-ne/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/ai-nutanix-vision-agentic-infrastructure-as-the-ne/"
+            "https://news.lego-sia.com/posts/2026/04/25/insights-palantirs-identity-crisis-leaked-messages/",
+            "https://news.lego-sia.com/en/posts/2026/04/25/insights-palantirs-identity-crisis-leaked-messages/",
+            "https://news.lego-sia.com/posts/2026/04/25/ai-from-stanford-lab-to-1b-unicorn-james-zou-launc/",
+            "https://news.lego-sia.com/en/posts/2026/04/25/ai-from-stanford-lab-to-1b-unicorn-james-zou-launc/",
+            "https://news.lego-sia.com/posts/2026/04/25/hardware-meta-secures-multi-billion-dollar-amazon/",
+            "https://news.lego-sia.com/en/posts/2026/04/25/hardware-meta-secures-multi-billion-dollar-amazon/",
+            "https://news.lego-sia.com/posts/2026/04/25/markets-meta-and-microsoft-cut-23000-jobs-to-fuel/",
+            "https://news.lego-sia.com/en/posts/2026/04/25/markets-meta-and-microsoft-cut-23000-jobs-to-fuel/"
         ],
-        "published_at": "2026-04-24T09:51:58.342714"
+        "published_at": "2026-04-25T23:04:49.387938"
     },
     "hardware": {
-        "notebook_id": "3725a7a4-cb9c-45bc-a066-5a70ba87450a",
-        "title": "2026-04-24 hardware Analysis",
+        "notebook_id": "b93b1cc4-a076-4147-b7da-f97dced84d47",
+        "title": "2026-04-25 hardware Analysis",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-04-24T08:07:10.518820",
+        "triggered_at": "2026-04-25T23:01:33.470149",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/04/24/hardware-sk-hynix-signals-multi-year-hbm-supply-de/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/hardware-sk-hynix-signals-multi-year-hbm-supply-de/",
-            "https://news.lego-sia.com/posts/2026/04/24/hardware-intel-foundry-re-emergence-tesla-adopts-c/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/hardware-intel-foundry-re-emergence-tesla-adopts-c/",
-            "https://news.lego-sia.com/posts/2026/04/24/hardware-ai-driven-memory-restructuring-samsung-an/",
-            "https://news.lego-sia.com/en/posts/2026/04/24/hardware-ai-driven-memory-restructuring-samsung-an/"
+            "https://news.lego-sia.com/posts/2026/04/25/hardware-intels-discrete-gpu-pivot-xe3p-celestial/",
+            "https://news.lego-sia.com/en/posts/2026/04/25/hardware-intels-discrete-gpu-pivot-xe3p-celestial/",
+            "https://news.lego-sia.com/posts/2026/04/25/hardware-intel-vp-reveals-30-performance-overhead/",
+            "https://news.lego-sia.com/en/posts/2026/04/25/hardware-intel-vp-reveals-30-performance-overhead/",
+            "https://news.lego-sia.com/posts/2026/04/25/hardware-amd-expo-12-expansion-integrating-chinese/",
+            "https://news.lego-sia.com/en/posts/2026/04/25/hardware-amd-expo-12-expansion-integrating-chinese/",
+            "https://news.lego-sia.com/posts/2026/04/25/hardware-asus-zenbook-duo-2026-official-launch-a-2/",
+            "https://news.lego-sia.com/en/posts/2026/04/25/hardware-asus-zenbook-duo-2026-official-launch-a-2/"
         ],
-        "published_at": "2026-04-24T09:52:00.578986"
+        "published_at": "2026-04-25T23:04:53.164582"
     },
     "insights": {
-        "notebook_id": "e5d5464d-0828-436d-9841-a2ecd5d915e7",
+        "notebook_id": "a7afe7d3-21a8-4b8a-91af-fc3190101859",
         "title": "2026-04-25 insights Analysis",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-04-25T17:01:34.812325",
+        "triggered_at": "2026-04-25T23:01:40.993450",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/04/25/insights-uzbekistans-digital-strategy-leveraging-t/",
-            "https://news.lego-sia.com/en/posts/2026/04/25/insights-uzbekistans-digital-strategy-leveraging-t/"
+            "https://news.lego-sia.com/posts/2026/04/25/insights-mastering-the-terminal-8-essential-curl-w/",
+            "https://news.lego-sia.com/en/posts/2026/04/25/insights-mastering-the-terminal-8-essential-curl-w/",
+            "https://news.lego-sia.com/posts/2026/04/25/hardware-strengthening-3d-prints-the-science-of-ov/",
+            "https://news.lego-sia.com/en/posts/2026/04/25/hardware-strengthening-3d-prints-the-science-of-ov/",
+            "https://news.lego-sia.com/posts/2026/04/25/insights-reclaiming-control-enhancing-android-with/",
+            "https://news.lego-sia.com/en/posts/2026/04/25/insights-reclaiming-control-enhancing-android-with/",
+            "https://news.lego-sia.com/posts/2026/04/25/insights-human-centric-automation-transitioning-fr/",
+            "https://news.lego-sia.com/en/posts/2026/04/25/insights-human-centric-automation-transitioning-fr/"
         ],
-        "published_at": "2026-04-25T17:03:12.025930"
+        "published_at": "2026-04-25T23:04:57.813949"
     }
 }
