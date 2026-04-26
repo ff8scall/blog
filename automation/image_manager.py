@@ -5,6 +5,8 @@ import time
 import logging
 import re
 from datetime import datetime
+from PIL import Image
+import io
 
 logger = logging.getLogger("ImageManager")
 
@@ -54,9 +56,9 @@ def download_image(url, slug):
     save_dir = os.path.join(POST_IMAGE_ROOT, date_dir)
     os.makedirs(save_dir, exist_ok=True)
     
-    filename = f"{slug}.jpg"
-    save_path = os.path.join(save_dir, filename)
-    web_path = f"/images/posts/{date_dir}/{filename}"
+    filename_base = f"{slug}"
+    save_path = os.path.join(save_dir, f"{filename_base}.webp")
+    web_path = f"/images/posts/{date_dir}/{filename_base}.webp"
     
     try:
         # [V6.2] 정교한 헤더 설정 (Referer, Accept 등 추가)
@@ -80,9 +82,11 @@ def download_image(url, slug):
                 return None
                 
             content = resp.content
-            if len(content) > 2048: # 최소 2KB 이상 (너무 작은 파일은 깨진 것으로 간주)
-                with open(save_path, 'wb') as f: f.write(content)
-                logger.info(f" [Tier 1] [OK] Original Image Saved: {web_path}")
+            if len(content) > 1000:
+                # [V6.2] WebP 변환 및 저장 지원
+                with Image.open(io.BytesIO(content)) as img:
+                    img.save(save_path, "WEBP", quality=85)
+                logger.info(f" [Tier 1] [OK] Image converted to WebP: {web_path}")
                 return web_path
             else:
                 logger.warning(f" [Tier 1] [FAIL] Image too small ({len(content)} bytes) from: {url}")
@@ -165,23 +169,24 @@ def generate_and_cache(prompt, cluster, keywords, slug):
                     date_dir = datetime.now().strftime("%Y/%m/%d")
                     post_dir = os.path.join(POST_IMAGE_ROOT, date_dir)
                     os.makedirs(post_dir, exist_ok=True)
-                    post_save_path = os.path.join(post_dir, f"{slug}_gen.jpg")
-                    with open(post_save_path, 'wb') as f: f.write(content)
+                    post_save_path = os.path.join(post_dir, f"{slug}_gen.webp")
+                    with Image.open(io.BytesIO(content)) as img:
+                        img.save(post_save_path, "WEBP", quality=85)
+                        
+                        # 라이브러리용 저장
+                        target_cluster = CLUSTER_MAP.get(cluster.lower(), "ai-tech").split('-')[0]
+                        if keywords:
+                            for kw in keywords:
+                                safe_kw = sanitize_name(kw)
+                                if not safe_kw or len(safe_kw) < 2: continue
+                                lib_dir = os.path.join(DEFAULT_LIB_ROOT, target_cluster)
+                                os.makedirs(lib_dir, exist_ok=True)
+                                slot = random.randint(1, 5)
+                                lib_save_path = os.path.join(lib_dir, f"{safe_kw}_{slot}.webp")
+                                img.save(lib_save_path, "WEBP", quality=85)
+                                break 
                     
-                    # 라이브러리용 저장
-                    target_cluster = CLUSTER_MAP.get(cluster.lower(), "ai-tech").split('-')[0]
-                    if keywords:
-                        for kw in keywords:
-                            safe_kw = sanitize_name(kw)
-                            if not safe_kw or len(safe_kw) < 2: continue
-                            lib_dir = os.path.join(DEFAULT_LIB_ROOT, target_cluster)
-                            os.makedirs(lib_dir, exist_ok=True)
-                            slot = random.randint(1, 5)
-                            lib_save_path = os.path.join(lib_dir, f"{safe_kw}_{slot}.jpg")
-                            with open(lib_save_path, 'wb') as f: f.write(content)
-                            break 
-                    
-                    return f"/images/posts/{date_dir}/{slug}_gen.jpg"
+                    return f"/images/posts/{date_dir}/{slug}_gen.webp"
             
             elif resp.status_code == 429:
                 wait_time *= 2
@@ -234,7 +239,7 @@ def get_tiered_image(article, slug):
         # static/images/fallbacks/ 폴더 내 파일 목록 가져오기
         fb_dir = os.path.join(STATIC_ROOT, "images/fallbacks")
         if os.path.exists(fb_dir):
-            files = [f for f in os.listdir(fb_dir) if f.endswith('.jpg')]
+            files = [f for f in os.listdir(fb_dir) if f.endswith('.webp') or f.endswith('.jpg')]
             if files:
                 # 슬러그의 해시값을 인덱스로 사용하여 결정적 랜덤(Deterministic Random) 구현
                 idx = int(hashlib.md5(slug.encode()).hexdigest(), 16) % len(files)

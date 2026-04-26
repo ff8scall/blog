@@ -11,7 +11,9 @@
 {{/* [V0.2.6] Fallback Path Logic */}}
 {{ $fallback_img := "" }}
 {{ if $c_slug }}
-  {{ if (fileExists (printf "static/images/fallbacks/%s.jpg" $c_slug)) }}
+  {{ if (fileExists (printf "static/images/fallbacks/%s.webp" $c_slug)) }}
+    {{ $fallback_img = printf "/images/fallbacks/%s.webp" $c_slug }}
+  {{ else if (fileExists (printf "static/images/fallbacks/%s.jpg" $c_slug)) }}
     {{ $fallback_img = printf "/images/fallbacks/%s.jpg" $c_slug }}
   {{ end }}
 {{ end }}
