@@ -541,6 +541,54 @@
   border-radius: var(--radius-md);
   margin: var(--sp-6) auto;
 }
+
+/* ── 핵심 요약 (Executive Summary) Box ── */
+.executive-summary {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: var(--radius-md);
+  padding: var(--sp-6);
+  margin: var(--sp-4) 0 var(--sp-10);
+  box-shadow: var(--shadow-sm);
+}
+.summary-title {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--text-lg) !important;
+  font-weight: var(--fw-bold) !important;
+  color: var(--accent-primary) !important;
+  margin: 0 0 var(--sp-4) 0 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.summary-title .icon {
+  font-size: 1.2em;
+}
+.executive-summary ul {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.executive-summary li {
+  position: relative;
+  padding-left: var(--sp-6);
+  margin-bottom: var(--sp-3) !important;
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+.executive-summary li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--accent-primary);
+  font-weight: bold;
+}
+.executive-summary li:last-child {
+  margin-bottom: 0 !important;
+}
 .post-tags {
   display: flex;
   flex-wrap: wrap;

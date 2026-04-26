@@ -37,4 +37,8 @@
 - [x] NLM 파서 고도화 및 이미지 폴백 경로(엑박) 긴급 수정 완료 [v4.7]
 - [x] 국문 제목 누락 복구 로직 및 요약 트렁케이션 완화 자동화 완료 [v4.9]
 - [x] Bing 사이트 소유권 인증 메타 태그 추가 완료 [v5.1]
+- [x] **SEO 통합 최적화 (Google, Bing, Advanced)**:
+    - **Bing/Copilot**: 핵심 요약 박스 상단 배치, LCP 개선(`fetchpriority`), AI 기반 Alt 텍스트 자동화 적용. [v12.0]
+    - **Google/UX**: WebP 이미지 포맷 전환(Pillow), CLS 최적화(Width/Height 명시), E-E-A-T 강화 프롬프트 적용. [v12.1]
+    - **Advanced**: JSON-LD 구조화 데이터 보완(`hugo.toml` 파라미터 추가), Silo 구조 내부 링크 강화. [v12.2]
 - [ ] 메가트렌드 분석 및 성능 비교 콘텐츠 보완 (Next)

@@ -36,7 +36,8 @@ class NewsEditor:
       "insight": "Strategic analyst commentary",
       "keywords": ["tag1", "tag2"],
       "category": "ai|hardware|insights",
-      "image_prompt": "Vivid image generation prompt"
+      "image_prompt": "Vivid image generation prompt",
+      "alt_text": "Detailed SEO alt text for the featured image (max 120 chars)"
     }
     """
 
@@ -173,6 +174,8 @@ class NewsEditor:
             [REQUIREMENTS]:
              - Analyze "Why" and "So What" behind the news.
              - Include technical specs, business risks, and future outlook.
+             - **Independent Completeness**: Provide all necessary context within the article so it's understandable without external links.
+             - **Reliability (E-E-A-T)**: Use definitive statements, cite specific data points where available, and maintain transparency.
              - Tone: Cold, analytical, Bloomberg-style.
              - Formatting: Use Markdown. Subheaders should use '###'.
             [OUTPUT FORMAT]: JSON based on this schema:
@@ -225,17 +228,11 @@ class NewsEditor:
                 "category": cat,
                 "cluster": cat,
                 "image_prompt_core": en_draft.get('image_prompt', "Tech innovation"),
+                "alt_text": en_draft.get('alt_text', ""),
                 "original_url": articles[0]['url'],
                 "original_image_url": articles[0].get('image'),
                 "source_name": articles[0].get('source_name', 'Global Sources')
             }
-            
-            # Apply Global Formatting (### -> > )
-            for key in ["eng_content", "kor_content"]:
-                content = final_article.get(key, "")
-                if content:
-                    content = re.sub(r'^###\s+', '> ', content, flags=re.MULTILINE)
-                    final_article[key] = content
             
             return [final_article]
                 
