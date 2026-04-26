@@ -4,7 +4,9 @@ import urllib.parse
 import time
 import logging
 import re
+import io
 from datetime import datetime
+from PIL import Image
 
 logger = logging.getLogger("ImageManager")
 
@@ -80,17 +82,16 @@ def download_image(url, slug):
                 return None
                 
             content = resp.content
-<<<<<<< Updated upstream
             if len(content) > 1000:
                 # [V6.2] WebP 변환 및 저장 지원
-                with Image.open(io.BytesIO(content)) as img:
-                    img.save(save_path, "WEBP", quality=85)
-                logger.info(f" [Tier 1] [OK] Image converted to WebP: {web_path}")
-=======
-            if len(content) > 2048: # 최소 2KB 이상 (너무 작은 파일은 깨진 것으로 간주)
-                with open(save_path, 'wb') as f: f.write(content)
-                logger.info(f" [Tier 1] [OK] Original Image Saved: {web_path}")
->>>>>>> Stashed changes
+                try:
+                    with Image.open(io.BytesIO(content)) as img:
+                        img.save(save_path, "WEBP", quality=85)
+                    logger.info(f" [Tier 1] [OK] Image converted to WebP: {web_path}")
+                except Exception as e:
+                    # WebP 변환 실패 시 원본 저장 (폴백)
+                    with open(save_path, 'wb') as f: f.write(content)
+                    logger.warning(f" [Tier 1] [FALLBACK] WebP conversion failed, saved original: {e}")
                 return web_path
             else:
                 logger.warning(f" [Tier 1] [FAIL] Image too small ({len(content)} bytes) from: {url}")

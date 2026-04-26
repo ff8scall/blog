@@ -56,6 +56,7 @@ FIELD_MAP = {
     "KOR_KEYWORDS": "kor_keywords",
     "ENG_KEYWORDS": "eng_keywords",
     "IMAGE_PROMPT": "image_prompt_core",
+    "ALT_TEXT": "alt_text",
     "ORIGINAL_IMAGE": "original_image",
     "ORIGINAL_IMAGE_URL": "original_image",
     "CLUSTERCATEGORY": "cluster",

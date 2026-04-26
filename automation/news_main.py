@@ -354,12 +354,17 @@ def create_hugo_post(article, lang='ko'):
         article['thumbnail_image'] = thumbnail_url 
 
     # Build Body
-    content_body = f"## {summary_label}\n{summary_text}\n\n"
+    content_body = "" # Summary moved to frontmatter/template for better SEO
     if formatted_content:
         content_body += f"## {analysis_label}\n\n{formatted_content}\n\n"
     if formatted_insight:
         content_body += f"## {insight_label}\n\n{formatted_insight}"
 
+    # [V12.0] SEO Enhanced Frontmatter
+    summaries_json = json.dumps(summary_list, ensure_ascii=False)
+    alt_text = article.get('alt_text') or f"{title} - AI 테크 인텔리전스 리포트 시각 자료"
+    if not article.get('alt_text') and article.get('image_prompt_core'):
+        alt_text = f"{title}: {article['image_prompt_core'][:100]}"
     # Build Frontmatter
     # [V11.3] 줄바꿈 제거 및 따옴표/백슬래시 이스케이프 강화 (YAML 안정성)
     # YAML 더블 쿼트 내에서 백슬래시(\)는 이스케이프 시작이므로 \\로 변환 필요
@@ -373,6 +378,8 @@ title: "{safe_title}"
 date: "{date_str}"
 description: "{safe_desc}"
 image: "{thumbnail_url}"
+alt_text: "{alt_text.replace('"', "'")}"
+{prefix}_summary: {summaries_json}
 clusters: ["{article.get('cluster', 'ai')}"]
 tags: {tags_json}
 featured: {is_featured}
