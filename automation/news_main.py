@@ -131,7 +131,66 @@ FALLBACK_MAP = {
     "markets": "markets"
 }
 
-# [REMOVED] Redundant image functions. Using image_manager.py instead.
+def download_image(url, category_slug, slug):
+    """[V3.5] Article Image -> Return None if fail (to trigger AI generation)"""
+    if not url or str(url).lower() == 'none' or not str(url).startswith('http'):
+        return None
+    
+    # [V3.19] 가짜 이미지 링크(HTML 페이지 등) 필터링
+    lower_url = url.lower().split('?')[0] # 쿼리 파라미터 제외하고 확장자 확인
+    valid_exts = ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg']
+    if not any(ext in lower_url for ext in valid_exts) or 'html' in lower_url:
+        logger.warning(f" [IMAGE] Skipping non-image URL: {url}")
+        return None
+
+    if url.startswith('//'): url = 'https:' + url
+    
+    date_dir = datetime.now().strftime('%Y/%m/%d')
+    img_dir = f"static/images/posts/{date_dir}"
+    os.makedirs(img_dir, exist_ok=True)
+    
+    img_path = f"{img_dir}/{slug}.jpg"
+    web_url = f"/images/posts/{date_dir}/{slug}.jpg"
+    
+    try:
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/123.0.0.0',
+            'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8'
+        }
+        resp = requests.get(url, timeout=(5, 15), headers=headers)
+        if resp.status_code == 200:
+            with open(img_path, 'wb') as f: f.write(resp.content)
+            return web_url
+        else:
+            logger.warning(f" [IMAGE] Download failed with status {resp.status_code}: {url}")
+    except Exception as e:
+        logger.warning(f" [IMAGE] Download error ({url}): {e}")
+    
+    return None
+
+def generate_and_save_thumbnail(image_prompt_core, slug_name, retries=2):
+    """[V8.1] Pollinations.ai 이미지 생성 (재시도 포함)"""
+    aesthetic_base = ", high-tech minimalism, cinematic 3D render, dark metallic texture, neon accents, isometric perspective, Unreal Engine 5 aesthetic, 8k resolution --no text, no faces, no humans"
+    final_prompt = (image_prompt_core if image_prompt_core else "Abstract futuristic technology concept") + aesthetic_base
+    
+    encoded_prompt = urllib.parse.quote(final_prompt)
+    image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=1200&height=630&nologo=true"
+    
+    for attempt in range(retries + 1):
+        try:
+            response = requests.get(image_url, timeout=45)
+            if response.status_code == 200 and len(response.content) > 5000:
+                date_dir = datetime.now().strftime("%Y/%m/%d")
+                save_dir = f"static/images/posts/{date_dir}"
+                os.makedirs(save_dir, exist_ok=True)
+                save_path = f"{save_dir}/{slug_name}_gen.jpg"
+                with open(save_path, 'wb') as f: f.write(response.content)
+                return f"/images/posts/{date_dir}/{slug_name}_gen.jpg"
+        except Exception:
+            pass
+        if attempt < retries:
+            time.sleep(2)
+    return None
 
 
 def _format_readable_content(text):
@@ -295,7 +354,7 @@ def create_hugo_post(article, lang='ko'):
         article['thumbnail_image'] = thumbnail_url 
 
     # Build Body
-    content_body = "" # Summary moved to frontmatter/template for better SEO
+    content_body = f"## {summary_label}\n{summary_text}\n\n"
     if formatted_content:
         content_body += f"## {analysis_label}\n\n{formatted_content}\n\n"
     if formatted_insight:
@@ -308,20 +367,12 @@ def create_hugo_post(article, lang='ko'):
     safe_desc = (description if description else (summary_list[0] if summary_list else title)).replace('\\', '\\\\').replace('"', "'").replace("\n", " ").strip()
     is_featured = "true" if article.get('featured') else "false"
     tags_json = json.dumps(keywords, ensure_ascii=False)
-    
-    # [V12.0] SEO Enhanced Frontmatter
-    summaries_json = json.dumps(summary_list, ensure_ascii=False)
-    alt_text = f"{title} - AI 테크 인텔리전스 리포트 시각 자료" # Default alt text
-    if article.get('image_prompt_core'):
-        alt_text = f"{title}: {article['image_prompt_core'][:100]}"
 
     post_md = f"""---
 title: "{safe_title}"
 date: "{date_str}"
 description: "{safe_desc}"
 image: "{thumbnail_url}"
-alt_text: "{alt_text.replace('"', "'")}"
-{prefix}_summary: {summaries_json}
 clusters: ["{article.get('cluster', 'ai')}"]
 tags: {tags_json}
 featured: {is_featured}

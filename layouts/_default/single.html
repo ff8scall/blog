@@ -25,8 +25,7 @@
         {{/* ── 대표 이미지 ── */}}
         {{ with .Params.image }}
         <div class="post-thumbnail">
-          <img src="{{ . }}" alt="{{ with $.Params.alt_text }}{{ . }}{{ else }}{{ $.Title }}{{ end }}" 
-               fetchpriority="high" loading="eager" width="1200" height="630">
+          <img src="{{ . }}" alt="{{ $.Title }}" loading="lazy" width="1200" height="630">
         </div>
         {{ end }}
 
@@ -45,27 +44,6 @@
 
         {{/* ── 본문 ── */}}
         <div class="post-content">
-          {{/* Copilot/Bing을 위한 핵심 요약 박스 (템플릿 레벨에서 강조) */}}
-          {{ if .Params.kor_summary }}
-          <div class="executive-summary">
-            <h2 class="summary-title"><span class="icon">🔍</span> 핵심 요약</h2>
-            <ul>
-              {{ range .Params.kor_summary }}
-              <li>{{ . }}</li>
-              {{ end }}
-            </ul>
-          </div>
-          {{ else if .Params.eng_summary }}
-          <div class="executive-summary">
-            <h2 class="summary-title"><span class="icon">🔍</span> Executive Summary</h2>
-            <ul>
-              {{ range .Params.eng_summary }}
-              <li>{{ . }}</li>
-              {{ end }}
-            </ul>
-          </div>
-          {{ end }}
-
           {{ .Content }}
         </div>
 

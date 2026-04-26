@@ -66,16 +66,7 @@ buildFuture = true
 
 [params]
   ui_version = "V0"
-  siteName = "Lego-Sia News Intelligence"
-  siteDescription = "AI, 하드웨어, 기술 트렌드 심층 분석 리포트 - 레고-시아 테크 인텔리전스"
-  author = "Lego-Sia Intelligence Team"
-  logo = "/images/logo.png"
-  ogImage = "/images/og-main.png"
-  
   bingSiteVerification = "048AB450B6B91E03CAF13FDE8415F954" # Bing SEO Verification Tag (Last updated: 2026-04-21 14:16)
-  googleSiteVerification = "" # Add your Google Search Console verification code here
-  naverSiteVerification = "" # Add your Naver Search Advisor verification code here
-  
   [params.ui]
     # Cluster UI Mapping (Centralized management)
     badge_colors = { "ai" = "#3B82F6", "hardware" = "#10B981", "insights" = "#F59E0B", "markets" = "#EC4899" }
