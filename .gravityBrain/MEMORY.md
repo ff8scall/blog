@@ -1,11 +1,12 @@
 # 🧠 MEMORY: 뉴스 인텔리전스 시스템
 
 ## 📍 현재 상태
-- **날짜**: 2026-04-27 (v14.2 장애 복구 및 WebP 강화)
-- **달성**: 26일 23:00 배치 시 발생한 머지 충돌(SyntaxError) 해결 및 전 게시물 WebP 변환 엔진 적용 완료.
-- **수정**: `image_manager.py` 머지 충돌 해결, `Pillow` 기반 WebP 변환 로직 활성화, `layouts/partials/card.html` WebP 우선 순위 적용.
-- **상태**: 27일 07:12 수동 복구 배치 실행 중 (WebP 변환 정상 작동 확인).
+- **날짜**: 2026-04-27 (v14.3 SEO 복구 및 IndexNow 최적화)
+- **달성**: 11:00 배치 시 Bing 색인 누락 장애 분석 완료 및 지연 시간(Throttling) 도입을 통한 재색인 98건 성공.
+- **수정**: `indexnow_service.py` 전송 간 1초 지연 추가, `hugo.toml` 메타 데이터(languageCode 등) 복구, `seo.html` 다국어 태그 통합.
+- **상태**: 4대 엔진(Bing, Naver 등)에 최근 이틀치 기사(KO/EN) 98건 재색인 통보 완료.
 - **최근 결정**: 
+    - **[v14.3] SEO Recovery & IndexNow Throttling**: 검색 엔진의 개별 URL 인지력을 높이기 위해 Streaming(GET) 방식에 1초의 Throttling을 도입함. 유실되었던 `hreflang`, `canonical`, 사이트 메타 정보를 복구하여 다국어 검색 품질을 강화함.
     - **[v14.2] Hotfix & WebP Optimization**: 배포 과정에서 누락된 머지 충돌을 해결하고, 이미지 자산의 효율성을 위해 모든 다운로드 이미지를 WebP로 자동 변환하는 기능을 활성화함. (v6.2 대응)
     - **[v14.1] JSON-Native & Hybrid Recovery**: NLM에게 JSON 출력을 강제하고 실패 시 V13.0 정규식 및 ID 기반 분할로 복구하는 다중 방어 체계 구축. 작업 분할 임계값을 4로 낮추어 출력 안정성 극대화.
     - **[v12.2] 슬러그 유니크성 강화**: 비영어권 제목 정제 시 발생하는 슬러그 충돌을 방지하기 위해, 모든 기사 슬러그 뒤에 고유 ID를 추가하도록 `notebooklm_publisher.py`를 개선했습니다.

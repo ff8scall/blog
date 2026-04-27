@@ -1,4 +1,5 @@
 import os
+import time
 import requests
 import logging
 from dotenv import load_dotenv
@@ -55,6 +56,9 @@ def notify_indexnow(urls):
                     logger.warning(f"{name} streaming failed: {res.status_code} - {url}")
             except Exception as e:
                 logger.error(f"{name} streaming error: {e}")
+        
+        # [V1.6] Throttling: 검색 엔진 부하 방지 및 개별 URL 인지력 향상을 위해 1초 지연 추가
+        time.sleep(1.0)
     
     print(f" [OK] IndexNow streaming notification completed.")
     
