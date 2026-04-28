@@ -1,119 +1,111 @@
 {
     "hardware_part1": {
-        "notebook_id": "9d265605-845d-47ee-8bc6-af281ff7b407",
+        "notebook_id": "d7026e12-3970-4866-b41f-887e67425fb9",
         "title": "2026-04-28 hardware Analysis (part1)",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-04-28T17:01:27.559916",
+        "triggered_at": "2026-04-28T23:02:32.005033",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/04/28/hardware-tmyteks-strategic-pivot-dominating-satell/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/hardware-tmyteks-strategic-pivot-dominating-satell/",
-            "https://news.lego-sia.com/posts/2026/04/28/markets-apple-and-asus-defy-2026-pc-market-downtur/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/markets-apple-and-asus-defy-2026-pc-market-downtur/",
-            "https://news.lego-sia.com/posts/2026/04/28/ai-the-ai-memory-supercycle-sk-hynix-and-samsung-s/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/ai-the-ai-memory-supercycle-sk-hynix-and-samsung-s/",
-            "https://news.lego-sia.com/posts/2026/04/28/hardware-moore-threads-hits-historic-first-profit/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/hardware-moore-threads-hits-historic-first-profit/"
+            "https://news.lego-sia.com/posts/2026/04/28/hardware-metas-orbital-power-play-leveraging-space/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/hardware-metas-orbital-power-play-leveraging-space/",
+            "https://news.lego-sia.com/posts/2026/04/28/markets-the-feudal-cloud-architecture-microsofts-i/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/markets-the-feudal-cloud-architecture-microsofts-i/",
+            "https://news.lego-sia.com/posts/2026/04/28/insights-the-geopolitical-premium-empyrean-technol/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/insights-the-geopolitical-premium-empyrean-technol/",
+            "https://news.lego-sia.com/posts/2026/04/28/hardware-macronixs-1q26-pivot-how-tightening-suppl/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/hardware-macronixs-1q26-pivot-how-tightening-suppl/"
         ],
-        "published_at": "2026-04-28T17:03:42.478778"
+        "published_at": "2026-04-28T23:05:01.396488"
     },
     "hardware_part2": {
-        "notebook_id": "a20c2c9d-14c3-4ab1-bac0-95925466cd4a",
+        "notebook_id": "5c79e1d4-a453-431e-8b32-8d01f2831fa3",
         "title": "2026-04-28 hardware Analysis (part2)",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-04-28T17:01:35.691156",
+        "triggered_at": "2026-04-28T23:02:39.621157",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/04/28/hardware-lg-display-hits-5-year-profit-high-in-1q2/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/hardware-lg-display-hits-5-year-profit-high-in-1q2/",
-            "https://news.lego-sia.com/posts/2026/04/28/hardware-valve-decouples-hardware-roadmap-amid-202/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/hardware-valve-decouples-hardware-roadmap-amid-202/",
-            "https://news.lego-sia.com/posts/2026/04/28/hardware-amkor-technology-posts-record-1q26-result/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/hardware-amkor-technology-posts-record-1q26-result/",
-            "https://news.lego-sia.com/posts/2026/04/28/ai-honors-humanoid-pivot-beijing-robot-marathon-vi/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/ai-honors-humanoid-pivot-beijing-robot-marathon-vi/"
+            "https://news.lego-sia.com/posts/2026/04/28/hardware-recovery-ai-llm-gpu-1/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/hardware-recovery-ai-llm-gpu-1/",
+            "https://news.lego-sia.com/posts/2026/04/28/hardware-recovery-aiagentic-ai-2/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/hardware-recovery-aiagentic-ai-2/",
+            "https://news.lego-sia.com/posts/2026/04/28/markets-recovery-ems-celestica-2026-1-3/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/markets-recovery-ems-celestica-2026-1-3/",
+            "https://news.lego-sia.com/posts/2026/04/28/insights-recovery-tokyo-electron-4/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/insights-recovery-tokyo-electron-4/"
         ],
-        "published_at": "2026-04-28T17:03:57.731895"
+        "published_at": "2026-04-28T23:05:04.140028"
     },
     "ai_part1": {
-        "notebook_id": "d696b304-aed5-40ed-898e-e8d4fb435bfc",
+        "notebook_id": "bb125dba-ae13-4d53-97eb-4c979ef2c442",
         "title": "2026-04-28 ai Analysis (part1)",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-04-28T11:01:13.375323",
+        "triggered_at": "2026-04-28T23:02:16.884689",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/04/28/ai-article-1-cluster-ai-titleko-51-ineffable-intel/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/ai-article-1-cluster-ai-titleko-51-ineffable-intel/",
-            "https://news.lego-sia.com/posts/2026/04/28/tech-article-1-0/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/tech-article-1-0/",
-            "https://news.lego-sia.com/posts/2026/04/28/tech-article-2-0/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/tech-article-2-0/",
-            "https://news.lego-sia.com/posts/2026/04/28/tech-article-4-0/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/tech-article-4-0/",
-            "https://news.lego-sia.com/posts/2026/04/28/tech-article-5-0/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/tech-article-5-0/",
-            "https://news.lego-sia.com/posts/2026/04/28/tech-intelligence-report-6-0/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/tech-intelligence-report-6-0/",
-            "https://news.lego-sia.com/posts/2026/04/28/tech-article-8-0/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/tech-article-8-0/",
-            "https://news.lego-sia.com/posts/2026/04/28/ai-article-2-cluster-insights-titleko-100-element/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/ai-article-2-cluster-insights-titleko-100-element/",
-            "https://news.lego-sia.com/posts/2026/04/28/ai-article-3-cluster-markets-titleko-agi-vs-openai/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/ai-article-3-cluster-markets-titleko-agi-vs-openai/",
-            "https://news.lego-sia.com/posts/2026/04/28/tech-heres-a-possible-seo-optimized-english-transl/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/tech-heres-a-possible-seo-optimized-english-transl/"
+            "https://news.lego-sia.com/posts/2026/04/28/hardware-sensor-first-methodology-and-bidirectiona/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/hardware-sensor-first-methodology-and-bidirectiona/",
+            "https://news.lego-sia.com/posts/2026/04/28/ai-youtube-pilots-ai-powered-search-feature-for-pr/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/ai-youtube-pilots-ai-powered-search-feature-for-pr/",
+            "https://news.lego-sia.com/posts/2026/04/28/hardware-neurable-to-license-non-invasive-bci-tech/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/hardware-neurable-to-license-non-invasive-bci-tech/",
+            "https://news.lego-sia.com/posts/2026/04/28/insights-red-hat-enhances-enterprise-ai-security-v/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/insights-red-hat-enhances-enterprise-ai-security-v/"
         ],
-        "published_at": "2026-04-28T11:09:39.088816"
+        "published_at": "2026-04-28T23:06:33.214757"
     },
     "ai_part2": {
-        "notebook_id": "1ef47380-49a3-4bce-9a5b-189aa1c874ee",
+        "notebook_id": "38fde5ba-ee8b-4bde-87ba-cf8386e2b209",
         "title": "2026-04-28 ai Analysis (part2)",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-04-28T11:01:20.979499",
+        "triggered_at": "2026-04-28T23:02:24.297414",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/04/28/ai-openai-ends-cloud-exclusivity-with-microsoft-st/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/ai-openai-ends-cloud-exclusivity-with-microsoft-st/",
-            "https://news.lego-sia.com/posts/2026/04/28/markets-eu-demands-ai-openness-on-android-regulato/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/markets-eu-demands-ai-openness-on-android-regulato/"
+            "https://news.lego-sia.com/posts/2026/04/28/ai-otterai-expands-ecosystem-with-native-windows-a/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/ai-otterai-expands-ecosystem-with-native-windows-a/",
+            "https://news.lego-sia.com/posts/2026/04/28/ai-the-evolution-of-encoders-transforming-high-dim/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/ai-the-evolution-of-encoders-transforming-high-dim/",
+            "https://news.lego-sia.com/posts/2026/04/28/ai-kakao-mobility-unveils-physical-ai-strategy-for/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/ai-kakao-mobility-unveils-physical-ai-strategy-for/",
+            "https://news.lego-sia.com/posts/2026/04/28/hardware-lightelligence-hits-10b-market-cap-optica/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/hardware-lightelligence-hits-10b-market-cap-optica/"
         ],
-        "published_at": "2026-04-28T11:09:42.336701"
+        "published_at": "2026-04-28T23:08:39.823359"
     },
     "insights_part1": {
-        "notebook_id": "9e1894fd-74a0-4a5c-873b-d0328c107cb3",
+        "notebook_id": "964b3a00-fcb7-443b-ab6d-7931f030f19c",
         "title": "2026-04-28 insights Analysis (part1)",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-04-28T11:01:44.366743",
+        "triggered_at": "2026-04-28T23:02:47.359184",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/04/28/insights-the-geopolitical-ripple-effect-of-us-drug/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/insights-the-geopolitical-ripple-effect-of-us-drug/",
-            "https://news.lego-sia.com/posts/2026/04/28/insights-the-architectural-revolution-in-automotiv/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/insights-the-architectural-revolution-in-automotiv/",
-            "https://news.lego-sia.com/posts/2026/04/28/ai-hitachis-data-centric-rebirth-capitalizing-on-r/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/ai-hitachis-data-centric-rebirth-capitalizing-on-r/",
-            "https://news.lego-sia.com/posts/2026/04/28/hardware-byds-formula-1-strategic-gambit-mastering/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/hardware-byds-formula-1-strategic-gambit-mastering/"
+            "https://news.lego-sia.com/posts/2026/04/28/markets-sky-high-fuel-costs-force-asian-carriers-t/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/markets-sky-high-fuel-costs-force-asian-carriers-t/",
+            "https://news.lego-sia.com/posts/2026/04/28/insights-the-china-crucible-apples-new-ceo-faces-g/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/insights-the-china-crucible-apples-new-ceo-faces-g/",
+            "https://news.lego-sia.com/posts/2026/04/28/ai-physical-ai-revolution-fanuc-and-siemens-forge/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/ai-physical-ai-revolution-fanuc-and-siemens-forge/",
+            "https://news.lego-sia.com/posts/2026/04/28/markets-breaking-the-monopoly-lynas-ceo-outlines-c/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/markets-breaking-the-monopoly-lynas-ceo-outlines-c/"
         ],
-        "published_at": "2026-04-28T11:11:10.223282"
+        "published_at": "2026-04-28T23:10:32.656031"
     },
     "insights_part2": {
-        "notebook_id": "48532bf1-4cd3-4977-b58d-c7f8d4abefc1",
+        "notebook_id": "bade5bb5-dcaa-40f0-8756-c0e18c5b13d0",
         "title": "2026-04-28 insights Analysis (part2)",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-04-28T11:01:51.617797",
+        "triggered_at": "2026-04-28T23:02:54.701017",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/04/28/hardware-audi-2027-q4-e-tron-revamp-increased-rang/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/hardware-audi-2027-q4-e-tron-revamp-increased-rang/",
-            "https://news.lego-sia.com/posts/2026/04/28/markets-japanese-chemical-maker-to-quintuple-china/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/markets-japanese-chemical-maker-to-quintuple-china/",
-            "https://news.lego-sia.com/posts/2026/04/28/insights-japan-ma-guidance-prioritizing-economic-s/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/insights-japan-ma-guidance-prioritizing-economic-s/",
-            "https://news.lego-sia.com/posts/2026/04/28/ai-china-blocks-metas-2b-acquisition-of-manus-foll/",
-            "https://news.lego-sia.com/en/posts/2026/04/28/ai-china-blocks-metas-2b-acquisition-of-manus-foll/"
+            "https://news.lego-sia.com/posts/2026/04/28/insights-indonesias-goto-achieves-first-quarterly/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/insights-indonesias-goto-achieves-first-quarterly/",
+            "https://news.lego-sia.com/posts/2026/04/28/markets-byd-q1-profits-plunge-55-as-ev-leader-navi/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/markets-byd-q1-profits-plunge-55-as-ev-leader-navi/",
+            "https://news.lego-sia.com/posts/2026/04/28/insights-bangladesh-nears-nuclear-energy-debut-to/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/insights-bangladesh-nears-nuclear-energy-debut-to/",
+            "https://news.lego-sia.com/posts/2026/04/28/insights-south-korean-lawmakers-rebut-us-claims-ov/",
+            "https://news.lego-sia.com/en/posts/2026/04/28/insights-south-korean-lawmakers-rebut-us-claims-ov/"
         ],
-        "published_at": "2026-04-28T11:12:14.732191"
+        "published_at": "2026-04-28T23:12:26.657284"
     },
     "ai": {
         "notebook_id": "eb12fab0-f8bb-40da-bc03-2a5e88cfe28f",
