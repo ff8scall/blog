@@ -1,75 +1,75 @@
 {
     "hardware_part1": {
-        "notebook_id": "74628bee-8262-4cb5-80a2-273e70b6f900",
-        "title": "2026-05-22 hardware Analysis (part1)",
+        "notebook_id": "cf8e0e3d-daf4-4cfd-ab25-569d69a458b6",
+        "title": "2026-05-23 hardware Analysis (part1)",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-05-22T23:02:01.326173",
+        "triggered_at": "2026-05-23T05:01:46.763262",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/05/22/markets-nvidias-fiscal-2027-q1-revenue-hits-816b-a/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/markets-nvidias-fiscal-2027-q1-revenue-hits-816b-a/",
-            "https://news.lego-sia.com/posts/2026/05/22/hardware-the-great-silicon-blockade-taiwan-raids-1/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/hardware-the-great-silicon-blockade-taiwan-raids-1/",
-            "https://news.lego-sia.com/posts/2026/05/22/hardware-state-of-custom-ai-asics-2026-broadcom-go/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/hardware-state-of-custom-ai-asics-2026-broadcom-go/",
-            "https://news.lego-sia.com/posts/2026/05/22/hardware-amd-ramps-256-core-epyc-venice-on-2nm-a-7/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/hardware-amd-ramps-256-core-epyc-venice-on-2nm-a-7/"
+            "https://news.lego-sia.com/posts/2026/05/23/hardware-phison-pascari-d206v-architectural-breakt/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/hardware-phison-pascari-d206v-architectural-breakt/",
+            "https://news.lego-sia.com/posts/2026/05/23/hardware-the-revival-of-non-binary-computing-gener/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/hardware-the-revival-of-non-binary-computing-gener/",
+            "https://news.lego-sia.com/posts/2026/05/23/markets-xfusion-reports-cny-582-billion-revenue-st/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/markets-xfusion-reports-cny-582-billion-revenue-st/",
+            "https://news.lego-sia.com/posts/2026/05/23/insights-nvidias-vera-rubin-platform-economics-the/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/insights-nvidias-vera-rubin-platform-economics-the/"
         ],
-        "published_at": "2026-05-22T23:05:05.563473"
+        "published_at": "2026-05-23T05:04:19.937663"
     },
     "hardware_part2": {
-        "notebook_id": "ccd200c6-7718-4368-a160-4573902b26dd",
-        "title": "2026-05-22 hardware Analysis (part2)",
+        "notebook_id": "3df2174f-68b4-4d64-b6b4-5afaac361801",
+        "title": "2026-05-23 hardware Analysis (part2)",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-05-22T23:02:10.681571",
+        "triggered_at": "2026-05-23T05:01:56.749708",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/05/22/hardware-intel-crescent-island-ai-gpu-analysis-lev/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/hardware-intel-crescent-island-ai-gpu-analysis-lev/",
-            "https://news.lego-sia.com/posts/2026/05/22/markets-asml-ceo-confirms-direct-talks-with-elon-m/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/markets-asml-ceo-confirms-direct-talks-with-elon-m/",
-            "https://news.lego-sia.com/posts/2026/05/22/hardware-fraunhofer-ipms-unveils-high-density-wafe/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/hardware-fraunhofer-ipms-unveils-high-density-wafe/",
-            "https://news.lego-sia.com/posts/2026/05/22/hardware-ibm-and-us-doc-establish-anderon-americas/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/hardware-ibm-and-us-doc-establish-anderon-americas/"
+            "https://news.lego-sia.com/posts/2026/05/23/hardware-eu-weighs-sanction-exemptions-for-chinese/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/hardware-eu-weighs-sanction-exemptions-for-chinese/",
+            "https://news.lego-sia.com/posts/2026/05/23/hardware-amd-solidifies-taiwan-ecosystem-with-land/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/hardware-amd-solidifies-taiwan-ecosystem-with-land/",
+            "https://news.lego-sia.com/posts/2026/05/23/hardware-intels-strategic-pivot-engineering-cultur/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/hardware-intels-strategic-pivot-engineering-cultur/",
+            "https://news.lego-sia.com/posts/2026/05/23/hardware-lam-research-targets-post-wafer-era-with/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/hardware-lam-research-targets-post-wafer-era-with/"
         ],
-        "published_at": "2026-05-22T23:05:13.216159"
+        "published_at": "2026-05-23T05:04:24.624628"
     },
     "ai_part1": {
-        "notebook_id": "7043342f-3885-49d8-becc-6be86f98ff7d",
-        "title": "2026-05-22 ai Analysis (part1)",
+        "notebook_id": "28434c6a-7d1d-40dd-934c-e4808207b7e6",
+        "title": "2026-05-23 ai Analysis (part1)",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-05-22T23:01:41.475301",
+        "triggered_at": "2026-05-23T05:01:26.389763",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/05/22/ai-teampcps-mass-supply-chain-offensive-poisoning/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/ai-teampcps-mass-supply-chain-offensive-poisoning/",
-            "https://news.lego-sia.com/posts/2026/05/22/ai-openais-strategic-pivot-to-singapore-s300-milli/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/ai-openais-strategic-pivot-to-singapore-s300-milli/",
-            "https://news.lego-sia.com/posts/2026/05/22/markets-chinas-ai-driven-grid-mapping-solving-the/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/markets-chinas-ai-driven-grid-mapping-solving-the/",
-            "https://news.lego-sia.com/posts/2026/05/22/insights-trump-scraps-ai-executive-order-following/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/insights-trump-scraps-ai-executive-order-following/"
+            "https://news.lego-sia.com/posts/2026/05/23/ai-texas-attorney-general-initiates-landmark-litig/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/ai-texas-attorney-general-initiates-landmark-litig/",
+            "https://news.lego-sia.com/posts/2026/05/23/ai-ad-tech-firm-to-pay-880000-for-deceptive-active/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/ai-ad-tech-firm-to-pay-880000-for-deceptive-active/",
+            "https://news.lego-sia.com/posts/2026/05/23/ai-trump-abandons-ai-safety-executive-order-after/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/ai-trump-abandons-ai-safety-executive-order-after/",
+            "https://news.lego-sia.com/posts/2026/05/23/ai-irony-in-the-future-of-truth-author-steven-rose/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/ai-irony-in-the-future-of-truth-author-steven-rose/"
         ],
-        "published_at": "2026-05-22T23:05:33.590248"
+        "published_at": "2026-05-23T05:04:30.086526"
     },
     "ai_part2": {
-        "notebook_id": "bb13e2f4-c9bf-4f30-b094-be511bbf5d21",
-        "title": "2026-05-22 ai Analysis (part2)",
+        "notebook_id": "e60fcf3f-9941-46d3-aa33-78e090cf9bba",
+        "title": "2026-05-23 ai Analysis (part2)",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-05-22T23:01:51.415392",
+        "triggered_at": "2026-05-23T05:01:36.598496",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/05/22/hardware-kawasaki-heavy-industries-and-nvidia-forg/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/hardware-kawasaki-heavy-industries-and-nvidia-forg/",
-            "https://news.lego-sia.com/posts/2026/05/22/insights-the-collapse-of-critterz-how-the-shutdown/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/insights-the-collapse-of-critterz-how-the-shutdown/",
-            "https://news.lego-sia.com/posts/2026/05/22/hardware-nvidias-nventures-invests-in-alice-bob-ac/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/hardware-nvidias-nventures-invests-in-alice-bob-ac/",
-            "https://news.lego-sia.com/posts/2026/05/22/markets-deepseek-pursues-massive-10-billion-fundin/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/markets-deepseek-pursues-massive-10-billion-fundin/"
+            "https://news.lego-sia.com/posts/2026/05/23/ai-recovery-disregard-ai-1/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/ai-recovery-disregard-ai-1/",
+            "https://news.lego-sia.com/posts/2026/05/23/hardware-recovery-xr-ai-2/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/hardware-recovery-xr-ai-2/",
+            "https://news.lego-sia.com/posts/2026/05/23/insights-recovery-gpu-ai-3/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/insights-recovery-gpu-ai-3/",
+            "https://news.lego-sia.com/posts/2026/05/23/markets-recovery-quiq-ai-ai-4/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/markets-recovery-quiq-ai-ai-4/"
         ],
-        "published_at": "2026-05-22T23:06:20.009756"
+        "published_at": "2026-05-23T05:05:21.121379"
     },
     "insights_part1": {
         "notebook_id": "8dd02d14-0f3d-49fc-9e88-2d544d2c9c8d",
@@ -128,21 +128,21 @@
         "published_at": "2026-05-18T05:03:41.983844"
     },
     "insights": {
-        "notebook_id": "8ae850b1-d02f-42ba-b797-0e123fc2782e",
-        "title": "2026-05-22 insights Analysis",
+        "notebook_id": "136db2c6-36ec-4804-b118-97bb99db8879",
+        "title": "2026-05-23 insights Analysis",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-05-22T17:02:14.071275",
+        "triggered_at": "2026-05-23T05:02:07.160500",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/05/22/hardware-china-ev-memory-crunch-high-bandwidth-bot/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/hardware-china-ev-memory-crunch-high-bandwidth-bot/",
-            "https://news.lego-sia.com/posts/2026/05/22/markets-asean-manufacturing-labor-contraction-the/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/markets-asean-manufacturing-labor-contraction-the/",
-            "https://news.lego-sia.com/posts/2026/05/22/hardware-amd-ceo-forecasts-sustained-architectural/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/hardware-amd-ceo-forecasts-sustained-architectural/",
-            "https://news.lego-sia.com/posts/2026/05/22/insights-national-sovereignty-vs-global-defense-th/",
-            "https://news.lego-sia.com/en/posts/2026/05/22/insights-national-sovereignty-vs-global-defense-th/"
+            "https://news.lego-sia.com/posts/2026/05/23/ai-waymo-halts-freeway-robotaxi-operations-technic/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/ai-waymo-halts-freeway-robotaxi-operations-technic/",
+            "https://news.lego-sia.com/posts/2026/05/23/markets-global-infrastructure-funding-doubles-in-5/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/markets-global-infrastructure-funding-doubles-in-5/",
+            "https://news.lego-sia.com/posts/2026/05/23/hardware-hitachi-secures-major-mexican-rail-signal/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/hardware-hitachi-secures-major-mexican-rail-signal/",
+            "https://news.lego-sia.com/posts/2026/05/23/hardware-chinese-drone-industry-faces-existential/",
+            "https://news.lego-sia.com/en/posts/2026/05/23/hardware-chinese-drone-industry-faces-existential/"
         ],
-        "published_at": "2026-05-22T17:05:50.003607"
+        "published_at": "2026-05-23T05:05:42.657167"
     }
 }
