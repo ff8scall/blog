@@ -116,33 +116,35 @@
         "published_at": "2026-05-24T05:04:57.355833"
     },
     "hardware": {
-        "notebook_id": "d94a4f2e-7ed9-4bf8-bd7c-c00ecffe2f1d",
-        "title": "2026-05-18 hardware Analysis",
+        "notebook_id": "fa393479-6e86-4bfd-ba02-56ba19ef1891",
+        "title": "2026-05-24 hardware Analysis",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-05-18T05:01:23.609345",
+        "triggered_at": "2026-05-24T11:01:24.244207",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/05/18/hardware-asml-to-equip-indias-first-commercial-fab/",
-            "https://news.lego-sia.com/en/posts/2026/05/18/hardware-asml-to-equip-indias-first-commercial-fab/"
+            "https://news.lego-sia.com/posts/2026/05/24/hardware-recovery-122tb-ssd-1/",
+            "https://news.lego-sia.com/en/posts/2026/05/24/hardware-recovery-122tb-ssd-1/",
+            "https://news.lego-sia.com/posts/2026/05/24/hardware-recovery-ceo-2/",
+            "https://news.lego-sia.com/en/posts/2026/05/24/hardware-recovery-ceo-2/",
+            "https://news.lego-sia.com/posts/2026/05/24/hardware-recovery-vlsi-2025-intel-18a-3/",
+            "https://news.lego-sia.com/en/posts/2026/05/24/hardware-recovery-vlsi-2025-intel-18a-3/",
+            "https://news.lego-sia.com/posts/2026/05/24/hardware-recovery-1-1-dram-4/",
+            "https://news.lego-sia.com/en/posts/2026/05/24/hardware-recovery-1-1-dram-4/"
         ],
-        "published_at": "2026-05-18T05:03:41.983844"
+        "published_at": "2026-05-24T11:02:51.877122"
     },
     "insights": {
-        "notebook_id": "26a8e7ca-c47b-4e23-a472-37207f1ad563",
+        "notebook_id": "8ac188a9-b810-456b-8953-1eaa208344f5",
         "title": "2026-05-24 insights Analysis",
         "mode": "B",
         "status": "published",
-        "triggered_at": "2026-05-24T05:02:06.684689",
+        "triggered_at": "2026-05-24T11:01:33.765762",
         "urls": [
-            "https://news.lego-sia.com/posts/2026/05/24/ai-beyond-the-spec-sheet-technical-benchmark-analy/",
-            "https://news.lego-sia.com/en/posts/2026/05/24/ai-beyond-the-spec-sheet-technical-benchmark-analy/",
-            "https://news.lego-sia.com/posts/2026/05/24/markets-the-pioneers-dilemma-gopros-strategic-eros/",
-            "https://news.lego-sia.com/en/posts/2026/05/24/markets-the-pioneers-dilemma-gopros-strategic-eros/",
-            "https://news.lego-sia.com/posts/2026/05/24/hardware-the-ev-reality-check-nissan-halts-uk-e-ax/",
-            "https://news.lego-sia.com/en/posts/2026/05/24/hardware-the-ev-reality-check-nissan-halts-uk-e-ax/",
-            "https://news.lego-sia.com/posts/2026/05/24/markets-the-geopolitical-domino-effect-iran-confli/",
-            "https://news.lego-sia.com/en/posts/2026/05/24/markets-the-geopolitical-domino-effect-iran-confli/"
+            "https://news.lego-sia.com/posts/2026/05/24/hardware-strengthening-the-south-korea-netherlands/",
+            "https://news.lego-sia.com/en/posts/2026/05/24/hardware-strengthening-the-south-korea-netherlands/",
+            "https://news.lego-sia.com/posts/2026/05/24/markets-copper-prices-surge-amid-ai-demand-and-sul/",
+            "https://news.lego-sia.com/en/posts/2026/05/24/markets-copper-prices-surge-amid-ai-demand-and-sul/"
         ],
-        "published_at": "2026-05-24T05:05:17.624928"
+        "published_at": "2026-05-24T11:03:39.569982"
     }
 }
